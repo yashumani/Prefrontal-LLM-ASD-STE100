@@ -1,139 +1,369 @@
 {
-  "title": "Connect the context. Keep control.",
-  "subtitle": "A governed context layer across four industry workflows",
+  "title": "Prefrontal · Controlled context for enterprise AI",
+  "subtitle": "A product concept and measured pilot proposal",
   "slides": [
     {
       "id": "opening-thesis",
       "type": "cover",
-      "eyebrow": "Industry briefing · development proposal",
-      "title": "Connect the context. Keep control.",
-      "lead": "One context layer. Four different workflows. Link the right evidence, preserve its meaning and keep authority with the right owner.",
+      "eyebrow": "Prefrontal · enterprise AI context",
+      "title": "Put the right context behind every AI task.",
+      "lead": "A governed context product for your AI workflows. Reuse organizational knowledge. Control the task. Prove the value.",
       "items": [
         {
-          "title": "Industry evidence",
-          "text": "Four primary-source signals anchor the problem."
+          "title": "A reusable product",
+          "text": "One context foundation across domain-specific workflows."
         },
         {
-          "title": "A solution to test",
-          "text": "Separate vaults, shared checks and reviewable outputs."
+          "title": "A measured pilot",
+          "text": "Agree the baseline, quality gates and benefit owner."
         }
       ],
-      "note": "STE-inspired writing. Full compliance has not been checked. The context layer remains an unimplemented proposal."
+      "note": "Product concept · seeking a pilot partner. Writing inspired by ASD-STE100; full compliance has not been checked."
+    },
+    {
+      "id": "fragmented-context",
+      "type": "problem",
+      "eyebrow": "The buyer problem",
+      "title": "Every task pays for missing context.",
+      "lead": "Teams spend effort finding evidence, reconciling changes and reviewing AI work. A shared context product targets that repeated work.",
+      "items": [
+        {
+          "title": "Repeated setup",
+          "text": "People explain definitions, ownership and exceptions again for each workflow."
+        },
+        {
+          "title": "Avoidable work",
+          "text": "Irrelevant context, retries and manual reconciliation can add cost and delay."
+        },
+        {
+          "title": "Uncertain answers",
+          "text": "Missing dates or conditions can make an answer unsuitable for the task."
+        },
+        {
+          "title": "Unclear accountability",
+          "text": "Teams need to see which evidence, permissions and review decisions support a result."
+        }
+      ],
+      "note": "Buyer problem hypotheses. Measure their frequency and cost in the first workflow; industry pressure figures do not quantify them."
+    },
+    {
+      "id": "enterprise-lessons",
+      "type": "pitch-insights",
+      "eyebrow": "Why this product · enterprise field insights",
+      "title": "Enterprise value needs an operating model.",
+      "lead": "Enterprise conference field notes connect business meaning, appropriate methods and lifecycle control. Prefrontal brings those ideas into one proposed context product.",
+      "items": [],
+      "note": "Source: Yashu Sharma’s independent field report, 1 September 2026. Vendor savings claims are not used as Prefrontal results."
+    },
+    {
+      "id": "buyer-value",
+      "type": "pitch-value",
+      "eyebrow": "The value proposition",
+      "title": "Four outcomes. One accountable pilot.",
+      "lead": "Design for cost, performance, accuracy and trust together. Agree how each outcome will be measured before implementation.",
+      "items": [],
+      "note": "Product objectives and proposed mechanisms. No improvement, benchmark or trust score has been established for Prefrontal."
+    },
+    {
+      "id": "durable-foundation",
+      "type": "foundation",
+      "eyebrow": "The product",
+      "title": "A context foundation around your AI workflows.",
+      "lead": "Prefrontal is designed to organize approved knowledge, assemble task context and preserve control as components change.",
+      "items": [
+        {
+          "title": "Connect your knowledge",
+          "text": "Adapt approved documents, records and tools to shared context rules."
+        },
+        {
+          "title": "Keep meaning and ownership",
+          "text": "Carry source identity, dates, exceptions, uncertainty and the responsible owner."
+        },
+        {
+          "title": "Fit your model strategy",
+          "text": "Use adapters around models, retrieval and tools. Keep the context contract explicit."
+        },
+        {
+          "title": "Qualify each workflow",
+          "text": "Configure domain definitions, permissions, review and acceptance cases for each customer."
+        }
+      ],
+      "note": "Proposed product architecture. Integrations and runtime behavior require implementation and customer-specific qualification."
+    },
+    {
+      "id": "governed-ingestion",
+      "type": "pipeline",
+      "eyebrow": "How it works",
+      "title": "Turn approved evidence into useful task context.",
+      "lead": "One lifecycle carries the source, its meaning and its authority into the task. Corrections flow into the affected views.",
+      "items": [
+        {
+          "title": "Admit",
+          "text": "Check source scope and access. Keep permitted originals and revisions."
+        },
+        {
+          "title": "Reconcile",
+          "text": "Link claims to evidence. Preserve time, exceptions and unresolved conflicts."
+        },
+        {
+          "title": "Prepare",
+          "text": "Create searchable and clear task views. Keep their dependencies visible."
+        },
+        {
+          "title": "Maintain",
+          "text": "Apply corrections, access revocation and retention rules to derived views."
+        }
+      ],
+      "note": "Proposed lifecycle. A memory proposal becomes usable only through the agreed evidence and policy checks."
+    },
+    {
+      "id": "bounded-decision-router",
+      "type": "router",
+      "eyebrow": "Cost and performance",
+      "title": "Choose a capable path for each task.",
+      "lead": "Routine work may use valid cached context, retrieval or a bounded decision. Escalate when evidence or complexity requires more.",
+      "items": [
+        {
+          "title": "Bound the work",
+          "text": "Limit inputs and options to the active task. Keep uncertainty visible."
+        },
+        {
+          "title": "Reuse with conditions",
+          "text": "Check source versions, freshness, scope and permissions before using a cached view."
+        },
+        {
+          "title": "Measure the complete path",
+          "text": "Include retrieval, reasoning, tools, retries and review in cost and latency."
+        },
+        {
+          "title": "Protect quality",
+          "text": "A lower-cost path must meet the same acceptance and authority gates."
+        }
+      ],
+      "note": "Routing is a design proposal. No method is always cheapest; local workload measurements decide. Candidate decision models remain unqualified."
+    },
+    {
+      "id": "meaning-preserving-ste",
+      "type": "ste",
+      "eyebrow": "Accuracy and clarity",
+      "title": "Clear language. Preserved meaning.",
+      "lead": "Give the agent and reviewer a concise task view. Carry the conditions that determine the correct decision.",
+      "items": [
+        {
+          "title": "Preserve the decision",
+          "text": "Keep negation, conditions, exceptions, numbers, units, dates and uncertainty."
+        },
+        {
+          "title": "Keep evidence available",
+          "text": "Link derived statements to source records. Retain exact wording where it matters."
+        },
+        {
+          "title": "Check the rewrite",
+          "text": "Detect omitted conditions and unsupported additions. Flag unresolved meaning."
+        },
+        {
+          "title": "Measure both forms",
+          "text": "Compare task decisions from original and simplified context on difficult cases."
+        }
+      ],
+      "note": "STE-inspired approach. Full ASD-STE100 compliance and meaning preservation require validation; concise writing alone cannot guarantee accuracy."
+    },
+    {
+      "id": "human-review-routes",
+      "type": "governance",
+      "eyebrow": "Trust and accountability",
+      "title": "Put authority where the responsibility sits.",
+      "lead": "Use routine automation within approved rules. Give owners clear review points for consequential decisions and exceptions.",
+      "items": [
+        {
+          "title": "Source scope",
+          "text": "Approve initial sources and material expansion of access."
+        },
+        {
+          "title": "Evidence conflict",
+          "text": "Resolve disagreements that materially affect a decision."
+        },
+        {
+          "title": "Goal or authority ambiguity",
+          "text": "Clarify material uncertainty about intent or permitted action."
+        },
+        {
+          "title": "Retention or deletion",
+          "text": "Approve consequential choices about originals, derived views and backups."
+        },
+        {
+          "title": "Policy or permission change",
+          "text": "Review changes to trusted rules, access or action authority."
+        },
+        {
+          "title": "Acceptance or autonomy",
+          "text": "Accept milestone evidence and approve any broader autonomous scope."
+        }
+      ],
+      "note": "Proposed controls. Trusted policy enforces permission; retrieved instructions and model confidence cannot change it."
     },
     {
       "id": "industry-pressure",
       "type": "industry-overview",
-      "eyebrow": "Four signals · four different populations",
-      "title": "Different pressures. A shared need for context.",
-      "lead": "Read each figure in its own scope. These metrics describe industry pressure; they do not measure context errors.",
+      "eyebrow": "One product · four application examples",
+      "title": "The workflow changes. The context need travels.",
+      "lead": "These industry signals explain why the examples matter. Prefrontal’s proposed foundation adapts through domain definitions, connectors and review rules.",
       "items": [],
-      "note": "Different units and populations. Do not rank, average or combine these figures into one score."
+      "note": "Different units and populations. Do not combine the figures or treat them as context-product performance results."
     },
     {
       "id": "telecom-context",
       "type": "industry-case",
       "industry": "telecom",
-      "eyebrow": "Telecommunications · industry evidence → design response",
-      "title": "An alert needs a service history",
-      "lead": "More traffic raises the importance of understanding local network conditions.",
+      "eyebrow": "Telecom · application example",
+      "title": "Turn alerts into reviewable incident briefs.",
+      "lead": "For network operations, connect an alert to the service, recent changes and approved next checks.",
       "items": [],
-      "note": "Industry metric: observed evidence. Context workflow: illustrative proposal. No operational benefit has been measured."
+      "note": "Industry signal: observed evidence. Product workflow and buyer objective: proposed; benefits require a qualified pilot."
     },
     {
       "id": "utilities-context",
       "type": "industry-case",
       "industry": "utilities",
-      "eyebrow": "Electricity utilities · industry evidence → design response",
-      "title": "A queue needs current engineering evidence",
-      "lead": "Connection reviews need current engineering evidence and a clear decision history.",
+      "eyebrow": "Utilities · application example",
+      "title": "Bring current evidence into connection reviews.",
+      "lead": "For grid teams, assemble current study references and unresolved prerequisites before an engineering decision.",
       "items": [],
-      "note": "Industry metric: observed evidence. Context workflow: illustrative proposal. No operational benefit has been measured."
+      "note": "Industry signal: observed evidence. Product workflow and buyer objective: proposed; benefits require a qualified pilot."
     },
     {
       "id": "healthcare-context",
       "type": "industry-case",
       "industry": "healthcare",
-      "eyebrow": "Healthcare · industry evidence → design response",
-      "title": "Received data still needs a usable handoff",
-      "lead": "Receiving a record and integrating it are different capabilities.",
+      "eyebrow": "Healthcare · application example",
+      "title": "Keep care handoffs traceable.",
+      "lead": "For clinical teams, prepare a cited draft with the correct patient, dates, conflicts and responsible reviewer.",
       "items": [],
-      "note": "Industry metric: observed evidence. Context workflow: illustrative proposal. No operational benefit has been measured."
+      "note": "Industry signal: observed evidence. Product workflow and buyer objective: proposed; benefits require a qualified pilot."
     },
     {
       "id": "hospitality-context",
       "type": "industry-case",
       "industry": "hospitality",
-      "eyebrow": "Hospitality · industry evidence → design response",
-      "title": "A shift change must carry the open task",
-      "lead": "A shift brief should carry the request, verified status, owner and next action.",
+      "eyebrow": "Hospitality · application example",
+      "title": "Carry guest requests across every shift.",
+      "lead": "For hotel operations, link the request, verified room status, promises and responsible next action.",
       "items": [],
-      "note": "Industry metric: observed evidence. Context workflow: illustrative proposal. No operational benefit has been measured."
+      "note": "Industry signal: observed evidence. Product workflow and buyer objective: proposed; benefits require a qualified pilot."
     },
     {
       "id": "industry-linked-context",
       "type": "industry-bridge",
-      "eyebrow": "Connect the dots · design synthesis",
-      "title": "Same checks. Separate vaults.",
-      "lead": "Follow one industry task from its evidence to its responsible owner. Reuse the checks while keeping records and permissions separate.",
+      "eyebrow": "Cross-industry product fit",
+      "title": "Reuse the foundation. Adapt the workflow.",
+      "lead": "Follow one task from its evidence to its responsible owner. Domain knowledge changes; the core checks remain consistent.",
       "items": [],
-      "note": "Choose an industry to follow its proposed workflow. This illustration performs no retrieval or external action."
+      "note": "Designed for cross-industry reuse. Each deployment needs its own integrations, permissions and acceptance evidence."
     },
     {
-      "id": "fragmented-context",
-      "type": "problem",
-      "eyebrow": "The problem",
-      "title": "Stored information does not become useful context by itself",
-      "lead": "A personal agent must find the right evidence, interpret its conditions and carry the current task forward.",
-      "items": [
-        {
-          "title": "Fragmentation",
-          "text": "Facts, decisions and goals sit in separate notes, files and chats."
-        },
-        {
-          "title": "Stale memory",
-          "text": "An earlier statement can remain active after circumstances change."
-        },
-        {
-          "title": "Conflicting evidence",
-          "text": "Different sources can disagree. The newest statement is not automatically authoritative."
-        },
-        {
-          "title": "Lost intent",
-          "text": "A summary can remove a condition, exception or unresolved decision that changes the answer."
-        }
-      ],
-      "note": "Sources: longmemeval, tangle. Project incidence has not been measured."
+      "id": "value-assumptions",
+      "type": "pitch-calculator",
+      "eyebrow": "The business case · editable example",
+      "title": "Make the economics inspectable.",
+      "lead": "Compare the same accepted-task target. Change the assumptions and see recurring cost, handling effort and one-time setup separately.",
+      "items": [],
+      "note": "Planning worksheet only. It runs arithmetic in this browser; it does not call a model or predict a customer result."
     },
     {
-      "id": "durable-foundation",
-      "type": "foundation",
-      "eyebrow": "Architecture principle",
-      "title": "Keep commitments durable and components replaceable",
-      "lead": "Resilience means controlled replacement with evidence and recovery. It is not a guarantee against future failure.",
+      "id": "pilot-acceptance",
+      "type": "pitch-proof",
+      "eyebrow": "Proof before expansion",
+      "title": "Agree the scorecard before the pilot.",
+      "lead": "A lower bill is useful only when the workflow also meets its performance, quality and control requirements.",
+      "items": [],
+      "note": "Thresholds need buyer agreement. No product performance, accuracy, certification or realized saving is claimed."
+    },
+    {
+      "id": "upgrade-example",
+      "type": "upgrade",
+      "eyebrow": "Protect the investment · interactive design example",
+      "title": "Keep the context contract when models change.",
+      "lead": "Explore a small contract example. Compare a replacement against the same evidence, meaning and authority checks.",
       "items": [
         {
-          "title": "Preserve",
-          "text": "Permitted originals, source identity, history, uncertainty, goals and verified outcomes."
+          "title": "Compare",
+          "text": "Check evidence recovery, correctness, abstention, meaning, context size, latency and cost."
         },
         {
-          "title": "Enforce",
-          "text": "Project scope, access and action authority in trusted application code."
+          "title": "Approve or reject",
+          "text": "Promote only within approved scope after agreed gates pass."
         },
         {
-          "title": "Replace",
-          "text": "Models, parsers, frameworks, embeddings, indexes, storage engines and selection methods."
-        },
-        {
-          "title": "Prove each change",
-          "text": "Export, compare, rebuild, restore and roll back against representative tasks."
+          "title": "Recover",
+          "text": "Roll back a failed candidate and resume with goals, history and verified outcomes intact."
         }
       ],
-      "note": "Invariants are rules that each replacement must continue to satisfy. Sources: prov, nist."
+      "note": "Browser demonstration on one fixed record. Real model migration, recovery and performance qualification remain pending."
+    },
+    {
+      "id": "development-gates",
+      "type": "roadmap",
+      "eyebrow": "The pilot proposal",
+      "title": "Start with one workflow. Expand after proof.",
+      "lead": "Scope the first implementation around an accountable owner and a repeatable task. Agree deliverables and exit criteria before work starts.",
+      "items": [
+        {
+          "title": "Frame the pilot",
+          "text": "Choose workflow, sources, data boundary, permitted actions and benefit owner."
+        },
+        {
+          "title": "Establish the baseline",
+          "text": "Record accepted-task cost, latency, review effort and failure cases."
+        },
+        {
+          "title": "Build the context path",
+          "text": "Implement approved adapters, memory, task views and review boundaries."
+        },
+        {
+          "title": "Evaluate together",
+          "text": "Use held-out cases and agreed load. Review quality, controls and complete costs."
+        },
+        {
+          "title": "Prove maintenance",
+          "text": "Exercise source updates, access revocation, model replacement and recovery."
+        },
+        {
+          "title": "Decide the rollout",
+          "text": "Review measured results and residual risks. Expand, revise or stop against agreed gates."
+        }
+      ],
+      "note": "Proposed pilot scope. Dates, pricing, integration effort and success thresholds require agreement; runtime capabilities are not yet delivered."
+    },
+    {
+      "id": "next-decisions",
+      "type": "decisions",
+      "eyebrow": "The next conversation",
+      "title": "Bring one workflow. Agree the proof.",
+      "lead": "Partner on a measured Prefrontal pilot. Start where repeated context work matters and a responsible owner can judge the result.",
+      "items": [
+        {
+          "title": "Choose the workflow",
+          "text": "Name the user, task, current process and business consequence."
+        },
+        {
+          "title": "Bring the baseline",
+          "text": "Identify current costs, time, review effort and accepted-output criteria."
+        },
+        {
+          "title": "Set the boundary",
+          "text": "Approve sources, privacy, permissions, human review and retention."
+        },
+        {
+          "title": "Agree the decision",
+          "text": "Define pilot deliverables, commercial terms and evidence needed to expand."
+        }
+      ],
+      "note": "Product concept and pilot-partner invitation. Customer value is measured in the pilot; no production service or price is represented as available today."
     },
     {
       "id": "context-contract",
       "type": "contract",
-      "eyebrow": "The stable boundary",
+      "eyebrow": "Appendix · the product contract",
       "title": "Define a versioned context contract",
       "lead": "The contract defines the records, meanings and rules that components exchange. Changes require compatible behavior or an explicit migration.",
       "items": [
@@ -157,37 +387,11 @@
       "note": "Evidence traceability explains origin and transformation. It does not prove a source is true. Source: prov."
     },
     {
-      "id": "governed-ingestion",
-      "type": "pipeline",
-      "eyebrow": "From source to usable evidence",
-      "title": "Ingest through explicit gates",
-      "lead": "A source enters the vault only within its approved scope. Extraction creates reviewable memory proposals.",
-      "items": [
-        {
-          "title": "Admit and preserve",
-          "text": "Check scope and access. Retain exact phrases, numbers, conditions and history in the original."
-        },
-        {
-          "title": "Extract and reconcile",
-          "text": "Link candidate claims to evidence. Preserve dates, exceptions and unresolved conflicts."
-        },
-        {
-          "title": "Publish derived views",
-          "text": "Create clear summaries and searchable views with dependencies and transformation versions."
-        },
-        {
-          "title": "Correct and invalidate",
-          "text": "Apply corrections, revocation and deletion to affected views under an explicit retention policy."
-        }
-      ],
-      "note": "A memory proposal is not an established fact. Backup and restore behavior must prevent removed context from silently returning."
-    },
-    {
       "id": "layered-memory",
       "type": "memory",
-      "eyebrow": "Memory stack",
-      "title": "Separate durable evidence from working context",
-      "lead": "The controller selects a bounded context packet for the active task. Each selected item keeps a reason and source reference.",
+      "eyebrow": "Appendix · memory architecture",
+      "title": "Keep evidence durable and task context bounded.",
+      "lead": "The proposed memory design separates permitted evidence from derived views and the current task. Each selected item keeps its source and selection reason.",
       "items": [
         {
           "title": "Evidence vault",
@@ -209,61 +413,9 @@
       "note": "Local runtime, provider behavior and integration remain unverified. Sources: openviking, graphiti, letta, mem0."
     },
     {
-      "id": "bounded-decision-router",
-      "type": "router",
-      "eyebrow": "Jev-style decisions",
-      "title": "Ask a small, bounded question",
-      "lead": "The router can judge relevance, choose a category, flag a possible conflict or recommend escalation.",
-      "items": [
-        {
-          "title": "Typed inputs and outputs",
-          "text": "Supply bounded options and evidence. Use Choice, yes/no probability or a described score rubric."
-        },
-        {
-          "title": "Preserve abstention",
-          "text": "Insufficient evidence must remain a valid route. Evaluate truncation, label order and uncertainty."
-        },
-        {
-          "title": "Compare candidates",
-          "text": "Start with Mapika decider-2b, decider-4b and Laya typed-decisions. Test on our context decisions."
-        },
-        {
-          "title": "Keep authority external",
-          "text": "Probability does not grant permission or establish truth. Application rules control actions."
-        }
-      ],
-      "note": "Confidence fields differ across runtimes. Calibration and complete request latency need local measurement. Sources: mapika, laya."
-    },
-    {
-      "id": "meaning-preserving-ste",
-      "type": "ste",
-      "eyebrow": "STE-inspired context compiler",
-      "title": "Simplify language while preserving meaning",
-      "lead": "The compiler creates a clear task view and checks it against the original evidence.",
-      "items": [
-        {
-          "title": "Check meaning",
-          "text": "Preserve negation, conditions, exceptions, numbers, units, dates and uncertainty."
-        },
-        {
-          "title": "Keep exact evidence",
-          "text": "Use exact quotations when wording matters. Link every derived claim to its source."
-        },
-        {
-          "title": "Reject unsafe rewrites",
-          "text": "Flag meaning changes or unsupported additions. Keep the original available."
-        },
-        {
-          "title": "Test both forms",
-          "text": "Compare decisions from original and rewritten context on representative and difficult cases."
-        }
-      ],
-      "note": "Meaning-checking workflow proposed; implementation and ASD-STE100 compliance unverified."
-    },
-    {
       "id": "fifteen-responsibilities",
       "type": "governance",
-      "eyebrow": "Planning breakdown",
+      "eyebrow": "Appendix · implementation responsibilities",
       "title": "15 responsibilities: 12 lifecycle and 3 governance",
       "lead": "These are logical responsibilities. They do not require 15 agents or services.",
       "items": [
@@ -291,167 +443,57 @@
       "note": "Planning count, not a universal architecture rule. Retention applies across the lifecycle. Full external-action execution needs separate acceptance checks."
     },
     {
-      "id": "human-review-routes",
-      "type": "governance",
-      "eyebrow": "Six human review routes",
-      "title": "Review consequential choices at setup, milestones and exceptions",
-      "lead": "Routine requests can proceed within approved rules. Human review handles material changes or uncertainty.",
-      "items": [
-        {
-          "title": "Source scope",
-          "text": "Approve initial sources and material expansion of access."
-        },
-        {
-          "title": "Evidence conflict",
-          "text": "Resolve disagreements that materially affect a decision."
-        },
-        {
-          "title": "Goal or authority ambiguity",
-          "text": "Clarify material uncertainty about intent or permitted action."
-        },
-        {
-          "title": "Retention or deletion",
-          "text": "Approve consequential choices about originals, derived views and backups."
-        },
-        {
-          "title": "Policy or permission change",
-          "text": "Review changes to trusted rules, access or action authority."
-        },
-        {
-          "title": "Acceptance or autonomy",
-          "text": "Accept milestone evidence and approve any broader autonomous scope."
-        }
-      ],
-      "note": "Retrieved instructions cannot change trusted policy or create permission."
-    },
-    {
-      "id": "upgrade-example",
-      "type": "upgrade",
-      "eyebrow": "Interactive design example",
-      "title": "Replace a model without losing the task",
-      "lead": "Explore an illustrative upgrade: export the vault, change one component, rebuild its views and apply the same acceptance gates.",
-      "items": [
-        {
-          "title": "Compare",
-          "text": "Check evidence recovery, correctness, abstention, meaning, context size, latency and cost."
-        },
-        {
-          "title": "Approve or reject",
-          "text": "Promote only within approved scope after agreed gates pass."
-        },
-        {
-          "title": "Recover",
-          "text": "Roll back a failed candidate and resume with goals, history and verified outcomes intact."
-        }
-      ],
-      "note": "This browser example checks one fixed record. Real model comparison, migration, recovery and performance tests remain unverified."
-    },
-    {
-      "id": "development-gates",
-      "type": "roadmap",
-      "eyebrow": "Completion plan",
-      "title": "Develop through usable outcomes and acceptance gates",
-      "lead": "Agree thresholds from the first vault and its actual tasks. No dates or performance targets are committed.",
-      "items": [
-        {
-          "title": "1 · Define the boundary",
-          "text": "Agree runtime, privacy, sources, authority and contract. Gate: review concrete records and cases."
-        },
-        {
-          "title": "2 · Build the evidence vault",
-          "text": "Ingest and export a small approved corpus. Gate: restore scope, history and references."
-        },
-        {
-          "title": "3 · Prove memory behavior",
-          "text": "Test restart, project separation, updates and conflicts. Gate: supported answers or explicit uncertainty."
-        },
-        {
-          "title": "4 · Prove context selection",
-          "text": "Compare decision candidates and STE views. Gate: agreed correctness, calibration and meaning checks."
-        },
-        {
-          "title": "5 · Prove governance",
-          "text": "Test hostile source instructions, correction, revocation and deletion. Gate: authority and retention rules hold."
-        },
-        {
-          "title": "6 · Prove change and recovery",
-          "text": "Swap components and roll back. Gate: resume tasks and preserve verified state."
-        }
-      ],
-      "note": "All runtime gates are currently unverified. Expand only when a demonstrated requirement justifies it."
-    },
-    {
       "id": "evidence-boundary",
       "type": "evidence",
-      "eyebrow": "What is known",
-      "title": "Research supports candidates, not system acceptance",
-      "lead": "Public artifacts and documentation provide a starting point. The proposed layer still needs implementation and local proof.",
+      "eyebrow": "Appendix · product maturity",
+      "title": "A clear view of what is ready and what comes next.",
+      "lead": "The presentation and interactive examples are available. The context product still needs implementation and a qualified pilot.",
       "items": [
         {
-          "title": "Source-level evidence",
-          "text": "Model artifacts, author code, documented memory capabilities and research-informed checks were reviewed."
+          "title": "Available today",
+          "text": "Research-informed product story, source-backed industry examples and browser design demonstrations."
         },
         {
-          "title": "Local proof pending",
-          "text": "No weights, installation, inference, benchmark, personal-source ingestion or agent integration was run."
+          "title": "Pilot implementation",
+          "text": "Approved data adapters, memory behavior, context selection and review workflows remain to be built."
         },
         {
-          "title": "Limits remain",
-          "text": "Provenance does not prove truth. A format guarantee does not prove correctness. A tool attempt does not prove success."
+          "title": "Proof to earn",
+          "text": "Demonstrate accepted-task economics, latency, accuracy, boundaries and recovery on the buyer’s workload."
         },
         {
-          "title": "Evaluate changes",
-          "text": "Keep fitting and final evaluation cases separate. Add cases when new failures appear."
+          "title": "Expansion decision",
+          "text": "Use measured outcomes and owner approval. Qualify new domains and integrations before broader operation."
         }
       ],
-      "note": "Evidence checkpoint: research-shortlist.md, 2026-10-05. Sources: longmemeval, tangle, prov, nist."
-    },
-    {
-      "id": "next-decisions",
-      "type": "decisions",
-      "eyebrow": "Next concrete decisions",
-      "title": "Define the first vault before choosing the stack",
-      "lead": "The next deliverable is a reviewable context contract and acceptance set for one approved use case.",
-      "items": [
-        {
-          "title": "Runtime and privacy",
-          "text": "Choose fully local Windows/WSL or local memory with approved hosted inference."
-        },
-        {
-          "title": "Initial sources",
-          "text": "Select files, notes, chats or an existing vault; define project separation and retention."
-        },
-        {
-          "title": "Acceptance and authority",
-          "text": "Choose representative tasks, material failure cases and permitted actions."
-        },
-        {
-          "title": "Candidate feasibility",
-          "text": "Check hardware, provider behavior, licenses and export/recovery before selection."
-        }
-      ],
-      "note": "No framework or model decision is locked."
+      "note": "This pitch does not claim deployed context infrastructure, operational results, full compliance or future-proof performance."
     },
     {
       "id": "primary-sources",
       "type": "sources",
-      "eyebrow": "Primary references",
-      "title": "Inspect the evidence behind the proposal",
-      "lead": "Model and framework sources describe candidates. Memory research and governance sources inform the checks.",
+      "eyebrow": "Appendix · field insights and architecture references",
+      "title": "Inspect the ideas behind the product.",
+      "lead": "The conference report informs the buyer story. Public research and framework sources inform the proposed design and tests.",
       "items": [],
-      "note": "Research checkpoint: 2026-10-05. Findings and limitations: research-shortlist.md."
+      "note": "Conference reconstructions are independent field notes. Candidate documentation and external claims do not qualify Prefrontal."
     },
     {
       "id": "industry-evidence-sources",
       "type": "industry-sources",
-      "eyebrow": "Industry evidence · scope matters",
-      "title": "Inspect the four industry signals",
-      "lead": "Each chart links to its primary source. Dates, populations and units travel with the claim.",
+      "eyebrow": "Appendix · industry evidence",
+      "title": "Inspect the four industry signals.",
+      "lead": "Each figure keeps its primary source, date, population and unit. These are application context, not product benchmarks.",
       "items": [],
       "note": "Readback: October 2026. Sources support the pressure metrics; proposed workflows and benefits still need acceptance evidence."
     }
   ],
   "sources": [
+    {
+      "id": "conference-field-report",
+      "title": "Yashu Sharma · AI Enterprise Conference 2026 field report",
+      "url": "https://ai-enterprise-journey-2026.yashumani.chatgpt.site/",
+      "note": "20 reconstructed exhibits and field synthesis. Independent report, not official slides or product performance proof."
+    },
     {
       "id": "mapika",
       "title": "Mapika decision models and runtime",
@@ -567,7 +609,9 @@
       "output": "Incident brief with sources, unknowns and proposed next checks.",
       "humanGate": "The network operator approves any configuration change. The agent cannot grant itself access.",
       "owner": "Network operator",
-      "test": "Check source recovery, stale telemetry detection and reviewer corrections on historical incidents."
+      "test": "Check source recovery, stale telemetry detection and reviewer corrections on historical incidents.",
+      "benefit": "Faster investigation with less repeated evidence gathering.",
+      "buyerMetric": "Measure handling time, task acceptance and permission-gate results."
     },
     {
       "id": "utilities",
@@ -608,7 +652,9 @@
       "output": "Connection review brief with study references and unresolved engineering questions.",
       "humanGate": "A qualified engineer validates studies and limits. The operator retains connection and operating authority.",
       "owner": "Grid engineer / operator",
-      "test": "Check evidence completeness, revision conflicts found and reviewer correction rates on historical applications."
+      "test": "Check evidence completeness, revision conflicts found and reviewer correction rates on historical applications.",
+      "benefit": "Less reconciliation across application and study versions.",
+      "buyerMetric": "Measure evidence completeness, review time and revision-conflict detection."
     },
     {
       "id": "healthcare",
@@ -651,7 +697,9 @@
       "output": "Draft handoff with source links and clear review questions.",
       "humanGate": "The responsible clinician verifies content and makes clinical decisions. Privacy and access controls must hold.",
       "owner": "Responsible clinician",
-      "test": "Use approved synthetic cases to check identity separation, temporal accuracy and clinician corrections."
+      "test": "Use approved synthetic cases to check identity separation, temporal accuracy and clinician corrections.",
+      "benefit": "A clearer draft with fewer missing handoff facts.",
+      "buyerMetric": "Use approved cases to measure source correctness, correction effort and privacy-boundary results."
     },
     {
       "id": "hospitality",
@@ -693,7 +741,9 @@
       "output": "Shift brief with verified status, owner, next action and escalation condition.",
       "humanGate": "Staff verifies room readiness. A manager approves compensation or room moves under hotel policy.",
       "owner": "Duty manager / staff",
-      "test": "Check open-task recall, owner accuracy and false completion claims in approved shift scenarios."
+      "test": "Check open-task recall, owner accuracy and false completion claims in approved shift scenarios.",
+      "benefit": "Fewer lost tasks when ownership moves across shifts.",
+      "buyerMetric": "Measure open-task recall, owner accuracy, handling time and false completion claims."
     }
   ],
   "industrySources": [
@@ -721,5 +771,125 @@
       "url": "https://www.ahla.com/news/65-surveyed-hotels-report-staffing-shortages",
       "note": "65% · 6 Dec 2024–3 Jan 2025 · published February 2025. U.S.-focused AHLA survey of 282 hotelier respondents. Self-reported; not a census. A dated respondent result, not a current estimate for all hotels. The context layer does not create staff."
     }
-  ]
+  ],
+  "pitch": {
+    "productName": "Prefrontal",
+    "maturity": "Product concept · pilot partner pitch",
+    "audience": "Enterprise AI leaders, operations owners and pilot sponsors",
+    "conference": {
+      "title": "AI Enterprise Conference 2026 — Yashu Sharma’s Field Report",
+      "url": "https://ai-enterprise-journey-2026.yashumani.chatgpt.site/",
+      "eventDate": "1 September 2026",
+      "exhibits": 20,
+      "scope": "Independent field report: 19 conference reconstructions and one personal synthesis. These are not official slides or product benchmarks.",
+      "insights": [
+        {
+          "title": "Make knowledge reusable",
+          "observation": "Data access needs business definitions, relationships and expert interpretation.",
+          "application": "Capture approved knowledge once. Carry its sources and conditions into each relevant task.",
+          "exhibits": "08, 15, 17"
+        },
+        {
+          "title": "Choose a capable path",
+          "observation": "A task can use rules, retrieval, a small model or deeper reasoning.",
+          "application": "Compare complete task cost and quality. Route within permissions and freshness limits.",
+          "exhibits": "12, 13, 14"
+        },
+        {
+          "title": "Prove the operating model",
+          "observation": "Production work needs ownership, evaluation, lifecycle controls and recovery.",
+          "application": "Start with a bounded workflow. Establish a baseline and agreed expansion gates.",
+          "exhibits": "05, 07, 09, 20"
+        }
+      ]
+    },
+    "lenses": [
+      {
+        "id": "cost",
+        "name": "Cost",
+        "goal": "Control cost per accepted task",
+        "mechanism": "Bound context size. Reuse valid views. Choose a capable route.",
+        "measure": "All-in recurring cost per accepted task, plus one-time setup cost.",
+        "guardrail": "Include review, rework, retrieval and operations. Token savings alone do not establish value.",
+        "color": "#16a9c3"
+      },
+      {
+        "id": "performance",
+        "name": "Performance",
+        "goal": "Keep routine work responsive",
+        "mechanism": "Use bounded decisions and fast paths. Escalate when the task needs more work.",
+        "measure": "End-to-end median and p95 latency, throughput and retries at agreed load.",
+        "guardrail": "p95 is the time within which 95% of measured tasks finish. Compare the same workload and quality gates.",
+        "color": "#efaa28"
+      },
+      {
+        "id": "accuracy",
+        "name": "Accuracy",
+        "goal": "Preserve the meaning behind the answer",
+        "mechanism": "Carry source links, dates, conditions and conflicts. Check derived statements.",
+        "measure": "Domain-reviewed task acceptance, supported claims and appropriate abstention.",
+        "guardrail": "Abstention means withholding a conclusion when evidence is insufficient. A correct format does not prove a correct answer.",
+        "color": "#ed607d"
+      },
+      {
+        "id": "trust",
+        "name": "Trust",
+        "goal": "Make control visible",
+        "mechanism": "Enforce scope and permission. Show the evidence, owner and review decision.",
+        "measure": "Boundary-test results, audit coverage, owner approval and user confidence.",
+        "guardrail": "Measure user confidence separately from correctness. Model confidence cannot create authority.",
+        "color": "#8c67db"
+      }
+    ],
+    "scorecard": [
+      {
+        "id": "cost",
+        "name": "Cost",
+        "metric": "Recurring cost per accepted task; one-time setup; maintenance effort.",
+        "trial": "Run baseline and candidate on the same accepted-task target. Include digital costs and human handling.",
+        "decision": "Expand only when the agreed economic case holds after full cost readback."
+      },
+      {
+        "id": "performance",
+        "name": "Performance",
+        "metric": "Median and p95 completion time; throughput; retries; recovery time.",
+        "trial": "Use the same workload, load and quality standard. Include retrieval, tools and review queues.",
+        "decision": "Meet the owner’s service target without hiding tail latency or failed tasks."
+      },
+      {
+        "id": "accuracy",
+        "name": "Accuracy",
+        "metric": "Task acceptance; source correctness; stale/conflict detection; abstention.",
+        "trial": "Keep held-out cases separate from development cases. Use domain review and deterministic checks.",
+        "decision": "Meet agreed quality gates. Investigate failures before expanding scope."
+      },
+      {
+        "id": "trust",
+        "name": "Trust",
+        "metric": "Scope isolation; permission enforcement; evidence coverage; reviewer decisions.",
+        "trial": "Test hostile source instructions, revoked access, cross-vault retrieval and audit readback.",
+        "decision": "Hold release for a material boundary failure. Assess user confidence separately."
+      }
+    ],
+    "businessCase": {
+      "currency": "USD",
+      "defaults": {
+        "target": 1000,
+        "hourly": 60,
+        "setup": 5000,
+        "baselineCost": 1.2,
+        "candidateCost": 0.7,
+        "baselineMinutes": 4,
+        "candidateMinutes": 2,
+        "baselineAcceptance": 80,
+        "candidateAcceptance": 80,
+        "baselineFixed": 0,
+        "candidateFixed": 1000
+      },
+      "definition": "Compare the same monthly number of accepted tasks. Accepted means the result passes the buyer’s task and quality criteria.",
+      "formula": "Attempts = accepted-task target ÷ acceptance rate. Monthly recurring cost = attempts × (digital cost + handling minutes × hourly rate ÷ 60) + fixed cost. Year-one net difference = 12 × monthly difference − one-time setup.",
+      "limitation": "Invented example assumptions, not measured product savings or a price quote. Rates and workload stay constant for the year-one estimate. Validate them in a pilot. Positive economics do not override quality or permission gates.",
+      "costScope": "Digital cost includes inference, retrieval, tools and variable infrastructure. Handling includes review, rework and escalation. Fixed cost includes licensing and operations. Setup is shown separately."
+    }
+  }
 }

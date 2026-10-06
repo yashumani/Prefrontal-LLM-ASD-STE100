@@ -6,7 +6,7 @@ const assert = require('node:assert/strict');
   const base = process.env.PREFRONTAL_TEST_URL || 'http://127.0.0.1:8893/';
   const deck = JSON.parse(await readFile('presentation-content.json', 'utf8'));
   const expectedSectors = ['telecom', 'utilities', 'healthcare', 'hospitality'];
-  assert.equal(deck.slides.length, 22, 'The agreed release contains 22 slides.');
+  assert.equal(deck.slides.length, 26, 'The agreed release contains 26 product-pitch and appendix slides.');
   assert.deepEqual(deck.industries.map(industry => industry.id).sort(), [...expectedSectors].sort());
   await mkdir('.validation', { recursive: true });
   const browser = await chromium.launch({ headless: true });
@@ -90,6 +90,172 @@ const assert = require('node:assert/strict');
   const pipelineSelector = `[data-slide="${pipelineId}"] svg.motion-diagram`;
   const industryById = Object.fromEntries(deck.industries.map(industry => [industry.id, industry]));
   const normalized = text => text.replace(/\s+/g, ' ').trim();
+  const assertProductNodeBounds = async svg => {
+    const boxes = await svg.evaluate(node => [...node.querySelectorAll('.m-node[data-stage]')].map(group => {
+      const box = group.querySelector('rect').getBBox();
+      return {
+        stage: group.dataset.stage,
+        box: { x: box.x, y: box.y, width: box.width, height: box.height },
+        labels: [...group.querySelectorAll('text')].map(text => {
+          const bounds = text.getBBox();
+          return { text: text.textContent, x: bounds.x, y: bounds.y, width: bounds.width, height: bounds.height };
+        })
+      };
+    }));
+    assert.equal(boxes.length, 5, 'The product map needs five visible boxed stages.');
+    const horizontalPadding = 8;
+    const verticalPadding = 6;
+    for (const stage of boxes) {
+      assert(stage.labels.length >= 3, `Product stage ${stage.stage} must keep its heading and explanatory labels.`);
+      for (const label of stage.labels) {
+        assert(label.width > 0 && label.height > 0, `${stage.stage}: ${label.text} must render a measurable label.`);
+        assert(label.x >= stage.box.x + horizontalPadding - 0.5 && label.x + label.width <= stage.box.x + stage.box.width - horizontalPadding + 0.5,
+          `Product label must fit inside its node with horizontal padding: ${JSON.stringify({ stage: stage.stage, label, box: stage.box })}`);
+        assert(label.y >= stage.box.y + verticalPadding - 0.5 && label.y + label.height <= stage.box.y + stage.box.height - verticalPadding + 0.5,
+          `Product label must fit inside its node with vertical padding: ${JSON.stringify({ stage: stage.stage, label, box: stage.box })}`);
+      }
+    }
+  };
+  const expectedLenses = ['cost', 'performance', 'accuracy', 'trust'];
+  const resultKeys = ['baseline', 'candidate', 'difference', 'yearOne', 'baselineUnit', 'candidateUnit'];
+  const assumptionKeys = Object.keys(deck.pitch.businessCase.defaults);
+  const slideForType = type => deck.slides.find(slide => slide.type === type);
+  const assertPitchNarrative = async (root, staticMode = false) => {
+    const panelForType = async type => {
+      const slide = slideForType(type);
+      if (!staticMode) await goto(root, slide.id);
+      const panel = root.locator(staticMode ? `#static-${slide.id}` : `[data-slide="${slide.id}"]`);
+      assert(await panel.isVisible(), `${type} must have a readable buyer story.`);
+      return panel;
+    };
+    const opening = await panelForType('cover');
+    assert((await opening.innerText()).includes(deck.pitch.productName), 'The cover must sell the proposed product.');
+    assert.match(normalized(await opening.innerText()), /product concept.{0,60}pilot/i, 'The cover must state concept maturity and the pilot proposition.');
+    const insights = await panelForType('pitch-insights');
+    const insightText = normalized(await insights.innerText());
+    for (const insight of deck.pitch.conference.insights) {
+      for (const key of ['title', 'observation', 'application']) assert(insightText.includes(normalized(insight[key])), `The conference pitch must show ${key} without losing attribution.`);
+      assert(insightText.includes(normalized(insight.exhibits)), 'Each conference insight must retain its exhibit references.');
+    }
+    const citations = insights.locator('a.conference-citation');
+    assert((await citations.count()) >= 1, 'The insights slide must link directly to the supplied portfolio conference.');
+    for (const link of await citations.all()) assert.equal(await link.getAttribute('href'), deck.pitch.conference.url);
+    assert(insightText.includes(normalized(deck.pitch.conference.scope)), 'Conference notes must preserve the scope of the observation.');
+    assert(insightText.includes(normalized(deck.pitch.conference.eventDate)), 'Conference notes must retain the event date.');
+    if (!staticMode) await root.screenshot({ path: '.validation/pitch-insights-desktop.png', fullPage: true });
+    const value = await panelForType('pitch-value');
+    assert.equal(await value.locator('.value-lens').count(), expectedLenses.length);
+    for (const lens of deck.pitch.lenses) {
+      const card = value.locator(`.value-lens[data-lens="${lens.id}"]`);
+      assert.equal(await card.count(), 1, `The buyer story needs one ${lens.id} value card.`);
+      const text = normalized(await card.innerText());
+      for (const key of ['name', 'goal', 'mechanism', 'measure', 'guardrail']) assert(text.toLowerCase().includes(normalized(lens[key]).toLowerCase()), `${lens.id} value must preserve its ${key}.`);
+    }
+    if (!staticMode) await root.screenshot({ path: '.validation/buyer-value-desktop.png', fullPage: true });
+    const proof = await panelForType('pitch-proof');
+    assert.equal(await proof.locator('.proof-card').count(), expectedLenses.length);
+    for (const item of deck.pitch.scorecard) {
+      const card = proof.locator(`.proof-card[data-lens="${item.id}"]`);
+      assert.equal(await card.count(), 1, `A buyer must see how ${item.id} will be proved.`);
+      const text = normalized(await card.innerText());
+      for (const key of ['name', 'metric', 'trial', 'decision']) assert(text.toLowerCase().includes(normalized(item[key]).toLowerCase()), `${item.id} proof must preserve its ${key}.`);
+    }
+    assert.match(await proof.innerText(), /pilot|not.{0,30}measured|unmeasured/i, 'Pilot evidence must not read as an achieved product benchmark.');
+    if (!staticMode) await root.screenshot({ path: '.validation/pilot-proof-desktop.png', fullPage: true });
+    for (const sector of expectedSectors) {
+      const id = `${sector}-context`;
+      if (!staticMode) await goto(root, id);
+      const panel = root.locator(staticMode ? `#static-${id}` : `[data-slide="${id}"]`);
+      const goal = panel.locator('.industry-value-note');
+      assert.equal(await goal.count(), 1, 'Industry examples must connect the task to a buyer value goal.');
+      assert.match(await goal.innerText(), /goal|pilot|hypothesis|proposed|test/i, 'Industry buyer value must remain a goal to test.');
+    }
+  };
+  const assertCostResults = async (model, expected, outcome, staticMode = false) => {
+    if (!staticMode) assert.equal(await model.getAttribute('data-state'), 'illustrative');
+    const results = model.locator('.business-case-results');
+    assert(await results.isVisible(), 'A valid cost scenario must show its complete results.');
+    assert.deepEqual((await results.locator('[data-result]').evaluateAll(nodes => nodes.map(node => node.dataset.result))).sort(), [...resultKeys].sort(), 'The model must show exactly six named results.');
+    if (outcome) assert.equal(await results.getAttribute('data-outcome'), outcome, 'The cost result must distinguish lower and higher candidate costs.');
+    for (const [key, value] of Object.entries(expected)) {
+      const result = results.locator(`[data-result="${key}"]`);
+      assert.equal(await result.count(), 1, `The cost model needs its ${key} result.`);
+      const raw = await result.getAttribute('data-value');
+      assert(raw !== null && raw.trim().length > 0, `${key} must expose its unrounded numeric result.`);
+      const actual = Number(raw);
+      assert(Number.isFinite(actual), `${key} must be a finite number.`);
+      assert(Math.abs(actual - value) < 0.000001, `${key}: expected ${value}, received ${actual}.`);
+      const readable = await result.innerText();
+      const formatted = new Intl.NumberFormat('en-US', { style: 'currency', currency: deck.pitch.businessCase.currency, maximumFractionDigits: 2 }).format(value);
+      assert(readable.includes(formatted), `${key} must display its checked numeric result as ${formatted}.`);
+    }
+    const note = model.locator('.business-case-note');
+    assert(await note.isVisible(), 'The illustrative model must show its assumption warning.');
+    assert.match(await note.innerText(), /illustrative|assumption/i);
+    assert.match(await note.innerText(), /not.{0,40}measur|unmeasured|invented/i, 'The scenario must not imply measured product savings.');
+  };
+  const assertBusinessCase = async (page, staticMode = false, root = page) => {
+    const slide = slideForType('pitch-calculator');
+    if (!staticMode) await goto(page, slide.id);
+    const panel = root.locator(staticMode ? `#static-${slide.id}` : `[data-slide="${slide.id}"]`);
+    const model = panel.locator(staticMode ? '.business-case-static' : '.business-case');
+    assert.equal(await model.count(), 1, 'The buyer story needs one cost model.');
+    const defaultResults = { baseline: 6500, candidate: 4375, difference: 2125, yearOne: 20500, baselineUnit: 6.5, candidateUnit: 4.375 };
+    await assertCostResults(model, defaultResults, 'lower-cost', staticMode);
+    assert.match(await model.innerText(), /accepted.{0,30}task|task.{0,30}accepted/i, 'The cost model must compare a common accepted-task target.');
+    assert.match(await model.innerText(), /USD|\$/, 'The cost model must label its currency.');
+    const modelText = normalized(await model.innerText());
+    for (const key of ['definition', 'limitation', 'costScope']) assert(modelText.includes(normalized(deck.pitch.businessCase[key])), `The cost model must retain its ${key}.`);
+    if (staticMode) {
+      assert.equal(await model.locator('input').count(), 0, 'The JavaScript-disabled cost model must read as a fixed worked example.');
+      for (const key of assumptionKeys) {
+        const assumption = model.locator(`[data-assumption="${key}"]`);
+        assert.equal(await assumption.count(), 1, `The static example must preserve ${key}.`);
+        const raw = await assumption.getAttribute('data-value');
+        assert(raw !== null && raw.trim().length > 0, `The static ${key} must expose its stated assumption.`);
+        assert.equal(Number(raw), deck.pitch.businessCase.defaults[key], `The static ${key} must match the illustrative defaults.`);
+      }
+      assert.match(await model.innerText(), /attempts|acceptance/i, 'The static example must retain the acceptance adjustment.');
+      assert.match(await model.innerText(), /setup/i, 'The static example must retain one-time setup cost.');
+      assert(modelText.includes(normalized(deck.pitch.businessCase.formula)), 'The static worked example must preserve the complete formula.');
+      return;
+    }
+    for (const key of assumptionKeys) {
+      const field = model.locator(`#bc-${key}`);
+      assert.equal(await field.getAttribute('type'), 'number');
+      assert.equal(Number(await field.inputValue()), deck.pitch.businessCase.defaults[key]);
+      assert(await field.evaluate(input => input.labels.length > 0 && [...input.labels].every(label => label.textContent.trim().length > 0)), `Cost input ${key} needs an accessible label.`);
+    }
+    const setInputs = async values => {
+      for (const [key, value] of Object.entries(values)) await model.locator(`#bc-${key}`).fill(String(value));
+    };
+    // The same accepted-task target requires 2,000 candidate attempts at 50%
+    // acceptance. This independently checks the model's quality adjustment.
+    await setInputs({ candidateAcceptance: 50 });
+    await assertCostResults(model, { baseline: 6500, candidate: 6400, difference: 100, yearOne: -3800, baselineUnit: 6.5, candidateUnit: 6.4 }, 'lower-cost');
+    await setInputs({ candidateCost: 2, candidateMinutes: 8 });
+    await assertCostResults(model, { baseline: 6500, candidate: 21000, difference: -14500, yearOne: -179000, baselineUnit: 6.5, candidateUnit: 21 }, 'higher-cost');
+    assert.match(await model.innerText(), /higher|more expensive|increase/i, 'A negative case must state that the candidate costs more.');
+    await setInputs({ target: 2000, hourly: 0, setup: 0, baselineCost: 2, candidateCost: 1, baselineMinutes: 0, candidateMinutes: 0, baselineAcceptance: 100, candidateAcceptance: 100, baselineFixed: 0, candidateFixed: 0 });
+    await assertCostResults(model, { baseline: 4000, candidate: 2000, difference: 2000, yearOne: 24000, baselineUnit: 2, candidateUnit: 1 }, 'lower-cost');
+    const invalidInputs = [['target', ''], ['target', '0'], ['hourly', '-1'], ['candidateCost', '-0.1'], ['setup', '-1'], ['baselineAcceptance', '0'], ['candidateAcceptance', '101'], ['target', '1e308']];
+    for (const [key, value] of invalidInputs) {
+      const field = model.locator(`#bc-${key}`);
+      const before = await field.inputValue();
+      await field.fill(value);
+      assert.equal(await model.getAttribute('data-state'), 'invalid', `${key}=${value || 'empty'} must not produce a cost claim.`);
+      const warning = model.locator('.business-case-error');
+      assert(await warning.isVisible());
+      assert.equal(await warning.getAttribute('role'), 'alert');
+      assert((await warning.innerText()).trim().length > 0);
+      assert(await model.locator('.business-case-results').isHidden(), 'Invalid inputs must hide stale positive results.');
+      await field.fill(before);
+      await assertCostResults(model, { baseline: 4000, candidate: 2000, difference: 2000, yearOne: 24000, baselineUnit: 2, candidateUnit: 1 }, 'lower-cost');
+    }
+    await setInputs(deck.pitch.businessCase.defaults);
+    await assertCostResults(model, defaultResults, 'lower-cost');
+    await page.screenshot({ path: '.validation/pitch-calculator-desktop.png', fullPage: true });
+  };
   const assertIndustryEvidence = async (root, staticMode = false) => {
     for (const industry of deck.industries) {
       const caseId = `${industry.id}-context`;
@@ -169,15 +335,17 @@ const assert = require('node:assert/strict');
       assert.equal(await root.locator(`svg.insight-chart[data-sector="${sector}"]`).count(), 2, 'Each sector appears in both the overview and its case.');
     }
   };
-  const assertAtlasCaptions = async (page, figure) => {
+  const assertProductValueCaptions = async (page, figure) => {
     const svg = figure.locator('svg.motion-diagram');
     const stages = await svg.locator('.m-node[data-stage]').evaluateAll(nodes => nodes.map(node => ({ step: Number(node.dataset.step), title: node.dataset.stage, detail: node.dataset.stageDetail })));
-    assert.equal(stages.length, 5, 'The atlas needs four industry stages and a common pattern.');
-    for (let index = 0; index < expectedSectors.length; index += 1) {
+    assert.equal(stages.length, 5, 'The product value map needs four buyer dimensions and a common product stage.');
+    const dimensions = [/cost/i, /performance|latency|speed/i, /accuracy/i, /trust/i];
+    for (let index = 0; index < dimensions.length; index += 1) {
       assert.equal(stages[index].step, index);
-      assert(stages[index].title.toLowerCase().includes(industryById[expectedSectors[index]].shortName.toLowerCase()), 'Atlas stage titles must name the selected sector.');
-      assert(stages[index].detail.length > 30, 'Each atlas stage needs a readable explanation.');
+      assert.match(stages[index].title, dimensions[index], 'Product stages must explain cost, performance, accuracy, and trust in that order.');
+      assert(stages[index].detail.length > 30, 'Each product stage needs a readable explanation.');
     }
+    assert.match(stages[4].title, /prefrontal|governed|context/i, 'The common stage must identify the proposed product.');
     await assertHighlight(svg);
     await assertAllPaused(page);
   };
@@ -297,7 +465,8 @@ const assert = require('node:assert/strict');
     }
     const reducedCover = page.locator(coverSelector);
     await assertHighlight(reducedCover);
-    await assertAtlasCaptions(page, page.locator('.slide:visible .mechanism-figure'));
+    await assertProductValueCaptions(page, page.locator('.slide:visible .mechanism-figure'));
+    await assertProductNodeBounds(reducedCover);
     const inheritedColor = await reducedCover.evaluate(svg => {
       const host = svg.closest('.mechanism-figure');
       host.style.setProperty('--blue', '#123456');
@@ -309,12 +478,14 @@ const assert = require('node:assert/strict');
     await page.screenshot({ path: '.validation/cover-desktop.png', fullPage: true });
     await page.keyboard.press('ArrowRight');
     await page.locator(`[data-slide="${deck.slides[1].id}"]`).waitFor({ state: 'visible' });
-    await page.screenshot({ path: '.validation/industry-overview-desktop.png', fullPage: true });
+    await page.screenshot({ path: '.validation/buyer-problem-desktop.png', fullPage: true });
     await page.getByRole('button', { name: 'Slides', exact: false }).click();
     assert.equal(await page.locator('.overview-card:visible').count(), deck.slides.length);
     await page.keyboard.press('Escape');
     assert(await page.locator('#overview').isHidden());
     for (const slide of deck.slides) { await goto(page, slide.id); await noOverflow(page); }
+    await assertPitchNarrative(page);
+    await assertBusinessCase(page);
     await assertIndustryEvidence(page);
     await assertIndustryBridge(page);
     await goto(page, 'human-review-routes');
@@ -340,15 +511,22 @@ const assert = require('node:assert/strict');
       assert((await page.locator('.check-mark.fail').count()) >= 1);
     }
     await page.screenshot({ path: '.validation/upgrade-desktop.png', fullPage: true });
-    assertPdfPages(await page.pdf({ path: '.validation/industry-deck.pdf', printBackground: true, preferCSSPageSize: true }));
+    assertPdfPages(await page.pdf({ path: '.validation/pitch-deck.pdf', printBackground: true, preferCSSPageSize: true }));
     await page.setViewportSize({ width: 390, height: 844 });
     for (const slide of deck.slides) { await goto(page, slide.id); await noOverflow(page); }
+    await goto(page, slideForType('pitch-calculator').id);
+    await page.locator('#bc-candidateAcceptance').fill('50');
+    await assertCostResults(page.locator('.slide:visible .business-case'), { baseline: 6500, candidate: 6400, difference: 100, yearOne: -3800, baselineUnit: 6.5, candidateUnit: 6.4 }, 'lower-cost');
+    await noOverflow(page);
+    await page.screenshot({ path: '.validation/pitch-calculator-mobile.png', fullPage: true });
+    await page.locator('#bc-candidateAcceptance').fill(String(deck.pitch.businessCase.defaults.candidateAcceptance));
     await assertMobileFlows(page);
-    await goto(page, deck.slides[1].id);
+    await goto(page, deck.slides.find(slide => slide.type === 'industry-overview').id);
     await page.screenshot({ path: '.validation/industry-overview-mobile.png', fullPage: true });
     await goto(page, 'healthcare-context');
     await page.screenshot({ path: '.validation/healthcare-context-mobile.png', fullPage: true });
     await goto(page, deck.slides[0].id);
+    await assertProductNodeBounds(page.locator(coverSelector));
     await page.screenshot({ path: '.validation/cover-mobile.png', fullPage: true });
     await goto(page, 'upgrade-example');
     await page.locator('#upgrade-kind').selectOption('lost-exception');
@@ -477,15 +655,19 @@ const assert = require('node:assert/strict');
       assert(await svg.locator('desc').textContent());
       assert((await svg.locator('text').count()) > 0, 'Static diagrams must preserve their visible labels.');
     }
+    await assertProductNodeBounds(fallback.locator(`#static-${deck.slides[0].id} svg.product-map`));
+    await assertPitchNarrative(fallback, true);
+    await assertBusinessCase(staticPage, true, fallback);
     await assertIndustryEvidence(fallback, true);
     await noOverflow(staticPage);
-    assertPdfPages(await staticPage.pdf({ path: '.validation/industry-static-deck.pdf', printBackground: true, preferCSSPageSize: true }));
+    assertPdfPages(await staticPage.pdf({ path: '.validation/pitch-static-deck.pdf', printBackground: true, preferCSSPageSize: true }));
     await staticPage.setViewportSize({ width: 390, height: 844 });
     assert.equal(await fallback.locator('.slide:visible').count(), deck.slides.length);
+    await assertProductNodeBounds(fallback.locator(`#static-${deck.slides[0].id} svg.product-map`));
     await noOverflow(staticPage);
     await assertMobileFlows(staticPage, fallback, true);
     assert.deepEqual(errors, []);
-    console.log(`Browser checks: PASS (${deck.slides.length} desktop/mobile slides; 10 SVG stage diagrams; 8 evidence charts; 4 cited industry cases; synchronized sector bridge; readable mobile flow scrolling and keyboard navigation; native autoplay/pause/manual/resume; one stage interval; inactive/overview/25% visibility pausing; reduced motion; inherited CSS color; navigation; 4 upgrade scenarios; PDF/print; ${deck.slides.length}-slide JavaScript-disabled fallback; no page errors)`);
+    console.log(`Browser checks: PASS (${deck.slides.length} desktop/mobile slides; product-first buyer story; 4 value lenses and pilot proof cards; attributed conference insights; cost model arithmetic, acceptance adjustment, negative case, 8 invalid cases and recovery; 10 SVG stage diagrams; 8 evidence charts; 4 cited industry cases; synchronized sector bridge; readable mobile flow scrolling and keyboard navigation; native autoplay/pause/manual/resume; one stage interval; inactive/overview/25% visibility pausing; reduced motion; inherited CSS color; navigation; 4 upgrade scenarios; PDF/print; ${deck.slides.length}-slide JavaScript-disabled fallback with worked cost example; no page errors)`);
     console.log(`Checked URL: ${base}`);
   } finally { await browser.close(); }
 })().catch(error => { console.error(error.stack || error.message); process.exitCode = 1; });

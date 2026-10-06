@@ -5,9 +5,9 @@ const files = ['index.html', 'styles.css', 'app.js', 'diagrams.js', 'presentatio
 await Promise.all(files.map(file => access(file)));
 const deck = JSON.parse(await readFile('presentation-content.json', 'utf8'));
 const expectedSectors = ['telecom', 'utilities', 'healthcare', 'hospitality'];
-assert.equal(deck.slides.length, 22, 'Expected the agreed 22-slide industry presentation.');
+assert.equal(deck.slides.length, 26, 'Expected the agreed 26-slide product pitch and appendix.');
 assert.equal(new Set(deck.slides.map(slide => slide.id)).size, deck.slides.length, 'Slide IDs must be unique.');
-const allowed = new Set(['cover', 'problem', 'foundation', 'contract', 'pipeline', 'memory', 'router', 'ste', 'governance', 'upgrade', 'roadmap', 'evidence', 'decisions', 'sources', 'industry-overview', 'industry-case', 'industry-bridge', 'industry-sources']);
+const allowed = new Set(['cover', 'problem', 'foundation', 'contract', 'pipeline', 'memory', 'router', 'ste', 'governance', 'upgrade', 'roadmap', 'evidence', 'decisions', 'sources', 'industry-overview', 'industry-case', 'industry-bridge', 'industry-sources', 'pitch-insights', 'pitch-value', 'pitch-calculator', 'pitch-proof']);
 for (const slide of deck.slides) {
   assert.match(slide.id, /^[a-z0-9]+(?:-[a-z0-9]+)*$/);
   assert(allowed.has(slide.type), `Unsupported slide type: ${slide.type}`);
@@ -15,7 +15,42 @@ for (const slide of deck.slides) {
   assert(Array.isArray(slide.items));
 }
 assert(deck.slides.some(slide => slide.type === 'upgrade'), 'The interactive upgrade example is required.');
-assert.equal(deck.slides[1].type, 'industry-overview', 'The cover must lead into the industry evidence.');
+assert.equal(deck.slides[0].type, 'cover', 'The buyer story must open with the product.');
+assert.equal(deck.slides[1].id, 'fragmented-context', 'The product opening must lead into the buyer problem.');
+for (const type of ['pitch-insights', 'pitch-value', 'pitch-calculator', 'pitch-proof']) {
+  assert.equal(deck.slides.filter(slide => slide.type === type).length, 1, `The buyer story needs one ${type} slide.`);
+  assert(deck.slides.findIndex(slide => slide.type === type) < 20, `${type} belongs in the twenty-slide buyer story.`);
+}
+assert(deck.slides.findIndex(slide => slide.type === 'pitch-insights') < deck.slides.findIndex(slide => slide.type === 'industry-overview'), 'Buyer insights must precede industry examples.');
+const expectedLenses = ['cost', 'performance', 'accuracy', 'trust'];
+const pitch = deck.pitch;
+assert.equal(pitch?.productName, 'Prefrontal', 'The opening must identify the product being pitched.');
+assert.match(pitch.maturity, /concept.*pilot/i, 'The pitch must preserve the product concept and pilot maturity.');
+assert.match([deck.slides[0].eyebrow, deck.slides[0].title, deck.slides[0].lead].join(' '), /Prefrontal/i, 'The cover must identify the product.');
+assert.equal(new URL(pitch.conference.url).protocol, 'https:');
+assert.equal(pitch.conference.exhibits, 20, 'The portfolio conference contains twenty supplied exhibit images.');
+for (const key of ['title', 'eventDate', 'scope']) assert(pitch.conference[key]?.trim().length > 0, `Conference attribution must include ${key}.`);
+assert(pitch.conference.insights.length >= 3, 'The pitch needs specific conference observations and their product implications.');
+for (const insight of pitch.conference.insights) {
+  for (const key of ['title', 'observation', 'application']) assert(insight[key]?.trim().length > 0, `Each conference insight needs ${key}.`);
+  assert(insight.exhibits?.length > 0, 'Conference observations must point to the supplied exhibits.');
+}
+assert.deepEqual(pitch.lenses.map(lens => lens.id), expectedLenses, 'The buyer value story must explain all four agreed dimensions.');
+for (const lens of pitch.lenses) {
+  for (const key of ['name', 'goal', 'mechanism', 'measure', 'guardrail']) assert(lens[key]?.trim().length > 0, `${lens.id} must explain ${key}.`);
+}
+assert.deepEqual(pitch.scorecard.map(card => card.id), expectedLenses, 'Pilot proof must cover each value dimension.');
+for (const card of pitch.scorecard) {
+  for (const key of ['name', 'metric', 'trial', 'decision']) assert(card[key]?.trim().length > 0, `${card.id} proof must explain ${key}.`);
+}
+const assumptions = pitch.businessCase.defaults;
+const assumptionKeys = ['target', 'hourly', 'setup', 'baselineCost', 'candidateCost', 'baselineMinutes', 'candidateMinutes', 'baselineAcceptance', 'candidateAcceptance', 'baselineFixed', 'candidateFixed'];
+assert.deepEqual(Object.keys(assumptions).sort(), [...assumptionKeys].sort(), 'The cost model must state every recurring, handling, acceptance, and setup assumption.');
+for (const key of assumptionKeys) assert(Number.isFinite(assumptions[key]) && assumptions[key] >= 0, `${key} default must be finite and nonnegative.`);
+for (const key of ['baselineAcceptance', 'candidateAcceptance']) assert(assumptions[key] > 0 && assumptions[key] <= 100, `${key} must be a usable acceptance rate.`);
+assert(assumptions.target > 0, 'The monthly accepted-task target must be positive.');
+assert.equal(pitch.businessCase.currency, 'USD', 'The cost model must label its currency.');
+assert(deck.sources.some(source => source.url === pitch.conference.url), 'The portfolio conference must appear in the reference appendix.');
 assert.equal(deck.slides.filter(slide => slide.type === 'industry-overview').length, 1);
 assert.equal(deck.slides.filter(slide => slide.type === 'industry-bridge').length, 1);
 assert.equal(deck.slides.filter(slide => slide.type === 'industry-sources').length, 1);
@@ -53,6 +88,7 @@ assert.deepEqual(industryById.healthcare.metric.rates, [93, 79], 'The hospital r
 assert.deepEqual(industryById.hospitality.metric.rates, [65], 'The dated hospitality survey reports 65%.');
 assert.match(industryById.hospitality.metric.scope, /282/, 'The survey respondent population must remain explicit.');
 assert(deck.sources.length > 0, 'The presentation must include primary sources.');
+assert.equal(deck.sources.length, 13, 'The architecture/source appendix must preserve twelve references and add the portfolio conference.');
 for (const source of [...deck.sources, ...deck.industrySources]) {
   assert.equal(new URL(source.url).protocol, 'https:');
   assert.equal(typeof source.title, 'string');

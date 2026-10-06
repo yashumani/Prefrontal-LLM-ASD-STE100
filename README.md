@@ -1,8 +1,26 @@
-# Connect the context. Keep control.
+# Prefrontal · Controlled context for enterprise AI
 
-A browser presentation about developing a precise, governed context layer across four industry workflows.
+A browser sales pitch for Prefrontal, a proposed governed context product for enterprise AI.
 
-The 22 slides connect telecommunications, electricity utilities, healthcare and hospitality to a proposed context layer. Sourced infographics show industry pressure. Each case follows a task through its evidence, authority check and reviewable result. The architecture slides cover a versioned context contract, layered memory, Jev-style decisions, STE-inspired writing, human review and development gates. The upgrade example runs simple browser checks on one illustrative record. It does not call a model or demonstrate production reliability.
+The 26 slides contain a 20-slide buyer story and six technical/source appendix slides. The product, shared buyer problem and four outcomes lead the story: cost, performance, accuracy and trust. Telecommunications, electricity utilities, healthcare and hospitality illustrate how the same foundation could adapt to different workflows. Their sourced pressure figures are application context, not product results. A pilot scorecard and editable business-case example make the proposed value inspectable. The upgrade example checks one illustrative record in the browser. Neither example calls a model or demonstrates production reliability.
+
+## Conference material and buyer story
+
+[Yashu Sharma's AI Enterprise Conference 2026 field report](https://ai-enterprise-journey-2026.yashumani.chatgpt.site/) is linked from the [portfolio](https://yashumani.github.io/). It contains 19 conference concept reconstructions and one personal synthesis. These are independent field notes, not official conference slides. The pitch uses their themes of business meaning, reusable expert knowledge, appropriate task methods and lifecycle control. Vendor token reductions, overhead estimates and promotional savings are not used as Prefrontal results.
+
+The product is a concept seeking a pilot partner. Its proposed mechanisms need implementation and customer-specific integration. Cross-industry reuse requires domain definitions, connectors, permissions and acceptance cases. The pitch closes by asking for one workflow, its baseline, an accountable owner and agreed success gates. Dates and commercial terms remain open.
+
+## Editable business case
+
+The **Make the economics inspectable** slide compares the same monthly accepted-task target. An accepted task passes the buyer's task and quality criteria. The worksheet accounts for unsuccessful attempts through each process's acceptance rate. Digital cost covers inference, retrieval, tools and variable infrastructure. Human handling covers review, rework and escalation. Monthly fixed cost covers licensing and operations. One-time setup remains separate.
+
+```text
+Attempts = monthly accepted-task target / acceptance rate
+Monthly recurring cost = attempts * (digital cost + handling minutes * hourly rate / 60) + fixed cost
+Year-one net difference = 12 * monthly recurring difference - one-time setup
+```
+
+Every default is an invented example assumption, not a measured saving or quote. The example assumes constant workload and rates for the year-one estimate. Invalid or overflowing values hide results. A higher-cost scenario remains visible. Positive economics never override quality or permission gates. The no-JavaScript deck includes the same worked example and assumptions.
 
 ## Industry evidence and linked workflows
 
@@ -15,7 +33,7 @@ Each chart keeps its date, population, unit and primary source. The signals use 
 | Healthcare | In 2025, 93% of U.S. non-federal acute-care hospitals reported receiving outside summary records; 79% reported integration. These are weighted capability estimates. [ONC](https://healthit.gov/data/quickstats/electronic-health-information-exchange-hospitals/) | Draft a cited handoff with patient identity, observation dates, conflicts and clinician ownership. |
 | Hospitality | 65% of 282 hotelier respondents reported staffing shortages in a survey conducted from 6 December 2024 to 3 January 2025. This dated, self-reported result is not a hotel census. [AHLA / Hireology](https://www.ahla.com/news/65-surveyed-hotels-report-staffing-shortages) | Carry an open guest request across shifts with verified status, owner, existing promises and escalation rules. |
 
-The workflows are design proposals. The sources do not prove missing-context rates or operational benefits. The interactive **Same checks. Separate vaults.** slide connects each workflow to identity, time, conditions, evidence and authority. It keeps the industry records and permissions separate. Selecting an industry pauses playback and updates its task, evidence, owner, output and proposed acceptance check.
+The workflows are design proposals. The sources do not prove missing-context rates or operational benefits. The interactive **Reuse the foundation. Adapt the workflow.** slide connects each workflow to identity, time, conditions, evidence and authority. It keeps the industry records and permissions separate. Selecting an industry pauses playback and updates its task, evidence, owner, output and proposed acceptance check.
 
 ## View and present
 
@@ -33,7 +51,7 @@ Native SVG [`animateMotion`](https://developer.mozilla.org/en-US/docs/Web/SVG/Re
 
 An [`IntersectionObserver`](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) permits playback when at least one quarter of the active SVG is visible. Playback also stops in the overview, on hidden slides, when the document is hidden, and during print. There is no offscreen stage timer.
 
-[`prefers-reduced-motion`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@media/prefers-reduced-motion) disables autoplay and hides dots. Manual stage controls remain available. Printing shows the entire diagram. The static generator includes all 22 slides, ten staged SVG diagrams and eight evidence charts in a no-JavaScript fallback. It removes the travelling dots and their animation elements. The evidence charts show the same final values at rest. CSS alone handles their brief entry animation.
+[`prefers-reduced-motion`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@media/prefers-reduced-motion) disables autoplay and hides dots. Manual stage controls remain available. Printing shows the entire diagram. The static generator includes all 26 slides, ten staged SVG diagrams and eight evidence charts in a no-JavaScript fallback. It removes the travelling dots and their animation elements. The evidence charts show the same final values at rest. CSS alone handles their brief entry animation. The cover map shows four product objectives; the industry map shows four application signals. Both use the same stage controller.
 
 To view locally, serve this folder over HTTP:
 

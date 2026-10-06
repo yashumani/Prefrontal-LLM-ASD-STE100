@@ -147,40 +147,47 @@ window.ContextDiagrams = (() => {
     return svg;
   }
   function createIndustry(kind, input) {
-    if (!["atlas", "flow", "metric"].includes(kind)) throw new Error(`Unknown industry graphic: ${kind}`);
+    if (!["atlas", "product", "flow", "metric"].includes(kind)) throw new Error(`Unknown industry graphic: ${kind}`);
     const id = `industry-${kind}-${++render}`;
     const svg = document.createElementNS(NS, "svg");
-    const sectors = kind === "atlas" ? input : [input];
+    const atlas = kind === "atlas" || kind === "product";
+    const sectors = kind === "product" ? input.lenses : kind === "atlas" ? input : [input];
     const sector = sectors[0];
     const plot = kind === "metric";
-    const viewBox = kind === "atlas" ? "0 0 720 510" : plot ? "0 0 440 155" : "0 0 900 240";
+    const viewBox = atlas ? "0 0 720 510" : plot ? "0 0 440 155" : "0 0 900 240";
     svg.setAttribute("viewBox", viewBox);
     svg.setAttribute("role", "img");
     svg.setAttribute("aria-labelledby", `${id}-title ${id}-desc`);
-    svg.setAttribute("class", plot ? "insight-chart" : `motion-diagram industry-svg industry-svg-${kind}`);
+    svg.setAttribute("class", plot ? "insight-chart" : `motion-diagram industry-svg industry-svg-${atlas ? 'atlas' : kind}${kind === 'product' ? ' product-map' : ''}`);
     svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
-    if (kind !== "atlas") svg.setAttribute("data-sector", sector.id);
-    const title = kind === "atlas" ? "Four industries connect to shared context checks in separate vaults" : plot ? `${sector.name}: ${sector.metric.value}. ${sector.metric.label}` : `${sector.name}: proposed evidence-to-review workflow`;
-    const desc = kind === "atlas" ? "Telecom, electricity utilities, healthcare and hospitality have different pressures. Each task needs its own evidence, time, scope and responsible owner. Connections illustrate shared design checks, not data sharing between industries. Industry metrics appear with dates and sources on the following slides. Proposed architecture, not implemented." : plot ? `${sector.metric.scope} ${sector.metric.period}. ${sector.metric.limitation} ${sector.metric.definition}` : `${sector.task} Link the evidence. ${sector.humanGate} Prepare: ${sector.output} This is an illustrative, unimplemented workflow.`;
+    if (!atlas) svg.setAttribute("data-sector", sector.id);
+    const title = kind === "product" ? "Prefrontal connects cost, performance, accuracy and trust through governed context" : kind === "atlas" ? "Four industries connect to shared context checks in separate vaults" : plot ? `${sector.name}: ${sector.metric.value}. ${sector.metric.label}` : `${sector.name}: proposed evidence-to-review workflow`;
+    const desc = kind === "product" ? "Four product objectives surround one proposed governed context layer. Cost, performance, accuracy and trust need agreed pilot measurements. This diagram reports no achieved result." : kind === "atlas" ? "Telecom, electricity utilities, healthcare and hospitality have different pressures. Each task needs its own evidence, time, scope and responsible owner. Connections illustrate shared design checks, not data sharing between industries. Industry metrics appear with dates and sources on the case slides. Proposed architecture, not implemented." : plot ? `${sector.metric.scope} ${sector.metric.period}. ${sector.metric.limitation} ${sector.metric.definition}` : `${sector.task} Link the evidence. ${sector.humanGate} Prepare: ${sector.output} This is an illustrative, unimplemented workflow.`;
     let markup = `<title id="${id}-title">${esc(title)}</title><desc id="${id}-desc">${esc(desc)}</desc>`;
     const text = (x, y, value, size = 20, fill = "var(--ink, #102d3e)", anchor = "start", weight = 500) => `<text x="${x}" y="${y}" font-family="Segoe UI, Arial, sans-serif" font-size="${size}" font-weight="${weight}" text-anchor="${anchor}" fill="${fill}">${esc(value)}</text>`;
     const rectangle = (x, y, width, height, fill, stroke, radius = 14) => `<rect x="${x}" y="${y}" width="${width}" height="${height}" rx="${radius}" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>`;
     const node = (step, title, detail, body) => `<g class="m-node m-stage" data-step="${step}" data-stage="${esc(title)}" data-stage-detail="${esc(detail)}">${body}</g>`;
     const edge = (step, name, path, color) => `<g class="m-edge m-stage" data-step="${step}"><path id="${id}-${name}" d="${path}" fill="none" stroke="${color}" stroke-width="2.5" marker-end="url(#${id}-arrow)"/><circle class="m-dot" r="5" fill="${color}"><animateMotion dur="1.6s" repeatCount="indefinite"><mpath href="#${id}-${name}"/></animateMotion></circle></g>`;
     if (!plot) markup += `<defs><marker id="${id}-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M1 1 L9 5 L1 9 Z" fill="var(--blue, #147dfa)"/></marker></defs>`;
-    if (kind === "atlas") {
+    if (atlas) {
       markup += `<path d="M360 38V475M35 255H685" stroke="#254963" stroke-dasharray="2 8" fill="none"/><circle cx="360" cy="255" r="151" fill="none" stroke="#254963" stroke-dasharray="3 8"/><circle cx="360" cy="255" r="118" fill="none" stroke="#345e78"/>`;
       const positions = [[30, 38], [450, 38], [30, 356], [450, 356]];
       const paths = ["M270 94 C348 94 302 172 336 206", "M450 94 C372 94 418 172 384 206", "M270 414 C348 414 302 330 336 306", "M450 414 C372 414 418 330 384 306"];
       sectors.forEach((s, i) => { markup += edge(i, s.id, paths[i], `var(--${s.id}, ${s.color})`); });
       sectors.forEach((s, i) => {
         const [x, y] = positions[i], color = `var(--${s.id}, ${s.color})`;
+        if (kind === 'product') {
+          const copy = {cost:['Task economics','Include the full cost'],performance:['Responsive work','Measure the full path'],accuracy:['Meaning + evidence','Check the task result'],trust:['Visible control','Keep the owner involved']}[s.id];
+          markup += node(i,s.name,s.goal + '. Measure: ' + s.measure,
+            rectangle(x,y,240,112,'#12324a',color)+text(x+17,y+27,s.name.toUpperCase(),16,color,'start',700)+text(x+17,y+66,copy[0],22,'#f3f8ff','start',700)+text(x+17,y+94,copy[1],15,'#c5dbea'));
+          return;
+        }
         const brief = { telecom: "Traffic growth", utilities: "Queued renewables", healthcare: "Receive / integrate", hospitality: "Staffing shortages" }[s.id];
         markup += node(i, s.name, s.solution,
           rectangle(x, y, 240, 112, "#12324a", color) + text(x + 17, y + 27, s.shortName.toUpperCase(), 16, color, "start", 700) + text(x + 17, y + 69, s.metric.value, 34, "#f3f8ff", "start", 700) + text(x + 17, y + 94, brief, 17, "#c5dbea"));
       });
-      markup += node(4, "Shared checks, separate vaults", "Link evidence for one authorized task. Preserve time, conditions and authority. Keep industry and project records separate.", rectangle(267, 206, 186, 100, "#e8f4fc", "var(--cyan, #53c8d8)", 22) + text(360, 240, "Governed", 24, "#102d3e", "middle", 700) + text(360, 269, "context", 24, "#102d3e", "middle", 700) + text(360, 290, "EVIDENCE + OWNER", 11, "#2f5aa6", "middle", 600));
-      markup += text(360, 493, "Shared checks do not mean shared private records.", 16, "#c5dbea", "middle");
+      markup += node(4, kind === 'product' ? 'Prefrontal · governed context' : "Shared checks, separate vaults", kind === 'product' ? 'One proposed context foundation. Configure each workflow. Prove its value and boundaries in a measured pilot.' : "Link evidence for one authorized task. Preserve time, conditions and authority. Keep industry and project records separate.", rectangle(267, 206, 186, 100, "#e8f4fc", "var(--cyan, #53c8d8)", 22) + text(360, 240, kind === 'product' ? 'Prefrontal' : "Governed", 24, "#102d3e", "middle", 700) + text(360, 269, "context", 24, "#102d3e", "middle", 700) + text(360, 290, "EVIDENCE + OWNER", 11, "#2f5aa6", "middle", 600));
+      markup += text(360, 493, kind === 'product' ? 'Product objectives · measured in the pilot' : "Shared checks do not mean shared private records.", 16, "#c5dbea", "middle");
     } else if (kind === "flow") {
       const color = `var(--${sector.id}, ${sector.color})`;
       markup += text(22, 22, "PROPOSED WORKFLOW · REVIEWABLE OUTPUT", 13, "var(--muted, #50677b)");

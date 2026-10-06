@@ -125,10 +125,8 @@ function industryCitation(sector, compact = false) {
 
 function industryHero() {
   const visual = element("div", "industry-hero-visual");
-  visual.append(createMechanism(window.ContextDiagrams.createIndustry("atlas", deckData.industries)));
-  const sources = element("div", "atlas-sources");
-  deckData.industries.forEach(sector => sources.append(industryCitation(sector, true)));
-  visual.append(sources);
+  visual.append(createMechanism(window.ContextDiagrams.createIndustry("product", deckData.pitch)));
+  visual.append(element("p", "product-status", deckData.pitch.maturity));
   return visual;
 }
 
@@ -166,7 +164,7 @@ function industryCase(slide) {
     block.append(element("h3", "", label), element("p", "", text));
     story.append(block);
   }
-  story.append(element("p", "industry-owner-note", sector.humanGate), element("p", "industry-term", sector.metric.definition));
+  story.append(element("p", "industry-value-note", "Buyer goal to test: " + sector.benefit + " " + sector.buyerMetric), element("p", "industry-owner-note", sector.humanGate), element("p", "industry-term", sector.metric.definition));
   intro.append(industryMetric(sector), story);
   wrap.append(intro, createMechanism(window.ContextDiagrams.createIndustry("flow", sector)), element("p", "industry-limit", sector.metric.limitation));
   return wrap;
@@ -332,6 +330,109 @@ function sourcesVisual(sources = deckData.sources) {
   return group;
 }
 
+function conferenceVisual() {
+  const conference = deckData.pitch.conference;
+  const wrap = element("div", "conference-insights");
+  const grid = element("div", "conference-grid");
+  conference.insights.forEach(insight => {
+    const card = element("article", "conference-insight");
+    card.append(element("span", "design-label", "FIELD INSIGHT · EXHIBITS " + insight.exhibits), element("h3", "", insight.title), element("p", "", insight.observation), element("h4", "", "Product implication"), element("p", "", insight.application));
+    grid.append(card);
+  });
+  const link = element("a", "conference-citation", conference.title);
+  link.href = conference.url; link.target = "_blank"; link.rel = "noopener noreferrer";
+  wrap.append(grid, element("p", "conference-scope", conference.eventDate + " · " + conference.exhibits + " exhibits. " + conference.scope), link);
+  return wrap;
+}
+
+function valueVisual() {
+  const grid = element("div", "value-grid");
+  deckData.pitch.lenses.forEach(lens => {
+    const card = element("article", "value-lens");
+    card.dataset.lens = lens.id; card.style.setProperty("--sector", lens.color);
+    card.append(element("span", "value-name", lens.name), element("h3", "", lens.goal), element("p", "value-mechanism", lens.mechanism), element("h4", "", "Measure"), element("p", "value-measure", lens.measure), element("p", "value-guardrail", lens.guardrail));
+    grid.append(card);
+  });
+  return grid;
+}
+
+function proofVisual() {
+  const grid = element("div", "proof-grid");
+  deckData.pitch.scorecard.forEach(plan => {
+    const card = element("article", "proof-card");
+    card.dataset.lens = plan.id;
+    card.append(element("h3", "", plan.name), element("h4", "", "Measure"), element("p", "", plan.metric), element("h4", "", "Trial"), element("p", "", plan.trial), element("h4", "", "Expansion gate"), element("p", "proof-decision", plan.decision));
+    grid.append(card);
+  });
+  return grid;
+}
+
+function businessCaseVisual() {
+  const model = deckData.pitch.businessCase;
+  const wrap = element("div", "business-case");
+  const grid = element("div", "business-case-grid");
+  const controls = element("div", "business-case-controls");
+  const inputs = new Map();
+  const labels = {target:"Accepted tasks / month",hourly:"Handling cost / hour ($)",setup:"One-time setup ($)",baselineCost:"Digital cost / attempt ($)",candidateCost:"Digital cost / attempt ($)",baselineMinutes:"Handling minutes / attempt",candidateMinutes:"Handling minutes / attempt",baselineAcceptance:"Accepted attempts (%)",candidateAcceptance:"Accepted attempts (%)",baselineFixed:"Fixed cost / month ($)",candidateFixed:"Fixed cost / month ($)"};
+  const group = (title,keys) => {
+    const fieldset = element("fieldset", "business-case-group");
+    fieldset.append(element("legend", "", title));
+    keys.forEach(key => {
+      const label = element("label", "", labels[key]);
+      const input = element("input", "");
+      input.type = "number"; input.id = "bc-" + key; input.value = model.defaults[key]; input.min = key === 'target' ? '1' : key.includes('Acceptance') ? '.01' : '0'; input.step = "any";
+      if(key.includes('Acceptance')) input.max = '100';
+      label.htmlFor = input.id; label.append(input); fieldset.append(label); inputs.set(key,input);
+    });
+    return fieldset;
+  };
+  controls.append(group("Example assumptions · USD",['target','hourly','setup']));
+  const comparison = element("div", "business-case-comparison");
+  comparison.append(group("Current process",['baselineCost','baselineMinutes','baselineAcceptance','baselineFixed']),group("Proposed process",['candidateCost','candidateMinutes','candidateAcceptance','candidateFixed']));
+  controls.append(comparison);
+  const results = element("div", "business-case-results");
+  const resultLabels = {baseline:'Current recurring / month',candidate:'Proposed recurring / month',difference:'Recurring difference / month',yearOne:'Year-one net difference'};
+  const outputs = new Map();
+  for(const [key,label] of Object.entries(resultLabels)){
+    const card = element("div", "business-case-result");
+    const output = element("strong", ""); output.dataset.result = key;
+    card.append(element("span", "", label),output); outputs.set(key,output);
+    if(key==='baseline'||key==='candidate'){
+      const unit = element("span", "business-case-unit"); unit.dataset.result = key+'Unit'; outputs.set(key+'Unit',unit); card.append(unit);
+    }
+    results.append(card);
+  }
+  const status = element("p", "business-case-status"); status.setAttribute("aria-live", "polite");
+  const error = element("p", "business-case-error"); error.setAttribute("role", "alert"); error.hidden = true;
+  const resultSide = element("div", "business-case-result-side"); resultSide.append(results,status,error);
+  grid.append(controls,resultSide);
+  wrap.append(grid,element("p", "business-case-definition",model.definition),element("p", "business-case-formula",model.formula),element("p", "business-case-scope",model.costScope),element("p", "business-case-note",model.limitation));
+  const money = new Intl.NumberFormat('en-US',{style:'currency',currency:model.currency,maximumFractionDigits:2});
+  const update = () => {
+    const values = Object.fromEntries([...inputs].map(([key,input])=>[key,input.value.trim() === '' ? NaN : Number(input.value)]));
+    const invalid = Object.values(values).some(value=>!Number.isFinite(value)||value<0)||values.target<=0||['baselineAcceptance','candidateAcceptance'].some(key=>values[key]<=0||values[key]>100);
+    const monthly = prefix => values.target/(values[prefix+'Acceptance']/100)*(values[prefix+'Cost']+values[prefix+'Minutes']*values.hourly/60)+values[prefix+'Fixed'];
+    const baseline=monthly('baseline'),candidate=monthly('candidate'),difference=baseline-candidate;
+    const totals={baseline,candidate,difference,yearOne:12*difference-values.setup,baselineUnit:baseline/values.target,candidateUnit:candidate/values.target};
+    if(invalid||Object.values(totals).some(value=>!Number.isFinite(value))){
+      wrap.dataset.state='invalid';results.hidden=true;status.textContent='';error.hidden=false;
+      error.textContent='Enter finite, nonnegative costs and a positive task target. Acceptance must be greater than 0% and at most 100%. Keep values within a calculable range.';
+      outputs.forEach(output=>{output.textContent='';delete output.dataset.value;});
+      return;
+    }
+    wrap.dataset.state='illustrative'; results.hidden=false;error.hidden=true;
+    results.dataset.outcome=difference<0?'higher-cost':'lower-cost';
+    for(const [key,value] of Object.entries(totals)){
+      const output=outputs.get(key); output.dataset.value=String(value); output.textContent=money.format(value)+(key.endsWith('Unit')?' / accepted task':'');
+    }
+    status.textContent=difference<0?'These assumptions produce higher recurring cost. Revisit the case before committing.':'These assumptions produce lower recurring cost. Validate the inputs and all quality gates in a pilot.';
+    if(values.candidateAcceptance<values.baselineAcceptance) status.textContent+=' The proposed acceptance assumption is lower; inspect that quality trade-off.';
+    if(totals.yearOne<0)status.textContent+=' One-time setup exceeds the first-year recurring difference.';
+  };
+  inputs.forEach(input=>input.addEventListener('input',update)); update();
+  return wrap;
+}
+
 function renderSlide(slide, i) {
   const panel = element("section", `slide type-${slide.type}`);
   panel.id = `panel-${slide.id}`;
@@ -360,6 +461,10 @@ function renderSlide(slide, i) {
     else if (slide.type === "industry-case") panel.append(industryCase(slide));
     else if (slide.type === "industry-bridge") panel.append(industryBridge());
     else if (slide.type === "industry-sources") panel.append(sourcesVisual(deckData.industrySources));
+    else if (slide.type === "pitch-insights") panel.append(conferenceVisual());
+    else if (slide.type === "pitch-value") panel.append(valueVisual());
+    else if (slide.type === "pitch-proof") panel.append(proofVisual());
+    else if (slide.type === "pitch-calculator") panel.append(businessCaseVisual());
     else if (slide.type === "upgrade") panel.append(upgradeVisual());
     else if (slide.type === "sources") panel.append(sourcesVisual());
     else panel.append(renderItems(slide.items));
