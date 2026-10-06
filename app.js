@@ -1,4 +1,5 @@
 "use strict";
+document.documentElement.classList.remove("no-js");
 
 const element = (tag, className, text) => {
   const node = document.createElement(tag);
@@ -13,17 +14,78 @@ let showingOverview = false;
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 let motionPaused = reducedMotion.matches;
 let motionOverride = false;
+let printing = false;
 const panels = [];
 const navButtons = [];
+const mechanisms = [];
 
 function syncMotion() {
-  byId("motion-toggle").textContent = motionPaused ? "Play motion" : "Pause motion";
-  byId("motion-toggle").setAttribute("aria-pressed", String(motionPaused));
-  panels.forEach((panel, index) => panel.querySelectorAll("svg.motion-diagram").forEach(svg => {
-    const pause = motionPaused || showingOverview || document.hidden || index !== current;
-    if (pause && svg.pauseAnimations) svg.pauseAnimations();
-    else if (!pause && svg.unpauseAnimations) svg.unpauseAnimations();
-  }));
+  const paused = motionPaused || reducedMotion.matches;
+  byId("motion-toggle").textContent = reducedMotion.matches ? "Motion off" : paused ? "Play motion" : "Pause motion";
+  byId("motion-toggle").disabled = reducedMotion.matches;
+  byId("motion-toggle").setAttribute("aria-pressed", String(paused));
+  mechanisms.forEach(controller => controller.setAllowed(!paused && !printing && !showingOverview && !document.hidden && controller.figure.closest(".slide") === panels[current]));
+}
+
+function createMechanism(kind) {
+  const figure = element("figure", "mechanism-figure");
+  const svg = window.ContextDiagrams.create(kind);
+  const groups = [...svg.querySelectorAll("[data-step]")];
+  const stages = [...svg.querySelectorAll("[data-stage]")];
+  const caption = element("figcaption", "stage-caption");
+  const heading = element("strong", "stage-title");
+  const detail = element("p", "stage-detail");
+  const controls = element("div", "stage-controls");
+  const previous = element("button", "stage-prev", "← Stage");
+  const next = element("button", "stage-next", "Stage →");
+  previous.type = next.type = "button";
+  previous.setAttribute("aria-label", "Previous diagram stage");
+  next.setAttribute("aria-label", "Next diagram stage");
+  const count = element("span", "stage-count");
+  controls.append(previous, count, next);
+  caption.append(heading, detail, controls);
+  figure.append(svg, caption);
+  let cursor = 0, visible = false, allowed = false, timer = null;
+  const select = index => {
+    cursor = (index + stages.length) % stages.length;
+    const stage = stages[cursor];
+    groups.forEach(group => group.classList.toggle("is-current", group.dataset.step === stage.dataset.step));
+    svg.dataset.currentStep = stage.dataset.step;
+    heading.textContent = stage.dataset.stage;
+    detail.textContent = stage.dataset.stageDetail;
+    count.textContent = `${cursor + 1} / ${stages.length}`;
+  };
+  const reconcile = () => {
+    const play = allowed && visible;
+    svg.dataset.playing = String(play);
+    if (play && timer === null) {
+      svg.unpauseAnimations?.();
+      timer = window.setInterval(() => select(cursor + 1), 2400);
+    } else if (!play) {
+      if (timer !== null) window.clearInterval(timer);
+      timer = null;
+      svg.pauseAnimations?.();
+    }
+  };
+  const controller = { figure, setAllowed(value) { allowed = value; reconcile(); } };
+  const manualStep = delta => {
+    motionPaused = true;
+    motionOverride = true;
+    syncMotion();
+    select(cursor + delta);
+  };
+  previous.addEventListener("click", () => manualStep(-1));
+  next.addEventListener("click", () => manualStep(1));
+  select(0);
+  reconcile();
+  // The observer supplies visibility changes; no per-frame JavaScript runs.
+  const observer = new IntersectionObserver(entries => {
+    visible = entries[0].isIntersecting && entries[0].intersectionRatio >= .25;
+    reconcile();
+  }, { threshold: [0, .25] });
+  observer.observe(svg);
+  mechanisms.push(controller);
+  return figure;
 }
 
 function renderItems(items = []) {
@@ -38,47 +100,25 @@ function renderItems(items = []) {
 
 function coreVisual() {
   const visual = element("div", "core-visual");
-  visual.append(window.ContextDiagrams.create("cover"));
+  visual.append(createMechanism("cover"));
   return visual;
 }
 
 function flowVisual() {
   const wrap = element("div", "");
-  wrap.append(window.ContextDiagrams.create("pipeline"), element("div", "trust-boundary", "A retrieved instruction cannot grant permission."));
+  wrap.append(createMechanism("pipeline"), element("div", "trust-boundary", "A retrieved instruction cannot grant permission."));
   return wrap;
 }
 
 function memoryVisual() {
   const stack = element("div", "memory-stack");
-  const layerControls = element("div", "memory-controls");
-  stack.append(window.ContextDiagrams.create("memory"), layerControls);
-  const definitions = [
-    ["Working context", "TASK STATE", "The current goal, constraints and selected evidence. It must fit the model's input limit."],
-    ["Derived views", "REBUILDABLE", "Search indexes, summaries, caches and optional graphs. Invalidate them when sources or access change."],
-    ["Structured memory", "EVIDENCE LINKS", "Record claims, dates, status and unresolved conflicts. A model's assertion is not proof."],
-    ["Original sources", "VERSIONED", "Retain permitted originals under explicit retention rules. They remain available to check generated memory."]
-  ];
-  const detail = element("p", "memory-detail", definitions[0][2]);
-  detail.setAttribute("aria-live", "polite");
-  const buttons = definitions.map(([title, label, description], i) => {
-    const button = element("button", "memory-layer");
-    button.type = "button";
-    button.setAttribute("aria-pressed", String(i === 0));
-    button.append(element("small", "", label), element("strong", "", title));
-    button.addEventListener("click", () => {
-      buttons.forEach(b => b.setAttribute("aria-pressed", String(b === button)));
-      detail.textContent = description;
-    });
-    layerControls.append(button);
-    return button;
-  });
-  stack.append(detail);
+  stack.append(createMechanism("memory"));
   return stack;
 }
 
 function routerVisual() {
   const visual = element("div", "router-visual");
-  visual.append(window.ContextDiagrams.create("router"),
+  visual.append(createMechanism("router"),
     element("p", "router-rule", "Application code checks permissions before retrieval or action. Model confidence cannot override this check."));
   return visual;
 }
@@ -281,8 +321,8 @@ async function initialize() {
     byId("motion-toggle").addEventListener("click", () => { motionPaused = !motionPaused; motionOverride = true; syncMotion(); });
     reducedMotion.addEventListener("change", event => { if (!motionOverride) motionPaused = event.matches; syncMotion(); });
     document.addEventListener("visibilitychange", syncMotion);
-    window.addEventListener("beforeprint", () => document.querySelectorAll("svg.motion-diagram").forEach(svg => svg.pauseAnimations?.()));
-    window.addEventListener("afterprint", syncMotion);
+    window.addEventListener("beforeprint", () => { printing = true; syncMotion(); });
+    window.addEventListener("afterprint", () => { printing = false; syncMotion(); });
     byId("fullscreen").addEventListener("click", async () => {
       try {
         if (document.fullscreenElement) await document.exitFullscreen();

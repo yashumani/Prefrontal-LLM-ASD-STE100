@@ -10,6 +10,8 @@ on:
       - diagrams.js
       - presentation-content.json
       - scripts/check-static.mjs
+      - scripts/build-static.cjs
+      - scripts/verify-browser.cjs
       - .github/workflows/pages.yml
   workflow_dispatch:
 
@@ -30,7 +32,20 @@ jobs:
         run: |
           node --check app.js
           node --check diagrams.js
+          node --check scripts/build-static.cjs
+          node --check scripts/verify-browser.cjs
+          node scripts/build-static.cjs --check
           node scripts/check-static.mjs
+      - name: Install browser validation tools
+        run: |
+          npm install --no-save --package-lock=false playwright@1.62.1
+          npx playwright install --with-deps chromium
+      - name: Validate presentation in Chromium
+        run: |
+          python3 -m http.server 8893 --bind 127.0.0.1 >/tmp/context-presentation-http.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid"' EXIT
+          node scripts/verify-browser.cjs
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
       - name: Assemble public site
