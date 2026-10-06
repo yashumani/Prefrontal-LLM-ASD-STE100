@@ -146,5 +146,75 @@ window.ContextDiagrams = (() => {
     svg.innerHTML = markup;
     return svg;
   }
-  return Object.freeze({ create });
+  function createIndustry(kind, input) {
+    if (!["atlas", "flow", "metric"].includes(kind)) throw new Error(`Unknown industry graphic: ${kind}`);
+    const id = `industry-${kind}-${++render}`;
+    const svg = document.createElementNS(NS, "svg");
+    const sectors = kind === "atlas" ? input : [input];
+    const sector = sectors[0];
+    const plot = kind === "metric";
+    const viewBox = kind === "atlas" ? "0 0 720 510" : plot ? "0 0 440 155" : "0 0 900 240";
+    svg.setAttribute("viewBox", viewBox);
+    svg.setAttribute("role", "img");
+    svg.setAttribute("aria-labelledby", `${id}-title ${id}-desc`);
+    svg.setAttribute("class", plot ? "insight-chart" : `motion-diagram industry-svg industry-svg-${kind}`);
+    svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+    if (kind !== "atlas") svg.setAttribute("data-sector", sector.id);
+    const title = kind === "atlas" ? "Four industries connect to shared context checks in separate vaults" : plot ? `${sector.name}: ${sector.metric.value}. ${sector.metric.label}` : `${sector.name}: proposed evidence-to-review workflow`;
+    const desc = kind === "atlas" ? "Telecom, electricity utilities, healthcare and hospitality have different pressures. Each task needs its own evidence, time, scope and responsible owner. Connections illustrate shared design checks, not data sharing between industries. Industry metrics appear with dates and sources on the following slides. Proposed architecture, not implemented." : plot ? `${sector.metric.scope} ${sector.metric.period}. ${sector.metric.limitation} ${sector.metric.definition}` : `${sector.task} Link the evidence. ${sector.humanGate} Prepare: ${sector.output} This is an illustrative, unimplemented workflow.`;
+    let markup = `<title id="${id}-title">${esc(title)}</title><desc id="${id}-desc">${esc(desc)}</desc>`;
+    const text = (x, y, value, size = 20, fill = "var(--ink, #102d3e)", anchor = "start", weight = 500) => `<text x="${x}" y="${y}" font-family="Segoe UI, Arial, sans-serif" font-size="${size}" font-weight="${weight}" text-anchor="${anchor}" fill="${fill}">${esc(value)}</text>`;
+    const rectangle = (x, y, width, height, fill, stroke, radius = 14) => `<rect x="${x}" y="${y}" width="${width}" height="${height}" rx="${radius}" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>`;
+    const node = (step, title, detail, body) => `<g class="m-node m-stage" data-step="${step}" data-stage="${esc(title)}" data-stage-detail="${esc(detail)}">${body}</g>`;
+    const edge = (step, name, path, color) => `<g class="m-edge m-stage" data-step="${step}"><path id="${id}-${name}" d="${path}" fill="none" stroke="${color}" stroke-width="2.5" marker-end="url(#${id}-arrow)"/><circle class="m-dot" r="5" fill="${color}"><animateMotion dur="1.6s" repeatCount="indefinite"><mpath href="#${id}-${name}"/></animateMotion></circle></g>`;
+    if (!plot) markup += `<defs><marker id="${id}-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M1 1 L9 5 L1 9 Z" fill="var(--blue, #147dfa)"/></marker></defs>`;
+    if (kind === "atlas") {
+      markup += `<path d="M360 38V475M35 255H685" stroke="#254963" stroke-dasharray="2 8" fill="none"/><circle cx="360" cy="255" r="151" fill="none" stroke="#254963" stroke-dasharray="3 8"/><circle cx="360" cy="255" r="118" fill="none" stroke="#345e78"/>`;
+      const positions = [[30, 38], [450, 38], [30, 356], [450, 356]];
+      const paths = ["M270 94 C348 94 302 172 336 206", "M450 94 C372 94 418 172 384 206", "M270 414 C348 414 302 330 336 306", "M450 414 C372 414 418 330 384 306"];
+      sectors.forEach((s, i) => { markup += edge(i, s.id, paths[i], `var(--${s.id}, ${s.color})`); });
+      sectors.forEach((s, i) => {
+        const [x, y] = positions[i], color = `var(--${s.id}, ${s.color})`;
+        const brief = { telecom: "Traffic growth", utilities: "Queued renewables", healthcare: "Receive / integrate", hospitality: "Staffing shortages" }[s.id];
+        markup += node(i, s.name, s.solution,
+          rectangle(x, y, 240, 112, "#12324a", color) + text(x + 17, y + 27, s.shortName.toUpperCase(), 16, color, "start", 700) + text(x + 17, y + 69, s.metric.value, 34, "#f3f8ff", "start", 700) + text(x + 17, y + 94, brief, 17, "#c5dbea"));
+      });
+      markup += node(4, "Shared checks, separate vaults", "Link evidence for one authorized task. Preserve time, conditions and authority. Keep industry and project records separate.", rectangle(267, 206, 186, 100, "#e8f4fc", "var(--cyan, #53c8d8)", 22) + text(360, 240, "Governed", 24, "#102d3e", "middle", 700) + text(360, 269, "context", 24, "#102d3e", "middle", 700) + text(360, 290, "EVIDENCE + OWNER", 11, "#2f5aa6", "middle", 600));
+      markup += text(360, 493, "Shared checks do not mean shared private records.", 16, "#c5dbea", "middle");
+    } else if (kind === "flow") {
+      const color = `var(--${sector.id}, ${sector.color})`;
+      markup += text(22, 22, "PROPOSED WORKFLOW · REVIEWABLE OUTPUT", 13, "var(--muted, #50677b)");
+      markup += edge(1, "task-context", "M188 121H238", color) + edge(2, "context-check", "M520 121H567", color) + edge(3, "check-draft", "M697 121H746", color);
+      markup += node(0, "Task arrives", sector.task, rectangle(22, 66, 166, 110, "var(--white, #fff)", color) + text(105, 110, "Task", 26, undefined, "middle", 700) + text(105, 140, "Goal + entity", 17, undefined, "middle"));
+      let evidence = rectangle(238, 37, 282, 174, "var(--canvas, #eaf2f8)", color) + text(257, 66, "Linked evidence", 23, undefined, "start", 700);
+      sector.inputLabels.forEach((label, i) => { evidence += `<circle cx="258" cy="${88+i*23}" r="3" fill="${color}"/>` + text(271, 94+i*23, label, 17); });
+      markup += node(1, "Link the evidence", sector.inputs.join(" · "), evidence);
+      markup += node(2, "Check the boundary", sector.humanGate, rectangle(567, 66, 130, 110, "var(--navy, #172b4d)", color) + text(632, 108, "Check", 25, "#fff", "middle", 700) + text(632, 140, "Authority", 17, "#bceaf1", "middle"));
+      markup += node(3, "Prepare a reviewable result", sector.output + " " + sector.test, rectangle(746, 66, 132, 110, "var(--white, #fff)", color) + text(812, 108, "Draft", 25, undefined, "middle", 700) + text(812, 140, "Owner reviews", 16, undefined, "middle"));
+      markup += text(450, 234, "The illustration neither approves nor executes an external action.", 14, "var(--muted, #50677b)", "middle");
+    } else if (sector.metric.kind === "growth") {
+      const labels = ["Q2 2025", "Q2 2026"];
+      sector.metric.rates.forEach((value, i) => {
+        const y = 26 + i*48, width = value/130*290;
+        markup += text(5, y+18, labels[i], 17) + `<rect class="chart-fill" data-value="${value}" x="110" y="${y}" width="${width}" height="27" rx="4" fill="${i ? sector.color : '#9eafbe'}"/>` + text(115+width, y+20, value, 17);
+      });
+      markup += `<path d="M110 110H400" stroke="#9eafbe"/>` + text(110, 129, "0", 13) + text(205, 148, "Index: Q2 2025 = 100", 16, "var(--muted, #50677b)", "middle");
+    } else if (sector.metric.kind === "capacity") {
+      for (let i=0; i<sector.metric.nodeCount; i++) markup += `<circle class="capacity-node" cx="${28+(i%9)*45}" cy="${38+Math.floor(i/9)*44}" r="12" fill="${sector.color}"/>`;
+      markup += text(10, 135, "Each node = 100 GW of the lower bound", 17, "var(--muted, #50677b)");
+    } else if (sector.metric.kind === "comparison") {
+      const labels = ["Receive", "Integrate"];
+      sector.metric.rates.forEach((value, i) => {
+        const y=22+i*48;
+        markup += text(4, y+21, labels[i], 19) + `<rect x="112" y="${y}" width="275" height="28" rx="4" fill="#e1e7ed"/><rect class="chart-fill" data-value="${value}" x="112" y="${y}" width="${value/100*275}" height="28" rx="4" fill="${sector.color}"/>` + text(395, y+21, value+"%", 17);
+      });
+      markup += text(112, 133, "0", 13) + text(387, 133, "100%", 13, undefined, "end") + text(112, 152, "Hospital-level capability rates", 16, "var(--muted, #50677b)");
+    } else if (sector.metric.kind === "share") {
+      for (let i=0; i<100; i++) markup += `<circle class="chart-dot${i<sector.metric.rates[0] ? ' is-filled' : ''}" cx="${15+(i%10)*14}" cy="${13+Math.floor(i/10)*14}" r="5" fill="${i<sector.metric.rates[0] ? sector.color : '#dde4eb'}"/>`;
+      markup += text(171, 45, "65 of 100", 26, undefined, "start", 700) + text(171, 73, "percentage points", 17) + text(171, 110, "Survey: 282 respondents", 16, "var(--muted, #50677b)");
+    }
+    svg.innerHTML = markup;
+    return svg;
+  }
+  return Object.freeze({ create, createIndustry });
 })();

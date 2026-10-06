@@ -1,18 +1,82 @@
 {
-  "title": "Context that can survive change",
-  "subtitle": "A proposed governed context layer for a personal agent",
+  "title": "Connect the context. Keep control.",
+  "subtitle": "A governed context layer across four industry workflows",
   "slides": [
     {
       "id": "opening-thesis",
       "type": "cover",
-      "eyebrow": "Design proposal · October 2026",
-      "title": "Preserve meaning. Control authority. Replace components.",
-      "lead": "Build a context layer that keeps useful knowledge across sessions and lets models and frameworks change through verified upgrades.",
+      "eyebrow": "Industry briefing · development proposal",
+      "title": "Connect the context. Keep control.",
+      "lead": "One context layer. Four different workflows. Link the right evidence, preserve its meaning and keep authority with the right owner.",
       "items": [
-        {"title": "The innovation", "text": "An executive context controller assembles evidence, goals and constraints for each task."},
-        {"title": "The durable asset", "text": "Sources, history, explicit rules and acceptance cases remain under your control."}
+        {
+          "title": "Industry evidence",
+          "text": "Four primary-source signals anchor the problem."
+        },
+        {
+          "title": "A solution to test",
+          "text": "Separate vaults, shared checks and reviewable outputs."
+        }
       ],
-      "note": "Unimplemented proposal. ASD-STE100-inspired clarity; full compliance has not been checked."
+      "note": "STE-inspired writing. Full compliance has not been checked. The context layer remains an unimplemented proposal."
+    },
+    {
+      "id": "industry-pressure",
+      "type": "industry-overview",
+      "eyebrow": "Four signals · four different populations",
+      "title": "Different pressures. A shared need for context.",
+      "lead": "Read each figure in its own scope. These metrics describe industry pressure; they do not measure context errors.",
+      "items": [],
+      "note": "Different units and populations. Do not rank, average or combine these figures into one score."
+    },
+    {
+      "id": "telecom-context",
+      "type": "industry-case",
+      "industry": "telecom",
+      "eyebrow": "Telecommunications · industry evidence → design response",
+      "title": "An alert needs a service history",
+      "lead": "More traffic raises the importance of understanding local network conditions.",
+      "items": [],
+      "note": "Industry metric: observed evidence. Context workflow: illustrative proposal. No operational benefit has been measured."
+    },
+    {
+      "id": "utilities-context",
+      "type": "industry-case",
+      "industry": "utilities",
+      "eyebrow": "Electricity utilities · industry evidence → design response",
+      "title": "A queue needs current engineering evidence",
+      "lead": "Connection reviews need current engineering evidence and a clear decision history.",
+      "items": [],
+      "note": "Industry metric: observed evidence. Context workflow: illustrative proposal. No operational benefit has been measured."
+    },
+    {
+      "id": "healthcare-context",
+      "type": "industry-case",
+      "industry": "healthcare",
+      "eyebrow": "Healthcare · industry evidence → design response",
+      "title": "Received data still needs a usable handoff",
+      "lead": "Receiving a record and integrating it are different capabilities.",
+      "items": [],
+      "note": "Industry metric: observed evidence. Context workflow: illustrative proposal. No operational benefit has been measured."
+    },
+    {
+      "id": "hospitality-context",
+      "type": "industry-case",
+      "industry": "hospitality",
+      "eyebrow": "Hospitality · industry evidence → design response",
+      "title": "A shift change must carry the open task",
+      "lead": "A shift brief should carry the request, verified status, owner and next action.",
+      "items": [],
+      "note": "Industry metric: observed evidence. Context workflow: illustrative proposal. No operational benefit has been measured."
+    },
+    {
+      "id": "industry-linked-context",
+      "type": "industry-bridge",
+      "eyebrow": "Connect the dots · design synthesis",
+      "title": "Same checks. Separate vaults.",
+      "lead": "Follow one industry task from its evidence to its responsible owner. Reuse the checks while keeping records and permissions separate.",
+      "items": [],
+      "note": "Choose an industry to follow its proposed workflow. This illustration performs no retrieval or external action."
     },
     {
       "id": "fragmented-context",
@@ -21,10 +85,22 @@
       "title": "Stored information does not become useful context by itself",
       "lead": "A personal agent must find the right evidence, interpret its conditions and carry the current task forward.",
       "items": [
-        {"title": "Fragmentation", "text": "Facts, decisions and goals sit in separate notes, files and chats."},
-        {"title": "Stale memory", "text": "An earlier statement can remain active after circumstances change."},
-        {"title": "Conflicting evidence", "text": "Different sources can disagree. The newest statement is not automatically authoritative."},
-        {"title": "Lost intent", "text": "A summary can remove a condition, exception or unresolved decision that changes the answer."}
+        {
+          "title": "Fragmentation",
+          "text": "Facts, decisions and goals sit in separate notes, files and chats."
+        },
+        {
+          "title": "Stale memory",
+          "text": "An earlier statement can remain active after circumstances change."
+        },
+        {
+          "title": "Conflicting evidence",
+          "text": "Different sources can disagree. The newest statement is not automatically authoritative."
+        },
+        {
+          "title": "Lost intent",
+          "text": "A summary can remove a condition, exception or unresolved decision that changes the answer."
+        }
       ],
       "note": "Sources: longmemeval, tangle. Project incidence has not been measured."
     },
@@ -35,10 +111,22 @@
       "title": "Keep commitments durable and components replaceable",
       "lead": "Resilience means controlled replacement with evidence and recovery. It is not a guarantee against future failure.",
       "items": [
-        {"title": "Preserve", "text": "Permitted originals, source identity, history, uncertainty, goals and verified outcomes."},
-        {"title": "Enforce", "text": "Project scope, access and action authority in trusted application code."},
-        {"title": "Replace", "text": "Models, parsers, frameworks, embeddings, indexes, storage engines and selection methods."},
-        {"title": "Prove each change", "text": "Export, compare, rebuild, restore and roll back against representative tasks."}
+        {
+          "title": "Preserve",
+          "text": "Permitted originals, source identity, history, uncertainty, goals and verified outcomes."
+        },
+        {
+          "title": "Enforce",
+          "text": "Project scope, access and action authority in trusted application code."
+        },
+        {
+          "title": "Replace",
+          "text": "Models, parsers, frameworks, embeddings, indexes, storage engines and selection methods."
+        },
+        {
+          "title": "Prove each change",
+          "text": "Export, compare, rebuild, restore and roll back against representative tasks."
+        }
       ],
       "note": "Invariants are rules that each replacement must continue to satisfy. Sources: prov, nist."
     },
@@ -49,10 +137,22 @@
       "title": "Define a versioned context contract",
       "lead": "The contract defines the records, meanings and rules that components exchange. Changes require compatible behavior or an explicit migration.",
       "items": [
-        {"title": "Source record", "text": "Stable ID, permitted original, revision, origin, scope and access rules."},
-        {"title": "Claim record", "text": "Statement, source references, conditions, uncertainty and competing claims."},
-        {"title": "Time and dependencies", "text": "Observed and valid dates; the inputs and versions used by each derived view."},
-        {"title": "Task and authority", "text": "Goal, constraints, pending decisions, permissions and intended, attempted or verified actions."}
+        {
+          "title": "Source record",
+          "text": "Stable ID, permitted original, revision, origin, scope and access rules."
+        },
+        {
+          "title": "Claim record",
+          "text": "Statement, source references, conditions, uncertainty and competing claims."
+        },
+        {
+          "title": "Time and dependencies",
+          "text": "Observed and valid dates; the inputs and versions used by each derived view."
+        },
+        {
+          "title": "Task and authority",
+          "text": "Goal, constraints, pending decisions, permissions and intended, attempted or verified actions."
+        }
       ],
       "note": "Evidence traceability explains origin and transformation. It does not prove a source is true. Source: prov."
     },
@@ -63,10 +163,22 @@
       "title": "Ingest through explicit gates",
       "lead": "A source enters the vault only within its approved scope. Extraction creates reviewable memory proposals.",
       "items": [
-        {"title": "Admit and preserve", "text": "Check scope and access. Retain exact phrases, numbers, conditions and history in the original."},
-        {"title": "Extract and reconcile", "text": "Link candidate claims to evidence. Preserve dates, exceptions and unresolved conflicts."},
-        {"title": "Publish derived views", "text": "Create clear summaries and searchable views with dependencies and transformation versions."},
-        {"title": "Correct and invalidate", "text": "Apply corrections, revocation and deletion to affected views under an explicit retention policy."}
+        {
+          "title": "Admit and preserve",
+          "text": "Check scope and access. Retain exact phrases, numbers, conditions and history in the original."
+        },
+        {
+          "title": "Extract and reconcile",
+          "text": "Link candidate claims to evidence. Preserve dates, exceptions and unresolved conflicts."
+        },
+        {
+          "title": "Publish derived views",
+          "text": "Create clear summaries and searchable views with dependencies and transformation versions."
+        },
+        {
+          "title": "Correct and invalidate",
+          "text": "Apply corrections, revocation and deletion to affected views under an explicit retention policy."
+        }
       ],
       "note": "A memory proposal is not an established fact. Backup and restore behavior must prevent removed context from silently returning."
     },
@@ -77,10 +189,22 @@
       "title": "Separate durable evidence from working context",
       "lead": "The controller selects a bounded context packet for the active task. Each selected item keeps a reason and source reference.",
       "items": [
-        {"title": "Evidence vault", "text": "Permitted originals and structured claims preserve history, scope and unresolved disagreements."},
-        {"title": "Rebuildable views", "text": "Search indexes, embeddings, caches, graphs and summaries derive from authorized evidence."},
-        {"title": "Working task context", "text": "Current goal, constraints, useful evidence, pending decisions and tool results fit the model input limit."},
-        {"title": "Candidate foundations", "text": "Compare OpenViking, Graphiti, Letta Code and Mem0 against actual tasks. No stack is selected."}
+        {
+          "title": "Evidence vault",
+          "text": "Permitted originals and structured claims preserve history, scope and unresolved disagreements."
+        },
+        {
+          "title": "Rebuildable views",
+          "text": "Search indexes, embeddings, caches, graphs and summaries derive from authorized evidence."
+        },
+        {
+          "title": "Working task context",
+          "text": "Current goal, constraints, useful evidence, pending decisions and tool results fit the model input limit."
+        },
+        {
+          "title": "Candidate foundations",
+          "text": "Compare OpenViking, Graphiti, Letta Code and Mem0 against actual tasks. No stack is selected."
+        }
       ],
       "note": "Local runtime, provider behavior and integration remain unverified. Sources: openviking, graphiti, letta, mem0."
     },
@@ -91,10 +215,22 @@
       "title": "Ask a small, bounded question",
       "lead": "The router can judge relevance, choose a category, flag a possible conflict or recommend escalation.",
       "items": [
-        {"title": "Typed inputs and outputs", "text": "Supply bounded options and evidence. Use Choice, yes/no probability or a described score rubric."},
-        {"title": "Preserve abstention", "text": "Insufficient evidence must remain a valid route. Evaluate truncation, label order and uncertainty."},
-        {"title": "Compare candidates", "text": "Start with Mapika decider-2b, decider-4b and Laya typed-decisions. Test on our context decisions."},
-        {"title": "Keep authority external", "text": "Probability does not grant permission or establish truth. Application rules control actions."}
+        {
+          "title": "Typed inputs and outputs",
+          "text": "Supply bounded options and evidence. Use Choice, yes/no probability or a described score rubric."
+        },
+        {
+          "title": "Preserve abstention",
+          "text": "Insufficient evidence must remain a valid route. Evaluate truncation, label order and uncertainty."
+        },
+        {
+          "title": "Compare candidates",
+          "text": "Start with Mapika decider-2b, decider-4b and Laya typed-decisions. Test on our context decisions."
+        },
+        {
+          "title": "Keep authority external",
+          "text": "Probability does not grant permission or establish truth. Application rules control actions."
+        }
       ],
       "note": "Confidence fields differ across runtimes. Calibration and complete request latency need local measurement. Sources: mapika, laya."
     },
@@ -105,10 +241,22 @@
       "title": "Simplify language while preserving meaning",
       "lead": "The compiler creates a clear task view and checks it against the original evidence.",
       "items": [
-        {"title": "Check meaning", "text": "Preserve negation, conditions, exceptions, numbers, units, dates and uncertainty."},
-        {"title": "Keep exact evidence", "text": "Use exact quotations when wording matters. Link every derived claim to its source."},
-        {"title": "Reject unsafe rewrites", "text": "Flag meaning changes or unsupported additions. Keep the original available."},
-        {"title": "Test both forms", "text": "Compare decisions from original and rewritten context on representative and difficult cases."}
+        {
+          "title": "Check meaning",
+          "text": "Preserve negation, conditions, exceptions, numbers, units, dates and uncertainty."
+        },
+        {
+          "title": "Keep exact evidence",
+          "text": "Use exact quotations when wording matters. Link every derived claim to its source."
+        },
+        {
+          "title": "Reject unsafe rewrites",
+          "text": "Flag meaning changes or unsupported additions. Keep the original available."
+        },
+        {
+          "title": "Test both forms",
+          "text": "Compare decisions from original and rewritten context on representative and difficult cases."
+        }
       ],
       "note": "Meaning-checking workflow proposed; implementation and ASD-STE100 compliance unverified."
     },
@@ -119,11 +267,26 @@
       "title": "15 responsibilities: 12 lifecycle and 3 governance",
       "lead": "These are logical responsibilities. They do not require 15 agents or services.",
       "items": [
-        {"title": "1–3 · Capture sources", "text": "Register sources; capture and version originals; parse and segment material."},
-        {"title": "4–6 · Validate proposals", "text": "Classify scope and content; extract memory proposals; check evidence, time, conflicts and uncertainty."},
-        {"title": "7–9 · Maintain usable state", "text": "Persist labeled memory and history; maintain derived indexes; resolve the active goal and constraints."},
-        {"title": "10–12 · Support the task", "text": "Retrieve and rank permitted evidence; assemble and check STE-inspired context; apply feedback, corrections and forgetting."},
-        {"title": "13–15 · Govern the lifecycle", "text": "Enforce policy and permissions; audit provenance; evaluate quality and reliability."}
+        {
+          "title": "1–3 · Capture sources",
+          "text": "Register sources; capture and version originals; parse and segment material."
+        },
+        {
+          "title": "4–6 · Validate proposals",
+          "text": "Classify scope and content; extract memory proposals; check evidence, time, conflicts and uncertainty."
+        },
+        {
+          "title": "7–9 · Maintain usable state",
+          "text": "Persist labeled memory and history; maintain derived indexes; resolve the active goal and constraints."
+        },
+        {
+          "title": "10–12 · Support the task",
+          "text": "Retrieve and rank permitted evidence; assemble and check STE-inspired context; apply feedback, corrections and forgetting."
+        },
+        {
+          "title": "13–15 · Govern the lifecycle",
+          "text": "Enforce policy and permissions; audit provenance; evaluate quality and reliability."
+        }
       ],
       "note": "Planning count, not a universal architecture rule. Retention applies across the lifecycle. Full external-action execution needs separate acceptance checks."
     },
@@ -134,12 +297,30 @@
       "title": "Review consequential choices at setup, milestones and exceptions",
       "lead": "Routine requests can proceed within approved rules. Human review handles material changes or uncertainty.",
       "items": [
-        {"title": "Source scope", "text": "Approve initial sources and material expansion of access."},
-        {"title": "Evidence conflict", "text": "Resolve disagreements that materially affect a decision."},
-        {"title": "Goal or authority ambiguity", "text": "Clarify material uncertainty about intent or permitted action."},
-        {"title": "Retention or deletion", "text": "Approve consequential choices about originals, derived views and backups."},
-        {"title": "Policy or permission change", "text": "Review changes to trusted rules, access or action authority."},
-        {"title": "Acceptance or autonomy", "text": "Accept milestone evidence and approve any broader autonomous scope."}
+        {
+          "title": "Source scope",
+          "text": "Approve initial sources and material expansion of access."
+        },
+        {
+          "title": "Evidence conflict",
+          "text": "Resolve disagreements that materially affect a decision."
+        },
+        {
+          "title": "Goal or authority ambiguity",
+          "text": "Clarify material uncertainty about intent or permitted action."
+        },
+        {
+          "title": "Retention or deletion",
+          "text": "Approve consequential choices about originals, derived views and backups."
+        },
+        {
+          "title": "Policy or permission change",
+          "text": "Review changes to trusted rules, access or action authority."
+        },
+        {
+          "title": "Acceptance or autonomy",
+          "text": "Accept milestone evidence and approve any broader autonomous scope."
+        }
       ],
       "note": "Retrieved instructions cannot change trusted policy or create permission."
     },
@@ -150,9 +331,18 @@
       "title": "Replace a model without losing the task",
       "lead": "Explore an illustrative upgrade: export the vault, change one component, rebuild its views and apply the same acceptance gates.",
       "items": [
-        {"title": "Compare", "text": "Check evidence recovery, correctness, abstention, meaning, context size, latency and cost."},
-        {"title": "Approve or reject", "text": "Promote only within approved scope after agreed gates pass."},
-        {"title": "Recover", "text": "Roll back a failed candidate and resume with goals, history and verified outcomes intact."}
+        {
+          "title": "Compare",
+          "text": "Check evidence recovery, correctness, abstention, meaning, context size, latency and cost."
+        },
+        {
+          "title": "Approve or reject",
+          "text": "Promote only within approved scope after agreed gates pass."
+        },
+        {
+          "title": "Recover",
+          "text": "Roll back a failed candidate and resume with goals, history and verified outcomes intact."
+        }
       ],
       "note": "This browser example checks one fixed record. Real model comparison, migration, recovery and performance tests remain unverified."
     },
@@ -163,12 +353,30 @@
       "title": "Develop through usable outcomes and acceptance gates",
       "lead": "Agree thresholds from the first vault and its actual tasks. No dates or performance targets are committed.",
       "items": [
-        {"title": "1 · Define the boundary", "text": "Agree runtime, privacy, sources, authority and contract. Gate: review concrete records and cases."},
-        {"title": "2 · Build the evidence vault", "text": "Ingest and export a small approved corpus. Gate: restore scope, history and references."},
-        {"title": "3 · Prove memory behavior", "text": "Test restart, project separation, updates and conflicts. Gate: supported answers or explicit uncertainty."},
-        {"title": "4 · Prove context selection", "text": "Compare decision candidates and STE views. Gate: agreed correctness, calibration and meaning checks."},
-        {"title": "5 · Prove governance", "text": "Test hostile source instructions, correction, revocation and deletion. Gate: authority and retention rules hold."},
-        {"title": "6 · Prove change and recovery", "text": "Swap components and roll back. Gate: resume tasks and preserve verified state."}
+        {
+          "title": "1 · Define the boundary",
+          "text": "Agree runtime, privacy, sources, authority and contract. Gate: review concrete records and cases."
+        },
+        {
+          "title": "2 · Build the evidence vault",
+          "text": "Ingest and export a small approved corpus. Gate: restore scope, history and references."
+        },
+        {
+          "title": "3 · Prove memory behavior",
+          "text": "Test restart, project separation, updates and conflicts. Gate: supported answers or explicit uncertainty."
+        },
+        {
+          "title": "4 · Prove context selection",
+          "text": "Compare decision candidates and STE views. Gate: agreed correctness, calibration and meaning checks."
+        },
+        {
+          "title": "5 · Prove governance",
+          "text": "Test hostile source instructions, correction, revocation and deletion. Gate: authority and retention rules hold."
+        },
+        {
+          "title": "6 · Prove change and recovery",
+          "text": "Swap components and roll back. Gate: resume tasks and preserve verified state."
+        }
       ],
       "note": "All runtime gates are currently unverified. Expand only when a demonstrated requirement justifies it."
     },
@@ -179,10 +387,22 @@
       "title": "Research supports candidates, not system acceptance",
       "lead": "Public artifacts and documentation provide a starting point. The proposed layer still needs implementation and local proof.",
       "items": [
-        {"title": "Source-level evidence", "text": "Model artifacts, author code, documented memory capabilities and research-informed checks were reviewed."},
-        {"title": "Local proof pending", "text": "No weights, installation, inference, benchmark, personal-source ingestion or agent integration was run."},
-        {"title": "Limits remain", "text": "Provenance does not prove truth. A format guarantee does not prove correctness. A tool attempt does not prove success."},
-        {"title": "Evaluate changes", "text": "Keep fitting and final evaluation cases separate. Add cases when new failures appear."}
+        {
+          "title": "Source-level evidence",
+          "text": "Model artifacts, author code, documented memory capabilities and research-informed checks were reviewed."
+        },
+        {
+          "title": "Local proof pending",
+          "text": "No weights, installation, inference, benchmark, personal-source ingestion or agent integration was run."
+        },
+        {
+          "title": "Limits remain",
+          "text": "Provenance does not prove truth. A format guarantee does not prove correctness. A tool attempt does not prove success."
+        },
+        {
+          "title": "Evaluate changes",
+          "text": "Keep fitting and final evaluation cases separate. Add cases when new failures appear."
+        }
       ],
       "note": "Evidence checkpoint: research-shortlist.md, 2026-10-05. Sources: longmemeval, tangle, prov, nist."
     },
@@ -193,10 +413,22 @@
       "title": "Define the first vault before choosing the stack",
       "lead": "The next deliverable is a reviewable context contract and acceptance set for one approved use case.",
       "items": [
-        {"title": "Runtime and privacy", "text": "Choose fully local Windows/WSL or local memory with approved hosted inference."},
-        {"title": "Initial sources", "text": "Select files, notes, chats or an existing vault; define project separation and retention."},
-        {"title": "Acceptance and authority", "text": "Choose representative tasks, material failure cases and permitted actions."},
-        {"title": "Candidate feasibility", "text": "Check hardware, provider behavior, licenses and export/recovery before selection."}
+        {
+          "title": "Runtime and privacy",
+          "text": "Choose fully local Windows/WSL or local memory with approved hosted inference."
+        },
+        {
+          "title": "Initial sources",
+          "text": "Select files, notes, chats or an existing vault; define project separation and retention."
+        },
+        {
+          "title": "Acceptance and authority",
+          "text": "Choose representative tasks, material failure cases and permitted actions."
+        },
+        {
+          "title": "Candidate feasibility",
+          "text": "Check hardware, provider behavior, licenses and export/recovery before selection."
+        }
       ],
       "note": "No framework or model decision is locked."
     },
@@ -208,20 +440,286 @@
       "lead": "Model and framework sources describe candidates. Memory research and governance sources inform the checks.",
       "items": [],
       "note": "Research checkpoint: 2026-10-05. Findings and limitations: research-shortlist.md."
+    },
+    {
+      "id": "industry-evidence-sources",
+      "type": "industry-sources",
+      "eyebrow": "Industry evidence · scope matters",
+      "title": "Inspect the four industry signals",
+      "lead": "Each chart links to its primary source. Dates, populations and units travel with the claim.",
+      "items": [],
+      "note": "Readback: October 2026. Sources support the pressure metrics; proposed workflows and benefits still need acceptance evidence."
     }
   ],
   "sources": [
-    {"id": "mapika", "title": "Mapika decision models and runtime", "url": "https://github.com/Mapika/decider", "note": "Author code; links to decider-2b and decider-4b."},
-    {"id": "laya", "title": "Laya typed-decisions", "url": "https://huggingface.co/convaiinnovations/laya-typed-decisions", "note": "Candidate encoder model; local quality unverified."},
-    {"id": "openviking", "title": "OpenViking", "url": "https://github.com/volcengine/OpenViking", "note": "Inspectable context organization; license and provider review required."},
-    {"id": "graphiti", "title": "Graphiti", "url": "https://github.com/getzep/graphiti", "note": "Temporal relationships and source episodes."},
-    {"id": "letta", "title": "Letta Code", "url": "https://github.com/letta-ai/letta-code", "note": "Stateful agent harness and memory controls."},
-    {"id": "mem0", "title": "Mem0", "url": "https://github.com/mem0ai/mem0", "note": "Alternative memory-library baseline."},
-    {"id": "llm-wiki", "title": "Karpathy's LLM Wiki idea", "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f", "note": "Sources, derived pages and maintenance; idea document."},
-    {"id": "longmemeval", "title": "LongMemEval", "url": "https://arxiv.org/abs/2410.10813", "note": "Memory updates, temporal reasoning and abstention tests."},
-    {"id": "tangle", "title": "TANGLE", "url": "https://arxiv.org/abs/2608.13921", "note": "Preprint on unresolved personal-memory conflicts."},
-    {"id": "prov", "title": "W3C PROV overview", "url": "https://www.w3.org/TR/prov-overview/", "note": "Provenance concepts; Working Group Note."},
-    {"id": "nist", "title": "NIST Generative AI Profile", "url": "https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf", "note": "Evaluation, monitoring, recovery and disengagement."},
-    {"id": "mcp-auth", "title": "MCP authorization", "url": "https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization", "note": "Possible adapter boundary; authority still needs enforcement."}
+    {
+      "id": "mapika",
+      "title": "Mapika decision models and runtime",
+      "url": "https://github.com/Mapika/decider",
+      "note": "Author code; links to decider-2b and decider-4b."
+    },
+    {
+      "id": "laya",
+      "title": "Laya typed-decisions",
+      "url": "https://huggingface.co/convaiinnovations/laya-typed-decisions",
+      "note": "Candidate encoder model; local quality unverified."
+    },
+    {
+      "id": "openviking",
+      "title": "OpenViking",
+      "url": "https://github.com/volcengine/OpenViking",
+      "note": "Inspectable context organization; license and provider review required."
+    },
+    {
+      "id": "graphiti",
+      "title": "Graphiti",
+      "url": "https://github.com/getzep/graphiti",
+      "note": "Temporal relationships and source episodes."
+    },
+    {
+      "id": "letta",
+      "title": "Letta Code",
+      "url": "https://github.com/letta-ai/letta-code",
+      "note": "Stateful agent harness and memory controls."
+    },
+    {
+      "id": "mem0",
+      "title": "Mem0",
+      "url": "https://github.com/mem0ai/mem0",
+      "note": "Alternative memory-library baseline."
+    },
+    {
+      "id": "llm-wiki",
+      "title": "Karpathy's LLM Wiki idea",
+      "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f",
+      "note": "Sources, derived pages and maintenance; idea document."
+    },
+    {
+      "id": "longmemeval",
+      "title": "LongMemEval",
+      "url": "https://arxiv.org/abs/2410.10813",
+      "note": "Memory updates, temporal reasoning and abstention tests."
+    },
+    {
+      "id": "tangle",
+      "title": "TANGLE",
+      "url": "https://arxiv.org/abs/2608.13921",
+      "note": "Preprint on unresolved personal-memory conflicts."
+    },
+    {
+      "id": "prov",
+      "title": "W3C PROV overview",
+      "url": "https://www.w3.org/TR/prov-overview/",
+      "note": "Provenance concepts; Working Group Note."
+    },
+    {
+      "id": "nist",
+      "title": "NIST Generative AI Profile",
+      "url": "https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf",
+      "note": "Evaluation, monitoring, recovery and disengagement."
+    },
+    {
+      "id": "mcp-auth",
+      "title": "MCP authorization",
+      "url": "https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization",
+      "note": "Possible adapter boundary; authority still needs enforcement."
+    }
+  ],
+  "industries": [
+    {
+      "id": "telecom",
+      "name": "Telecommunications",
+      "shortName": "Telecom",
+      "color": "#16a9c3",
+      "metric": {
+        "value": "+23%",
+        "label": "Mobile network data traffic growth",
+        "scope": "Global mobile networks, including fixed wireless access.",
+        "period": "Q2 2025 → Q2 2026",
+        "sourceTitle": "Ericsson Mobility Report · Q2 2026",
+        "sourceUrl": "https://www.ericsson.com/en/reports-and-papers/mobility-report/dataforecasts/mobile-traffic-update",
+        "kind": "growth",
+        "rates": [
+          100,
+          123
+        ],
+        "limitation": "Traffic growth does not measure incident rates or missing context. Indexed chart: Q2 2025 = 100.",
+        "definition": "Fixed wireless access delivers broadband to a fixed location through a mobile network."
+      },
+      "insight": "More traffic raises the importance of understanding local network conditions.",
+      "problem": "An alert alone cannot explain the affected service, recent change or approved response.",
+      "task": "Investigate a congestion alert.",
+      "inputs": [
+        "Affected cell and service",
+        "Time-stamped telemetry",
+        "Recent configuration changes",
+        "Service target and runbook",
+        "Operator role and permissions"
+      ],
+      "inputLabels": [
+        "Cell + service",
+        "Telemetry + time",
+        "Change history",
+        "Target + runbook",
+        "Role + permission"
+      ],
+      "solution": "Link the alert to the right service, recent changes and current runbook. Draft cited options and prerequisites.",
+      "output": "Incident brief with sources, unknowns and proposed next checks.",
+      "humanGate": "The network operator approves any configuration change. The agent cannot grant itself access.",
+      "owner": "Network operator",
+      "test": "Check source recovery, stale telemetry detection and reviewer corrections on historical incidents."
+    },
+    {
+      "id": "utilities",
+      "name": "Electricity utilities",
+      "shortName": "Utilities",
+      "color": "#efaa28",
+      "metric": {
+        "value": "≥1,700 GW",
+        "label": "Advanced-stage renewables awaiting connection",
+        "scope": "Global renewable project capacity. Utility-scale batteries are reported separately.",
+        "period": "Queue snapshot: 2025 · IEA report: 2026",
+        "sourceTitle": "IEA · Modernising Grids in the Age of Electricity",
+        "sourceUrl": "https://www.iea.org/reports/modernising-grids-in-the-age-of-electricity/executive-summary",
+        "kind": "capacity",
+        "nodeCount": 17,
+        "unitPerNode": 100,
+        "limitation": "A lower-bound capacity snapshot, not a project count or capacity this system can connect.",
+        "definition": "GW means gigawatts, a unit of power capacity. Each plotted node represents 100 GW of the reported lower bound."
+      },
+      "insight": "Connection reviews need current engineering evidence and a clear decision history.",
+      "problem": "An application and an old study can describe different assumptions or network states.",
+      "task": "Review a renewable connection application.",
+      "inputs": [
+        "Application and proposed capacity",
+        "Approved network model revision",
+        "Dated constraint and contingency studies",
+        "Prior decisions and open prerequisites",
+        "Engineering owner and authority"
+      ],
+      "inputLabels": [
+        "Application + capacity",
+        "Model revision",
+        "Studies + constraints",
+        "Prior decisions",
+        "Owner + authority"
+      ],
+      "solution": "Assemble a traceable review brief. Flag conflicting revisions and missing prerequisites before engineering review.",
+      "output": "Connection review brief with study references and unresolved engineering questions.",
+      "humanGate": "A qualified engineer validates studies and limits. The operator retains connection and operating authority.",
+      "owner": "Grid engineer / operator",
+      "test": "Check evidence completeness, revision conflicts found and reviewer correction rates on historical applications."
+    },
+    {
+      "id": "healthcare",
+      "name": "Healthcare",
+      "shortName": "Healthcare",
+      "color": "#ed607d",
+      "metric": {
+        "value": "93% / 79%",
+        "label": "Receive / integrate outside summary records",
+        "scope": "U.S. non-federal acute-care hospitals. Weighted hospital-level survey estimates.",
+        "period": "2025 survey · ONC update: February 2026",
+        "sourceTitle": "ONC · Health IT Quick Stat 66",
+        "sourceUrl": "https://healthit.gov/data/quickstats/electronic-health-information-exchange-hospitals/",
+        "kind": "comparison",
+        "rates": [
+          93,
+          79
+        ],
+        "limitation": "Capability rates, not patient outcomes. These aggregate measures do not identify which hospitals lack integration.",
+        "definition": "Integrate means the electronic health record incorporates an outside summary without manual entry."
+      },
+      "insight": "Receiving a record and integrating it are different capabilities.",
+      "problem": "A handoff still needs the correct patient, dates, source status and unresolved conflicts.",
+      "task": "Prepare a draft care handoff.",
+      "inputs": [
+        "Authorized patient identity",
+        "Source records and observation dates",
+        "Current and superseded information",
+        "Unresolved conflicts and review status",
+        "Purpose, access and clinician owner"
+      ],
+      "inputLabels": [
+        "Patient + access",
+        "Sources + dates",
+        "Current / superseded",
+        "Conflicts + status",
+        "Purpose + clinician"
+      ],
+      "solution": "Prepare a cited handoff that distinguishes current evidence, conflicts and unknowns. Keep clinical decisions with the clinician.",
+      "output": "Draft handoff with source links and clear review questions.",
+      "humanGate": "The responsible clinician verifies content and makes clinical decisions. Privacy and access controls must hold.",
+      "owner": "Responsible clinician",
+      "test": "Use approved synthetic cases to check identity separation, temporal accuracy and clinician corrections."
+    },
+    {
+      "id": "hospitality",
+      "name": "Hospitality",
+      "shortName": "Hospitality",
+      "color": "#8c67db",
+      "metric": {
+        "value": "65%",
+        "label": "Surveyed hoteliers reported staffing shortages",
+        "scope": "U.S.-focused AHLA survey of 282 hotelier respondents. Self-reported; not a census.",
+        "period": "6 Dec 2024–3 Jan 2025 · published February 2025",
+        "sourceTitle": "AHLA / Hireology · Front Desk Feedback survey",
+        "sourceUrl": "https://www.ahla.com/news/65-surveyed-hotels-report-staffing-shortages",
+        "kind": "share",
+        "rates": [
+          65
+        ],
+        "limitation": "A dated respondent result, not a current estimate for all hotels. The context layer does not create staff.",
+        "definition": "The 100 plotted dots represent percentage points, not the 282 actual survey respondents."
+      },
+      "insight": "A shift brief should carry the request, verified status, owner and next action.",
+      "problem": "A guest request can remain open while ownership moves between teams and shifts.",
+      "task": "Hand over an open room-maintenance request.",
+      "inputs": [
+        "Privacy-limited guest request and time",
+        "Verified room status",
+        "Maintenance ticket and assigned owner",
+        "Promises already made to the guest",
+        "Escalation policy and staff role"
+      ],
+      "inputLabels": [
+        "Guest request + time",
+        "Room status",
+        "Ticket + owner",
+        "Existing promises",
+        "Policy + role"
+      ],
+      "solution": "Link the guest request, room update and maintenance ticket. Draft a shift brief that marks unverified completion.",
+      "output": "Shift brief with verified status, owner, next action and escalation condition.",
+      "humanGate": "Staff verifies room readiness. A manager approves compensation or room moves under hotel policy.",
+      "owner": "Duty manager / staff",
+      "test": "Check open-task recall, owner accuracy and false completion claims in approved shift scenarios."
+    }
+  ],
+  "industrySources": [
+    {
+      "id": "telecom-evidence",
+      "title": "Ericsson Mobility Report · Q2 2026",
+      "url": "https://www.ericsson.com/en/reports-and-papers/mobility-report/dataforecasts/mobile-traffic-update",
+      "note": "+23% · Q2 2025 → Q2 2026. Global mobile networks, including fixed wireless access. Traffic growth does not measure incident rates or missing context. Indexed chart: Q2 2025 = 100."
+    },
+    {
+      "id": "utilities-evidence",
+      "title": "IEA · Modernising Grids in the Age of Electricity",
+      "url": "https://www.iea.org/reports/modernising-grids-in-the-age-of-electricity/executive-summary",
+      "note": "≥1,700 GW · Queue snapshot: 2025 · IEA report: 2026. Global renewable project capacity. Utility-scale batteries are reported separately. A lower-bound capacity snapshot, not a project count or capacity this system can connect."
+    },
+    {
+      "id": "healthcare-evidence",
+      "title": "ONC · Health IT Quick Stat 66",
+      "url": "https://healthit.gov/data/quickstats/electronic-health-information-exchange-hospitals/",
+      "note": "93% / 79% · 2025 survey · ONC update: February 2026. U.S. non-federal acute-care hospitals. Weighted hospital-level survey estimates. Capability rates, not patient outcomes. These aggregate measures do not identify which hospitals lack integration."
+    },
+    {
+      "id": "hospitality-evidence",
+      "title": "AHLA / Hireology · Front Desk Feedback survey",
+      "url": "https://www.ahla.com/news/65-surveyed-hotels-report-staffing-shortages",
+      "note": "65% · 6 Dec 2024–3 Jan 2025 · published February 2025. U.S.-focused AHLA survey of 282 hotelier respondents. Self-reported; not a census. A dated respondent result, not a current estimate for all hotels. The context layer does not create staff."
+    }
   ]
 }

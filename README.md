@@ -1,12 +1,27 @@
-# Context that can survive change
+# Connect the context. Keep control.
 
-A browser presentation about developing a precise, governed context layer for a personal agent.
+A browser presentation about developing a precise, governed context layer across four industry workflows.
 
-The 15 slides explain the problems, a proposed solution, a versioned context contract, layered memory, Jev-style decisions, STE-inspired writing, human review and development acceptance gates. The upgrade example runs simple browser checks on one illustrative record. It does not call a model or demonstrate production reliability.
+The 22 slides connect telecommunications, electricity utilities, healthcare and hospitality to a proposed context layer. Sourced infographics show industry pressure. Each case follows a task through its evidence, authority check and reviewable result. The architecture slides cover a versioned context contract, layered memory, Jev-style decisions, STE-inspired writing, human review and development gates. The upgrade example runs simple browser checks on one illustrative record. It does not call a model or demonstrate production reliability.
+
+## Industry evidence and linked workflows
+
+Each chart keeps its date, population, unit and primary source. The signals use different units and populations. They must not be ranked, averaged or combined into one score.
+
+| Industry | Observed signal | Proposed workflow |
+|---|---|---|
+| Telecommunications | Global mobile network data traffic grew 23% from Q2 2025 to Q2 2026, including fixed wireless access. [Ericsson](https://www.ericsson.com/en/reports-and-papers/mobility-report/dataforecasts/mobile-traffic-update) | Connect an alert to the affected service, dated telemetry, changes and approved runbook. |
+| Electricity utilities | At least 1,700 GW of advanced-stage renewable projects awaited connection globally in 2025. This is a capacity lower bound. [IEA](https://www.iea.org/reports/modernising-grids-in-the-age-of-electricity/executive-summary) | Assemble a connection review brief with current studies, model revisions and unresolved prerequisites. |
+| Healthcare | In 2025, 93% of U.S. non-federal acute-care hospitals reported receiving outside summary records; 79% reported integration. These are weighted capability estimates. [ONC](https://healthit.gov/data/quickstats/electronic-health-information-exchange-hospitals/) | Draft a cited handoff with patient identity, observation dates, conflicts and clinician ownership. |
+| Hospitality | 65% of 282 hotelier respondents reported staffing shortages in a survey conducted from 6 December 2024 to 3 January 2025. This dated, self-reported result is not a hotel census. [AHLA / Hireology](https://www.ahla.com/news/65-surveyed-hotels-report-staffing-shortages) | Carry an open guest request across shifts with verified status, owner, existing promises and escalation rules. |
+
+The workflows are design proposals. The sources do not prove missing-context rates or operational benefits. The interactive **Same checks. Separate vaults.** slide connects each workflow to identity, time, conditions, evidence and authority. It keeps the industry records and permissions separate. Selecting an industry pauses playback and updates its task, evidence, owner, output and proposed acceptance check.
 
 ## View and present
 
 Open [the presentation](https://yashumani.github.io/Prefrontal-LLM-ASD-STE100/). Arrow keys move between slides. **Slides** opens the overview. The SVG diagrams highlight one stage at a time. Its caption explains the selected stage. **← Stage** and **Stage →** select a stage and pause playback. **Play motion** resumes it. Reduced-motion settings keep diagrams static. **Print / PDF** prints all slides. With JavaScript off, the page shows the complete static deck.
+
+On a small screen, swipe within an industry workflow diagram to read its labels. Keyboard users can focus that diagram and scroll with the arrow keys. The stage caption remains below the diagram.
 
 ## Reusable motion technique
 
@@ -18,7 +33,7 @@ Native SVG [`animateMotion`](https://developer.mozilla.org/en-US/docs/Web/SVG/Re
 
 An [`IntersectionObserver`](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) permits playback when at least one quarter of the active SVG is visible. Playback also stops in the overview, on hidden slides, when the document is hidden, and during print. There is no offscreen stage timer.
 
-[`prefers-reduced-motion`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@media/prefers-reduced-motion) disables autoplay and hides dots. Manual stage controls remain available. Printing shows the entire diagram. The static generator includes all 15 slides and four SVGs in a no-JavaScript fallback. It removes the dots and their animation elements.
+[`prefers-reduced-motion`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@media/prefers-reduced-motion) disables autoplay and hides dots. Manual stage controls remain available. Printing shows the entire diagram. The static generator includes all 22 slides, ten staged SVG diagrams and eight evidence charts in a no-JavaScript fallback. It removes the travelling dots and their animation elements. The evidence charts show the same final values at rest. CSS alone handles their brief entry animation.
 
 To view locally, serve this folder over HTTP:
 

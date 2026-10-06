@@ -4,9 +4,10 @@ import assert from 'node:assert/strict';
 const files = ['index.html', 'styles.css', 'app.js', 'diagrams.js', 'presentation-content.json'];
 await Promise.all(files.map(file => access(file)));
 const deck = JSON.parse(await readFile('presentation-content.json', 'utf8'));
-assert.equal(deck.slides.length, 15, 'Expected the agreed 15-slide presentation.');
+const expectedSectors = ['telecom', 'utilities', 'healthcare', 'hospitality'];
+assert.equal(deck.slides.length, 22, 'Expected the agreed 22-slide industry presentation.');
 assert.equal(new Set(deck.slides.map(slide => slide.id)).size, deck.slides.length, 'Slide IDs must be unique.');
-const allowed = new Set(['cover', 'problem', 'foundation', 'contract', 'pipeline', 'memory', 'router', 'ste', 'governance', 'upgrade', 'roadmap', 'evidence', 'decisions', 'sources']);
+const allowed = new Set(['cover', 'problem', 'foundation', 'contract', 'pipeline', 'memory', 'router', 'ste', 'governance', 'upgrade', 'roadmap', 'evidence', 'decisions', 'sources', 'industry-overview', 'industry-case', 'industry-bridge', 'industry-sources']);
 for (const slide of deck.slides) {
   assert.match(slide.id, /^[a-z0-9]+(?:-[a-z0-9]+)*$/);
   assert(allowed.has(slide.type), `Unsupported slide type: ${slide.type}`);
@@ -14,8 +15,55 @@ for (const slide of deck.slides) {
   assert(Array.isArray(slide.items));
 }
 assert(deck.slides.some(slide => slide.type === 'upgrade'), 'The interactive upgrade example is required.');
+assert.equal(deck.slides[1].type, 'industry-overview', 'The cover must lead into the industry evidence.');
+assert.equal(deck.slides.filter(slide => slide.type === 'industry-overview').length, 1);
+assert.equal(deck.slides.filter(slide => slide.type === 'industry-bridge').length, 1);
+assert.equal(deck.slides.filter(slide => slide.type === 'industry-sources').length, 1);
+assert.equal(deck.slides.filter(slide => slide.type === 'industry-case').length, expectedSectors.length);
+assert.deepEqual(deck.industries.map(industry => industry.id).sort(), [...expectedSectors].sort(), 'All four agreed sectors need structured evidence.');
+assert.equal(deck.industrySources.length, expectedSectors.length, 'Industry evidence needs four primary references.');
+assert.equal(new Set(deck.industrySources.map(source => source.url)).size, expectedSectors.length, 'Industry references must be distinct.');
+for (const industry of deck.industries) {
+  assert.equal(typeof industry.name, 'string');
+  assert(industry.name.trim().length > 0);
+  const slide = deck.slides.find(candidate => candidate.id === `${industry.id}-context`);
+  assert.equal(slide?.type, 'industry-case', `Missing ${industry.name} case narrative.`);
+  assert.equal(slide.industry, industry.id);
+  for (const key of ['problem', 'task', 'solution', 'output', 'humanGate', 'owner', 'test']) {
+    assert.equal(typeof industry[key], 'string', `${industry.name} must explain ${key}.`);
+    assert(industry[key].trim().length > 0, `${industry.name} ${key} cannot be empty.`);
+  }
+  assert(industry.inputs.length >= 4, `${industry.name} must identify the context needed for its task.`);
+  assert.equal(industry.inputLabels.length, industry.inputs.length, 'Diagram labels must preserve every input.');
+  assert(slide.lead.trim().length > 30 && slide.note?.trim().length > 30, `${industry.name} needs a readable narrative and its limits.`);
+  for (const key of ['value', 'label', 'scope', 'period', 'sourceUrl', 'sourceTitle', 'limitation', 'definition']) {
+    assert.equal(typeof industry.metric[key], 'string', `${industry.name} metric.${key} must be explicit text.`);
+    assert(industry.metric[key].trim().length > 0, `${industry.name} metric.${key} cannot be empty.`);
+  }
+  assert.equal(new URL(industry.metric.sourceUrl).protocol, 'https:');
+  assert(deck.industrySources.some(source => source.url === industry.metric.sourceUrl && source.title === industry.metric.sourceTitle), `${industry.name} metric must link to an included primary reference.`);
+}
+const industryById = Object.fromEntries(deck.industries.map(industry => [industry.id, industry]));
+assert.deepEqual(industryById.telecom.metric.rates, [100, 123], 'Telecom uses the source growth rate as a 100-to-123 index.');
+assert.equal(industryById.utilities.metric.nodeCount * industryById.utilities.metric.unitPerNode, 1700, 'Utility nodes represent the reported 1,700 GW lower bound.');
+assert.equal(industryById.utilities.metric.nodeCount, 17);
+assert.equal(industryById.utilities.metric.unitPerNode, 100);
+assert.match(industryById.utilities.metric.value, /[≥>]\s*1,700\s*GW/, 'Utility capacity must retain its lower-bound qualifier and unit.');
+assert.deepEqual(industryById.healthcare.metric.rates, [93, 79], 'The hospital receiving and integration rates must remain distinct.');
+assert.deepEqual(industryById.hospitality.metric.rates, [65], 'The dated hospitality survey reports 65%.');
+assert.match(industryById.hospitality.metric.scope, /282/, 'The survey respondent population must remain explicit.');
 assert(deck.sources.length > 0, 'The presentation must include primary sources.');
-for (const source of deck.sources) assert.equal(new URL(source.url).protocol, 'https:');
+for (const source of [...deck.sources, ...deck.industrySources]) {
+  assert.equal(new URL(source.url).protocol, 'https:');
+  assert.equal(typeof source.title, 'string');
+  assert(source.title.trim().length > 0);
+}
 const html = await readFile('index.html', 'utf8');
 assert(html.includes('href="styles.css"') && html.includes('src="app.js"') && html.includes('src="diagrams.js"'), 'Assets must use project-relative paths.');
-console.log(`Static checks: PASS (${deck.slides.length} slides, ${deck.sources.length} source links, ${files.length} site files)`);
+assert(html.includes('static-presentation'), 'A complete JavaScript-disabled fallback is required.');
+for (const slide of deck.slides) assert(html.includes(`id="static-${slide.id}"`), `Static fallback is missing ${slide.id}.`);
+const svgClasses = [...html.matchAll(/<svg\b[^>]*\bclass=["']([^"']+)["'][^>]*>/g)].map(match => match[1].split(/\s+/));
+assert.equal(svgClasses.filter(classes => classes.includes('motion-diagram')).length, 10, 'Static fallback must preserve all ten staged diagrams.');
+assert.equal(svgClasses.filter(classes => classes.includes('insight-chart')).length, 8, 'Static fallback must preserve all eight evidence charts.');
+assert(!/<animateMotion\b/.test(html), 'The JavaScript-disabled fallback must contain no native animation.');
+console.log(`Static checks: PASS (${deck.slides.length} slides, ${expectedSectors.length} industry cases, ${deck.industrySources.length} industry references, ${deck.sources.length} architecture references, 10 static diagrams, 8 evidence charts, ${files.length} site files)`);

@@ -27,9 +27,9 @@ function syncMotion() {
   mechanisms.forEach(controller => controller.setAllowed(!paused && !printing && !showingOverview && !document.hidden && controller.figure.closest(".slide") === panels[current]));
 }
 
-function createMechanism(kind) {
+function createMechanism(kind, onStage = () => {}) {
   const figure = element("figure", "mechanism-figure");
-  const svg = window.ContextDiagrams.create(kind);
+  const svg = typeof kind === "string" ? window.ContextDiagrams.create(kind) : kind;
   const groups = [...svg.querySelectorAll("[data-step]")];
   const stages = [...svg.querySelectorAll("[data-stage]")];
   const caption = element("figcaption", "stage-caption");
@@ -44,7 +44,14 @@ function createMechanism(kind) {
   const count = element("span", "stage-count");
   controls.append(previous, count, next);
   caption.append(heading, detail, controls);
-  figure.append(svg, caption);
+  if (svg.classList.contains("industry-svg-flow")) {
+    const viewport = element("div", "diagram-viewport");
+    viewport.tabIndex = 0;
+    viewport.setAttribute("role", "region");
+    viewport.setAttribute("aria-label", "Industry workflow diagram. Scroll horizontally on a small screen.");
+    viewport.append(svg);
+    figure.append(viewport, element("p", "diagram-scroll-hint", "Swipe the diagram to follow the workflow. Focus it and use arrow keys to scroll."), caption);
+  } else figure.append(svg, caption);
   let cursor = 0, visible = false, allowed = false, timer = null;
   const select = index => {
     cursor = (index + stages.length) % stages.length;
@@ -54,6 +61,7 @@ function createMechanism(kind) {
     heading.textContent = stage.dataset.stage;
     detail.textContent = stage.dataset.stageDetail;
     count.textContent = `${cursor + 1} / ${stages.length}`;
+    onStage(cursor);
   };
   const reconcile = () => {
     const play = allowed && visible;
@@ -76,6 +84,7 @@ function createMechanism(kind) {
   };
   previous.addEventListener("click", () => manualStep(-1));
   next.addEventListener("click", () => manualStep(1));
+  figure.selectStage = index => manualStep(index - cursor);
   select(0);
   reconcile();
   // The observer supplies visibility changes; no per-frame JavaScript runs.
@@ -102,6 +111,101 @@ function coreVisual() {
   const visual = element("div", "core-visual");
   visual.append(createMechanism("cover"));
   return visual;
+}
+
+function industryCitation(sector, compact = false) {
+  const link = element("a", "industry-citation", compact ? sector.shortName + " · source" : sector.metric.sourceTitle);
+  const url = new URL(sector.metric.sourceUrl);
+  if (url.protocol !== "https:") throw new Error("Industry evidence must use HTTPS.");
+  link.href = url.href;
+  link.target = "_blank";
+  link.rel = "noopener noreferrer";
+  return link;
+}
+
+function industryHero() {
+  const visual = element("div", "industry-hero-visual");
+  visual.append(createMechanism(window.ContextDiagrams.createIndustry("atlas", deckData.industries)));
+  const sources = element("div", "atlas-sources");
+  deckData.industries.forEach(sector => sources.append(industryCitation(sector, true)));
+  visual.append(sources);
+  return visual;
+}
+
+function industryMetric(sector, overview = false) {
+  const card = element("article", "industry-metric");
+  card.dataset.sector = sector.id;
+  card.style.setProperty("--sector", sector.color);
+  if (overview) card.append(element("h3", "sector-name", sector.name));
+  card.append(element("strong", "metric-value", sector.metric.value), element("p", "metric-label", sector.metric.label), window.ContextDiagrams.createIndustry("metric", sector), element("p", "metric-period", sector.metric.period), element("p", "metric-scope", sector.metric.scope), industryCitation(sector));
+  return card;
+}
+
+function industryOverview() {
+  const grid = element("div", "industry-overview-grid");
+  deckData.industries.forEach(sector => {
+    const card = industryMetric(sector, true);
+    const button = element("button", "industry-open-case", "Follow the workflow →");
+    button.type = "button";
+    button.addEventListener("click", () => showSlide(deckData.slides.findIndex(slide => slide.industry === sector.id)));
+    card.append(button);
+    grid.append(card);
+  });
+  return grid;
+}
+
+function industryCase(slide) {
+  const sector = deckData.industries.find(item => item.id === slide.industry);
+  const wrap = element("div", "industry-case");
+  wrap.dataset.sector = sector.id;
+  wrap.style.setProperty("--sector", sector.color);
+  const intro = element("div", "industry-case-intro");
+  const story = element("div", "industry-story");
+  for (const [label, text] of [["The context problem", sector.problem], ["The proposed solution", sector.solution]]) {
+    const block = element("article", "industry-story-block");
+    block.append(element("h3", "", label), element("p", "", text));
+    story.append(block);
+  }
+  story.append(element("p", "industry-owner-note", sector.humanGate), element("p", "industry-term", sector.metric.definition));
+  intro.append(industryMetric(sector), story);
+  wrap.append(intro, createMechanism(window.ContextDiagrams.createIndustry("flow", sector)), element("p", "industry-limit", sector.metric.limitation));
+  return wrap;
+}
+
+function industryBridge() {
+  const wrap = element("div", "industry-bridge");
+  const selector = element("div", "sector-selector");
+  selector.setAttribute("aria-label", "Choose the industry workflow");
+  const grid = element("div", "industry-bridge-grid");
+  const story = element("div", "bridge-story");
+  const task = element("h3", "bridge-task");
+  const evidence = element("ul", "bridge-evidence");
+  const output = element("p", "bridge-output");
+  const owner = element("strong", "bridge-owner");
+  const test = element("p", "bridge-test");
+  story.append(element("span", "design-label", "ILLUSTRATIVE TASK"), task, element("h4", "", "Context to carry"), evidence, element("h4", "", "Reviewable output"), output, element("h4", "", "Responsible owner"), owner, element("h4", "", "Proof still needed"), test);
+  const buttons = deckData.industries.map((sector, i) => {
+    const button = element("button", "", sector.shortName);
+    button.type = "button";
+    button.dataset.sector = sector.id;
+    button.style.setProperty("--sector", sector.color);
+    button.addEventListener("click", () => figure.selectStage(i));
+    selector.append(button);
+    return button;
+  });
+  const figure = createMechanism(window.ContextDiagrams.createIndustry("atlas", deckData.industries), index => {
+    const sector = deckData.industries[index];
+    buttons.forEach((button, i) => button.setAttribute("aria-pressed", String(i === index)));
+    wrap.dataset.sector = sector?.id || "shared";
+    task.textContent = sector?.task || "Reuse the checks. Preserve the boundaries.";
+    evidence.replaceChildren(...(sector?.inputs || ["Correct entity", "Current and historical dates", "Conditions and unresolved conflicts", "Evidence and verification status", "Scope, owner and action authority"]).map(value => element("li", "", value)));
+    output.textContent = sector?.output || "An evidence-linked result for one authorized task. Private records stay inside the approved vault.";
+    owner.textContent = sector?.owner || "The responsible domain owner";
+    test.textContent = sector?.test || "Prove identity separation, meaning preservation and permission enforcement before increasing autonomy.";
+  });
+  grid.append(figure, story);
+  wrap.append(selector, grid);
+  return wrap;
 }
 
 function flowVisual() {
@@ -212,9 +316,9 @@ function upgradeVisual() {
   return wrap;
 }
 
-function sourcesVisual() {
+function sourcesVisual(sources = deckData.sources) {
   const group = element("div", "source-grid");
-  for (const source of deckData.sources) {
+  for (const source of sources) {
     const card = element("article", "source-card");
     const link = element("a", "", source.title);
     const url = new URL(source.url);
@@ -244,14 +348,18 @@ function renderSlide(slide, i) {
     const tags = element("div", "cover-tags");
     (slide.items || []).forEach(item => tags.append(element("span", "", item.title)));
     words.append(eyebrow, heading, lead, tags);
-    grid.append(words, coreVisual()); panel.append(grid);
+    grid.append(words, industryHero()); panel.append(grid);
   } else {
     panel.append(eyebrow, heading, lead);
-    const visuals = { contract: contractVisual, pipeline: flowVisual, memory: memoryVisual, router: routerVisual };
+    const visuals = { foundation: coreVisual, contract: contractVisual, pipeline: flowVisual, memory: memoryVisual, router: routerVisual };
     if (visuals[slide.type]) {
       const grid = element("div", "diagram-grid");
       grid.append(visuals[slide.type](), renderItems(slide.items)); panel.append(grid);
     } else if (slide.type === "ste") panel.append(steVisual(slide));
+    else if (slide.type === "industry-overview") panel.append(industryOverview());
+    else if (slide.type === "industry-case") panel.append(industryCase(slide));
+    else if (slide.type === "industry-bridge") panel.append(industryBridge());
+    else if (slide.type === "industry-sources") panel.append(sourcesVisual(deckData.industrySources));
     else if (slide.type === "upgrade") panel.append(upgradeVisual());
     else if (slide.type === "sources") panel.append(sourcesVisual());
     else panel.append(renderItems(slide.items));
@@ -305,7 +413,8 @@ async function initialize() {
     deckData.slides.forEach((slide, i) => {
       const panel = renderSlide(slide, i); panels.push(panel); deck.append(panel);
       const button = element("button", "nav-item"); button.type = "button";
-      button.append(element("span", "nav-index", String(i + 1).padStart(2, "0")), element("span", "", slide.eyebrow));
+      const navLabel = slide.industry ? deckData.industries.find(sector => sector.id === slide.industry).shortName + " workflow" : slide.eyebrow.split(" · ")[0];
+      button.append(element("span", "nav-index", String(i + 1).padStart(2, "0")), element("span", "", navLabel));
       button.addEventListener("click", () => showSlide(i));
       navButtons.push(button); byId("slide-nav").append(button);
       const overview = element("button", "overview-card"); overview.type = "button";
@@ -332,7 +441,7 @@ async function initialize() {
     document.addEventListener("fullscreenchange", () => { byId("fullscreen").textContent = document.fullscreenElement ? "Exit full screen" : "Full screen"; });
     window.addEventListener("hashchange", () => { const index = indexFromHash(); if (index >= 0) showSlide(index, false); });
     document.addEventListener("keydown", event => {
-      if (event.altKey || event.ctrlKey || event.metaKey || /^(INPUT|SELECT|TEXTAREA)$/.test(event.target.tagName) || event.target.isContentEditable) return;
+      if (event.altKey || event.ctrlKey || event.metaKey || /^(INPUT|SELECT|TEXTAREA)$/.test(event.target.tagName) || event.target.isContentEditable || event.target.closest(".diagram-viewport")) return;
       if (event.key === "Escape" && showingOverview) { setOverview(false); byId("overview-toggle").focus(); }
       if (showingOverview || event.target.tagName === "BUTTON" && event.key === " ") return;
       const routes = { ArrowRight: current + 1, PageDown: current + 1, ArrowLeft: current - 1, PageUp: current - 1, Home: 0, End: panels.length - 1 };
