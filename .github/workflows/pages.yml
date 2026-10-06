@@ -1,0 +1,57 @@
+name: Publish context layer presentation
+
+on:
+  push:
+    branches: [feature/context-presentation]
+    paths:
+      - index.html
+      - styles.css
+      - app.js
+      - diagrams.js
+      - presentation-content.json
+      - scripts/check-static.mjs
+      - .github/workflows/pages.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out presentation
+        uses: actions/checkout@v6
+      - name: Validate static presentation
+        run: |
+          node --check app.js
+          node --check diagrams.js
+          node scripts/check-static.mjs
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Assemble public site
+        run: |
+          mkdir _site
+          cp index.html styles.css app.js diagrams.js presentation-content.json _site/
+          touch _site/.nojekyll
+      - name: Upload public site
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy presentation
+        id: deployment
+        uses: actions/deploy-pages@v4
