@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#172b4d">
+  <meta name="description" content="A development proposal for durable memory, governed context, and replaceable AI components.">
+  <title>Context that survives change</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="diagrams.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#slide-title">Skip to the slide</a>
+  <div class="deck-shell">
+    <aside class="rail" aria-label="Presentation navigation">
+      <a class="identity" href="#opening-thesis" aria-label="Context layer presentation, first slide">
+        <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4 42 14v20L24 44 6 34V14Z"/><path d="m6 14 18 10 18-10M24 24v20M15 19v10l9 5 9-5V19"/></svg>
+        <span>CONTEXT<br><strong>THAT LASTS</strong></span>
+      </a>
+      <p class="rail-caption">A development proposal</p>
+      <nav id="slide-nav" aria-label="Choose a slide"></nav>
+      <div class="rail-bottom"><span class="status-dot"></span> Proposed system<br><small>Evidence before confidence.</small></div>
+    </aside>
+    <div class="main-shell">
+      <header class="topbar">
+        <span class="topic">MEMORY / GOVERNANCE / CHANGE</span>
+        <div class="tools">
+          <button id="motion-toggle" type="button" aria-pressed="false">Pause motion</button>
+          <button id="overview-toggle" type="button" aria-expanded="false" aria-controls="overview">Slides <span aria-hidden="true">▦</span></button>
+          <button id="print" type="button">Print / PDF</button>
+          <button id="fullscreen" type="button">Full screen</button>
+        </div>
+      </header>
+      <main id="deck" tabindex="-1" aria-busy="true">
+        <div class="loading">Loading the presentation…</div>
+      </main>
+      <div id="overview" class="overview" hidden aria-label="Slide overview"></div>
+      <footer class="deck-footer">
+        <div><span id="slide-count" aria-live="polite">—</span><span class="footer-hint">Use ← → to move</span></div>
+        <span class="compliance">STE-inspired · compliance unchecked</span>
+        <div class="pager"><button id="previous" type="button" aria-label="Previous slide">←</button><button id="next" type="button" aria-label="Next slide">→</button></div>
+      </footer>
+      <div class="progress-track" aria-hidden="true"><div id="progress"></div></div>
+    </div>
+  </div>
+  <noscript><div class="noscript">Enable JavaScript to view this interactive presentation. The complete slide text is available in <a href="presentation-content.json">the content file</a>.</div></noscript>
+</body>
+</html>

@@ -1,0 +1,4 @@
+.validation/
+node_modules/
+_site/
+__pycache__/

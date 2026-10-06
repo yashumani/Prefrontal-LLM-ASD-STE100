@@ -1,0 +1,227 @@
+{
+  "title": "Context that can survive change",
+  "subtitle": "A proposed governed context layer for a personal agent",
+  "slides": [
+    {
+      "id": "opening-thesis",
+      "type": "cover",
+      "eyebrow": "Design proposal · October 2026",
+      "title": "Preserve meaning. Control authority. Replace components.",
+      "lead": "Build a context layer that keeps useful knowledge across sessions and lets models and frameworks change through verified upgrades.",
+      "items": [
+        {"title": "The innovation", "text": "An executive context controller assembles evidence, goals and constraints for each task."},
+        {"title": "The durable asset", "text": "Sources, history, explicit rules and acceptance cases remain under your control."}
+      ],
+      "note": "Unimplemented proposal. ASD-STE100-inspired clarity; full compliance has not been checked."
+    },
+    {
+      "id": "fragmented-context",
+      "type": "problem",
+      "eyebrow": "The problem",
+      "title": "Stored information does not become useful context by itself",
+      "lead": "A personal agent must find the right evidence, interpret its conditions and carry the current task forward.",
+      "items": [
+        {"title": "Fragmentation", "text": "Facts, decisions and goals sit in separate notes, files and chats."},
+        {"title": "Stale memory", "text": "An earlier statement can remain active after circumstances change."},
+        {"title": "Conflicting evidence", "text": "Different sources can disagree. The newest statement is not automatically authoritative."},
+        {"title": "Lost intent", "text": "A summary can remove a condition, exception or unresolved decision that changes the answer."}
+      ],
+      "note": "Sources: longmemeval, tangle. Project incidence has not been measured."
+    },
+    {
+      "id": "durable-foundation",
+      "type": "foundation",
+      "eyebrow": "Architecture principle",
+      "title": "Keep commitments durable and components replaceable",
+      "lead": "Resilience means controlled replacement with evidence and recovery. It is not a guarantee against future failure.",
+      "items": [
+        {"title": "Preserve", "text": "Permitted originals, source identity, history, uncertainty, goals and verified outcomes."},
+        {"title": "Enforce", "text": "Project scope, access and action authority in trusted application code."},
+        {"title": "Replace", "text": "Models, parsers, frameworks, embeddings, indexes, storage engines and selection methods."},
+        {"title": "Prove each change", "text": "Export, compare, rebuild, restore and roll back against representative tasks."}
+      ],
+      "note": "Invariants are rules that each replacement must continue to satisfy. Sources: prov, nist."
+    },
+    {
+      "id": "context-contract",
+      "type": "contract",
+      "eyebrow": "The stable boundary",
+      "title": "Define a versioned context contract",
+      "lead": "The contract defines the records, meanings and rules that components exchange. Changes require compatible behavior or an explicit migration.",
+      "items": [
+        {"title": "Source record", "text": "Stable ID, permitted original, revision, origin, scope and access rules."},
+        {"title": "Claim record", "text": "Statement, source references, conditions, uncertainty and competing claims."},
+        {"title": "Time and dependencies", "text": "Observed and valid dates; the inputs and versions used by each derived view."},
+        {"title": "Task and authority", "text": "Goal, constraints, pending decisions, permissions and intended, attempted or verified actions."}
+      ],
+      "note": "Evidence traceability explains origin and transformation. It does not prove a source is true. Source: prov."
+    },
+    {
+      "id": "governed-ingestion",
+      "type": "pipeline",
+      "eyebrow": "From source to usable evidence",
+      "title": "Ingest through explicit gates",
+      "lead": "A source enters the vault only within its approved scope. Extraction creates reviewable memory proposals.",
+      "items": [
+        {"title": "Admit and preserve", "text": "Check scope and access. Retain exact phrases, numbers, conditions and history in the original."},
+        {"title": "Extract and reconcile", "text": "Link candidate claims to evidence. Preserve dates, exceptions and unresolved conflicts."},
+        {"title": "Publish derived views", "text": "Create clear summaries and searchable views with dependencies and transformation versions."},
+        {"title": "Correct and invalidate", "text": "Apply corrections, revocation and deletion to affected views under an explicit retention policy."}
+      ],
+      "note": "A memory proposal is not an established fact. Backup and restore behavior must prevent removed context from silently returning."
+    },
+    {
+      "id": "layered-memory",
+      "type": "memory",
+      "eyebrow": "Memory stack",
+      "title": "Separate durable evidence from working context",
+      "lead": "The controller selects a bounded context packet for the active task. Each selected item keeps a reason and source reference.",
+      "items": [
+        {"title": "Evidence vault", "text": "Permitted originals and structured claims preserve history, scope and unresolved disagreements."},
+        {"title": "Rebuildable views", "text": "Search indexes, embeddings, caches, graphs and summaries derive from authorized evidence."},
+        {"title": "Working task context", "text": "Current goal, constraints, useful evidence, pending decisions and tool results fit the model input limit."},
+        {"title": "Candidate foundations", "text": "Compare OpenViking, Graphiti, Letta Code and Mem0 against actual tasks. No stack is selected."}
+      ],
+      "note": "Local runtime, provider behavior and integration remain unverified. Sources: openviking, graphiti, letta, mem0."
+    },
+    {
+      "id": "bounded-decision-router",
+      "type": "router",
+      "eyebrow": "Jev-style decisions",
+      "title": "Ask a small, bounded question",
+      "lead": "The router can judge relevance, choose a category, flag a possible conflict or recommend escalation.",
+      "items": [
+        {"title": "Typed inputs and outputs", "text": "Supply bounded options and evidence. Use Choice, yes/no probability or a described score rubric."},
+        {"title": "Preserve abstention", "text": "Insufficient evidence must remain a valid route. Evaluate truncation, label order and uncertainty."},
+        {"title": "Compare candidates", "text": "Start with Mapika decider-2b, decider-4b and Laya typed-decisions. Test on our context decisions."},
+        {"title": "Keep authority external", "text": "Probability does not grant permission or establish truth. Application rules control actions."}
+      ],
+      "note": "Confidence fields differ across runtimes. Calibration and complete request latency need local measurement. Sources: mapika, laya."
+    },
+    {
+      "id": "meaning-preserving-ste",
+      "type": "ste",
+      "eyebrow": "STE-inspired context compiler",
+      "title": "Simplify language while preserving meaning",
+      "lead": "The compiler creates a clear task view and checks it against the original evidence.",
+      "items": [
+        {"title": "Check meaning", "text": "Preserve negation, conditions, exceptions, numbers, units, dates and uncertainty."},
+        {"title": "Keep exact evidence", "text": "Use exact quotations when wording matters. Link every derived claim to its source."},
+        {"title": "Reject unsafe rewrites", "text": "Flag meaning changes or unsupported additions. Keep the original available."},
+        {"title": "Test both forms", "text": "Compare decisions from original and rewritten context on representative and difficult cases."}
+      ],
+      "note": "Meaning-checking workflow proposed; implementation and ASD-STE100 compliance unverified."
+    },
+    {
+      "id": "fifteen-responsibilities",
+      "type": "governance",
+      "eyebrow": "Planning breakdown",
+      "title": "15 responsibilities: 12 lifecycle and 3 governance",
+      "lead": "These are logical responsibilities. They do not require 15 agents or services.",
+      "items": [
+        {"title": "1–3 · Capture sources", "text": "Register sources; capture and version originals; parse and segment material."},
+        {"title": "4–6 · Validate proposals", "text": "Classify scope and content; extract memory proposals; check evidence, time, conflicts and uncertainty."},
+        {"title": "7–9 · Maintain usable state", "text": "Persist labeled memory and history; maintain derived indexes; resolve the active goal and constraints."},
+        {"title": "10–12 · Support the task", "text": "Retrieve and rank permitted evidence; assemble and check STE-inspired context; apply feedback, corrections and forgetting."},
+        {"title": "13–15 · Govern the lifecycle", "text": "Enforce policy and permissions; audit provenance; evaluate quality and reliability."}
+      ],
+      "note": "Planning count, not a universal architecture rule. Retention applies across the lifecycle. Full external-action execution needs separate acceptance checks."
+    },
+    {
+      "id": "human-review-routes",
+      "type": "governance",
+      "eyebrow": "Six human review routes",
+      "title": "Review consequential choices at setup, milestones and exceptions",
+      "lead": "Routine requests can proceed within approved rules. Human review handles material changes or uncertainty.",
+      "items": [
+        {"title": "Source scope", "text": "Approve initial sources and material expansion of access."},
+        {"title": "Evidence conflict", "text": "Resolve disagreements that materially affect a decision."},
+        {"title": "Goal or authority ambiguity", "text": "Clarify material uncertainty about intent or permitted action."},
+        {"title": "Retention or deletion", "text": "Approve consequential choices about originals, derived views and backups."},
+        {"title": "Policy or permission change", "text": "Review changes to trusted rules, access or action authority."},
+        {"title": "Acceptance or autonomy", "text": "Accept milestone evidence and approve any broader autonomous scope."}
+      ],
+      "note": "Retrieved instructions cannot change trusted policy or create permission."
+    },
+    {
+      "id": "upgrade-example",
+      "type": "upgrade",
+      "eyebrow": "Interactive design example",
+      "title": "Replace a model without losing the task",
+      "lead": "Explore an illustrative upgrade: export the vault, change one component, rebuild its views and apply the same acceptance gates.",
+      "items": [
+        {"title": "Compare", "text": "Check evidence recovery, correctness, abstention, meaning, context size, latency and cost."},
+        {"title": "Approve or reject", "text": "Promote only within approved scope after agreed gates pass."},
+        {"title": "Recover", "text": "Roll back a failed candidate and resume with goals, history and verified outcomes intact."}
+      ],
+      "note": "This browser example checks one fixed record. Real model comparison, migration, recovery and performance tests remain unverified."
+    },
+    {
+      "id": "development-gates",
+      "type": "roadmap",
+      "eyebrow": "Completion plan",
+      "title": "Develop through usable outcomes and acceptance gates",
+      "lead": "Agree thresholds from the first vault and its actual tasks. No dates or performance targets are committed.",
+      "items": [
+        {"title": "1 · Define the boundary", "text": "Agree runtime, privacy, sources, authority and contract. Gate: review concrete records and cases."},
+        {"title": "2 · Build the evidence vault", "text": "Ingest and export a small approved corpus. Gate: restore scope, history and references."},
+        {"title": "3 · Prove memory behavior", "text": "Test restart, project separation, updates and conflicts. Gate: supported answers or explicit uncertainty."},
+        {"title": "4 · Prove context selection", "text": "Compare decision candidates and STE views. Gate: agreed correctness, calibration and meaning checks."},
+        {"title": "5 · Prove governance", "text": "Test hostile source instructions, correction, revocation and deletion. Gate: authority and retention rules hold."},
+        {"title": "6 · Prove change and recovery", "text": "Swap components and roll back. Gate: resume tasks and preserve verified state."}
+      ],
+      "note": "All runtime gates are currently unverified. Expand only when a demonstrated requirement justifies it."
+    },
+    {
+      "id": "evidence-boundary",
+      "type": "evidence",
+      "eyebrow": "What is known",
+      "title": "Research supports candidates, not system acceptance",
+      "lead": "Public artifacts and documentation provide a starting point. The proposed layer still needs implementation and local proof.",
+      "items": [
+        {"title": "Source-level evidence", "text": "Model artifacts, author code, documented memory capabilities and research-informed checks were reviewed."},
+        {"title": "Local proof pending", "text": "No weights, installation, inference, benchmark, personal-source ingestion or agent integration was run."},
+        {"title": "Limits remain", "text": "Provenance does not prove truth. A format guarantee does not prove correctness. A tool attempt does not prove success."},
+        {"title": "Evaluate changes", "text": "Keep fitting and final evaluation cases separate. Add cases when new failures appear."}
+      ],
+      "note": "Evidence checkpoint: research-shortlist.md, 2026-10-05. Sources: longmemeval, tangle, prov, nist."
+    },
+    {
+      "id": "next-decisions",
+      "type": "decisions",
+      "eyebrow": "Next concrete decisions",
+      "title": "Define the first vault before choosing the stack",
+      "lead": "The next deliverable is a reviewable context contract and acceptance set for one approved use case.",
+      "items": [
+        {"title": "Runtime and privacy", "text": "Choose fully local Windows/WSL or local memory with approved hosted inference."},
+        {"title": "Initial sources", "text": "Select files, notes, chats or an existing vault; define project separation and retention."},
+        {"title": "Acceptance and authority", "text": "Choose representative tasks, material failure cases and permitted actions."},
+        {"title": "Candidate feasibility", "text": "Check hardware, provider behavior, licenses and export/recovery before selection."}
+      ],
+      "note": "No framework or model decision is locked."
+    },
+    {
+      "id": "primary-sources",
+      "type": "sources",
+      "eyebrow": "Primary references",
+      "title": "Inspect the evidence behind the proposal",
+      "lead": "Model and framework sources describe candidates. Memory research and governance sources inform the checks.",
+      "items": [],
+      "note": "Research checkpoint: 2026-10-05. Findings and limitations: research-shortlist.md."
+    }
+  ],
+  "sources": [
+    {"id": "mapika", "title": "Mapika decision models and runtime", "url": "https://github.com/Mapika/decider", "note": "Author code; links to decider-2b and decider-4b."},
+    {"id": "laya", "title": "Laya typed-decisions", "url": "https://huggingface.co/convaiinnovations/laya-typed-decisions", "note": "Candidate encoder model; local quality unverified."},
+    {"id": "openviking", "title": "OpenViking", "url": "https://github.com/volcengine/OpenViking", "note": "Inspectable context organization; license and provider review required."},
+    {"id": "graphiti", "title": "Graphiti", "url": "https://github.com/getzep/graphiti", "note": "Temporal relationships and source episodes."},
+    {"id": "letta", "title": "Letta Code", "url": "https://github.com/letta-ai/letta-code", "note": "Stateful agent harness and memory controls."},
+    {"id": "mem0", "title": "Mem0", "url": "https://github.com/mem0ai/mem0", "note": "Alternative memory-library baseline."},
+    {"id": "llm-wiki", "title": "Karpathy's LLM Wiki idea", "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f", "note": "Sources, derived pages and maintenance; idea document."},
+    {"id": "longmemeval", "title": "LongMemEval", "url": "https://arxiv.org/abs/2410.10813", "note": "Memory updates, temporal reasoning and abstention tests."},
+    {"id": "tangle", "title": "TANGLE", "url": "https://arxiv.org/abs/2608.13921", "note": "Preprint on unresolved personal-memory conflicts."},
+    {"id": "prov", "title": "W3C PROV overview", "url": "https://www.w3.org/TR/prov-overview/", "note": "Provenance concepts; Working Group Note."},
+    {"id": "nist", "title": "NIST Generative AI Profile", "url": "https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf", "note": "Evaluation, monitoring, recovery and disengagement."},
+    {"id": "mcp-auth", "title": "MCP authorization", "url": "https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization", "note": "Possible adapter boundary; authority still needs enforcement."}
+  ]
+}
