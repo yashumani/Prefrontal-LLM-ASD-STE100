@@ -140,3 +140,5 @@ if (process.argv.includes("--check")) {
   const flows = (output.match(/<svg[^>]*class="[^"]*motion-diagram/g)||[]).length;
   console.log(`Static fallback generated (${deck.slides.length} slides, ${flows} flow SVGs)`);
 }
+
+require("./build-decisions.cjs");

@@ -1,0 +1,1183 @@
+{
+  "title": "Every decision. One governed journey.",
+  "status": "Proposed process · not a running backend",
+  "description": "Follow a submission into approved context, then follow a separate consumer request through secure retrieval and delivery. Side branches show what happens when a check fails.",
+  "nodes": [
+    {
+      "id": "submit",
+      "row": 0,
+      "col": 1,
+      "title": "Submit context",
+      "role": "human",
+      "summary": "A person or agent submits evidence.",
+      "detail": "Use a structured template with source, owner, workspace, meaning and conditions. Preserve the original.",
+      "phase": "01 · SUBMISSION",
+      "decision": false,
+      "reference": "submission-template"
+    },
+    {
+      "id": "sources",
+      "row": 0,
+      "col": 2,
+      "title": "Sources and systems",
+      "role": "source",
+      "summary": "Documents, LookML and custom apps.",
+      "detail": "Adapters preserve native source references and versions. Existing analytics systems remain authoritative for execution.",
+      "phase": "",
+      "decision": false,
+      "reference": "full-architecture"
+    },
+    {
+      "id": "admit",
+      "row": 1,
+      "col": 1,
+      "title": "May we accept this source?",
+      "role": "policy",
+      "summary": "Check identity, workspace and source rights.",
+      "detail": "Admission policy runs outside the model. An available connector is not permission.",
+      "phase": "",
+      "decision": true,
+      "reference": "full-architecture"
+    },
+    {
+      "id": "deny-intake",
+      "row": 1,
+      "col": 0,
+      "title": "Deny admission",
+      "role": "stop",
+      "summary": "Do not ingest restricted content.",
+      "detail": "Record a permitted audit receipt. A source owner must resolve access before another submission.",
+      "phase": "",
+      "decision": false,
+      "reference": "full-architecture"
+    },
+    {
+      "id": "prepare",
+      "row": 2,
+      "col": 1,
+      "title": "Prepare a review record",
+      "role": "agent",
+      "summary": "Keep original text and an STE-inspired view.",
+      "detail": "Extract structured fields. Preserve dates, units, negation, exceptions and uncertainty. This does not approve meaning.",
+      "phase": "",
+      "decision": false,
+      "reference": "submission-template"
+    },
+    {
+      "id": "complete",
+      "row": 3,
+      "col": 1,
+      "title": "Is the record complete?",
+      "role": "policy",
+      "summary": "Schema, required fields and evidence.",
+      "detail": "Reject malformed data. Do not invent missing evidence.",
+      "phase": "",
+      "decision": true,
+      "reference": "full-architecture"
+    },
+    {
+      "id": "repair",
+      "row": 3,
+      "col": 0,
+      "title": "Return for correction",
+      "role": "human",
+      "summary": "The submitter repairs the record.",
+      "detail": "The same preparation checks run again after correction.",
+      "phase": "",
+      "decision": false,
+      "reference": "full-architecture"
+    },
+    {
+      "id": "meaning",
+      "row": 4,
+      "col": 1,
+      "title": "Does the meaning match?",
+      "role": "policy",
+      "summary": "Compare the clear view with the source.",
+      "detail": "Hold unsupported or conflicting claims. Shorter English must not remove an exception or change a formula.",
+      "phase": "",
+      "decision": true,
+      "reference": "meaning-preserving-ste"
+    },
+    {
+      "id": "hold-meaning",
+      "row": 4,
+      "col": 0,
+      "title": "Resolve the meaning",
+      "role": "human",
+      "summary": "A responsible reviewer resolves the gap.",
+      "detail": "Uncertainty stays explicit. Submit a corrected draft for preparation and review.",
+      "phase": "",
+      "decision": false,
+      "reference": "full-architecture"
+    },
+    {
+      "id": "review",
+      "row": 5,
+      "col": 1,
+      "title": "Does the human approve?",
+      "role": "human",
+      "summary": "Approve this exact version and evidence.",
+      "detail": "The reviewer can approve, request revision or reject. Model scores never replace this authority.",
+      "phase": "02 · GOVERNANCE",
+      "decision": true,
+      "reference": "human-review-routes"
+    },
+    {
+      "id": "revise",
+      "row": 5,
+      "col": 0,
+      "title": "Request revision",
+      "role": "human",
+      "summary": "Return the draft with review notes.",
+      "detail": "Any revised meaning requires review of the new exact version.",
+      "phase": "",
+      "decision": false,
+      "reference": "full-architecture"
+    },
+    {
+      "id": "reject",
+      "row": 5,
+      "col": 2,
+      "title": "Reject the draft",
+      "role": "stop",
+      "summary": "Do not publish the rejected version.",
+      "detail": "Preserve the review outcome and allowed audit history.",
+      "phase": "",
+      "decision": false,
+      "reference": "full-architecture"
+    },
+    {
+      "id": "identity",
+      "row": 6,
+      "col": 1,
+      "title": "Does this identity exist?",
+      "role": "policy",
+      "summary": "Resolve the business object first.",
+      "detail": "A canonical ID identifies one governed object. It grants no permission.",
+      "phase": "",
+      "decision": true,
+      "reference": "context-contract"
+    },
+    {
+      "id": "new-id",
+      "row": 6,
+      "col": 0,
+      "title": "Allocate a new ID",
+      "role": "record",
+      "summary": "Create a unique canonical identity.",
+      "detail": "Create only after identity resolution. Preserve source and ownership links.",
+      "phase": "",
+      "decision": false,
+      "reference": "full-architecture"
+    },
+    {
+      "id": "registry",
+      "row": 7,
+      "col": 1,
+      "title": "Save the approved version",
+      "role": "record",
+      "summary": "ID, version, status and review history.",
+      "detail": "Bind approval to exact content. For metrics, retain the LookML reference and Git revision, population, grain, unit and period.",
+      "phase": "",
+      "decision": false,
+      "reference": "context-contract"
+    },
+    {
+      "id": "harness",
+      "row": 8,
+      "col": 1,
+      "title": "Run bounded orchestration",
+      "role": "agent",
+      "summary": "Code sets routes, budgets and limits.",
+      "detail": "Use typed choice, yes/no or rubric signals only when helpful. Deterministic code can handle known rules.",
+      "phase": "03 · ORGANIZATION",
+      "decision": false,
+      "reference": "bounded-decision-router"
+    },
+    {
+      "id": "model",
+      "row": 8,
+      "col": 2,
+      "title": "Optional decision model",
+      "role": "agent",
+      "summary": "Choice · yes/no · rubric score.",
+      "detail": "A replaceable model provides signals and evidence references. Calibration and JEV parity are unverified. It cannot grant approval.",
+      "phase": "",
+      "decision": false,
+      "reference": "full-architecture"
+    },
+    {
+      "id": "signals",
+      "row": 9,
+      "col": 1,
+      "title": "Are decisions valid?",
+      "role": "policy",
+      "summary": "Validate output shape and evidence.",
+      "detail": "Code checks allowed values, evidence references, permissions and limits. Invalid signals stop the operation.",
+      "phase": "",
+      "decision": true,
+      "reference": "full-architecture"
+    },
+    {
+      "id": "invalid-signal",
+      "row": 9,
+      "col": 0,
+      "title": "Stop invalid work",
+      "role": "stop",
+      "summary": "No permitted operation follows.",
+      "detail": "Keep the failure visible. Correct the input or model response before another attempt.",
+      "phase": "",
+      "decision": false,
+      "reference": "full-architecture"
+    },
+    {
+      "id": "approved-only",
+      "row": 10,
+      "col": 1,
+      "title": "Only approved meaning?",
+      "role": "policy",
+      "summary": "No new claims or unresolved conflicts.",
+      "detail": "The agent may place approved records. New interpretation must return through preparation and exact-version review.",
+      "phase": "",
+      "decision": true,
+      "reference": "full-architecture"
+    },
+    {
+      "id": "new-meaning",
+      "row": 10,
+      "col": 0,
+      "title": "Submit new meaning",
+      "role": "human",
+      "summary": "Human review remains required.",
+      "detail": "A model explanation is a draft, not an approved fact.",
+      "phase": "",
+      "decision": false,
+      "reference": "full-architecture"
+    },
+    {
+      "id": "layers",
+      "row": 11,
+      "col": 1,
+      "title": "Place linked context",
+      "role": "context",
+      "summary": "Data · Metric · Ontology · Interpretation.",
+      "detail": "Data holds facts and units. Metric holds formula, grain and period. Ontology holds concepts and relationships. Interpretation holds meaning and assumptions. These categories do not require four databases.",
+      "phase": "",
+      "decision": false,
+      "reference": "semantic-layers"
+    },
+    {
+      "id": "dependencies",
+      "row": 12,
+      "col": 1,
+      "title": "Are dependencies valid?",
+      "role": "policy",
+      "summary": "Check approved input IDs and versions.",
+      "detail": "References, permissions, validity and lineage must support the full derived object.",
+      "phase": "",
+      "decision": true,
+      "reference": "full-architecture"
+    },
+    {
+      "id": "hold-dependencies",
+      "row": 12,
+      "col": 0,
+      "title": "Hold publication",
+      "role": "stop",
+      "summary": "Repair missing or invalid references.",
+      "detail": "Do not publish a derived object whose evidence or dependency is invalid. Resubmit changed meaning.",
+      "phase": "",
+      "decision": false,
+      "reference": "full-architecture"
+    },
+    {
+      "id": "publish",
+      "row": 13,
+      "col": 1,
+      "title": "Prepare an atomic release",
+      "role": "agent",
+      "summary": "Publish a complete validated snapshot.",
+      "detail": "Never expose a partial update. Retain traceable versions and release receipts.",
+      "phase": "04 · PUBLICATION",
+      "decision": false,
+      "reference": "full-architecture"
+    },
+    {
+      "id": "release",
+      "row": 14,
+      "col": 1,
+      "title": "Did publication succeed?",
+      "role": "policy",
+      "summary": "Check durable state and readback.",
+      "detail": "A completed write request is not proof of a valid release.",
+      "phase": "",
+      "decision": true,
+      "reference": "full-architecture"
+    },
+    {
+      "id": "prior",
+      "row": 14,
+      "col": 0,
+      "title": "Use valid prior release",
+      "role": "record",
+      "summary": "Only while it remains valid and permitted.",
+      "detail": "If no valid prior release exists, hold delivery. Repair the publication fault and retry.",
+      "phase": "",
+      "decision": false,
+      "reference": "full-architecture"
+    },
+    {
+      "id": "index",
+      "row": 15,
+      "col": 1,
+      "title": "Build derived search views",
+      "role": "search",
+      "summary": "Index approved release references.",
+      "detail": "Index descriptions and linked evidence. Preserve IDs and versions. The canonical registry remains authoritative. Rebuild or invalidate when source state changes.",
+      "phase": "",
+      "decision": false,
+      "reference": "layered-memory"
+    },
+    {
+      "id": "request",
+      "row": 16,
+      "col": 1,
+      "title": "Receive a context request",
+      "role": "human",
+      "summary": "A user asks a question or supplies an ID.",
+      "detail": "Resolve caller, workspace, purpose and requested context. The request does not inherit the submitter’s permissions.",
+      "phase": "05 · CONSUMPTION",
+      "decision": false,
+      "reference": "full-architecture"
+    },
+    {
+      "id": "app",
+      "row": 16,
+      "col": 2,
+      "title": "Another user or app",
+      "role": "consumer",
+      "summary": "Analytics, assistants and workflows.",
+      "detail": "Each caller has its own identity and policy scope. Consumers may enter here without submitting new records.",
+      "phase": "",
+      "decision": false,
+      "reference": "full-architecture"
+    },
+    {
+      "id": "authenticated",
+      "row": 17,
+      "col": 1,
+      "title": "Is the caller verified?",
+      "role": "policy",
+      "summary": "Authenticate the requesting identity.",
+      "detail": "MCP is an exchange protocol. The server must implement authentication.",
+      "phase": "",
+      "decision": true,
+      "reference": "secure-delivery"
+    },
+    {
+      "id": "deny-identity",
+      "row": 17,
+      "col": 0,
+      "title": "Deny unknown caller",
+      "role": "stop",
+      "summary": "Return no restricted context.",
+      "detail": "Record a controlled authentication failure.",
+      "phase": "",
+      "decision": false,
+      "reference": "full-architecture"
+    },
+    {
+      "id": "authorized",
+      "row": 18,
+      "col": 1,
+      "title": "Is the scope permitted?",
+      "role": "policy",
+      "summary": "Filter records before retrieval.",
+      "detail": "Enforce workspace, purpose and record access in code. A model cannot widen the scope.",
+      "phase": "",
+      "decision": true,
+      "reference": "full-architecture"
+    },
+    {
+      "id": "deny-scope",
+      "row": 18,
+      "col": 0,
+      "title": "Deny restricted access",
+      "role": "stop",
+      "summary": "Keep restricted content out of results.",
+      "detail": "No title, excerpt or record body may leak through a failed access check.",
+      "phase": "",
+      "decision": false,
+      "reference": "full-architecture"
+    },
+    {
+      "id": "exact",
+      "row": 19,
+      "col": 1,
+      "title": "Is a canonical ID known?",
+      "role": "policy",
+      "summary": "Choose the retrieval path.",
+      "detail": "Known identity uses deterministic lookup. Natural-language discovery can use hybrid search or approved relationships.",
+      "phase": "",
+      "decision": true,
+      "reference": "full-architecture"
+    },
+    {
+      "id": "lookup",
+      "row": 19,
+      "col": 0,
+      "title": "Exact ID lookup",
+      "role": "record",
+      "summary": "Resolve the requested ID and version.",
+      "detail": "No model call is required for this lookup. Current record checks still follow.",
+      "phase": "",
+      "decision": false,
+      "reference": "full-architecture"
+    },
+    {
+      "id": "route",
+      "row": 20,
+      "col": 1,
+      "title": "Which discovery path?",
+      "role": "agent",
+      "summary": "Code selects the permitted method.",
+      "detail": "Choose a method suited to the task and budget. All paths stay inside the permitted record scope.",
+      "phase": "",
+      "decision": true,
+      "reference": "full-architecture"
+    },
+    {
+      "id": "links",
+      "row": 20,
+      "col": 0,
+      "title": "Follow approved links",
+      "role": "context",
+      "summary": "Find related people, metrics and concepts.",
+      "detail": "Follow only approved relationships. Check access on every linked record.",
+      "phase": "",
+      "decision": false,
+      "reference": "full-architecture"
+    },
+    {
+      "id": "hybrid",
+      "row": 20,
+      "col": 2,
+      "title": "Search words and meaning",
+      "role": "search",
+      "summary": "Combine keyword and semantic matches.",
+      "detail": "An embedding is a numerical representation used to compare meaning. Similarity is not truth, approval or a calibrated probability.",
+      "phase": "",
+      "decision": false,
+      "reference": "full-architecture"
+    },
+    {
+      "id": "matches",
+      "row": 21,
+      "col": 1,
+      "title": "Is the evidence sufficient?",
+      "role": "policy",
+      "summary": "Check relevance, ambiguity and conflict.",
+      "detail": "Do not turn the nearest match into an unsupported answer.",
+      "phase": "",
+      "decision": true,
+      "reference": "full-architecture"
+    },
+    {
+      "id": "clarify",
+      "row": 21,
+      "col": 0,
+      "title": "Hold or ask for clarity",
+      "role": "human",
+      "summary": "No match or unclear question.",
+      "detail": "Return a controlled clarification. Routine permitted search needs no new human approval.",
+      "phase": "",
+      "decision": false,
+      "reference": "full-architecture"
+    },
+    {
+      "id": "conflict",
+      "row": 21,
+      "col": 2,
+      "title": "Review conflicting meaning",
+      "role": "human",
+      "summary": "The owner resolves conflicting evidence.",
+      "detail": "Any new interpretation returns to a governed submission.",
+      "phase": "",
+      "decision": false,
+      "reference": "full-architecture"
+    },
+    {
+      "id": "resolve",
+      "row": 22,
+      "col": 1,
+      "title": "Resolve canonical records",
+      "role": "agent",
+      "summary": "Load current approved state.",
+      "detail": "Treat index hits as candidates. Resolve their source IDs and versions before delivery.",
+      "phase": "06 · DELIVERY",
+      "decision": false,
+      "reference": "full-architecture"
+    },
+    {
+      "id": "recheck",
+      "row": 23,
+      "col": 1,
+      "title": "Still valid and permitted?",
+      "role": "policy",
+      "summary": "Recheck rights, approval and validity.",
+      "detail": "Check expiry, withdrawal, revocation and complete release state at use. Stale search results cannot authorize output.",
+      "phase": "",
+      "decision": true,
+      "reference": "full-architecture"
+    },
+    {
+      "id": "deny-output",
+      "row": 23,
+      "col": 0,
+      "title": "Deny or hold output",
+      "role": "stop",
+      "summary": "No stale or restricted delivery.",
+      "detail": "Return a traceable controlled response. Record revocation or invalid dependencies without leaking content.",
+      "phase": "",
+      "decision": false,
+      "reference": "full-architecture"
+    },
+    {
+      "id": "budget",
+      "row": 24,
+      "col": 1,
+      "title": "Within the response budget?",
+      "role": "policy",
+      "summary": "Limit context, output and work.",
+      "detail": "Preserve evidence and material exceptions. Do not silently trim meaning to fit.",
+      "phase": "",
+      "decision": true,
+      "reference": "full-architecture"
+    },
+    {
+      "id": "narrow",
+      "row": 24,
+      "col": 0,
+      "title": "Narrow or hold the request",
+      "role": "human",
+      "summary": "Ask for a smaller supported scope.",
+      "detail": "A revised request passes through access checks again.",
+      "phase": "",
+      "decision": false,
+      "reference": "full-architecture"
+    },
+    {
+      "id": "deliver",
+      "row": 25,
+      "col": 1,
+      "title": "Deliver through MCP",
+      "role": "context",
+      "summary": "IDs, versions, evidence and limits.",
+      "detail": "Return one bounded, permitted context bundle with validity and traceable provenance.",
+      "phase": "",
+      "decision": false,
+      "reference": "secure-delivery"
+    },
+    {
+      "id": "consume",
+      "row": 26,
+      "col": 1,
+      "title": "Consumer uses the context",
+      "role": "consumer",
+      "summary": "The app keeps its own action authority.",
+      "detail": "Context delivery does not authorize a purchase, message, trade or other external action.",
+      "phase": "",
+      "decision": false,
+      "reference": "full-architecture"
+    },
+    {
+      "id": "action-policy",
+      "row": 26,
+      "col": 2,
+      "title": "Consumer action controls",
+      "role": "policy",
+      "summary": "Apply the app’s own permissions.",
+      "detail": "Any action approval belongs to the consuming application. It is outside this product’s context-delivery boundary.",
+      "phase": "",
+      "decision": false,
+      "reference": "full-architecture"
+    },
+    {
+      "id": "feedback",
+      "row": 27,
+      "col": 1,
+      "title": "New meaning or feedback?",
+      "role": "human",
+      "summary": "Review changes before reuse.",
+      "detail": "Outcomes can propose corrections. They cannot automatically approve new context.",
+      "phase": "07 · FEEDBACK",
+      "decision": true,
+      "reference": "full-architecture"
+    },
+    {
+      "id": "resubmit",
+      "row": 27,
+      "col": 0,
+      "title": "Create a new submission",
+      "role": "source",
+      "summary": "Link the affected IDs and evidence.",
+      "detail": "Return through preparation, governance and exact-version review.",
+      "phase": "",
+      "decision": false,
+      "reference": "full-architecture"
+    },
+    {
+      "id": "audit",
+      "row": 28,
+      "col": 1,
+      "title": "Record outcome and cost",
+      "role": "record",
+      "summary": "Trace the result, limits and accepted work.",
+      "detail": "Measure cost, latency, accuracy and access behavior. The owner decides pilot acceptance; no savings are proven by this diagram.",
+      "phase": "",
+      "decision": false,
+      "reference": "full-architecture"
+    },
+    {
+      "id": "change",
+      "row": 29,
+      "col": 1,
+      "title": "Has source state changed?",
+      "role": "policy",
+      "summary": "Change, expiry, withdrawal or revocation.",
+      "detail": "A lifecycle event can occur after delivery. Revoke invalid views immediately; approve changed meaning before reuse.",
+      "phase": "08 · LIFECYCLE",
+      "decision": true,
+      "reference": "full-architecture"
+    },
+    {
+      "id": "source-owner",
+      "row": 29,
+      "col": 2,
+      "title": "Source owner or policy event",
+      "role": "human",
+      "summary": "A new version or access decision arrives.",
+      "detail": "External source updates, time-based expiry and owner withdrawal start lifecycle checks.",
+      "phase": "",
+      "decision": false,
+      "reference": "full-architecture"
+    },
+    {
+      "id": "invalidate",
+      "row": 29,
+      "col": 0,
+      "title": "Invalidate dependent views",
+      "role": "agent",
+      "summary": "Block invalid output and rebuild safely.",
+      "detail": "Rebuild indexes only from current approved releases. A source change that changes meaning must also become a reviewed submission.",
+      "phase": "",
+      "decision": false,
+      "reference": "full-architecture"
+    },
+    {
+      "id": "retain",
+      "row": 30,
+      "col": 1,
+      "title": "Keep current governed state",
+      "role": "record",
+      "summary": "Remain available within current permissions.",
+      "detail": "Each later request repeats authentication, filtering and final canonical checks. This is a proposed process, not runtime evidence.",
+      "phase": "",
+      "decision": false,
+      "reference": "full-architecture"
+    }
+  ],
+  "edges": [
+    {
+      "id": "sources--submit",
+      "source": "sources",
+      "target": "submit",
+      "label": "Input",
+      "kind": "flow"
+    },
+    {
+      "id": "admit--deny-intake",
+      "source": "admit",
+      "target": "deny-intake",
+      "label": "No",
+      "kind": "deny"
+    },
+    {
+      "id": "complete--repair",
+      "source": "complete",
+      "target": "repair",
+      "label": "No",
+      "kind": "deny"
+    },
+    {
+      "id": "repair--prepare",
+      "source": "repair",
+      "target": "prepare",
+      "label": "Retry",
+      "kind": "return"
+    },
+    {
+      "id": "meaning--hold-meaning",
+      "source": "meaning",
+      "target": "hold-meaning",
+      "label": "No",
+      "kind": "deny"
+    },
+    {
+      "id": "hold-meaning--prepare",
+      "source": "hold-meaning",
+      "target": "prepare",
+      "label": "Revise",
+      "kind": "return"
+    },
+    {
+      "id": "review--revise",
+      "source": "review",
+      "target": "revise",
+      "label": "Revise",
+      "kind": "return"
+    },
+    {
+      "id": "revise--prepare",
+      "source": "revise",
+      "target": "prepare",
+      "label": "Retry",
+      "kind": "return"
+    },
+    {
+      "id": "review--reject",
+      "source": "review",
+      "target": "reject",
+      "label": "Reject",
+      "kind": "deny"
+    },
+    {
+      "id": "identity--new-id",
+      "source": "identity",
+      "target": "new-id",
+      "label": "No",
+      "kind": "flow"
+    },
+    {
+      "id": "new-id--registry",
+      "source": "new-id",
+      "target": "registry",
+      "label": "Create",
+      "kind": "flow"
+    },
+    {
+      "id": "harness--model",
+      "source": "harness",
+      "target": "model",
+      "label": "Ask",
+      "kind": "flow"
+    },
+    {
+      "id": "model--signals",
+      "source": "model",
+      "target": "signals",
+      "label": "Signals",
+      "kind": "flow"
+    },
+    {
+      "id": "signals--invalid-signal",
+      "source": "signals",
+      "target": "invalid-signal",
+      "label": "No",
+      "kind": "deny"
+    },
+    {
+      "id": "approved-only--new-meaning",
+      "source": "approved-only",
+      "target": "new-meaning",
+      "label": "No",
+      "kind": "return"
+    },
+    {
+      "id": "new-meaning--prepare",
+      "source": "new-meaning",
+      "target": "prepare",
+      "label": "Review",
+      "kind": "return"
+    },
+    {
+      "id": "dependencies--hold-dependencies",
+      "source": "dependencies",
+      "target": "hold-dependencies",
+      "label": "No",
+      "kind": "deny"
+    },
+    {
+      "id": "release--prior",
+      "source": "release",
+      "target": "prior",
+      "label": "No",
+      "kind": "deny"
+    },
+    {
+      "id": "prior--publish",
+      "source": "prior",
+      "target": "publish",
+      "label": "Retry",
+      "kind": "return"
+    },
+    {
+      "id": "app--request",
+      "source": "app",
+      "target": "request",
+      "label": "Request",
+      "kind": "flow"
+    },
+    {
+      "id": "authenticated--deny-identity",
+      "source": "authenticated",
+      "target": "deny-identity",
+      "label": "No",
+      "kind": "deny"
+    },
+    {
+      "id": "authorized--deny-scope",
+      "source": "authorized",
+      "target": "deny-scope",
+      "label": "No",
+      "kind": "deny"
+    },
+    {
+      "id": "exact--lookup",
+      "source": "exact",
+      "target": "lookup",
+      "label": "Yes",
+      "kind": "flow"
+    },
+    {
+      "id": "lookup--matches",
+      "source": "lookup",
+      "target": "matches",
+      "label": "Found",
+      "kind": "flow"
+    },
+    {
+      "id": "route--links",
+      "source": "route",
+      "target": "links",
+      "label": "Links",
+      "kind": "flow"
+    },
+    {
+      "id": "links--matches",
+      "source": "links",
+      "target": "matches",
+      "label": "Results",
+      "kind": "flow"
+    },
+    {
+      "id": "route--hybrid",
+      "source": "route",
+      "target": "hybrid",
+      "label": "Search",
+      "kind": "flow"
+    },
+    {
+      "id": "hybrid--matches",
+      "source": "hybrid",
+      "target": "matches",
+      "label": "Results",
+      "kind": "flow"
+    },
+    {
+      "id": "matches--clarify",
+      "source": "matches",
+      "target": "clarify",
+      "label": "No",
+      "kind": "deny"
+    },
+    {
+      "id": "matches--conflict",
+      "source": "matches",
+      "target": "conflict",
+      "label": "Conflict",
+      "kind": "return"
+    },
+    {
+      "id": "conflict--prepare",
+      "source": "conflict",
+      "target": "prepare",
+      "label": "Review",
+      "kind": "return"
+    },
+    {
+      "id": "recheck--deny-output",
+      "source": "recheck",
+      "target": "deny-output",
+      "label": "No",
+      "kind": "deny"
+    },
+    {
+      "id": "budget--narrow",
+      "source": "budget",
+      "target": "narrow",
+      "label": "No",
+      "kind": "deny"
+    },
+    {
+      "id": "narrow--request",
+      "source": "narrow",
+      "target": "request",
+      "label": "Retry",
+      "kind": "return"
+    },
+    {
+      "id": "consume--action-policy",
+      "source": "consume",
+      "target": "action-policy",
+      "label": "Own rules",
+      "kind": "flow"
+    },
+    {
+      "id": "feedback--resubmit",
+      "source": "feedback",
+      "target": "resubmit",
+      "label": "Yes",
+      "kind": "return"
+    },
+    {
+      "id": "resubmit--submit",
+      "source": "resubmit",
+      "target": "submit",
+      "label": "Resubmit",
+      "kind": "return"
+    },
+    {
+      "id": "source-owner--change",
+      "source": "source-owner",
+      "target": "change",
+      "label": "Event",
+      "kind": "flow"
+    },
+    {
+      "id": "change--invalidate",
+      "source": "change",
+      "target": "invalidate",
+      "label": "Yes",
+      "kind": "return"
+    },
+    {
+      "id": "invalidate--index",
+      "source": "invalidate",
+      "target": "index",
+      "label": "Rebuild",
+      "kind": "return"
+    },
+    {
+      "id": "invalidate--submit",
+      "source": "invalidate",
+      "target": "submit",
+      "label": "New meaning",
+      "kind": "return"
+    },
+    {
+      "id": "submit--admit",
+      "source": "submit",
+      "target": "admit",
+      "label": "Next",
+      "kind": "flow"
+    },
+    {
+      "id": "admit--prepare",
+      "source": "admit",
+      "target": "prepare",
+      "label": "Yes",
+      "kind": "flow"
+    },
+    {
+      "id": "prepare--complete",
+      "source": "prepare",
+      "target": "complete",
+      "label": "Next",
+      "kind": "flow"
+    },
+    {
+      "id": "complete--meaning",
+      "source": "complete",
+      "target": "meaning",
+      "label": "Yes",
+      "kind": "flow"
+    },
+    {
+      "id": "meaning--review",
+      "source": "meaning",
+      "target": "review",
+      "label": "Yes",
+      "kind": "flow"
+    },
+    {
+      "id": "review--identity",
+      "source": "review",
+      "target": "identity",
+      "label": "Approve",
+      "kind": "flow"
+    },
+    {
+      "id": "identity--registry",
+      "source": "identity",
+      "target": "registry",
+      "label": "Yes",
+      "kind": "flow"
+    },
+    {
+      "id": "registry--harness",
+      "source": "registry",
+      "target": "harness",
+      "label": "Next",
+      "kind": "flow"
+    },
+    {
+      "id": "harness--signals",
+      "source": "harness",
+      "target": "signals",
+      "label": "Code route",
+      "kind": "flow"
+    },
+    {
+      "id": "signals--approved-only",
+      "source": "signals",
+      "target": "approved-only",
+      "label": "Yes",
+      "kind": "flow"
+    },
+    {
+      "id": "approved-only--layers",
+      "source": "approved-only",
+      "target": "layers",
+      "label": "Yes",
+      "kind": "flow"
+    },
+    {
+      "id": "layers--dependencies",
+      "source": "layers",
+      "target": "dependencies",
+      "label": "Next",
+      "kind": "flow"
+    },
+    {
+      "id": "dependencies--publish",
+      "source": "dependencies",
+      "target": "publish",
+      "label": "Yes",
+      "kind": "flow"
+    },
+    {
+      "id": "publish--release",
+      "source": "publish",
+      "target": "release",
+      "label": "Next",
+      "kind": "flow"
+    },
+    {
+      "id": "release--index",
+      "source": "release",
+      "target": "index",
+      "label": "Yes",
+      "kind": "flow"
+    },
+    {
+      "id": "index--request",
+      "source": "index",
+      "target": "request",
+      "label": "Ready for requests",
+      "kind": "flow"
+    },
+    {
+      "id": "request--authenticated",
+      "source": "request",
+      "target": "authenticated",
+      "label": "Next",
+      "kind": "flow"
+    },
+    {
+      "id": "authenticated--authorized",
+      "source": "authenticated",
+      "target": "authorized",
+      "label": "Yes",
+      "kind": "flow"
+    },
+    {
+      "id": "authorized--exact",
+      "source": "authorized",
+      "target": "exact",
+      "label": "Yes",
+      "kind": "flow"
+    },
+    {
+      "id": "exact--route",
+      "source": "exact",
+      "target": "route",
+      "label": "No",
+      "kind": "flow"
+    },
+    {
+      "id": "matches--resolve",
+      "source": "matches",
+      "target": "resolve",
+      "label": "Yes",
+      "kind": "flow"
+    },
+    {
+      "id": "resolve--recheck",
+      "source": "resolve",
+      "target": "recheck",
+      "label": "Next",
+      "kind": "flow"
+    },
+    {
+      "id": "recheck--budget",
+      "source": "recheck",
+      "target": "budget",
+      "label": "Yes",
+      "kind": "flow"
+    },
+    {
+      "id": "budget--deliver",
+      "source": "budget",
+      "target": "deliver",
+      "label": "Yes",
+      "kind": "flow"
+    },
+    {
+      "id": "deliver--consume",
+      "source": "deliver",
+      "target": "consume",
+      "label": "Next",
+      "kind": "flow"
+    },
+    {
+      "id": "consume--feedback",
+      "source": "consume",
+      "target": "feedback",
+      "label": "Next",
+      "kind": "flow"
+    },
+    {
+      "id": "feedback--audit",
+      "source": "feedback",
+      "target": "audit",
+      "label": "No",
+      "kind": "flow"
+    },
+    {
+      "id": "audit--change",
+      "source": "audit",
+      "target": "change",
+      "label": "Later event",
+      "kind": "flow"
+    },
+    {
+      "id": "change--retain",
+      "source": "change",
+      "target": "retain",
+      "label": "No",
+      "kind": "flow"
+    }
+  ]
+}
