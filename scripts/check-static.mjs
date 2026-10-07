@@ -86,7 +86,7 @@ for (const slide of productFlows) {
 }
 
 const architecture = deck.architecture;
-const expectedNodes = ['submissions', 'preparation', 'human-review', 'canonical-registry', 'context-agent', 'decision-model', 'data-layer', 'metric-layer', 'ontology-layer', 'interpretation-layer', 'mcp-delivery', 'consumers'];
+const expectedNodes = ['submissions', 'preparation', 'human-review', 'canonical-registry', 'context-agent', 'decision-model', 'data-layer', 'metric-layer', 'ontology-layer', 'interpretation-layer', 'mcp-delivery', 'consumers', 'governed-retrieval', 'derived-search-index'];
 assert.equal(architecture?.stages?.length, 5, 'The full architecture needs five explanatory stages.');
 assert.deepEqual(architecture.nodes.map(node => node.id).sort(), [...expectedNodes].sort(), 'The architecture must retain submission, approval, identity, model/harness, four context layers and secure consumption.');
 for (const stage of architecture.stages) {
@@ -108,7 +108,13 @@ const expectedConnections = {
   'place-metric-layer': ['context-agent', 'metric-layer'], 'place-interpretation-layer': ['context-agent', 'interpretation-layer'],
   'publish-ontology-layer': ['ontology-layer', 'mcp-delivery'], 'publish-data-layer': ['data-layer', 'mcp-delivery'],
   'publish-metric-layer': ['metric-layer', 'mcp-delivery'], 'publish-interpretation-layer': ['interpretation-layer', 'mcp-delivery'],
-  'deliver-consumer': ['mcp-delivery', 'consumers'], 'feedback-submission': ['consumers', 'submissions']
+  'deliver-consumer': ['mcp-delivery', 'consumers'], 'feedback-submission': ['consumers', 'submissions'],
+  'approved-index': ['mcp-delivery', 'derived-search-index'],
+  'request-search': ['consumers', 'governed-retrieval'],
+  'query-index': ['governed-retrieval', 'derived-search-index'],
+  'index-matches': ['derived-search-index', 'governed-retrieval'],
+  'resolve-record': ['governed-retrieval', 'canonical-registry'],
+  'retrieval-delivery': ['governed-retrieval', 'mcp-delivery']
 };
 assert.deepEqual(Object.fromEntries(architecture.edges.map(edge => [edge.id, [edge.from, edge.to]])), expectedConnections, 'The architecture must preserve each intake, approval, bounded decision, layer, delivery and reviewed feedback relationship.');
 assert.equal(new Set(architecture.edges.map(edge => edge.id)).size, architecture.edges.length, 'Each architecture connector needs a unique ID.');
@@ -128,6 +134,15 @@ assert.match([architecture.policy?.title, architecture.policy?.detail].join(' ')
 for (const key of ['review', 'legend']) assert.equal(typeof architecture[key], 'string');
 assert.match(architecture.review, /owner|human|review/i);
 
+// Search is a proposed derived view; approval and permission stay canonical.
+assert.match(nodeText('derived-search-index'), /Approved release/);
+assert.match(nodeText('governed-retrieval'), /Authenticate.*filter access/);
+assert.match(nodeText('mcp-delivery'), /Final record recheck/);
+assert.match(deck.slides[8].note, /Similarity is not truth, approval or a probability/);
+assert.deepEqual(deck.slides[8].miniArchitecture.nodes.filter(n=>['exact','hybrid','links'].includes(n.id)).map(n=>n.id), ['exact','links','hybrid']);
+assert.deepEqual(deck.slides[9].miniArchitecture.edges.slice(0,4).map(e=>[e.from,e.to]), [['caller','search'],['search','access'],['access','delivery'],['delivery','consumer']]);
+assert.match(JSON.stringify(deck.slides[12]), /index creation|index build/i);
+assert.match(JSON.stringify(deck.slides[13]), /incorrect matches/);
 const pitch = deck.pitch;
 const lenses = ['cost', 'performance', 'accuracy', 'trust'];
 assert.equal(pitch?.productName, 'Prefrontal');
@@ -202,4 +217,4 @@ for (const id of expectedNodes) assert(html.includes(`data-node="${id}"`), `Stat
 for (const edge of architecture.edges) assert(html.includes(`data-edge="${edge.id}"`), `Static architecture is missing ${edge.id}.`);
 assert(html.includes('data-policy="external"') && html.includes('data-review="owner"'), 'The static architecture must preserve independent policy and human review.');
 assert(!/<animateMotion\b/.test(staticHTML), 'The JavaScript-disabled fallback must contain no native animation.');
-console.log(`Static checks: PASS (${deck.slides.length} product-first slides; four leadership slides; 12 focused mini architectures; six leadership takeaway groups; four calculated economic hurdle values; one full 12-node architecture on slide five; ${architecture.edges.length} directed connections; four retained source flow diagrams; existing-stack adapter and LookML mapping boundaries; certified-query and reviewed-draft distinction; complete cost scope and seven-stage governance alignment; neutral cost assumptions; four pilot dimensions; ${deck.sources.length} primary references; source diagrams plus consolidated infographics; supplied white/red brand tokens; complete no-JS fallback)`);
+console.log(`Static checks: PASS (${deck.slides.length} product-first slides; four leadership slides; 12 focused mini architectures; six leadership takeaway groups; four calculated economic hurdle values; one full 14-node architecture on slide five; ${architecture.edges.length} directed connections; four retained source flow diagrams; existing-stack adapter and LookML mapping boundaries; certified-query and reviewed-draft distinction; complete cost scope and seven-stage governance alignment; neutral cost assumptions; four pilot dimensions; ${deck.sources.length} primary references; source diagrams plus consolidated infographics; supplied white/red brand tokens; complete no-JS fallback)`);

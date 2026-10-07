@@ -122,18 +122,21 @@ const html = fs.readFileSync("presentation-shell.html", "utf8").replace(/\r\n/g,
 assert(html.includes(start) && html.includes(end), "Static presentation markers are required.");
 const replacement = `${start}\n  <noscript><main class="static-presentation"><p class="static-intro">Static presentation · all ${deck.slides.length} slides. Writing inspired by ASD-STE100; full compliance has not been checked.</p>\n${slides}\n</main></noscript>\n  ${end}`;
 let output = html.slice(0, html.indexOf(start)) + replacement + html.slice(html.indexOf(end) + end.length);
-const css=['styles.css','cost-lab.css'].map(file=>fs.readFileSync(file,'utf8')).join('\n');
-const scripts=['motion-runtime.js','diagrams.js','mini-architectures.js','cost-lab.js','app.js'].map(file=>fs.readFileSync(file,'utf8').replace(/<\/script/gi,'<\\/script')).join('\n');
+const css=['styles.css','cost-lab.css','story.css'].map(file=>fs.readFileSync(file,'utf8')).join('\n');
+const scripts=['motion-runtime.js','diagrams.js','mini-architectures.js','cost-lab.js','story.js','app.js'].map(file=>fs.readFileSync(file,'utf8').replace(/<\/script/gi,'<\\/script')).join('\n');
 output=output.replace('<!-- BUNDLE STYLES -->',()=>`<style>${css}</style>`).replace('<!-- BUNDLE SCRIPTS -->',()=>`<script type="application/json" id="presentation-data">${JSON.stringify(deck).replace(/</g,'\\u003c')}</script>\n<script>${scripts}</script>`);
 assert(!output.includes('<'+'?')&&!output.includes('?' + '>'),'The single-file page must contain no Apps Script scriptlet markers.');
 assert(!/<(?:script|link)\b[^>]*(?:src|href)=/.test(output),'The generated page must use inline CSS, JS and content.');
 output=output.replace(/\r\n/g,'\n');
+const storyOutput=output.replace('<body>','<body data-presentation="story">').replace('href="story.html" title="Read the complete scrolling presentation">Scroll story ↗','href="index.html" title="Open the original slide presentation">Slide deck ↗').replace(/<details\b/g,'<details open').replace('<title>Prefrontal · Governed context as a product</title>','<title>Prefrontal · The complete context story</title>');
 if (process.argv.includes("--check")) {
+  assert.equal(fs.readFileSync('story.html','utf8').replace(/\r\n/g,'\n'),storyOutput,'Scrolling story is stale. Rebuild both formats.');
   assert.equal(fs.readFileSync("index.html","utf8").replace(/\r\n/g,"\n"), output, "Static deck is stale. Run node scripts/build-static.cjs.");
   const flows = (output.match(/<svg[^>]*class="[^"]*motion-diagram/g)||[]).length;
   console.log(`Static fallback: PASS (${deck.slides.length} slides, ${flows} flow SVGs match their sources)`);
 } else {
   fs.writeFileSync("index.html", output);
+  fs.writeFileSync("story.html", storyOutput);
   const flows = (output.match(/<svg[^>]*class="[^"]*motion-diagram/g)||[]).length;
   console.log(`Static fallback generated (${deck.slides.length} slides, ${flows} flow SVGs)`);
 }

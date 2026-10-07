@@ -8,6 +8,7 @@ const element = (tag, className, text) => {
   return node;
 };
 const byId = id => document.getElementById(id);
+const storyMode = document.body.dataset.presentation === 'story';
 let deckData;
 let current = 0;
 let showingOverview = false;
@@ -21,6 +22,7 @@ const mechanisms = [];
 
 function syncMotion() {
   const paused = motionPaused || reducedMotion.matches || printing;
+  document.body.classList.toggle('motion-paused', paused);
   document.querySelectorAll('[data-motion]').forEach(button => {
     button.textContent = reducedMotion.matches ? 'Motion off' : paused ? 'Play motion' : 'Pause motion';
     button.disabled = reducedMotion.matches;
@@ -28,7 +30,7 @@ function syncMotion() {
   });
   window.ContextMotion.setReduced(reducedMotion.matches);
   window.ContextMotion.setPaused(paused || showingOverview || document.hidden);
-  mechanisms.forEach(controller => controller.setAllowed(!paused && !showingOverview && !document.hidden && controller.figure.closest('.slide') === panels[current]));
+  mechanisms.forEach(controller => controller.setAllowed(!paused && !showingOverview && !document.hidden && (storyMode || controller.figure.closest('.slide') === panels[current])));
 }
 
 function createMechanism(kind, onStage = () => {}) {
@@ -80,13 +82,14 @@ function createMechanism(kind, onStage = () => {}) {
   };
   const runtime=window.ContextMotion.register({element:svg,staticFrame:finalFrame,frame:t=>{
     lastTime=t;svg.dataset.playing='true';svg.dataset.elapsed=String(t);
-    const nextCursor=Math.floor((t-base)/2.4)%stages.length;
+    const nextCursor=storyMode && figure.dataset.scrollStage !== undefined ? Number(figure.dataset.scrollStage) : Math.floor((t-base)/2.4)%stages.length;
     if(nextCursor!==cursor||svg.classList.contains('is-static'))select(nextCursor);
     packets.forEach(({dot,points},i)=>{const f=((t/1.6+i*.17)%1)*80,j=Math.floor(f),r=f-j,a=points[j],b=points[Math.min(j+1,80)];dot.setAttribute('transform',`translate(${a[0]+(b[0]-a[0])*r} ${a[1]+(b[1]-a[1])*r})`);});
   }});
   const manualStep=delta=>{motionPaused=true;motionOverride=true;syncMotion();select(cursor+delta);base=lastTime-cursor*2.4;};
   previous.addEventListener('click',()=>manualStep(-1));next.addEventListener('click',()=>manualStep(1));
   figure.selectStage=index=>manualStep(index-cursor);
+  figure.scrollStage=index=>{figure.dataset.scrollStage=String(index);if(!motionPaused&&!reducedMotion.matches&&!printing){select(index);svg.dataset.playing='true';}};
   select(0);
   mechanisms.push({figure,setAllowed(value){svg.dataset.playing=String(value);runtime.setAllowed(value);if(!value&& (motionPaused||reducedMotion.matches||printing))finalFrame();}});
   return figure;
@@ -635,6 +638,7 @@ function setOverview(show) {
 
 function showSlide(index, updateHash = true) {
   current = Math.max(0, Math.min(index, panels.length - 1));
+  if(storyMode){window.ContextStory.navigate(current,updateHash);return;}
   setOverview(false);
   panels.forEach((panel, i) => { panel.hidden = i !== current; });
   navButtons.forEach((button, i) => {
@@ -648,6 +652,7 @@ function showSlide(index, updateHash = true) {
   byId("previous").disabled = current === 0;
   byId("next").disabled = current === panels.length - 1;
   document.title = `${deckData.slides[current].title} | Context that lasts`;
+  document.querySelector(".presentation-format").href = `story.html#${deckData.slides[current].id}`;
   if (updateHash) history.replaceState(null, "", `#${deckData.slides[current].id}`);
   syncMotion();
   window.scrollTo({ top: 0, behavior: "instant" });
@@ -676,6 +681,7 @@ async function initialize() {
       overview.addEventListener("click", () => showSlide(i)); byId("overview").append(overview);
     });
     deck.setAttribute("aria-busy", "false");
+    if(storyMode) window.ContextStory.initialize({panels,data:deckData,onChapter:index=>{current=index;syncMotion();}});
     showSlide(Math.max(0, indexFromHash()), false);
     byId("previous").addEventListener("click", () => showSlide(current - 1));
     byId("next").addEventListener("click", () => showSlide(current + 1));
@@ -699,6 +705,7 @@ async function initialize() {
     document.addEventListener("fullscreenchange", () => { byId("fullscreen").textContent = document.fullscreenElement ? "Exit full screen" : "Full screen"; });
     window.addEventListener("hashchange", () => { const index = indexFromHash(); if (index >= 0) showSlide(index, false); });
     document.addEventListener("keydown", event => {
+      if(storyMode) return;
       if (event.altKey || event.ctrlKey || event.metaKey || /^(INPUT|SELECT|TEXTAREA)$/.test(event.target.tagName) || event.target.isContentEditable || event.target.closest(".diagram-viewport")) return;
       if (event.key === "Escape" && showingOverview) { setOverview(false); byId("overview-toggle").focus(); }
       if (showingOverview || event.target.tagName === "BUTTON" && event.key === " ") return;

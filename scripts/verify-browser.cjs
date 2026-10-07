@@ -106,7 +106,7 @@ async function main(){
   assert.equal(agentExplanations,7);
   await goto(p,'bounded-decision-router');await p.locator('#motion-toggle').click();await p.waitForFunction(()=>ContextMotion.stats().active===1);
   const packet=p.locator('.slide:visible .mini-architecture-svg .m-dot').first();const packetPosition=await packet.getAttribute('transform');await p.waitForTimeout(130);assert.notEqual(await packet.getAttribute('transform'),packetPosition,'Native mini paths move in the shared loop.');await p.locator('#motion-toggle').click();
-  await goto(p,'full-architecture');assert.equal(await p.locator('.slide:visible [data-node]').count(),12);assert.equal(await p.locator('.slide:visible [data-edge]').count(),18);assert.equal(await p.locator('.slide:visible [data-policy=external]').count(),1);assert.equal(await p.locator('.slide:visible [data-review=owner]').count(),1);
+  await goto(p,'full-architecture');assert.equal(await p.locator('.slide:visible [data-node]').count(),14);assert.equal(await p.locator('.slide:visible [data-edge]').count(),24);assert.equal(await p.locator('.slide:visible [data-policy=external]').count(),1);assert.equal(await p.locator('.slide:visible [data-review=owner]').count(),1);
   let topics=0;
   for(const slide of deck.slides.filter(s=>s.type==='consolidated')){
    await goto(p,slide.id);await p.locator('[data-view=dev]').click();assert(await p.evaluate(()=>document.body.classList.contains('devview')));
@@ -152,7 +152,7 @@ async function main(){
   const staticPdf=await stat.pdf({path:'.validation/architecture-static-deck.pdf',format:'A4',landscape:true,printBackground:true,preferCSSPageSize:true});assert.equal(pages(staticPdf),16);await staticContext.close();
   assert.deepEqual(errors,[]);assert.equal(await p.locator('animateMotion').count(),0);assert.equal(await p.evaluate(()=>__motionProbe().peak),1);assert.equal(await p.evaluate(()=>__motionProbe().intervals),0);
   console.log(`Mini visual checks: PASS (12 focused diagrams;${miniNodes} nodes;${miniEdges} paths;all node and edge phase highlights;directed and reference routes;7 complete agent explanations;6 leadership takeaway groups;4 economic hurdle values;shared packet motion)`);
-  console.log('Browser checks: PASS (16 slides;31 retained topics;21 expanded developer sections plus4 cost topics;leadership takeaways and declared economic hurdle in live/static views;cost math/ROI/invalid cases;12-node18-edge architecture;one RAF and zero intervals;figure pause/reduced motion;all-slide geometry;mobile;offline single-file;no-JS;both16-page PDFs;zero page errors)');
+  console.log('Browser checks: PASS (16 slides;31 retained topics;21 expanded developer sections plus4 cost topics;leadership takeaways and declared economic hurdle in live/static views;cost math/ROI/invalid cases;14-node24-edge architecture;one RAF and zero intervals;figure pause/reduced motion;all-slide geometry;mobile;offline single-file;no-JS;both16-page PDFs;zero page errors)');
  }finally{await browser.close();}
 }
 main().catch(error=>{console.error(error);process.exitCode=1});

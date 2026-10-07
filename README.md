@@ -136,8 +136,14 @@ Browser validation needs Playwright and Chromium. Set `PREFRONTAL_PLAYWRIGHT_MOD
 
 ## Publication and proof boundaries
 
-The existing Pages workflow validates and publishes the seven public files from `feature/context-presentation`. It checks freshness, syntax and browser acceptance before deployment. Research, the supplied ZIP, local architecture sidecars, PDFs and screenshots remain outside the public package.
+The existing Pages workflow validates and publishes the eight public files from `feature/context-presentation`. It checks freshness, syntax and browser acceptance before deployment. Research, the supplied ZIP, local architecture sidecars, PDFs and screenshots remain outside the public package.
 
 Working artifacts: the presentation, illustrative browser checks, editable worksheet and checked local architecture viewer. Still to implement and qualify: persistent admission, real decision-model integration, calibration, record-level authorization, MCP service, recovery, load and customer return.
 
 The writing is inspired by ASD-STE100. Full compliance has not been checked. Primary standards guide the proposal; they do not certify it. No flawless-operation, future-proofing, cost-saving or model-parity guarantee is claimed.
+
+## Continuous scrolling presentation
+
+Open `story.html` for the full 16-chapter story. The header links both formats at the current chapter. Diagrams stay beside stage explanations on wide screens; scrolling selects their authored stages. On smaller screens the story stacks vertically. All developer disclosures start open, and all four cost views appear in sequence. Pause and OS reduced-motion settings keep diagrams legible at rest. Both HTML files work offline.
+
+Both formats use `presentation-content.json` and the same renderers. Run `node scripts/build-static.cjs` after edits; its `--check` flag verifies both generated files. Run `node scripts/verify-story.cjs` alongside the existing deck suite. Story print output includes expanded detail; use the original deck for the 16-page print layout. Search is proposed, not a deployed backend.

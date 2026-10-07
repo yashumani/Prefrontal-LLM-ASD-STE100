@@ -1118,9 +1118,9 @@
       "type": "architecture",
       "eyebrow": "Developer view · the whole product",
       "title": "From a submission to a permitted context output.",
-      "lead": "One workflow connects human governance, stable identities, linked layers and secure delivery. Feedback starts a new submission.",
+      "lead": "Approve the source. Find relevant context. Recheck permission and validity before delivery. Search remains a proposed capability.",
       "items": [],
-      "note": "Proposed architecture. Consumer applications execute their own workflows. The context layer does not grant them action authority.",
+      "note": "Proposed architecture. Approved records remain authoritative. Search indexes are rebuildable. Consumers retain their own action authority.",
       "covers": [
         "full-architecture"
       ]
@@ -2575,10 +2575,10 @@
       "id": "bounded-decision-router",
       "type": "consolidated",
       "eyebrow": "Decision harness · typed output + durable memory",
-      "title": "Bound the decisions. Bound the context.",
-      "lead": "The harness checks model outputs and limits operations. The vault supplies only permitted records for the task.",
+      "title": "Find context. Keep authority in code.",
+      "lead": "Use exact IDs, words and meaning, or approved links. Recheck every record before delivery.",
       "items": [],
-      "note": "The three decision types remain proposed. JEV parity and calibration are unverified. A score is not a probability. A cache cannot approve a record.",
+      "note": "Proposed retrieval. Similarity is not truth, approval or a probability. Typed model decisions remain proposed; JEV parity and calibration are unverified.",
       "covers": [
         "bounded-decision-router",
         "layered-memory"
@@ -2606,6 +2606,10 @@
             {
               "title": "Calibration",
               "text": "Check reported probabilities against observed outcomes before using risk thresholds."
+            },
+            {
+              "title": "Retrieval route",
+              "text": "Use exact ID lookup first when identity is known. Otherwise combine keyword and semantic search, or follow approved links. Code enforces permissions independently of model signals."
             }
           ],
           "note": "For familiar questions, deliver certified query references for native execution after access checks. New questions use expert drafts and review. The three decision types remain proposed; JEV parity and calibration are unverified."
@@ -2623,7 +2627,7 @@
             },
             {
               "title": "Derived views",
-              "text": "Build search indexes, graphs or caches when a use case needs them."
+              "text": "Build a rebuildable index of approved descriptions and linked evidence. Hybrid search combines keyword matches and semantic similarity. An embedding is a numerical representation used to compare meaning."
             },
             {
               "title": "Working context",
@@ -2631,7 +2635,7 @@
             },
             {
               "title": "Corrections",
-              "text": "Invalidate dependent views when inputs expire, change or lose access."
+              "text": "Update or invalidate indexes after approved source changes, expiry, withdrawal or revoked access. Recheck canonical state before delivery. Preserve IDs, versions, formulas, units and validity dates."
             }
           ],
           "note": "The semantic layers describe meaning. This storage lifecycle describes persistence and retrieval. A cache is never an approval authority."
@@ -2713,65 +2717,63 @@
       ],
       "miniArchitecture": {
         "id": "agent-mini",
-        "title": "Inside the agent: code bounds the model and the memory",
-        "summary": "A replaceable model supplies typed signals. The harness validates them before any permitted operation.",
+        "title": "Three retrieval paths converge on current record checks",
+        "summary": "The harness selects a permitted retrieval route. An optional model supplies typed signals, never access authority.",
         "anchorNodes": [
+          "governed-retrieval",
+          "derived-search-index",
           "canonical-registry",
           "context-agent",
           "decision-model",
-          "human-review",
-          "data-layer",
-          "metric-layer",
-          "ontology-layer",
-          "interpretation-layer"
+          "human-review"
         ],
         "viewBox": [
           1180,
           380
         ],
         "boundary": {
-          "title": "APPLICATION CODE ENFORCES POLICY",
-          "detail": "Choice · yes/no · rubric score. Scores are not probabilities. Calibration remains unverified."
+          "title": "APPROVED RECORDS ARE THE SOURCE OF TRUTH",
+          "detail": "Semantic search finds related meaning. The semantic layers define meaning. An index can be rebuilt."
         },
         "stages": [
           {
-            "title": "Load permitted task context",
-            "detail": "Read the approved IDs and valid versions needed for this request. Limit context size and recheck access, expiry and revocation."
+            "title": "Scope the request",
+            "detail": "Authenticate the caller. Restrict the workspace and records before retrieval. Natural-language questions do not need STE formatting."
           },
           {
-            "title": "Run the harness",
-            "detail": "Application code defines the task, allowed decisions, tools, budgets and stopping conditions. The model cannot change those rules."
+            "title": "Use an exact identifier",
+            "detail": "When the canonical ID and version are known, use deterministic lookup. A model call is not required."
           },
           {
-            "title": "Ask the replaceable model",
-            "detail": "The chosen model receives a bounded task and permitted context. It may return a choice, a yes/no judgment or a score against an explicit rubric."
+            "title": "Search words and meaning",
+            "detail": "Hybrid search combines keyword matches and semantic similarity. Search approved descriptions and linked evidence. An embedding is a numerical representation used to compare meaning."
           },
           {
-            "title": "Validate typed signals",
-            "detail": "Parse the declared output schema. Check allowed categories, evidence references and the rubric. Reject invalid signals and escalate uncertainty."
+            "title": "Follow approved relationships",
+            "detail": "Use approved links for related context. Each linked record needs its own permission and validity check."
           },
           {
-            "title": "Select the permitted route",
-            "detail": "Use an approved code, retrieval or model route within the request budget. Return relevant IDs, versions and evidence instead of the whole vault."
+            "title": "Resolve and bound the result",
+            "detail": "Resolve candidates to current canonical records. Recheck access, approval, units, period and validity. Return IDs, versions, evidence and limits within budget."
           },
           {
-            "title": "Escalate uncertainty or new meaning",
-            "detail": "Hold uncertain decisions. Submit new meaning for exact-version human review. Calibration and JEV parity require separate evidence."
+            "title": "Hold unsupported interpretation",
+            "detail": "An optional model may supply choice, yes/no or rubric signals. Code validates them. Hold ambiguity and return new meaning or conflicts to human review. Routine permitted retrieval needs no new approval."
           }
         ],
         "nodes": [
           {
-            "id": "vault",
-            "title": "Approved vault",
+            "id": "request",
+            "title": "Scoped request",
             "lines": [
-              "Allowed IDs + versions",
-              "Relevant vault records"
+              "Caller + permitted vault",
+              "Question or known ID"
             ],
-            "role": "store",
+            "role": "input",
             "x": 20,
             "y": 72,
             "width": 200,
-            "height": 90,
+            "height": 100,
             "steps": [
               0
             ]
@@ -2780,140 +2782,209 @@
             "id": "harness",
             "title": "Code harness",
             "lines": [
-              "Task + tools + budget",
-              "Policy outside model"
+              "Allowed routes + budget",
+              "Optional model help"
             ],
             "role": "agent",
             "x": 250,
             "y": 72,
             "width": 200,
-            "height": 90,
+            "height": 100,
+            "steps": [
+              0
+            ]
+          },
+          {
+            "id": "exact",
+            "title": "Exact ID lookup",
+            "lines": [
+              "Canonical ID + version",
+              "No model needed"
+            ],
+            "role": "store",
+            "x": 480,
+            "y": 72,
+            "width": 200,
+            "height": 100,
             "steps": [
               1
             ]
           },
           {
-            "id": "validator",
-            "title": "Check decisions",
+            "id": "check",
+            "title": "Current records",
             "lines": [
-              "Schema + evidence",
-              "Allowed values only"
+              "Rights + validity",
+              "Units + period + source"
             ],
             "role": "policy",
-            "x": 480,
-            "y": 72,
-            "width": 200,
-            "height": 90,
-            "steps": [
-              3
-            ]
-          },
-          {
-            "id": "route",
-            "title": "Permitted route",
-            "lines": [
-              "Code / retrieval / LLM",
-              "Steps + retry limits"
-            ],
-            "role": "agent",
             "x": 710,
             "y": 72,
             "width": 200,
-            "height": 90,
+            "height": 100,
             "steps": [
               4
             ]
           },
           {
-            "id": "working",
-            "title": "Bounded output",
+            "id": "output",
+            "title": "Bounded bundle",
             "lines": [
               "IDs + versions",
               "Evidence + limits"
             ],
-            "role": "store",
+            "role": "consumer",
             "x": 940,
             "y": 72,
             "width": 200,
-            "height": 90,
+            "height": 100,
             "steps": [
               4
             ]
           },
           {
             "id": "model",
-            "title": "Chosen model",
-            "lines": [
-              "Replaceable inference",
-              "No approval authority"
-            ],
-            "role": "model",
-            "x": 250,
-            "y": 235,
-            "width": 200,
-            "height": 90,
-            "steps": [
-              2
-            ]
-          },
-          {
-            "id": "signals",
             "title": "Typed signals",
             "lines": [
-              "Choice · yes/no",
-              "Rubric score"
+              "Choice / yes-no / score",
+              "No authority"
             ],
-            "role": "input",
-            "x": 480,
+            "role": "model",
+            "x": 20,
             "y": 235,
             "width": 200,
-            "height": 90,
-            "steps": [
-              3
-            ]
-          },
-          {
-            "id": "escalate",
-            "title": "Human review",
-            "lines": [
-              "Uncertain / new meaning",
-              "Hold until reviewed"
-            ],
-            "role": "gate",
-            "x": 710,
-            "y": 235,
-            "width": 200,
-            "height": 90,
+            "height": 100,
             "steps": [
               5
             ]
           },
           {
-            "id": "stop",
-            "title": "Stop invalid work",
+            "id": "links",
+            "title": "Approved links",
             "lines": [
-              "Invalid / denied signal",
-              "No permitted operation"
+              "Related records",
+              "Check each record"
             ],
-            "role": "stop",
+            "role": "store",
+            "x": 250,
+            "y": 235,
+            "width": 200,
+            "height": 100,
+            "steps": [
+              3
+            ]
+          },
+          {
+            "id": "hybrid",
+            "title": "Hybrid search",
+            "lines": [
+              "Keyword + meaning",
+              "Derived search index"
+            ],
+            "role": "store",
+            "x": 480,
+            "y": 235,
+            "width": 200,
+            "height": 100,
+            "steps": [
+              2
+            ]
+          },
+          {
+            "id": "review",
+            "title": "Hold + review",
+            "lines": [
+              "Unclear / new meaning",
+              "Human review"
+            ],
+            "role": "gate",
             "x": 940,
             "y": 235,
             "width": 200,
-            "height": 90,
+            "height": 100,
             "steps": [
-              3,
               5
             ]
           }
         ],
         "edges": [
           {
-            "id": "vault-harness",
-            "from": "vault",
+            "id": "scope-harness",
+            "from": "request",
             "to": "harness",
-            "path": "M220 117 H250",
+            "path": "M220 122 H250",
+            "steps": [
+              0
+            ],
+            "kind": "flow"
+          },
+          {
+            "id": "harness-exact",
+            "from": "harness",
+            "to": "exact",
+            "path": "M450 122 H480",
             "steps": [
               1
+            ],
+            "kind": "flow"
+          },
+          {
+            "id": "exact-check",
+            "from": "exact",
+            "to": "check",
+            "path": "M680 122 H710",
+            "steps": [
+              4
+            ],
+            "kind": "flow"
+          },
+          {
+            "id": "harness-hybrid",
+            "from": "harness",
+            "to": "hybrid",
+            "path": "M420 172 V193 H580 V235",
+            "steps": [
+              2
+            ],
+            "kind": "flow"
+          },
+          {
+            "id": "harness-links",
+            "from": "harness",
+            "to": "links",
+            "path": "M350 172 V235",
+            "steps": [
+              3
+            ],
+            "kind": "flow"
+          },
+          {
+            "id": "hybrid-check",
+            "from": "hybrid",
+            "to": "check",
+            "path": "M680 285 H695 V142 H710",
+            "steps": [
+              4
+            ],
+            "kind": "flow"
+          },
+          {
+            "id": "links-check",
+            "from": "links",
+            "to": "check",
+            "path": "M450 285 H465 V210 H790 V172",
+            "steps": [
+              4
+            ],
+            "kind": "flow"
+          },
+          {
+            "id": "check-output",
+            "from": "check",
+            "to": "output",
+            "path": "M910 122 H940",
+            "steps": [
+              4
             ],
             "kind": "flow"
           },
@@ -2921,98 +2992,27 @@
             "id": "harness-model",
             "from": "harness",
             "to": "model",
-            "path": "M350 162 V235",
+            "path": "M270 172 V200 H120 V235",
             "steps": [
-              2
+              5
             ],
-            "kind": "flow",
-            "label": "Bounded task",
-            "labelAt": [
-              391,
-              201
-            ]
+            "kind": "flow"
           },
           {
-            "id": "model-signals",
+            "id": "model-harness",
             "from": "model",
-            "to": "signals",
-            "path": "M450 280 H480",
-            "steps": [
-              3
-            ],
-            "kind": "flow"
-          },
-          {
-            "id": "signals-validator",
-            "from": "signals",
-            "to": "validator",
-            "path": "M580 235 V162",
-            "steps": [
-              3
-            ],
-            "kind": "flow",
-            "label": "Parse + check",
-            "labelAt": [
-              623,
-              203
-            ]
-          },
-          {
-            "id": "validator-route",
-            "from": "validator",
-            "to": "route",
-            "path": "M680 117 H710",
-            "steps": [
-              4
-            ],
-            "kind": "flow"
-          },
-          {
-            "id": "route-working",
-            "from": "route",
-            "to": "working",
-            "path": "M910 117 H940",
-            "steps": [
-              4
-            ],
-            "kind": "flow"
-          },
-          {
-            "id": "validator-review",
-            "from": "validator",
-            "to": "escalate",
-            "path": "M610 162 V193 H810 V235",
+            "to": "harness",
+            "path": "M220 285 H235 V150 H250",
             "steps": [
               5
             ],
-            "kind": "return",
-            "label": "Uncertain",
-            "labelAt": [
-              763,
-              187
-            ]
+            "kind": "flow"
           },
           {
-            "id": "validator-stop",
-            "from": "validator",
-            "to": "stop",
-            "path": "M680 137 H695 V214 H1040 V235",
-            "steps": [
-              3,
-              5
-            ],
-            "kind": "deny",
-            "label": "Invalid / denied",
-            "labelAt": [
-              970,
-              207
-            ]
-          },
-          {
-            "id": "new-meaning-review",
-            "from": "working",
-            "to": "escalate",
-            "path": "M1040 162 V196 H910 V280",
+            "id": "check-review",
+            "from": "check",
+            "to": "review",
+            "path": "M870 172 V205 H1040 V235",
             "steps": [
               5
             ],
@@ -3023,7 +3023,7 @@
       },
       "agentExplanation": {
         "title": "Model + code harness",
-        "definition": "An agent is a software loop with a chosen model, application code, permitted memory and approved tools. These are roles of one proposed harness.",
+        "definition": "The harness bounds model signals, retrieval and tools. Application code enforces authority.",
         "steps": [
           {
             "title": "Observe a bounded task",
@@ -3039,7 +3039,7 @@
           },
           {
             "title": "Route and observe the result",
-            "text": "Select an approved operation. Record its inputs, outcome, costs and stopping reason within the allowed limits."
+            "text": "Use exact IDs, keyword plus semantic search, or approved links within budget. Resolve matches to current records. Recheck each record before returning bounded evidence."
           },
           {
             "title": "Explain or escalate",
@@ -3060,7 +3060,8 @@
           "A rubric score is not a probability. Calibrated probabilities require observed-outcome tests.",
           "The three decision types and JEV parity remain proposed and unverified.",
           "Explainability means observable rules, sources and receipts; it does not require hidden model reasoning.",
-          "A cache or model result cannot approve a record or grant access."
+          "A cache or model result cannot approve a record or grant access.",
+          "Semantic similarity is not truth or approval. Search quality and savings remain pilot hypotheses."
         ]
       }
     },
@@ -3069,7 +3070,7 @@
       "type": "consolidated",
       "eyebrow": "Delivery · MCP boundary + explicit failure behavior",
       "title": "Deliver permitted context. Hold failed checks.",
-      "lead": "The server checks the caller and each record. A failed check produces a controlled response with traceable evidence.",
+      "lead": "Search permitted records. Recheck current approval and validity before returning context.",
       "items": [],
       "note": "MCP defines context exchange. Authentication, authorization and durable failure behavior require implementation. Consumers control their own actions.",
       "covers": [
@@ -3090,7 +3091,11 @@
             },
             {
               "title": "Access at use",
-              "text": "Recheck permissions for each resource or tool request."
+              "text": "Authorize and filter before retrieval. Resolve candidates to canonical records. Recheck current permissions, versions, approval and validity before delivery."
+            },
+            {
+              "title": "Bounded search response",
+              "text": "Return only permitted context. Treat empty or ambiguous matches as a hold or clarification. A similarity score cannot approve a claim."
             }
           ],
           "note": "MCP defines context exchange. Authentication and application authorization still require implementation. The protocol alone does not make a product secure.",
@@ -3113,7 +3118,7 @@
                   "Per-record permissions",
                   "Current approved versions"
                 ],
-                "detail": "Authorization decides which records the caller may access. Check current approval, expiry and withdrawal."
+                "detail": "Restrict permitted records before exact or hybrid retrieval. Recheck current canonical approval, access, expiry and withdrawal before delivery."
               },
               {
                 "id": "assemble",
@@ -3157,7 +3162,7 @@
             },
             {
               "title": "Expired or withdrawn input",
-              "text": "Invalidate dependent output and cached views."
+              "text": "Invalidate dependent output, search indexes and cached views. Rebuild from approved releases. Block stale or revoked content at delivery."
             },
             {
               "title": "Denied consumer access",
@@ -3165,7 +3170,11 @@
             },
             {
               "title": "Publication failure",
-              "text": "Keep the prior release available. Do not expose a partial update."
+              "text": "Do not expose a partial update. Keep the prior release available only while it remains valid and permitted."
+            },
+            {
+              "title": "Empty or ambiguous search",
+              "text": "Return a controlled hold or clarification. Route new interpretation or conflicting meaning to human review."
             }
           ],
           "note": "Proposed acceptance behaviors. The implementation must prove them with durable readback and failure tests.",
@@ -3301,13 +3310,15 @@
       ],
       "miniArchitecture": {
         "id": "delivery-mini",
-        "title": "A request crosses one explicit delivery boundary",
-        "summary": "The server verifies the caller, record rights and current release before it returns context.",
+        "title": "Two access checks protect one bounded response",
+        "summary": "Restrict candidates before search. Recheck current canonical records before MCP delivery.",
         "anchorNodes": [
           "canonical-registry",
           "mcp-delivery",
           "consumers",
-          "submissions"
+          "submissions",
+          "governed-retrieval",
+          "derived-search-index"
         ],
         "viewBox": [
           1180,
@@ -3319,87 +3330,87 @@
         },
         "stages": [
           {
-            "title": "Verify the caller",
-            "detail": "Authenticate the caller and identify the requested workspace and purpose. A protocol connection alone does not authorize a record read."
+            "title": "Verify and restrict",
+            "detail": "Authenticate the caller. Enforce workspace, purpose and record permissions before retrieval. Deny the request without exposing restricted text."
           },
           {
-            "title": "Read the permitted context",
-            "detail": "Locate requested canonical IDs and versions. Check the complete release, validity, withdrawal and dependent cache state."
+            "title": "Find permitted candidates",
+            "detail": "Use exact ID lookup, hybrid search or approved links within the permitted scope. Empty or ambiguous results return a controlled hold or clarification."
           },
           {
-            "title": "Enforce the authority gate",
-            "detail": "Recheck caller, workspace, purpose, source and record access for each resource or tool request. Deny access without leaking restricted content."
+            "title": "Recheck current canonical records",
+            "detail": "Resolve candidates to canonical IDs and versions. Check current permission, approval, validity and complete release state. Exclude expired, withdrawn or revoked records."
           },
           {
-            "title": "Return one valid bundle",
-            "detail": "Return current IDs, versions, evidence, validity and unresolved limits from a complete validated release. Keep the prior release when publication fails."
+            "title": "Return a bounded bundle",
+            "detail": "Return permitted IDs, versions, evidence, validity and unresolved limits through MCP. Do not expose a partial release. Reuse a prior release only if it is still valid and permitted."
           },
           {
-            "title": "Keep consumer actions separate",
-            "detail": "The consumer uses permitted context under its own action rules. Feedback and new interpretation start submissions. Failed checks remain denials, holds or invalidations."
+            "title": "Review changes and repair views",
+            "detail": "New meaning returns to submission and human review. Source updates, withdrawal and expiry invalidate dependent indexes. Rebuild from approved releases. Routine search does not approve records."
           }
         ],
         "nodes": [
           {
             "id": "caller",
-            "title": "Verified caller",
+            "title": "Verify + restrict",
             "lines": [
-              "Identity + workspace",
-              "Requested purpose"
+              "Caller + workspace",
+              "Permitted records only"
             ],
-            "role": "input",
+            "role": "policy",
             "x": 20,
             "y": 72,
             "width": 200,
-            "height": 90,
+            "height": 100,
             "steps": [
               0
             ]
           },
           {
-            "id": "read",
-            "title": "Read context",
+            "id": "search",
+            "title": "Search context",
             "lines": [
-              "Requested ID + version",
-              "Current full release"
+              "Exact / hybrid / links",
+              "Within permitted scope"
             ],
             "role": "agent",
             "x": 250,
             "y": 72,
             "width": 200,
-            "height": 90,
+            "height": 100,
             "steps": [
               1
             ]
           },
           {
             "id": "access",
-            "title": "Authority gate",
+            "title": "Recheck records",
             "lines": [
-              "Caller + record rights",
-              "Version + purpose"
+              "Rights + version",
+              "Approval + validity"
             ],
             "role": "policy",
             "x": 480,
             "y": 72,
             "width": 200,
-            "height": 90,
+            "height": 100,
             "steps": [
               2
             ]
           },
           {
             "id": "delivery",
-            "title": "Valid bundle",
+            "title": "MCP bundle",
             "lines": [
-              "IDs + evidence",
-              "Release + validity"
+              "IDs + evidence + limits",
+              "Complete valid release"
             ],
             "role": "store",
             "x": 710,
             "y": 72,
             "width": 200,
-            "height": 90,
+            "height": 100,
             "steps": [
               3
             ]
@@ -3415,42 +3426,9 @@
             "x": 940,
             "y": 72,
             "width": 200,
-            "height": 90,
+            "height": 100,
             "steps": [
-              4
-            ]
-          },
-          {
-            "id": "feedback",
-            "title": "New submission",
-            "lines": [
-              "Feedback → slide 07",
-              "Review new meaning"
-            ],
-            "role": "input",
-            "x": 20,
-            "y": 235,
-            "width": 200,
-            "height": 90,
-            "steps": [
-              4
-            ]
-          },
-          {
-            "id": "invalid",
-            "title": "Invalidate / hold",
-            "lines": [
-              "Expired / withdrawn",
-              "No stale delivery"
-            ],
-            "role": "stop",
-            "x": 250,
-            "y": 235,
-            "width": 200,
-            "height": 90,
-            "steps": [
-              1,
-              2
+              3
             ]
           },
           {
@@ -3458,140 +3436,195 @@
             "title": "Deny request",
             "lines": [
               "No restricted content",
-              "Failure audit receipt"
+              "Audit decision"
+            ],
+            "role": "stop",
+            "x": 20,
+            "y": 235,
+            "width": 200,
+            "height": 100,
+            "steps": [
+              0,
+              2
+            ]
+          },
+          {
+            "id": "hold",
+            "title": "Hold / clarify",
+            "lines": [
+              "Empty or ambiguous",
+              "No invented context"
+            ],
+            "role": "stop",
+            "x": 250,
+            "y": 235,
+            "width": 200,
+            "height": 100,
+            "steps": [
+              1
+            ]
+          },
+          {
+            "id": "invalid",
+            "title": "Invalidate index",
+            "lines": [
+              "Expired / revoked",
+              "Rebuild approved view"
             ],
             "role": "stop",
             "x": 480,
             "y": 235,
             "width": 200,
-            "height": 90,
+            "height": 100,
             "steps": [
-              2
+              2,
+              4
             ]
           },
           {
             "id": "retain",
             "title": "Prior release",
             "lines": [
-              "Publication check fails",
+              "Only if still valid",
               "No partial update"
             ],
             "role": "store",
             "x": 710,
             "y": 235,
             "width": 200,
-            "height": 90,
+            "height": 100,
             "steps": [
               3
+            ]
+          },
+          {
+            "id": "feedback",
+            "title": "New submission",
+            "lines": [
+              "New meaning → review",
+              "Update after approval"
+            ],
+            "role": "input",
+            "x": 940,
+            "y": 235,
+            "width": 200,
+            "height": 100,
+            "steps": [
+              4
             ]
           }
         ],
         "edges": [
           {
-            "id": "caller-read",
+            "id": "caller-search",
             "from": "caller",
-            "to": "read",
-            "path": "M220 117 H250",
+            "to": "search",
+            "path": "M220 122 H250",
             "steps": [
               1
             ],
             "kind": "flow"
           },
           {
-            "id": "read-access",
-            "from": "read",
+            "id": "search-recheck",
+            "from": "search",
             "to": "access",
-            "path": "M450 117 H480",
+            "path": "M450 122 H480",
             "steps": [
               2
             ],
             "kind": "flow"
           },
           {
-            "id": "access-bundle",
+            "id": "recheck-bundle",
             "from": "access",
             "to": "delivery",
-            "path": "M680 117 H710",
+            "path": "M680 122 H710",
             "steps": [
               3
             ],
-            "kind": "flow",
-            "label": "Permit",
-            "labelAt": [
-              696,
-              64
-            ]
+            "kind": "flow"
           },
           {
             "id": "bundle-consumer",
             "from": "delivery",
             "to": "consumer",
-            "path": "M910 117 H940",
+            "path": "M910 122 H940",
             "steps": [
-              4
+              3
             ],
             "kind": "flow"
           },
           {
-            "id": "read-invalid",
-            "from": "read",
-            "to": "invalid",
-            "path": "M350 162 V235",
+            "id": "caller-deny",
+            "from": "caller",
+            "to": "deny",
+            "path": "M120 172 V235",
             "steps": [
-              1,
-              2
+              0
             ],
-            "kind": "deny",
-            "label": "Stale / withdrawn",
-            "labelAt": [
-              414,
-              201
-            ]
+            "kind": "deny"
           },
           {
-            "id": "access-deny",
+            "id": "search-hold",
+            "from": "search",
+            "to": "hold",
+            "path": "M350 172 V235",
+            "steps": [
+              1
+            ],
+            "kind": "deny"
+          },
+          {
+            "id": "recheck-invalid",
+            "from": "access",
+            "to": "invalid",
+            "path": "M580 172 V235",
+            "steps": [
+              2,
+              4
+            ],
+            "kind": "deny"
+          },
+          {
+            "id": "recheck-deny",
             "from": "access",
             "to": "deny",
-            "path": "M580 162 V235",
+            "path": "M520 172 V202 H160 V235",
             "steps": [
               2
             ],
-            "kind": "deny",
-            "label": "Denied",
-            "labelAt": [
-              608,
-              201
-            ]
+            "kind": "deny"
           },
           {
             "id": "bundle-retain",
             "from": "delivery",
             "to": "retain",
-            "path": "M810 162 V235",
+            "path": "M810 172 V235",
             "steps": [
               3
             ],
-            "kind": "deny",
-            "label": "Release fails",
-            "labelAt": [
-              855,
-              201
-            ]
+            "kind": "deny"
           },
           {
             "id": "consumer-feedback",
             "from": "consumer",
             "to": "feedback",
-            "path": "M1040 162 V345 H120 V325",
+            "path": "M1040 172 V235",
             "steps": [
               4
             ],
-            "kind": "return",
-            "label": "New meaning / feedback",
-            "labelAt": [
-              539,
-              339
-            ]
+            "kind": "return"
+          },
+          {
+            "id": "feedback-index",
+            "from": "feedback",
+            "to": "invalid",
+            "path": "M1040 335 V345 H580 V335",
+            "steps": [
+              4
+            ],
+            "kind": "return"
           }
         ],
         "provenance": "Proposal · not from the reference slides"
@@ -3605,12 +3638,12 @@
             "text": "Read the caller, workspace, purpose and requested context IDs."
           },
           {
-            "title": "Check the release",
-            "text": "Locate a complete current release and reject expired, withdrawn or invalid dependencies."
+            "title": "Restrict and retrieve",
+            "text": "Apply caller and record policies before searching. Use exact IDs, hybrid search or approved links within the allowed scope."
           },
           {
-            "title": "Enforce access in code",
-            "text": "Check caller and source rights for every request. Treat model suggestions as untrusted proposals."
+            "title": "Recheck current records",
+            "text": "Resolve matches to canonical records. Check current rights, approval, release state and validity. An index hit cannot grant permission."
           },
           {
             "title": "Build a traceable bundle",
@@ -4287,7 +4320,7 @@
       "type": "consolidated",
       "eyebrow": "Investment case · full cost + controls + return worksheet",
       "title": "Count the full cost. Test the return.",
-      "lead": "Include setup, platform use, human work and operations. Compare the same accepted-task target in the editable worksheet.",
+      "lead": "Count indexing, search, model and human costs. Any saving remains a pilot hypothesis.",
       "items": [],
       "note": "Invented worksheet assumptions in USD. The neutral starting case assumes no improvement and shows added cost. No saving has been measured. Quality and permission gates still apply.",
       "covers": [
@@ -4305,11 +4338,11 @@
           "items": [
             {
               "title": "Setup",
-              "text": "Record contract, source mapping, adapters, deployment and acceptance tests."
+              "text": "Record contract, source mapping, adapters, deployment and acceptance tests. Include initial embeddings and search index creation."
             },
             {
               "title": "Recurring platform",
-              "text": "Tokens, warehouse queries, storage, tools, delivery and monitoring."
+              "text": "Tokens, warehouse queries, storage, tools, delivery and monitoring. Include query embeddings, search and optional result ranking."
             },
             {
               "title": "Human operations",
@@ -4317,7 +4350,7 @@
             },
             {
               "title": "Maintenance",
-              "text": "Licenses, seats, source updates, access changes, upgrades and recovery."
+              "text": "Licenses, seats, source updates, access changes, upgrades and recovery. Include index updates, rebuilds and invalidation."
             }
           ],
           "note": "Separate existing allocated costs from incremental spending. Include both consistently in the baseline and candidate. Count each cost once.",
@@ -4405,7 +4438,7 @@
             },
             {
               "title": "Count every cost once",
-              "text": "Track tokens, queries, seats, licenses and human review. Assign budget owners. Separate existing and incremental costs."
+              "text": "Track tokens, queries, seats, licenses and human review. Assign budget owners. Separate existing and incremental costs. Count index build, update, storage and query costs once. Enter observed search charges into the existing platform and setup totals; source model rates remain unchanged."
             }
           ],
           "note": "Keep certified queries unchanged. Review expert drafts before reuse. The supplied v7 guidance is not approved policy. No saving has been measured.",
@@ -4580,7 +4613,7 @@
           },
           {
             "title": "Count permitted execution",
-            "detail": "Track model, retrieval, warehouse, storage, tools and delivery work. Keep native certified queries unchanged. Include cache reads, writes, storage and invalidation."
+            "detail": "Count model, search, ranking, warehouse and delivery work. Include cache reads and writes. Measure each charge; do not assume savings."
           },
           {
             "title": "Count human handling",
@@ -4592,7 +4625,7 @@
           },
           {
             "title": "Compare the full cost",
-            "detail": "Separate setup from recurring cost. Separate allocated existing cost from incremental spending. Include licenses, seats, adapters, operations and recovery consistently."
+            "detail": "Separate setup from recurring cost. Include initial index build, updates, rebuilds, storage and queries. Allocate each charge once. Keep existing costs distinct from added spending."
           }
         ],
         "nodes": [
@@ -4630,9 +4663,9 @@
           },
           {
             "id": "execution",
-            "title": "Context + query",
+            "title": "Search + query",
             "lines": [
-              "Tokens + queries",
+              "Tokens + search + rank",
               "Tools + delivery"
             ],
             "role": "consumer",
@@ -4680,7 +4713,7 @@
             "id": "setup",
             "title": "One-time setup",
             "lines": [
-              "Contract + adapters",
+              "Adapters + index build",
               "Deployment + tests"
             ],
             "role": "input",
@@ -4696,8 +4729,8 @@
             "id": "recurring",
             "title": "Recurring costs",
             "lines": [
-              "Existing + added spend",
-              "Count each charge once"
+              "Updates + storage",
+              "Existing + added cost"
             ],
             "role": "input",
             "x": 480,
@@ -4909,7 +4942,8 @@
         "inputs": [
           "Baseline and candidate workloads with acceptance results",
           "Usage, review, rework, license and operations records",
-          "Explicit USD assumptions and setup costs"
+          "Explicit USD assumptions and setup costs",
+          "Measured index creation, updates, rebuilds, storage, search and optional ranking charges"
         ],
         "outputs": [
           "Cost per accepted task and recurring comparison",
@@ -4929,7 +4963,7 @@
       "type": "consolidated",
       "eyebrow": "Pilot acceptance · buyer value + current readiness",
       "title": "Prove the difference on the same real tasks.",
-      "lead": "Run the current process and the candidate against owner-reviewed cases. Let the evidence determine the next investment.",
+      "lead": "Test exact and keyword lookup against hybrid search. Measure relevance, cost, speed and access.",
       "items": [],
       "note": "No product outcome has been measured. The presentation and worksheets are available. Runtime, live integration, calibration and customer return require proof.",
       "covers": [
@@ -4943,7 +4977,12 @@
           "eyebrow": "The investment · decision evidence",
           "title": "Agree the proof before paying for scale.",
           "lead": "Run a baseline and a candidate on the same workload. Use held-out cases and complete cost evidence.",
-          "items": [],
+          "items": [
+            {
+              "title": "Retrieval trial",
+              "text": "Compare exact and keyword lookup with hybrid search on held-out questions. Test paraphrases, wrong units or periods, empty matches, ambiguity, expiry, revocation, cross-vault access and source-update rebuilds. Measure relevance, incorrect matches, latency, full cost and access-control results. Agree thresholds with the owner before testing."
+            }
+          ],
           "note": "Proposed pilot measurements. No product result has been measured. An accepted task passes owner criteria. p95 covers 95% of measured completion times."
         },
         {
@@ -5118,7 +5157,7 @@
       "miniArchitecture": {
         "id": "qualification-mini",
         "title": "A fair paired trial ends in an owner decision",
-        "summary": "Use held-out tasks that did not shape implementation. Compare baseline and candidate under the same acceptance rules.",
+        "summary": "Within the full task trial, compare exact and keyword lookup with proposed hybrid search. The owner agrees thresholds before testing.",
         "anchorNodes": [
           "context-agent",
           "decision-model",
@@ -5138,15 +5177,15 @@
         "stages": [
           {
             "title": "Agree the test and thresholds",
-            "detail": "The owner defines accepted outcomes, cost and service targets. Include normal, stale, conflicting and unauthorized cases."
+            "detail": "Agree owner thresholds first. Include paraphrases, exact IDs, wrong units or periods, empty matches, stale records, revoked access and cross-vault requests."
           },
           {
             "title": "Run both paths",
-            "detail": "Run the current process and implemented candidate on the same held-out workload. Track review queues and retries."
+            "detail": "Compare exact and keyword lookup with hybrid search. Use the same held-out tasks, approved records and access rules. Count retries and review queues."
           },
           {
             "title": "Collect comparable evidence",
-            "detail": "The evaluation harness records full cost, complete latency, supported meaning and access behavior. Preserve failures."
+            "detail": "Measure relevance, incorrect matches, full cost, latency and access behavior against owner-reviewed records. Preserve failed results."
           },
           {
             "title": "Review the evidence",
@@ -5180,10 +5219,10 @@
           },
           {
             "id": "baseline",
-            "title": "Current process",
+            "title": "Baseline lookup",
             "lines": [
-              "Baseline task results",
-              "Complete effort + cost"
+              "Exact ID + keywords",
+              "Current process cost"
             ],
             "role": "input",
             "x": 260,
@@ -5196,10 +5235,10 @@
           },
           {
             "id": "candidate",
-            "title": "Built candidate",
+            "title": "Hybrid candidate",
             "lines": [
-              "Same cases + rules",
-              "Include failure paths"
+              "Words + meaning",
+              "Same cases + rules"
             ],
             "role": "input",
             "x": 260,
@@ -5214,8 +5253,8 @@
             "id": "evidence",
             "title": "Evidence harness",
             "lines": [
-              "Cost + performance",
-              "Accuracy + trust"
+              "Relevance + errors",
+              "Speed / cost / access"
             ],
             "role": "agent",
             "x": 510,
@@ -5369,11 +5408,11 @@
           },
           {
             "title": "Run the held-out cases",
-            "text": "Collect normal, stale, conflict, revoked-access and cross-workspace cases at agreed load."
+            "text": "Collect normal, stale, conflict, revoked-access and cross-workspace cases at agreed load. Include paraphrases, exact IDs, incorrect periods or units, empty results and index rebuilds."
           },
           {
             "title": "Measure four outcomes",
-            "text": "Record accepted-task cost, complete latency, source-supported accuracy and authorization with durable audit readback."
+            "text": "Record accepted-task cost, complete latency, source-supported accuracy and authorization with durable audit readback. Compare relevance and incorrect matches against owner-reviewed expected records."
           },
           {
             "title": "Report limits honestly",
@@ -5408,11 +5447,11 @@
         },
         {
           "title": "Designed",
-          "text": "Submission review, linked context, agent limits and controlled delivery."
+          "text": "Submission review, linked context, proposed hybrid search and controlled delivery."
         },
         {
           "title": "Still to prove",
-          "text": "The runtime, live adapters, calibration and customer value."
+          "text": "Runtime search quality, access isolation, full cost and customer value."
         }
       ]
     },
@@ -6122,7 +6161,7 @@
       "detail": "Identity · access · validity · retention · audit"
     },
     "review": "Human approval binds to exact versions. New meaning and feedback return through preparation and review.",
-    "legend": "Solid arrows: approved processing and delivery. Dashed arrows: revision or new submission. IDs connect layers; IDs grant no permission.",
+    "legend": "Solid arrows: approved indexing, requests and delivery. Dashed arrows: review or correction. Similarity grants no approval or permission.",
     "stages": [
       {
         "title": "Submit, prepare and review",
@@ -6134,15 +6173,15 @@
       },
       {
         "title": "Link the semantic layers",
-        "detail": "Organize Data, Metric, Ontology and Interpretation records in a controlled workspace. Derived objects retain their own IDs and references to approved input versions."
+        "detail": "Organize Data, Metric, Ontology and Interpretation records in a controlled workspace. Derived objects retain their own IDs and references to approved input versions. Build a derived search index from approved descriptions and linked evidence in complete releases. Preserve IDs, versions, formulas, units and validity dates."
       },
       {
-        "title": "Publish and deliver permitted context",
-        "detail": "Publish a complete validated release. The MCP server checks caller and record access. Consumers receive IDs, evidence and current versions, and control their own actions."
+        "title": "Find, recheck and deliver",
+        "detail": "Authenticate the request and restrict the search to permitted records. Use exact IDs or keyword plus semantic search. Resolve matches to current canonical records. Recheck permission, approval and validity before MCP returns a bounded bundle."
       },
       {
         "title": "Review feedback and corrections",
-        "detail": "Consumer feedback and new agent interpretations start submissions. Human approval never happens automatically. Expiry, withdrawal or access changes invalidate dependent outputs."
+        "detail": "Consumer feedback and new agent interpretations start submissions. Human approval never happens automatically. Expiry, withdrawal or access changes invalidate dependent outputs. Update or invalidate the search index after approved source changes, expiry or withdrawal. A stale index cannot authorize delivery."
       }
     ],
     "nodes": [
@@ -6287,13 +6326,13 @@
         "id": "mcp-delivery",
         "step": 3,
         "x": 750,
-        "y": 291,
+        "y": 365,
         "width": 226,
         "height": 108,
         "title": "Publication + MCP",
         "lines": [
-          "Atomic release checks",
-          "Caller + record access",
+          "Complete release only",
+          "Final record recheck",
           "IDs + valid versions"
         ],
         "dark": true
@@ -6302,16 +6341,45 @@
         "id": "consumers",
         "step": 3,
         "x": 1010,
-        "y": 291,
+        "y": 390,
         "width": 226,
         "height": 108,
         "title": "Consumer applications",
         "lines": [
-          "Use permitted context",
+          "Request permitted context",
           "Own action authority",
           "Feedback → submission"
         ],
         "dark": false
+      },
+      {
+        "id": "derived-search-index",
+        "step": 2,
+        "x": 950,
+        "y": 78,
+        "width": 286,
+        "height": 90,
+        "title": "Derived search index",
+        "lines": [
+          "Approved release references",
+          "Rebuild on change / withdrawal"
+        ],
+        "dark": false
+      },
+      {
+        "id": "governed-retrieval",
+        "step": 3,
+        "x": 950,
+        "y": 220,
+        "width": 286,
+        "height": 108,
+        "title": "Governed retrieval",
+        "lines": [
+          "Authenticate + filter access",
+          "Exact / keyword + meaning",
+          "Resolve current records"
+        ],
+        "dark": true
       }
     ],
     "edges": [
@@ -6414,7 +6482,7 @@
       {
         "id": "publish-ontology-layer",
         "step": 3,
-        "path": "M616 235 H660 V307 H750",
+        "path": "M616 235 H660 V381 H750",
         "dashed": false,
         "from": "ontology-layer",
         "to": "mcp-delivery"
@@ -6422,7 +6490,7 @@
       {
         "id": "publish-data-layer",
         "step": 3,
-        "path": "M616 315 H678 V331 H750",
+        "path": "M616 315 H678 V405 H750",
         "dashed": false,
         "from": "data-layer",
         "to": "mcp-delivery"
@@ -6430,7 +6498,7 @@
       {
         "id": "publish-metric-layer",
         "step": 3,
-        "path": "M616 395 H696 V355 H750",
+        "path": "M616 395 H696 V429 H750",
         "dashed": false,
         "from": "metric-layer",
         "to": "mcp-delivery"
@@ -6438,7 +6506,7 @@
       {
         "id": "publish-interpretation-layer",
         "step": 3,
-        "path": "M616 475 H714 V379 H750",
+        "path": "M616 475 H714 V453 H750",
         "dashed": false,
         "from": "interpretation-layer",
         "to": "mcp-delivery"
@@ -6446,7 +6514,7 @@
       {
         "id": "deliver-consumer",
         "step": 3,
-        "path": "M976 345 H1010",
+        "path": "M976 430 H1010",
         "dashed": false,
         "from": "mcp-delivery",
         "to": "consumers"
@@ -6454,10 +6522,58 @@
       {
         "id": "feedback-submission",
         "step": 4,
-        "path": "M1123 399 V516 H12 V184 H108 V168",
+        "path": "M1123 498 V516 H12 V184 H108 V168",
         "dashed": true,
         "from": "consumers",
         "to": "submissions"
+      },
+      {
+        "id": "approved-index",
+        "from": "mcp-delivery",
+        "to": "derived-search-index",
+        "path": "M905 365 V123 H950",
+        "step": 2,
+        "dashed": false
+      },
+      {
+        "id": "request-search",
+        "from": "consumers",
+        "to": "governed-retrieval",
+        "path": "M1150 390 V328",
+        "step": 3,
+        "dashed": false
+      },
+      {
+        "id": "query-index",
+        "from": "governed-retrieval",
+        "to": "derived-search-index",
+        "path": "M1040 220 V168",
+        "step": 3,
+        "dashed": false
+      },
+      {
+        "id": "index-matches",
+        "from": "derived-search-index",
+        "to": "governed-retrieval",
+        "path": "M1160 168 V220",
+        "step": 3,
+        "dashed": false
+      },
+      {
+        "id": "resolve-record",
+        "from": "governed-retrieval",
+        "to": "canonical-registry",
+        "path": "M950 254 H925 V185 H850 V168",
+        "step": 3,
+        "dashed": false
+      },
+      {
+        "id": "retrieval-delivery",
+        "from": "governed-retrieval",
+        "to": "mcp-delivery",
+        "path": "M1010 328 V345 H850 V365",
+        "step": 3,
+        "dashed": false
       }
     ]
   },

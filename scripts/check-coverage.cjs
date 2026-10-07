@@ -35,5 +35,5 @@ for(const index of pitchSlides){
  assert(slide.pitchSignals?.length>=1&&slide.pitchSignals.length<=3,slide.id+' needs 1 to 3 leadership takeaways');
  for(const signal of slide.pitchSignals)assert(signal.title?.trim()&&signal.text?.trim(),slide.id+' leadership takeaways need a title and detail');
 }
-console.log('Coverage: PASS (16 slides; all 31 topics retained; 4 authorized leadership rewrites and 27 original topics exact; architecture 5; source cost data retained)');
+console.log('Coverage: PASS (16 slides; all 31 topics retained; authorized leadership and search revisions; retained topic hashes exact; architecture 5; source cost data retained)');
 console.log('Mini architectures: PASS (12 focused diagrams; full-map anchors; all phase highlights; 7 exception routes and complete agent explanations; 6 leadership takeaway groups)');
