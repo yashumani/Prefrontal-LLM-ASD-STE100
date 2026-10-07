@@ -43,7 +43,8 @@ assert(!deck.costLab.models.some(model=>model.id==='amp'),'Internal negotiated r
 assert.equal(deck.costLab.params.length,14,'Retain the source setting reference.');
 assert.equal(deck.costLab.recs.length,6,'Retain all six qualified task-setting examples.');
 assert.match(deck.costLab.rateStatus,/not checked|not verified/i);
-assert.equal(sourceSlides.filter(slide=>slide.infographic).length,10);
+const leadershipIds=new Set(['opening-thesis','fragmented-context','product-overview','investment-case']);
+assert.equal(sourceSlides.filter(slide=>slide.infographic&&!leadershipIds.has(slide.id)).length,9,'Keep the nine unchanged source infographics outside the authorized leadership rewrites.');
 assert.equal(sourceSlides.filter(slide=>slide.tokenCost).length,1);
 const slideText = id => JSON.stringify(byId(id));
 assert.match(slideText('opening-thesis'), /Prefrontal/i, 'Leadership must see the product name immediately.');
@@ -75,8 +76,8 @@ assert.match(slideText('meaning-preserving-ste'), /source|original/i, 'STE prepa
 assert.match(slideText('human-review-routes'), /version/i, 'Human approval must bind to the exact version.');
 assert.match(slideText('secure-delivery'), /authoriz|permission|access/i, 'MCP delivery must explain access control.');
 for (const state of ['Available now', 'Designed', 'To implement', 'To qualify']) assert(slideText('evidence-boundary').includes(state), `Readiness must distinguish ${state}.`);
-const productFlows = sourceSlides.filter(slide => slide.type === 'product-flow');
-assert.equal(productFlows.length, 5, 'The source deck needs five overview, existing-stack and developer flow diagrams.');
+const productFlows = sourceSlides.filter(slide => slide.type === 'product-flow'&&!leadershipIds.has(slide.id));
+assert.equal(productFlows.length, 4, 'Keep the four existing-stack and developer source flow diagrams outside the authorized leadership rewrite.');
 for (const slide of productFlows) {
   assert.equal(slide.flow?.nodes?.length, 4, `${slide.id} needs four readable explanatory stages.`);
   for (const stage of slide.flow.nodes) {
@@ -172,11 +173,33 @@ for (const slide of deck.slides) assert(html.includes(`id="static-${slide.id}"`)
 const staticHTML=html.slice(html.indexOf('<noscript>'),html.indexOf('</noscript>'));
 const svgClasses = [...staticHTML.matchAll(/<svg\b[^>]*\bclass=["']([^"']+)["'][^>]*>/g)].map(match => match[1].split(/\s+/));
 assert(svgClasses.filter(classes=>classes.includes('motion-diagram')).length>=20,'Keep the original diagrams and new composite infographics in the no-JS detail.');
-assert.equal(svgClasses.filter(classes => classes.includes('mini-architecture-svg')).length, 7, 'The seven requested slides need static mini architectures.');
+assert.equal(svgClasses.filter(classes => classes.includes('mini-architecture-svg')).length, 12, 'The twelve requested slides need static mini architectures.');
 assert.equal(svgClasses.filter(classes => classes.includes('architecture-svg')).length, 1, 'Exactly one complete architecture SVG belongs on slide five.');
-assert.equal(svgClasses.filter(classes => classes.includes('product-flow-svg')).length, 5, 'The product needs five readable overview, existing-stack and developer flow diagrams.');
+assert.equal(svgClasses.filter(classes => classes.includes('product-flow-svg')).length, 4, 'The product retains four original existing-stack and developer flow diagrams; the executive overview uses a focused mini architecture.');
+const staticSlideHTML=index=>{
+  const start=staticHTML.indexOf(`id="static-${deck.slides[index].id}"`);
+  const next=index+1<deck.slides.length?staticHTML.indexOf(`id="static-${deck.slides[index+1].id}"`):staticHTML.length;
+  assert(start>=0&&next>start,'Each static slide must retain an ordered content region.');
+  return staticHTML.slice(start,next);
+};
+const escapeHTML=value=>String(value).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+for(const index of [0,1,2,3,13,14]){
+  const slide=deck.slides[index],content=staticSlideHTML(index);
+  assert.equal((content.match(/class="pitch-signal"/g)||[]).length,slide.pitchSignals.length,slide.id+' static leadership takeaway count');
+  for(const signal of slide.pitchSignals){assert(content.includes(escapeHTML(signal.title)),slide.id+' static takeaway title');assert(content.includes(escapeHTML(signal.text)),slide.id+' static takeaway detail');}
+}
+const attempts=hurdle.acceptedTarget/(hurdle.acceptancePercent/100);
+const monthlyRequired=hurdle.monthlyOverhead+hurdle.setup/hurdle.months;
+const hurdleValues={attempts,monthlyRequired,perAttempt:monthlyRequired/attempts,handlingMinutes:(monthlyRequired/attempts)/hurdle.hourly*60};
+const leadershipHTML=staticSlideHTML(3);
+for(const [key,value]of Object.entries(hurdleValues)){
+  const tag=leadershipHTML.match(new RegExp(`<[^>]*\\bdata-hurdle="${key}"[^>]*>`));
+  assert(tag,`The static leadership hurdle needs ${key}.`);
+  const attribute=tag[0].match(/\bdata-value="([^"]+)"/);
+  assert(attribute&&Math.abs(Number(attribute[1])-value)<1e-7,`The static leadership hurdle must calculate ${key} from the declared inputs.`);
+}
 for (const id of expectedNodes) assert(html.includes(`data-node="${id}"`), `Static architecture is missing ${id}.`);
 for (const edge of architecture.edges) assert(html.includes(`data-edge="${edge.id}"`), `Static architecture is missing ${edge.id}.`);
 assert(html.includes('data-policy="external"') && html.includes('data-review="owner"'), 'The static architecture must preserve independent policy and human review.');
 assert(!/<animateMotion\b/.test(staticHTML), 'The JavaScript-disabled fallback must contain no native animation.');
-console.log(`Static checks: PASS (${deck.slides.length} product-first slides; four leadership slides; one full 12-node architecture on slide five; ${architecture.edges.length} directed connections; five product flow diagrams; existing-stack adapter and LookML mapping boundaries; certified-query and reviewed-draft distinction; complete cost scope and seven-stage governance alignment; neutral cost assumptions; four pilot dimensions; ${deck.sources.length} primary references; source diagrams plus consolidated infographics; supplied white/red brand tokens; complete no-JS fallback)`);
+console.log(`Static checks: PASS (${deck.slides.length} product-first slides; four leadership slides; 12 focused mini architectures; six leadership takeaway groups; four calculated economic hurdle values; one full 12-node architecture on slide five; ${architecture.edges.length} directed connections; four retained source flow diagrams; existing-stack adapter and LookML mapping boundaries; certified-query and reviewed-draft distinction; complete cost scope and seven-stage governance alignment; neutral cost assumptions; four pilot dimensions; ${deck.sources.length} primary references; source diagrams plus consolidated infographics; supplied white/red brand tokens; complete no-JS fallback)`);

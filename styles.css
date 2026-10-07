@@ -87,3 +87,52 @@ body{background:var(--paper);background-image:none;-webkit-font-smoothing:antial
 @media(max-width:760px){.mini-architecture-svg{min-width:1050px}.mini-focus-visual .diagram-viewport{overflow-x:auto;max-width:100%}.agent-role-strip,.agent-steps,.agent-contract{grid-template-columns:1fr}.agent-role-strip{gap:5px}.agent-detail-body{padding:12px}}
 @media print{.mini-architecture-svg{min-width:0!important;width:100%!important;max-height:none!important}.mini-focus-visual .diagram-viewport{overflow:visible!important}.agent-role-strip{padding:7px 10px;gap:10px;grid-template-columns:180px 1fr}.agent-role-strip strong,.agent-role-strip p{font-size:10px}.mini-focus-visual .stage-caption{display:none!important}}
 .type-consolidated:has(.mini-focus-visual){padding-top:22px;padding-bottom:12px}
+
+/* The leadership pitch uses the same mechanism and evidence in both views. */
+.has-mini-architecture.has-pitch-signals{padding-top:20px;padding-bottom:14px}
+.has-mini-architecture.has-pitch-signals h1,.has-mini-architecture.has-pitch-signals h2{max-width:none;font-size:clamp(30px,3.05vw,44px);line-height:1.08;margin-bottom:10px}
+.has-mini-architecture.has-pitch-signals .eyebrow{margin-bottom:10px}
+.has-mini-architecture.has-pitch-signals>.lead{max-width:none;font-size:17px;line-height:1.4;margin-bottom:12px}
+.has-mini-architecture.has-pitch-signals .mechanism-figure{margin:8px 0}
+.has-mini-architecture.has-pitch-signals .stage-caption{display:grid;grid-template-columns:1fr auto;gap:0 12px;padding-top:7px;margin-top:7px}
+.has-mini-architecture.has-pitch-signals .stage-title{font-size:14px}
+.has-mini-architecture.has-pitch-signals .stage-detail{grid-column:1;min-height:0;font-size:13px;line-height:1.4;margin:3px 0 0}
+.has-mini-architecture.has-pitch-signals .stage-controls{grid-column:2;grid-row:1/3;align-self:center;gap:7px}
+.has-mini-architecture.has-pitch-signals .provenance{font-size:11px;margin:6px 0}
+.has-mini-architecture.has-pitch-signals .slide-note{max-width:none;font-size:11px;line-height:1.4;margin-top:9px;padding-top:8px}
+.pitch-signals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:10px 0}
+.pitch-signal{min-width:0;padding:10px 13px;border:1px solid var(--line);border-top:3px solid var(--ink);border-radius:0 0 8px 8px;background:var(--paper)}
+.pitch-signal:first-child{border-top-color:var(--red)}
+.pitch-signal h3{font-size:15px;line-height:1.2;margin:0 0 4px}
+.pitch-signal p{font-size:13px;line-height:1.4;margin:0;color:var(--muted)}
+.has-pitch-signals .agent-role-strip{margin-top:9px;padding-top:8px;padding-bottom:8px}
+.leadership-case-compact .investment-hurdle{grid-template-columns:100px minmax(0,1fr);gap:2px 18px;padding:10px 14px;border-top-width:2px;border-radius:8px}
+.leadership-case-compact .design-label{font-size:9px;letter-spacing:.5px}
+.leadership-case-compact .hurdle-amount{font-size:43px;grid-row:2/4;margin:0}
+.leadership-case-compact .hurdle-unit{font-size:17px;max-width:none;margin:2px 0}
+.leadership-case-compact .hurdle-assumptions{font-size:11px;line-height:1.4}
+.leadership-case-compact .hurdle-support{gap:6px 18px;margin-top:5px;padding-top:6px;font-size:10px;line-height:1.4}
+.leadership-case-compact .hurdle-definition{font-size:10px;line-height:1.4;margin-top:4px}
+@media(max-width:1100px){.has-mini-architecture.has-pitch-signals .stage-caption{display:block}.has-mini-architecture.has-pitch-signals .stage-controls{margin-top:8px}.pitch-signal{padding:9px 10px}.pitch-signal h3{font-size:14px}.pitch-signal p{font-size:12px}}
+@media(max-width:760px){.has-mini-architecture.has-pitch-signals h1,.has-mini-architecture.has-pitch-signals h2{font-size:32px}.has-mini-architecture.has-pitch-signals>.lead{font-size:16px}.pitch-signals{grid-template-columns:1fr;gap:8px}.pitch-signal h3{font-size:15px}.pitch-signal p{font-size:14px}.leadership-case-compact .investment-hurdle{grid-template-columns:85px minmax(0,1fr);gap:6px 12px;padding:12px}.leadership-case-compact .hurdle-amount{font-size:36px}.leadership-case-compact .hurdle-unit{font-size:16px}.leadership-case-compact .hurdle-assumptions{grid-column:1/-1}.leadership-case-compact .hurdle-support{flex-direction:column}.has-mini-architecture.has-pitch-signals .stage-detail{font-size:14px}}
+@media print{.has-mini-architecture.has-pitch-signals{padding:0!important}.has-mini-architecture.has-pitch-signals h1,.has-mini-architecture.has-pitch-signals h2{font-size:29px;margin-bottom:8px}.has-mini-architecture.has-pitch-signals>.lead{font-size:13px;margin-bottom:8px}.has-mini-architecture.has-pitch-signals .eyebrow{margin-bottom:7px}.has-mini-architecture.has-pitch-signals .stage-caption,.has-mini-architecture.has-pitch-signals .static-diagram-caption,.has-mini-architecture.has-pitch-signals .diagram-scroll-hint{display:none!important}.has-mini-architecture.has-pitch-signals .mechanism-figure{margin:4px 0}.has-mini-architecture.has-pitch-signals .provenance{font-size:8px;margin:4px 0}.pitch-signals{gap:8px;margin:7px 0;grid-template-columns:repeat(3,minmax(0,1fr))}.pitch-signal{padding:7px 9px;border-top-width:2px}.pitch-signal h3{font-size:11px;margin-bottom:3px}.pitch-signal p{font-size:10px;line-height:1.3}.has-mini-architecture.has-pitch-signals .slide-note{font-size:9px;margin-top:7px;padding-top:6px}.leadership-case-compact .investment-hurdle{grid-template-columns:85px minmax(0,1fr);padding:7px 10px;gap:2px 12px}.leadership-case-compact .design-label{font-size:8px}.leadership-case-compact .hurdle-amount{font-size:34px}.leadership-case-compact .hurdle-unit{font-size:13px}.leadership-case-compact .hurdle-assumptions,.leadership-case-compact .hurdle-support,.leadership-case-compact .hurdle-definition{font-size:8px}.leadership-case-compact .hurdle-support{margin-top:3px;padding-top:4px;flex-direction:row}.has-pitch-signals .agent-role-strip{margin-top:7px}}
+/* Keep the projected pitch within one screen without scaling diagram labels. */
+@media screen and (min-width:1101px){
+  .has-mini-architecture.has-pitch-signals{padding-top:10px;padding-bottom:8px}
+  .has-mini-architecture.has-pitch-signals .eyebrow{margin-bottom:6px}
+  .has-mini-architecture.has-pitch-signals h1,.has-mini-architecture.has-pitch-signals h2{margin-bottom:8px}
+  .has-mini-architecture.has-pitch-signals>.lead{margin-bottom:8px}
+  .has-mini-architecture.has-pitch-signals .mechanism-figure{margin:4px 0}
+  .has-mini-architecture.has-pitch-signals .stage-caption{display:flex;gap:12px;align-items:center;margin-top:4px;padding-top:4px}
+  .has-mini-architecture.has-pitch-signals .stage-title{flex:0 1 185px;margin:0}
+  .has-mini-architecture.has-pitch-signals .stage-detail{flex:1;margin:0}
+  .has-mini-architecture.has-pitch-signals .stage-controls{flex-shrink:0;margin:0}
+  .has-mini-architecture.has-pitch-signals .provenance{margin:4px 0}
+  .has-mini-architecture.has-pitch-signals .pitch-signals{margin:8px 0}
+  .has-mini-architecture.has-pitch-signals .pitch-signal{padding-top:8px;padding-bottom:8px}
+  .has-mini-architecture.has-pitch-signals .slide-note{margin-top:4px;padding-top:6px}
+  .has-mini-architecture.has-pitch-signals .topic-strip{margin:7px 0}
+  .leadership-case-compact .investment-hurdle{padding-top:6px;padding-bottom:6px}
+  .leadership-case-compact .hurdle-support{margin-top:3px;padding-top:4px}
+  .leadership-case-compact .hurdle-definition{margin-top:2px}
+}

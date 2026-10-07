@@ -9,6 +9,27 @@ const base=process.env.PREFRONTAL_BASE_URL||'http://127.0.0.1:8893/';
 const near=(a,b)=>assert(Math.abs(a-b)<1e-7,`Expected ${b}, got ${a}`);
 const norm=s=>s.replace(/\s+/g,' ').trim();
 const pages=pdf=>(pdf.toString('latin1').match(/\/Type\s*\/Page\b/g)||[]).length;
+const focusedIndices=[0,1,2,3,6,7,8,9,10,12,13,14];
+const detailedAgentIndices=[6,7,8,9,10,12,13];
+const leadershipIndices=[0,1,2,3,13,14];
+const hurdle=deck.pitch.economicHurdle;
+const hurdleAttempts=hurdle.acceptedTarget/(hurdle.acceptancePercent/100);
+const hurdleMonthly=hurdle.monthlyOverhead+hurdle.setup/hurdle.months;
+const hurdleValues={attempts:hurdleAttempts,monthlyRequired:hurdleMonthly,perAttempt:hurdleMonthly/hurdleAttempts,handlingMinutes:(hurdleMonthly/hurdleAttempts)/hurdle.hourly*60};
+async function checkLeadershipSignals(region,slide){
+ const cards=region.locator('.pitch-signals .pitch-signal');
+ assert.equal(await cards.count(),slide.pitchSignals.length,slide.id+' leadership takeaway count');
+ for(let index=0;index<slide.pitchSignals.length;index++){
+  assert(await cards.nth(index).isVisible(),slide.id+' leadership takeaway is visible');
+  assert.equal(norm(await cards.nth(index).innerText()),norm(slide.pitchSignals[index].title+' '+slide.pitchSignals[index].text),slide.id+' leadership takeaway retains authored wording');
+ }
+}
+async function checkEconomicHurdle(region){
+ for(const [key,value]of Object.entries(hurdleValues)){
+  const output=region.locator('[data-hurdle="'+key+'"]');assert.equal(await output.count(),1,'The economic hurdle retains '+key);
+  assert(await output.isVisible(),key+' must remain visible in the leadership pitch');near(Number(await output.getAttribute('data-value')),value);
+ }
+}
 async function main(){
  verifyModel(deck);fs.mkdirSync('.validation',{recursive:true});
  const browser=await chromium.launch();const errors=[];
@@ -47,12 +68,19 @@ async function main(){
    await p.screenshot({path:'.validation/review-'+slide.id+'.png'});
   }
   fs.writeFileSync('.validation/consolidated-containment.json',JSON.stringify(containment,null,2));
-  let miniNodes=0,miniEdges=0;
-  for(const slide of deck.slides.filter(s=>s.miniArchitecture)){
+  for(const index of leadershipIndices){await goto(p,deck.slides[index].id);await checkLeadershipSignals(p.locator('.slide:visible'),deck.slides[index]);}
+  await goto(p,'investment-case');await checkEconomicHurdle(p.locator('.slide:visible'));
+  const miniSlides=deck.slides.filter(s=>s.miniArchitecture);
+  assert.deepEqual(miniSlides.map(s=>s.id),focusedIndices.map(index=>deck.slides[index].id),'Every requested focused architecture must remain present in deck order.');
+  assert.deepEqual(miniSlides.filter(s=>s.agentExplanation).map(s=>s.id),detailedAgentIndices.map(index=>deck.slides[index].id),'Keep all seven complete agent explanations.');
+  let miniNodes=0,miniEdges=0,agentExplanations=0;
+  for(const slide of miniSlides){
    await goto(p,slide.id);const root=p.locator('.slide:visible .mini-architecture-svg'),plan=slide.miniArchitecture;
    assert.equal(await root.count(),1);assert.equal(await root.locator('[data-node]').count(),plan.nodes.length);assert.equal(await root.locator('[data-edge]').count(),plan.edges.length);
    assert.equal(await root.getAttribute('data-architecture-anchors'),plan.anchorNodes.join(','));
+   assert(plan.anchorNodes.every(id=>deck.architecture.nodes.some(n=>n.id===id)),slide.id+' anchors refer to actual full-map nodes');
    assert.equal(await root.locator('[data-boundary=external-policy]').count(),1);
+   assert.equal(await root.locator('.stage-meta[data-stage]').count(),plan.stages.length,slide.id+' keeps every explanatory stage');
    const routingViolations=await root.evaluate(svg=>{
     const rects=[...svg.querySelectorAll('.m-node>rect')].map(r=>({id:r.parentElement.dataset.node,r:r.getBBox()}));
     const crossings=[...svg.querySelectorAll('.m-edge>path')].flatMap(path=>{const g=path.parentElement,l=path.getTotalLength();return rects.filter(({id,r})=>id!==g.dataset.from&&id!==g.dataset.to&&Array.from({length:150},(_,i)=>path.getPointAtLength(l*i/149)).some(p=>p.x>r.x+1&&p.x<r.x+r.width-1&&p.y>r.y+1&&p.y<r.y+r.height-1)).map(n=>g.dataset.edge+' crosses '+n.id);});
@@ -64,13 +92,18 @@ async function main(){
     await root.locator('xpath=../..').evaluate((figure,index)=>figure.selectStage(index),step);
     const highlighted=await root.locator('.m-node.is-current').evaluateAll(nodes=>nodes.map(n=>n.dataset.node));
     assert.deepEqual(highlighted,plan.nodes.filter(n=>n.steps.includes(step)).map(n=>n.id),slide.id+' phase highlights actual nodes');
+    const highlightedEdges=await root.locator('.m-edge.is-current').evaluateAll(edges=>edges.map(e=>e.dataset.edge));
+    assert.deepEqual(highlightedEdges,plan.edges.filter(e=>e.steps.includes(step)).map(e=>e.id),slide.id+' phase highlights actual paths');
    }
-   const role=p.locator('.slide:visible [data-agent-explanation]');assert.equal(norm(await role.innerText()),norm(slide.agentExplanation.title+' '+slide.agentExplanation.definition));
-   await p.locator('[data-view=dev]').click();const detail=p.locator('.slide:visible .agent-detail');await detail.locator('summary').click();
-   const agentText=norm(await detail.innerText());for(const value of [...slide.agentExplanation.steps.flatMap(s=>[s.title,s.text]),...slide.agentExplanation.inputs,...slide.agentExplanation.outputs,...slide.agentExplanation.limits])assert(agentText.includes(norm(value)),slide.id+' agent detail retained');
-   assert(await root.isVisible(),'Developer retains the focused architecture.');await p.screenshot({path:'.validation/agent-'+slide.id+'.png',fullPage:true});await detail.locator('summary').click();await p.locator('[data-view=leader]').click();
+   if(slide.agentExplanation){
+    const role=p.locator('.slide:visible [data-agent-explanation]');assert.equal(norm(await role.innerText()),norm(slide.agentExplanation.title+' '+slide.agentExplanation.definition));
+    await p.locator('[data-view=dev]').click();const detail=p.locator('.slide:visible .agent-detail');await detail.locator('summary').click();
+    const agentText=norm(await detail.innerText());for(const value of [...slide.agentExplanation.steps.flatMap(s=>[s.title,s.text]),...slide.agentExplanation.inputs,...slide.agentExplanation.outputs,...slide.agentExplanation.limits])assert(agentText.includes(norm(value)),slide.id+' agent detail retained');
+    assert(await root.isVisible(),'Developer retains the focused architecture.');await p.screenshot({path:'.validation/agent-'+slide.id+'.png',fullPage:true});await detail.locator('summary').click();await p.locator('[data-view=leader]').click();agentExplanations++;
+   }
    miniNodes+=plan.nodes.length;miniEdges+=plan.edges.length;
   }
+  assert.equal(agentExplanations,7);
   await goto(p,'bounded-decision-router');await p.locator('#motion-toggle').click();await p.waitForFunction(()=>ContextMotion.stats().active===1);
   const packet=p.locator('.slide:visible .mini-architecture-svg .m-dot').first();const packetPosition=await packet.getAttribute('transform');await p.waitForTimeout(130);assert.notEqual(await packet.getAttribute('transform'),packetPosition,'Native mini paths move in the shared loop.');await p.locator('#motion-toggle').click();
   await goto(p,'full-architecture');assert.equal(await p.locator('.slide:visible [data-node]').count(),12);assert.equal(await p.locator('.slide:visible [data-edge]').count(),18);assert.equal(await p.locator('.slide:visible [data-policy=external]').count(),1);assert.equal(await p.locator('.slide:visible [data-review=owner]').count(),1);
@@ -111,12 +144,15 @@ async function main(){
   const offline=await context.newPage();let external=0;offline.on('request',r=>{if(/^https?:/.test(r.url()))external++});offline.on('pageerror',e=>errors.push(e.message));await offline.goto(pathToFileURL(path.resolve('index.html')).href);await offline.locator('[data-slide=opening-thesis]').waitFor({state:'visible'});assert.equal(external,0);await offline.close();
   const staticContext=await browser.newContext({javaScriptEnabled:false,viewport:{width:1440,height:900}});const stat=await staticContext.newPage();await stat.goto(base);
   assert.equal(await stat.locator('.static-presentation>.slide').count(),16);assert.equal(await stat.locator('.static-presentation .developer-topic[data-source-slide]').count(),25);assert.equal(await stat.locator('.static-presentation animateMotion').count(),0);
+  assert.equal(await stat.locator('.static-presentation .mini-architecture-svg').count(),12);
+  for(const index of leadershipIndices)await checkLeadershipSignals(stat.locator('#static-'+deck.slides[index].id),deck.slides[index]);
+  await checkEconomicHurdle(stat.locator('#static-investment-case'));
   const source=stat.locator('[data-source-slide=meaning-preserving-ste]');await source.locator(':scope>summary').click();const presenter=source.locator('.presenter-detail');if(await presenter.count())await presenter.locator('summary').click();assert.match(await source.innerText(),/You should keep reports for 30 days/);
   await verifyVisuals(stat,deck,goto,true);
   const staticPdf=await stat.pdf({path:'.validation/architecture-static-deck.pdf',format:'A4',landscape:true,printBackground:true,preferCSSPageSize:true});assert.equal(pages(staticPdf),16);await staticContext.close();
   assert.deepEqual(errors,[]);assert.equal(await p.locator('animateMotion').count(),0);assert.equal(await p.evaluate(()=>__motionProbe().peak),1);assert.equal(await p.evaluate(()=>__motionProbe().intervals),0);
-  console.log(`Mini visual checks: PASS (7 focused diagrams;${miniNodes} nodes;${miniEdges} paths;all phase highlights;directed and reference routes;7 complete agent explanations;shared packet motion)`);
-  console.log('Browser checks: PASS (16 slides;31 preserved topics;21 expanded developer sections plus4 cost topics;cost math/ROI/invalid cases;12-node18-edge architecture;one RAF and zero intervals;figure pause/reduced motion;all-slide geometry;mobile;offline single-file;no-JS;both16-page PDFs;zero page errors)');
+  console.log(`Mini visual checks: PASS (12 focused diagrams;${miniNodes} nodes;${miniEdges} paths;all node and edge phase highlights;directed and reference routes;7 complete agent explanations;6 leadership takeaway groups;4 economic hurdle values;shared packet motion)`);
+  console.log('Browser checks: PASS (16 slides;31 retained topics;21 expanded developer sections plus4 cost topics;leadership takeaways and declared economic hurdle in live/static views;cost math/ROI/invalid cases;12-node18-edge architecture;one RAF and zero intervals;figure pause/reduced motion;all-slide geometry;mobile;offline single-file;no-JS;both16-page PDFs;zero page errors)');
  }finally{await browser.close();}
 }
 main().catch(error=>{console.error(error);process.exitCode=1});

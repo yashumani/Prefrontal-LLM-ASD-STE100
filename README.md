@@ -4,6 +4,14 @@
 
 This 16-slide presentation sells a proposed context product and a bounded pilot. The first four slides explain the buyer problem, product and investment case. Slide five shows the complete architecture. Developer detail follows: submissions, review, canonical IDs, semantic layers, model decisions, controlled delivery, economics and implementation gates.
 
+## Leadership rework
+
+The October 7 rework covers slides 1–4, 14 and 15. It keeps the CFPA design, shared SVG motion, 16-slide narrative and all 31 topics.
+
+Each revised slide has a connected SVG mechanism and three leadership takeaways. The investment slide retains all four calculated break-even values. The reference cost inputs and original developer sections remain available. Validation covers every diagram stage, desktop and mobile containment, the static fallback, and both 16-page PDF exports.
+
+The opening states what buyers receive, the repeated work to measure, the governed reuse mechanism and the funding rule. Slide 14 compares the current process and candidate on the same held-out workload. Slide 15 follows the seven delivery stages, including repair, launch approval and change qualification. The leadership claims remain proposed outcomes to test.
+
 The product accepts structured submissions from humans and agent loops. Human reviewers approve meaning for an exact record version. A context agent organizes approved records into Data, Metric, Ontology and Interpretation layers. Canonical IDs connect the layers. A controlled MCP server delivers permitted context to independent applications. New meaning and feedback return through preparation and review. Consumers control their own actions.
 
 ## Brand reference
@@ -69,7 +77,7 @@ The supplied `vz-motion-kit.zip` is the motion reference. Plain SVG elements use
 
 `index.html` is a generated, self-contained page with inline CSS, JavaScript and JSON. It works offline without external assets. To reuse it in Apps Script, paste it into an HTML file named **Index**. The build rejects template scriptlet markers. This change does not deploy an Apps Script backend or implement the proposed context product.
 
-Slides07,08,09,10,11,13,14 zoom into the full architecture. Each has a real processing path, an exception route and a policy boundary. The same diagram stays visible in both audience views. Developer view adds the agent steps, inputs, outputs and authority limits. The chosen model proposes typed signals; the code harness checks them. Human reviewers approve meaning and owners authorize releases. These are proposed capabilities, not an implemented agent runtime.
+Twelve slides now use focused architecture diagrams. Slides 1–4 explain the product, repeated work, governed service and funding decision. Slides 7–11 and 13 zoom into its operating mechanisms. Slide 14 compares baseline and candidate evidence. Slide 15 follows the seven-stage delivery plan. The same diagram stays visible in both audience views. Seven developer explanations add the agent steps, inputs, outputs and authority limits. The chosen model proposes typed signals; the code harness checks them. Human reviewers approve meaning and owners authorize releases. These are proposed capabilities, not an implemented agent runtime.
 
 Printing always exports the 16-slide Leader narrative. Developer detail remains inspectable in the web page and native disclosures in the no-JavaScript fallback. This avoids expanding the print deck back into 31 pages.
 

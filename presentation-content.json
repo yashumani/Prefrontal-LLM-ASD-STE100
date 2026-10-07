@@ -6,8 +6,8 @@
       "id": "opening-thesis",
       "type": "cover",
       "eyebrow": "Prefrontal · the context product",
-      "title": "Approve context once. Reuse it with control.",
-      "lead": "Turn business knowledge into approved, linked context for the analytics and AI applications you already use.",
+      "title": "Give AI approved context it can reuse.",
+      "lead": "Prefrontal turns business knowledge into versioned context. Your applications receive only the context they may use.",
       "items": [
         {
           "title": "One reusable context layer",
@@ -21,14 +21,232 @@
       "note": "Product concept and pilot proposal. Writing inspired by ASD-STE100; full compliance has not been checked.",
       "covers": [
         "opening-thesis"
-      ]
+      ],
+      "pitchSignals": [
+        {
+          "title": "What you buy",
+          "text": "A service to prepare, govern, organize and deliver context."
+        },
+        {
+          "title": "What you keep",
+          "text": "Looker, LookML, Zenlytics and your custom apps."
+        },
+        {
+          "title": "What we prove",
+          "text": "Useful reuse at an acceptable cost, speed and quality."
+        }
+      ],
+      "miniArchitecture": {
+        "id": "product-thesis-mini",
+        "title": "Approved knowledge becomes a reusable context product",
+        "summary": "People approve meaning. The service preserves identity and evidence. Every delivery checks current access and validity.",
+        "anchorNodes": [
+          "submissions",
+          "human-review",
+          "context-agent",
+          "canonical-registry",
+          "mcp-delivery",
+          "consumers"
+        ],
+        "viewBox": [
+          1180,
+          390
+        ],
+        "boundary": {
+          "title": "THE PRODUCT · CONTROLLED CONTEXT REUSE",
+          "detail": "Approval applies to one version. Each delivery still checks current access and validity."
+        },
+        "stages": [
+          {
+            "title": "Capture the business meaning",
+            "detail": "A submission carries the source, owner, definition and conditions. Preserve the original evidence."
+          },
+          {
+            "title": "Approve the exact record",
+            "detail": "A responsible reviewer approves the record version. Revised meaning needs a new review."
+          },
+          {
+            "title": "Build a reusable asset",
+            "detail": "The context service links approved records with stable IDs, versions and source evidence."
+          },
+          {
+            "title": "Deliver permitted context",
+            "detail": "The delivery gate checks identity, permissions and validity. Applications control their own actions."
+          },
+          {
+            "title": "Review changes before reuse",
+            "detail": "Feedback becomes a change request. It cannot silently overwrite an approved fact."
+          }
+        ],
+        "nodes": [
+          {
+            "id": "knowledge",
+            "title": "Business knowledge",
+            "lines": [
+              "Source + definition",
+              "Owner + conditions"
+            ],
+            "role": "input",
+            "x": 20,
+            "y": 84,
+            "width": 200,
+            "height": 100,
+            "steps": [
+              0
+            ]
+          },
+          {
+            "id": "review",
+            "title": "Human approval",
+            "lines": [
+              "Exact record version",
+              "Evidence + meaning"
+            ],
+            "role": "gate",
+            "x": 250,
+            "y": 84,
+            "width": 200,
+            "height": 100,
+            "steps": [
+              1
+            ]
+          },
+          {
+            "id": "service",
+            "title": "Context service",
+            "lines": [
+              "Stable IDs + versions",
+              "Linked approved layers"
+            ],
+            "role": "agent",
+            "x": 480,
+            "y": 84,
+            "width": 200,
+            "height": 100,
+            "steps": [
+              2
+            ]
+          },
+          {
+            "id": "access",
+            "title": "Delivery gate",
+            "lines": [
+              "Current permissions",
+              "Validity + evidence"
+            ],
+            "role": "policy",
+            "x": 710,
+            "y": 84,
+            "width": 200,
+            "height": 100,
+            "steps": [
+              3
+            ]
+          },
+          {
+            "id": "apps",
+            "title": "Your applications",
+            "lines": [
+              "Analytics + assistants",
+              "Apps control actions"
+            ],
+            "role": "consumer",
+            "x": 940,
+            "y": 84,
+            "width": 200,
+            "height": 100,
+            "steps": [
+              3
+            ]
+          },
+          {
+            "id": "change",
+            "title": "Change request",
+            "lines": [
+              "Feedback + new sources",
+              "Return for review"
+            ],
+            "role": "input",
+            "x": 480,
+            "y": 245,
+            "width": 200,
+            "height": 90,
+            "steps": [
+              4
+            ]
+          }
+        ],
+        "edges": [
+          {
+            "id": "knowledge-review",
+            "from": "knowledge",
+            "to": "review",
+            "path": "M220 134 H250",
+            "steps": [
+              1
+            ],
+            "kind": "flow"
+          },
+          {
+            "id": "review-service",
+            "from": "review",
+            "to": "service",
+            "path": "M450 134 H480",
+            "steps": [
+              2
+            ],
+            "kind": "flow"
+          },
+          {
+            "id": "service-access",
+            "from": "service",
+            "to": "access",
+            "path": "M680 134 H710",
+            "steps": [
+              3
+            ],
+            "kind": "flow"
+          },
+          {
+            "id": "access-apps",
+            "from": "access",
+            "to": "apps",
+            "path": "M910 134 H940",
+            "steps": [
+              3
+            ],
+            "kind": "flow"
+          },
+          {
+            "id": "apps-change",
+            "from": "apps",
+            "to": "change",
+            "path": "M1040 184 V215 H580 V245",
+            "steps": [
+              4
+            ],
+            "kind": "flow"
+          },
+          {
+            "id": "change-review",
+            "from": "change",
+            "to": "review",
+            "path": "M480 290 H350 V184",
+            "steps": [
+              4
+            ],
+            "kind": "return"
+          }
+        ],
+        "provenance": "Proposal · not from the reference slides"
+      }
     },
     {
       "id": "fragmented-context",
       "type": "problem",
       "eyebrow": "Leadership · the recurring cost",
-      "title": "Teams rebuild context across tools.",
-      "lead": "Your stack already models data. Teams may still repeat source checks, reconciliation and review.",
+      "title": "New tasks can restart the same work.",
+      "lead": "Existing tools may hold the data and formulas. Teams still reconnect meaning, evidence and permissions for each use.",
       "items": [
         {
           "title": "Preparation",
@@ -104,14 +322,219 @@
       },
       "covers": [
         "fragmented-context"
-      ]
+      ],
+      "pitchSignals": [
+        {
+          "title": "Cost to measure",
+          "text": "Time spent finding, explaining and reviewing the same context."
+        },
+        {
+          "title": "Risk to test",
+          "text": "Different versions or missing conditions can change an answer."
+        },
+        {
+          "title": "Opportunity",
+          "text": "Reuse approved meaning while checking each new use."
+        }
+      ],
+      "miniArchitecture": {
+        "id": "repeated-work-mini",
+        "title": "Separate consumers can repeat the same business checks",
+        "summary": "This is a problem hypothesis. Measure repeated preparation, reconciliation and review in the chosen workflow.",
+        "anchorNodes": [
+          "submissions",
+          "preparation",
+          "human-review",
+          "consumers"
+        ],
+        "viewBox": [
+          1180,
+          400
+        ],
+        "boundary": {
+          "title": "THE BUYER PROBLEM · REPEATED WORK BETWEEN TOOLS",
+          "detail": "Hypothesis to test: the source exists, but each consumer rebuilds the context around it."
+        },
+        "stages": [
+          {
+            "title": "Start from existing sources",
+            "detail": "LookML, documents and existing apps already hold useful definitions and source evidence."
+          },
+          {
+            "title": "Prepare context for each use",
+            "detail": "Separate teams or applications may assemble their own explanation, conditions and source references."
+          },
+          {
+            "title": "Resolve different versions",
+            "detail": "People check whether definitions, time windows, access and exceptions still agree."
+          },
+          {
+            "title": "Review and repair the result",
+            "detail": "Reviewers spend time correcting unsupported or unsuitable output. Keep this effort in the baseline."
+          },
+          {
+            "title": "Repeat when the task changes",
+            "detail": "A new assistant, source version or task may trigger the work again. The pilot must establish how often this happens."
+          }
+        ],
+        "nodes": [
+          {
+            "id": "sources",
+            "title": "Existing sources",
+            "lines": [
+              "Definitions + formulas",
+              "Documents + evidence"
+            ],
+            "role": "store",
+            "x": 20,
+            "y": 170,
+            "width": 200,
+            "height": 90,
+            "steps": [
+              0
+            ]
+          },
+          {
+            "id": "app-a",
+            "title": "Analytics task",
+            "lines": [
+              "Prepare local context",
+              "Check source meaning"
+            ],
+            "role": "consumer",
+            "x": 300,
+            "y": 72,
+            "width": 200,
+            "height": 90,
+            "steps": [
+              1
+            ]
+          },
+          {
+            "id": "app-b",
+            "title": "Assistant task",
+            "lines": [
+              "Prepare local context",
+              "Check source meaning"
+            ],
+            "role": "consumer",
+            "x": 300,
+            "y": 252,
+            "width": 200,
+            "height": 90,
+            "steps": [
+              1
+            ]
+          },
+          {
+            "id": "reconcile",
+            "title": "Reconcile copies",
+            "lines": [
+              "Version + conditions",
+              "Access + exceptions"
+            ],
+            "role": "gate",
+            "x": 650,
+            "y": 170,
+            "width": 210,
+            "height": 90,
+            "steps": [
+              2
+            ]
+          },
+          {
+            "id": "rework",
+            "title": "Review again",
+            "lines": [
+              "Check the answer",
+              "Record time + rework"
+            ],
+            "role": "gate",
+            "x": 940,
+            "y": 170,
+            "width": 210,
+            "height": 90,
+            "steps": [
+              3
+            ]
+          }
+        ],
+        "edges": [
+          {
+            "id": "source-a",
+            "from": "sources",
+            "to": "app-a",
+            "path": "M220 200 H260 V117 H300",
+            "steps": [
+              1
+            ],
+            "kind": "flow"
+          },
+          {
+            "id": "source-b",
+            "from": "sources",
+            "to": "app-b",
+            "path": "M220 230 H260 V297 H300",
+            "steps": [
+              1
+            ],
+            "kind": "flow"
+          },
+          {
+            "id": "a-check",
+            "from": "app-a",
+            "to": "reconcile",
+            "path": "M500 117 H575 V195 H650",
+            "steps": [
+              2
+            ],
+            "kind": "flow"
+          },
+          {
+            "id": "b-check",
+            "from": "app-b",
+            "to": "reconcile",
+            "path": "M500 297 H605 V235 H650",
+            "steps": [
+              2
+            ],
+            "kind": "flow"
+          },
+          {
+            "id": "check-review",
+            "from": "reconcile",
+            "to": "rework",
+            "path": "M860 215 H940",
+            "steps": [
+              3
+            ],
+            "kind": "flow"
+          },
+          {
+            "id": "next-task",
+            "from": "rework",
+            "to": "sources",
+            "path": "M1045 260 V365 H120 V260",
+            "steps": [
+              4
+            ],
+            "kind": "return",
+            "label": "Next task or change",
+            "labelAt": [
+              710,
+              359
+            ]
+          }
+        ],
+        "provenance": "Proposal · not from the reference slides"
+      }
     },
     {
       "id": "product-overview",
       "type": "product-flow",
       "eyebrow": "Leadership · what you would buy",
-      "title": "One governed context service. Many consumers.",
-      "lead": "The product accepts submissions, governs meaning, organizes linked records and delivers permitted context.",
+      "title": "One governed path. Many ways to use the output.",
+      "lead": "People approve the meaning. The agent organizes approved records. The delivery service checks each request.",
       "items": [
         {
           "title": "Reusable asset",
@@ -166,14 +589,279 @@
       },
       "covers": [
         "product-overview"
-      ]
+      ],
+      "pitchSignals": [
+        {
+          "title": "A reusable record",
+          "text": "A canonical ID, approved version, source evidence and owner."
+        },
+        {
+          "title": "A clear boundary",
+          "text": "The agent proposes changes. A reviewer approves new meaning."
+        },
+        {
+          "title": "A usable output",
+          "text": "Apps receive permitted parameters and source references."
+        }
+      ],
+      "miniArchitecture": {
+        "id": "service-workflow-mini",
+        "title": "The context product has a complete admission and delivery path",
+        "summary": "Submissions enter review before the agent publishes linked context. Rejected records return for revision. Consumers remain independent.",
+        "anchorNodes": [
+          "submissions",
+          "preparation",
+          "human-review",
+          "context-agent",
+          "canonical-registry",
+          "data-layer",
+          "metric-layer",
+          "ontology-layer",
+          "interpretation-layer",
+          "mcp-delivery",
+          "consumers"
+        ],
+        "viewBox": [
+          1180,
+          390
+        ],
+        "boundary": {
+          "title": "PRODUCT BOUNDARY · FROM A SUBMISSION TO A PERMITTED OUTPUT",
+          "detail": "A canonical ID identifies context. It grants no access. Changed meaning always returns to review."
+        },
+        "stages": [
+          {
+            "title": "Prepare a structured submission",
+            "detail": "A person or agent loop submits a template with evidence. STE-inspired writing clarifies the record while preserving meaning."
+          },
+          {
+            "title": "Review the exact version",
+            "detail": "The reviewer checks evidence, scope and conditions. A rejected record returns with a reason."
+          },
+          {
+            "title": "Organize approved context",
+            "detail": "The context agent places approved records into Data, Metric, Ontology and Interpretation layers. Stable IDs link them."
+          },
+          {
+            "title": "Check the delivery request",
+            "detail": "The MCP service checks caller identity, permissions, version and validity before returning a bounded context package."
+          },
+          {
+            "title": "Let the application consume it",
+            "detail": "The application uses permitted parameters and references. Native services execute queries under their own permissions."
+          },
+          {
+            "title": "Return new meaning to review",
+            "detail": "Feedback and derived interpretations enter a new submission. They do not become approved memory automatically."
+          }
+        ],
+        "nodes": [
+          {
+            "id": "intake",
+            "title": "Submit + prepare",
+            "lines": [
+              "One review template",
+              "Evidence attached"
+            ],
+            "role": "input",
+            "x": 20,
+            "y": 80,
+            "width": 200,
+            "height": 100,
+            "steps": [
+              0
+            ]
+          },
+          {
+            "id": "review",
+            "title": "Human review",
+            "lines": [
+              "Meaning + conditions",
+              "Exact version approval"
+            ],
+            "role": "gate",
+            "x": 250,
+            "y": 80,
+            "width": 200,
+            "height": 100,
+            "steps": [
+              1
+            ]
+          },
+          {
+            "id": "layers",
+            "title": "Agent + layers",
+            "lines": [
+              "Data, Metric, Ontology",
+              "Interpretation"
+            ],
+            "role": "agent",
+            "x": 480,
+            "y": 80,
+            "width": 200,
+            "height": 100,
+            "steps": [
+              2
+            ]
+          },
+          {
+            "id": "delivery",
+            "title": "MCP delivery",
+            "lines": [
+              "Identity + permissions",
+              "Version + validity"
+            ],
+            "role": "policy",
+            "x": 710,
+            "y": 80,
+            "width": 200,
+            "height": 100,
+            "steps": [
+              3
+            ]
+          },
+          {
+            "id": "consume",
+            "title": "Consumer apps",
+            "lines": [
+              "Values + references",
+              "Native query execution"
+            ],
+            "role": "consumer",
+            "x": 940,
+            "y": 80,
+            "width": 200,
+            "height": 100,
+            "steps": [
+              4
+            ]
+          },
+          {
+            "id": "revise",
+            "title": "Revise record",
+            "lines": [
+              "Reviewer reason",
+              "Resubmit for approval"
+            ],
+            "role": "stop",
+            "x": 250,
+            "y": 245,
+            "width": 200,
+            "height": 90,
+            "steps": [
+              1,
+              5
+            ]
+          },
+          {
+            "id": "feedback",
+            "title": "New submission",
+            "lines": [
+              "Feedback + new meaning",
+              "A new draft version"
+            ],
+            "role": "input",
+            "x": 710,
+            "y": 245,
+            "width": 200,
+            "height": 90,
+            "steps": [
+              5
+            ]
+          }
+        ],
+        "edges": [
+          {
+            "id": "intake-review",
+            "from": "intake",
+            "to": "review",
+            "path": "M220 130 H250",
+            "steps": [
+              1
+            ],
+            "kind": "flow"
+          },
+          {
+            "id": "review-layers",
+            "from": "review",
+            "to": "layers",
+            "path": "M450 130 H480",
+            "steps": [
+              2
+            ],
+            "kind": "flow"
+          },
+          {
+            "id": "layers-delivery",
+            "from": "layers",
+            "to": "delivery",
+            "path": "M680 130 H710",
+            "steps": [
+              3
+            ],
+            "kind": "flow"
+          },
+          {
+            "id": "delivery-consume",
+            "from": "delivery",
+            "to": "consume",
+            "path": "M910 130 H940",
+            "steps": [
+              4
+            ],
+            "kind": "flow"
+          },
+          {
+            "id": "review-revise",
+            "from": "review",
+            "to": "revise",
+            "path": "M350 180 V245",
+            "steps": [
+              1
+            ],
+            "kind": "deny"
+          },
+          {
+            "id": "revise-intake",
+            "from": "revise",
+            "to": "intake",
+            "path": "M250 290 H120 V180",
+            "steps": [
+              1,
+              5
+            ],
+            "kind": "return"
+          },
+          {
+            "id": "consume-feedback",
+            "from": "consume",
+            "to": "feedback",
+            "path": "M1040 180 V290 H910",
+            "steps": [
+              5
+            ],
+            "kind": "flow"
+          },
+          {
+            "id": "feedback-review",
+            "from": "feedback",
+            "to": "review",
+            "path": "M710 290 H580 V212 H395 V180",
+            "steps": [
+              5
+            ],
+            "kind": "return"
+          }
+        ],
+        "provenance": "Proposal · not from the reference slides"
+      }
     },
     {
       "id": "investment-case",
       "type": "leadership-case",
       "eyebrow": "Leadership · why fund this",
-      "title": "The product must earn back its overhead.",
-      "lead": "Reuse the current stack. Fund a bounded pilot only when accepted value can repay the added setup and operations.",
+      "title": "Fund the pilot against a clear break-even test.",
+      "lead": "Compare the same accepted workload. Include setup, operations and human review. Release only when value and control pass.",
       "items": [
         {
           "title": "Cost",
@@ -195,7 +883,235 @@
       "note": "Illustrative hurdle, not a price quote or forecast. The pilot must establish whether the required benefit is achievable.",
       "covers": [
         "investment-case"
-      ]
+      ],
+      "pitchSignals": [
+        {
+          "title": "Cost + performance",
+          "text": "Full cost per accepted task. Complete delivery time at agreed load."
+        },
+        {
+          "title": "Accuracy + trust",
+          "text": "Source-supported answers. Enforced access with audit evidence."
+        },
+        {
+          "title": "The funding rule",
+          "text": "Meet the agreed return and quality gates before expansion."
+        }
+      ],
+      "miniArchitecture": {
+        "id": "investment-decision-mini",
+        "title": "Compare total costs before asking the owner to expand",
+        "summary": "Compare the current process and proposed service on the same accepted workload. Benefits and quality must both pass.",
+        "anchorNodes": [
+          "human-review",
+          "context-agent",
+          "mcp-delivery",
+          "consumers"
+        ],
+        "viewBox": [
+          1180,
+          350
+        ],
+        "boundary": {
+          "title": "INVESTMENT DECISION · THE SAME ACCEPTED WORKLOAD",
+          "detail": "The figures below are invented assumptions. They define a hurdle, not achieved savings."
+        },
+        "stages": [
+          {
+            "title": "Measure the current process",
+            "detail": "Record digital spend, human handling and fixed costs for tasks that meet the owner acceptance criteria."
+          },
+          {
+            "title": "Price the proposed service",
+            "detail": "Include source adapters, setup, review, inference, queries, licenses and operating support. Count each cost once."
+          },
+          {
+            "title": "Compare complete economics",
+            "detail": "Use the same accepted-task target. Include failed attempts. Compare recurring cost and the year-one setup burden."
+          },
+          {
+            "title": "Require quality and access proof",
+            "detail": "Cost improvement alone is insufficient. Measure performance, source-supported accuracy and permission enforcement."
+          },
+          {
+            "title": "Make the investment decision",
+            "detail": "The owner accepts the evidence and budget or holds expansion. No product saving has been measured."
+          }
+        ],
+        "nodes": [
+          {
+            "id": "baseline",
+            "title": "Current process",
+            "lines": [
+              "Digital + human cost",
+              "Accepted task baseline"
+            ],
+            "role": "input",
+            "x": 20,
+            "y": 72,
+            "width": 220,
+            "height": 90,
+            "steps": [
+              0
+            ]
+          },
+          {
+            "id": "candidate",
+            "title": "Proposed service",
+            "lines": [
+              "Setup + recurring cost",
+              "Include review + rework"
+            ],
+            "role": "input",
+            "x": 20,
+            "y": 215,
+            "width": 220,
+            "height": 90,
+            "steps": [
+              1
+            ]
+          },
+          {
+            "id": "compare",
+            "title": "Compare full cost",
+            "lines": [
+              "Same accepted workload",
+              "Year-one net difference"
+            ],
+            "role": "agent",
+            "x": 330,
+            "y": 145,
+            "width": 230,
+            "height": 100,
+            "steps": [
+              2
+            ]
+          },
+          {
+            "id": "quality",
+            "title": "Quality + access",
+            "lines": [
+              "Performance + accuracy",
+              "Permissions + evidence"
+            ],
+            "role": "gate",
+            "x": 650,
+            "y": 72,
+            "width": 230,
+            "height": 90,
+            "steps": [
+              3
+            ]
+          },
+          {
+            "id": "decision",
+            "title": "Owner decision",
+            "lines": [
+              "Return + quality pass",
+              "Approve bounded scope"
+            ],
+            "role": "gate",
+            "x": 940,
+            "y": 145,
+            "width": 220,
+            "height": 100,
+            "steps": [
+              4
+            ]
+          },
+          {
+            "id": "hold",
+            "title": "Hold expansion",
+            "lines": [
+              "Return below target",
+              "Or a material failure"
+            ],
+            "role": "stop",
+            "x": 650,
+            "y": 215,
+            "width": 230,
+            "height": 90,
+            "steps": [
+              2,
+              3,
+              4
+            ]
+          }
+        ],
+        "edges": [
+          {
+            "id": "baseline-compare",
+            "from": "baseline",
+            "to": "compare",
+            "path": "M240 117 H280 V172 H330",
+            "steps": [
+              2
+            ],
+            "kind": "flow"
+          },
+          {
+            "id": "candidate-compare",
+            "from": "candidate",
+            "to": "compare",
+            "path": "M240 260 H300 V222 H330",
+            "steps": [
+              2
+            ],
+            "kind": "flow"
+          },
+          {
+            "id": "compare-quality",
+            "from": "compare",
+            "to": "quality",
+            "path": "M560 170 H600 V117 H650",
+            "steps": [
+              3
+            ],
+            "kind": "flow"
+          },
+          {
+            "id": "quality-decision",
+            "from": "quality",
+            "to": "decision",
+            "path": "M880 117 H910 V170 H940",
+            "steps": [
+              4
+            ],
+            "kind": "flow"
+          },
+          {
+            "id": "compare-hold",
+            "from": "compare",
+            "to": "hold",
+            "path": "M560 222 H600 V260 H650",
+            "steps": [
+              2
+            ],
+            "kind": "deny"
+          },
+          {
+            "id": "quality-hold",
+            "from": "quality",
+            "to": "hold",
+            "path": "M765 162 V215",
+            "steps": [
+              3
+            ],
+            "kind": "deny"
+          },
+          {
+            "id": "decision-hold",
+            "from": "decision",
+            "to": "hold",
+            "path": "M1050 245 V320 H765 V305",
+            "steps": [
+              4
+            ],
+            "kind": "deny"
+          }
+        ],
+        "provenance": "Proposal · not from the reference slides"
+      }
     },
     {
       "id": "full-architecture",
@@ -4012,8 +4928,8 @@
       "id": "pilot-acceptance",
       "type": "consolidated",
       "eyebrow": "Pilot acceptance · buyer value + current readiness",
-      "title": "Agree the proof. Report what is established.",
-      "lead": "Measure four outcomes on the same workload. Keep presentation evidence separate from product qualification.",
+      "title": "Prove the difference on the same real tasks.",
+      "lead": "Run the current process and the candidate against owner-reviewed cases. Let the evidence determine the next investment.",
       "items": [],
       "note": "No product outcome has been measured. The presentation and worksheets are available. Runtime, live integration, calibration and customer return require proof.",
       "covers": [
@@ -4201,8 +5117,8 @@
       ],
       "miniArchitecture": {
         "id": "qualification-mini",
-        "title": "Owner evidence determines whether the pilot expands",
-        "summary": "Use the same held-out workload for baseline and candidate. Separate presentation proof from runtime qualification.",
+        "title": "A fair paired trial ends in an owner decision",
+        "summary": "Use held-out tasks that did not shape implementation. Compare baseline and candidate under the same acceptance rules.",
         "anchorNodes": [
           "context-agent",
           "decision-model",
@@ -4213,65 +5129,81 @@
         ],
         "viewBox": [
           1180,
-          380
+          360
         ],
         "boundary": {
-          "title": "MEASURE FIRST · OWNER ACCEPTANCE BEFORE SCALE",
-          "detail": "No product outcome has been measured. Readiness labels are evidence states, not progress percentages."
+          "title": "PILOT ACCEPTANCE · AGREE THRESHOLDS BEFORE THE TRIAL",
+          "detail": "Keep failed, held and queued tasks in the evidence. Missing or failed proof holds expansion."
         },
         "stages": [
           {
-            "title": "Build the proposed prototype",
-            "detail": "Implement a real submission, persistent exact-version review, complete publication and authenticated context readback. These runtime capabilities remain to implement."
+            "title": "Agree the test and thresholds",
+            "detail": "The owner defines accepted outcomes, cost and service targets. Include normal, stale, conflicting and unauthorized cases."
           },
           {
-            "title": "Run held-out tasks",
-            "detail": "Use owner-reviewed tasks and failure cases that did not shape the implementation. Compare baseline and candidate at the same workload."
+            "title": "Run both paths",
+            "detail": "Run the current process and implemented candidate on the same held-out workload. Track review queues and retries."
           },
           {
-            "title": "Collect four kinds of evidence",
-            "detail": "Measure full cost, complete performance, source-supported accuracy and enforced access with audit readback. Keep failed, queued and held tasks visible."
+            "title": "Collect comparable evidence",
+            "detail": "The evaluation harness records full cost, complete latency, supported meaning and access behavior. Preserve failures."
           },
           {
-            "title": "Ask the acceptance owner",
-            "detail": "The owner checks agreed thresholds and material failures. Missing evidence or failed access holds expansion. A presentation test is not runtime qualification."
+            "title": "Review the evidence",
+            "detail": "The owner checks thresholds, audit readback and remaining limits. An agent report is evidence, not approval."
           },
           {
-            "title": "Approve a bounded pilot or hold",
-            "detail": "Expand only within the accepted scope, budget and service target. Separate measured outcomes from current design and future implementation work."
+            "title": "Accept a bounded next step",
+            "detail": "Expand only within accepted scope and budget. Recheck changed components before wider use."
           },
           {
-            "title": "Report the evidence state",
-            "detail": "Available now means the deck and worksheets plus the reported stack. Designed means the context contracts. To implement means runtime code. To qualify means live, calibration and buyer-value proof."
+            "title": "Hold and correct gaps",
+            "detail": "Missing evidence or a material access failure blocks expansion. Resolve the cause and rerun affected cases."
           }
         ],
         "nodes": [
           {
-            "id": "prototype",
-            "title": "Build prototype",
+            "id": "cases",
+            "title": "Agreed test cases",
             "lines": [
-              "Review + stored output",
-              "Authenticated read"
+              "Same task workload",
+              "Held-out owner truth"
             ],
             "role": "input",
             "x": 20,
-            "y": 72,
-            "width": 200,
-            "height": 90,
+            "y": 132,
+            "width": 190,
+            "height": 100,
             "steps": [
               0
             ]
           },
           {
-            "id": "held-out",
-            "title": "Held-out tasks",
+            "id": "baseline",
+            "title": "Current process",
             "lines": [
-              "Same baseline workload",
-              "Owner-reviewed truth"
+              "Baseline task results",
+              "Complete effort + cost"
             ],
-            "role": "agent",
-            "x": 250,
+            "role": "input",
+            "x": 260,
             "y": 72,
+            "width": 200,
+            "height": 90,
+            "steps": [
+              1
+            ]
+          },
+          {
+            "id": "candidate",
+            "title": "Built candidate",
+            "lines": [
+              "Same cases + rules",
+              "Include failure paths"
+            ],
+            "role": "input",
+            "x": 260,
+            "y": 215,
             "width": 200,
             "height": 90,
             "steps": [
@@ -4280,16 +5212,16 @@
           },
           {
             "id": "evidence",
-            "title": "Four measures",
+            "title": "Evidence harness",
             "lines": [
               "Cost + performance",
               "Accuracy + trust"
             ],
-            "role": "policy",
-            "x": 480,
-            "y": 72,
+            "role": "agent",
+            "x": 510,
+            "y": 132,
             "width": 200,
-            "height": 90,
+            "height": 100,
             "steps": [
               2
             ]
@@ -4298,133 +5230,87 @@
             "id": "acceptance",
             "title": "Owner gate",
             "lines": [
-              "Review evidence + limits",
-              "Agreed thresholds"
+              "Agreed thresholds",
+              "Audit + known limits"
             ],
             "role": "gate",
-            "x": 710,
-            "y": 72,
-            "width": 200,
-            "height": 90,
+            "x": 755,
+            "y": 132,
+            "width": 190,
+            "height": 100,
             "steps": [
               3
             ]
           },
           {
-            "id": "pilot",
-            "title": "Bounded pilot",
+            "id": "expand",
+            "title": "Accept scope",
             "lines": [
-              "Scope + budget",
-              "Measure before scale"
+              "Budget + owner",
+              "Bounded next step"
             ],
             "role": "consumer",
-            "x": 940,
+            "x": 990,
             "y": 72,
-            "width": 200,
+            "width": 170,
             "height": 90,
             "steps": [
               4
-            ]
-          },
-          {
-            "id": "available",
-            "title": "Available now",
-            "lines": [
-              "Deck + worksheets",
-              "Reported stack"
-            ],
-            "role": "store",
-            "x": 20,
-            "y": 235,
-            "width": 200,
-            "height": 90,
-            "steps": [
-              5
-            ]
-          },
-          {
-            "id": "designed",
-            "title": "Designed",
-            "lines": [
-              "Context + approval",
-              "Layer + access rules"
-            ],
-            "role": "store",
-            "x": 250,
-            "y": 235,
-            "width": 200,
-            "height": 90,
-            "steps": [
-              5
-            ]
-          },
-          {
-            "id": "implement",
-            "title": "To implement",
-            "lines": [
-              "Adapters + harness",
-              "Review store + MCP"
-            ],
-            "role": "store",
-            "x": 480,
-            "y": 235,
-            "width": 200,
-            "height": 90,
-            "steps": [
-              5
-            ]
-          },
-          {
-            "id": "qualify",
-            "title": "To qualify",
-            "lines": [
-              "Calibration + isolation",
-              "Recovery + live value"
-            ],
-            "role": "store",
-            "x": 710,
-            "y": 235,
-            "width": 200,
-            "height": 90,
-            "steps": [
-              5
             ]
           },
           {
             "id": "hold",
-            "title": "Hold expansion",
+            "title": "Hold + repair",
             "lines": [
-              "Failed / missing proof",
-              "Owner resolves gaps"
+              "Failed or missing",
+              "Repair + rerun"
             ],
             "role": "stop",
-            "x": 940,
-            "y": 235,
-            "width": 200,
+            "x": 990,
+            "y": 215,
+            "width": 170,
             "height": 90,
             "steps": [
-              2,
-              3,
-              4
+              5
             ]
           }
         ],
         "edges": [
           {
-            "id": "prototype-tasks",
-            "from": "prototype",
-            "to": "held-out",
-            "path": "M220 117 H250",
+            "id": "cases-baseline",
+            "from": "cases",
+            "to": "baseline",
+            "path": "M210 157 H235 V117 H260",
             "steps": [
               1
             ],
             "kind": "flow"
           },
           {
-            "id": "tasks-evidence",
-            "from": "held-out",
+            "id": "cases-candidate",
+            "from": "cases",
+            "to": "candidate",
+            "path": "M210 207 H235 V260 H260",
+            "steps": [
+              1
+            ],
+            "kind": "flow"
+          },
+          {
+            "id": "baseline-evidence",
+            "from": "baseline",
             "to": "evidence",
-            "path": "M450 117 H480",
+            "path": "M460 117 H485 V157 H510",
+            "steps": [
+              2
+            ],
+            "kind": "flow"
+          },
+          {
+            "id": "candidate-evidence",
+            "from": "candidate",
+            "to": "evidence",
+            "path": "M460 260 H485 V207 H510",
             "steps": [
               2
             ],
@@ -4434,58 +5320,41 @@
             "id": "evidence-owner",
             "from": "evidence",
             "to": "acceptance",
-            "path": "M680 117 H710",
+            "path": "M710 182 H755",
             "steps": [
               3
             ],
             "kind": "flow"
           },
           {
-            "id": "owner-pilot",
+            "id": "owner-expand",
             "from": "acceptance",
-            "to": "pilot",
-            "path": "M910 117 H940",
+            "to": "expand",
+            "path": "M945 157 H968 V117 H990",
             "steps": [
               4
             ],
-            "kind": "flow",
-            "label": "Accept",
-            "labelAt": [
-              925,
-              64
-            ]
-          },
-          {
-            "id": "evidence-hold",
-            "from": "evidence",
-            "to": "hold",
-            "path": "M580 162 V210 H1040 V235",
-            "steps": [
-              2,
-              3
-            ],
-            "kind": "deny",
-            "label": "Missing / failed proof",
-            "labelAt": [
-              853,
-              204
-            ]
+            "kind": "flow"
           },
           {
             "id": "owner-hold",
             "from": "acceptance",
             "to": "hold",
-            "path": "M810 162 V187 H1090 V235",
+            "path": "M945 207 H968 V260 H990",
             "steps": [
-              3,
-              4
+              5
             ],
-            "kind": "deny",
-            "label": "Not accepted",
-            "labelAt": [
-              968,
-              181
-            ]
+            "kind": "deny"
+          },
+          {
+            "id": "hold-candidate",
+            "from": "hold",
+            "to": "candidate",
+            "path": "M1075 305 V325 H360 V305",
+            "steps": [
+              5
+            ],
+            "kind": "return"
           }
         ],
         "provenance": "Proposal · not from the reference slides"
@@ -4531,14 +5400,28 @@
           "The evaluator cannot approve its own pilot or hide failed tasks.",
           "A material access failure blocks expansion even when cost improves."
         ]
-      }
+      },
+      "pitchSignals": [
+        {
+          "title": "Available now",
+          "text": "The presentation, worksheets and illustrative browser checks."
+        },
+        {
+          "title": "Designed",
+          "text": "Submission review, linked context, agent limits and controlled delivery."
+        },
+        {
+          "title": "Still to prove",
+          "text": "The runtime, live adapters, calibration and customer value."
+        }
+      ]
     },
     {
       "id": "plan-alignment",
       "type": "consolidated",
       "eyebrow": "Delivery plan · complete build path + bounded offer",
-      "title": "Fund one path. Expand after proof.",
-      "lead": "Follow the seven-stage plan. Agree owners, budget, and acceptance gates before development.",
+      "title": "Approve one complete pilot. Expand after proof.",
+      "lead": "Use the existing seven-stage delivery plan. Start with one governed metric, one reviewer and one consuming application.",
       "items": [],
       "note": "Proposed pilot. Scope, schedule, hosting, pricing and thresholds remain to agree. ERP or warehouse replacement is outside scope. Expansion needs a separate evidence-based decision.",
       "covers": [
@@ -4803,7 +5686,270 @@
         "existing delivery journey",
         "one complete vertical slice",
         "a bounded commitment"
-      ]
+      ],
+      "pitchSignals": [
+        {
+          "title": "Buyer commitment",
+          "text": "Name the workflow, source owner, reviewer and permitted test access."
+        },
+        {
+          "title": "Funding decision",
+          "text": "Agree a setup ceiling, recurring budget and acceptance thresholds."
+        },
+        {
+          "title": "Pilot deliverable",
+          "text": "A versioned context release plus replayable acceptance evidence."
+        }
+      ],
+      "miniArchitecture": {
+        "id": "delivery-plan-mini",
+        "title": "Seven delivery stages take the proposal to controlled operation",
+        "summary": "Follow Intake/Vetting, Product Requirements, Product Design, Development, Testing, Launch and Maintenance. Reuse catalog components first.",
+        "anchorNodes": [
+          "submissions",
+          "human-review",
+          "context-agent",
+          "canonical-registry",
+          "mcp-delivery",
+          "consumers"
+        ],
+        "viewBox": [
+          1180,
+          370
+        ],
+        "boundary": {
+          "title": "DELIVERY PLAN · OWNER GATES CONTROL THE NEXT COMMITMENT",
+          "detail": "Scope and budget precede development. Security and leadership go/no-go precede operational launch."
+        },
+        "stages": [
+          {
+            "title": "Name the problem and owners",
+            "detail": "Intake/Vetting selects one workflow. Product Requirements records source owners, baseline, scope and acceptance criteria."
+          },
+          {
+            "title": "Approve the design and budget",
+            "detail": "Product Design defines the context contract, reviewer duties, access boundaries and funding ceiling. Reuse catalog components."
+          },
+          {
+            "title": "Build one complete path",
+            "detail": "Development connects submission, human review, persistent layers and authenticated readback through one consumer adapter."
+          },
+          {
+            "title": "Test the product and its failures",
+            "detail": "Testing compares the baseline and candidate. Exercise rejection, stale data, conflict, withdrawal and failed publication."
+          },
+          {
+            "title": "Launch only the accepted release",
+            "detail": "Security review and leadership go/no-go precede Launch. Name the operating owner and verify support and rollback."
+          },
+          {
+            "title": "Maintain and requalify changes",
+            "detail": "Maintenance checks drift, cost and value. New meaning returns to review. Source or model changes need qualification before expansion."
+          }
+        ],
+        "nodes": [
+          {
+            "id": "intake",
+            "title": "Intake / Vetting",
+            "lines": [
+              "One workflow",
+              "Sponsor + source owner"
+            ],
+            "role": "input",
+            "x": 20,
+            "y": 72,
+            "width": 240,
+            "height": 100,
+            "steps": [
+              0
+            ]
+          },
+          {
+            "id": "requirements",
+            "title": "Product requirements",
+            "lines": [
+              "Baseline + success gates",
+              "Permitted test access"
+            ],
+            "role": "policy",
+            "x": 320,
+            "y": 72,
+            "width": 240,
+            "height": 100,
+            "steps": [
+              0
+            ]
+          },
+          {
+            "id": "design",
+            "title": "Product design",
+            "lines": [
+              "Contract + review duties",
+              "Approve scope + budget"
+            ],
+            "role": "gate",
+            "x": 620,
+            "y": 72,
+            "width": 240,
+            "height": 100,
+            "steps": [
+              1
+            ]
+          },
+          {
+            "id": "build",
+            "title": "Development",
+            "lines": [
+              "One complete path",
+              "Submission to readback"
+            ],
+            "role": "agent",
+            "x": 920,
+            "y": 72,
+            "width": 240,
+            "height": 100,
+            "steps": [
+              2
+            ]
+          },
+          {
+            "id": "test",
+            "title": "Testing",
+            "lines": [
+              "Value + quality + access",
+              "Security + owner gate"
+            ],
+            "role": "gate",
+            "x": 620,
+            "y": 220,
+            "width": 240,
+            "height": 100,
+            "steps": [
+              3
+            ]
+          },
+          {
+            "id": "launch",
+            "title": "Launch",
+            "lines": [
+              "Accepted release",
+              "Support + rollback"
+            ],
+            "role": "consumer",
+            "x": 320,
+            "y": 220,
+            "width": 240,
+            "height": 100,
+            "steps": [
+              4
+            ]
+          },
+          {
+            "id": "maintain",
+            "title": "Maintenance",
+            "lines": [
+              "Drift + cost + value",
+              "Requalify each change"
+            ],
+            "role": "policy",
+            "x": 20,
+            "y": 220,
+            "width": 240,
+            "height": 100,
+            "steps": [
+              5
+            ]
+          }
+        ],
+        "edges": [
+          {
+            "id": "intake-requirements",
+            "from": "intake",
+            "to": "requirements",
+            "path": "M260 122 H320",
+            "steps": [
+              0
+            ],
+            "kind": "flow"
+          },
+          {
+            "id": "requirements-design",
+            "from": "requirements",
+            "to": "design",
+            "path": "M560 122 H620",
+            "steps": [
+              1
+            ],
+            "kind": "flow"
+          },
+          {
+            "id": "design-build",
+            "from": "design",
+            "to": "build",
+            "path": "M860 122 H920",
+            "steps": [
+              2
+            ],
+            "kind": "flow"
+          },
+          {
+            "id": "build-test",
+            "from": "build",
+            "to": "test",
+            "path": "M1040 172 V194 H740 V220",
+            "steps": [
+              3
+            ],
+            "kind": "flow"
+          },
+          {
+            "id": "test-launch",
+            "from": "test",
+            "to": "launch",
+            "path": "M620 270 H560",
+            "steps": [
+              4
+            ],
+            "kind": "flow"
+          },
+          {
+            "id": "launch-maintain",
+            "from": "launch",
+            "to": "maintain",
+            "path": "M320 270 H260",
+            "steps": [
+              5
+            ],
+            "kind": "flow"
+          },
+          {
+            "id": "test-build",
+            "from": "test",
+            "to": "build",
+            "path": "M860 270 H1170 V202 H1080 V172",
+            "steps": [
+              3
+            ],
+            "kind": "return",
+            "label": "Fix gaps",
+            "labelAt": [
+              1015,
+              264
+            ]
+          },
+          {
+            "id": "maintain-intake",
+            "from": "maintain",
+            "to": "intake",
+            "path": "M20 270 H10 V122 H20",
+            "steps": [
+              5
+            ],
+            "kind": "return"
+          }
+        ],
+        "provenance": "Proposal · not from the reference slides"
+      }
     },
     {
       "id": "primary-sources",

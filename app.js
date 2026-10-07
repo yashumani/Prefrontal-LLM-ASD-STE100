@@ -430,13 +430,13 @@ function businessCaseVisual() {
   return wrap;
 }
 
-function leadershipCaseVisual() {
+function leadershipCaseVisual(compact = false) {
   const a = deckData.pitch.economicHurdle;
   const attempts = a.acceptedTarget / (a.acceptancePercent / 100);
   const monthlyRequired = a.monthlyOverhead + a.setup / a.months;
   const perAttempt = monthlyRequired / attempts;
   const handlingMinutes = perAttempt / (a.hourly / 60);
-  const wrap = element('div', 'leadership-case');
+  const wrap = element('div', 'leadership-case' + (compact ? ' leadership-case-compact' : ''));
   const hero = element('div', 'investment-hurdle');
   hero.append(element('span', 'design-label', 'ILLUSTRATIVE BREAK-EVEN REQUIREMENT · USD'));
   const amount = element('strong', 'hurdle-amount', '$' + perAttempt.toFixed(2));
@@ -444,7 +444,7 @@ function leadershipCaseVisual() {
   hero.append(amount, element('p', 'hurdle-unit', 'required benefit per attempt in year one'));
   const assumptions = element('p', 'hurdle-assumptions', `${a.acceptedTarget.toLocaleString()} accepted tasks/month · ${a.acceptancePercent}% accepted attempts · $${a.monthlyOverhead.toLocaleString()} monthly overhead · $${a.setup.toLocaleString()} setup over ${a.months} months`);
   const supporting = element('div', 'hurdle-support');
-  for (const [key,value,label] of [['attempts',attempts,'attempts per month'],['monthlyRequired',monthlyRequired,'required benefit per month'],['handlingMinutes',handlingMinutes,'handling minutes per attempt at $60/hour']]) {
+  for (const [key,value,label] of [['attempts',attempts,'attempts per month'],['monthlyRequired',monthlyRequired,'required benefit per month'],['handlingMinutes',handlingMinutes,`handling minutes per attempt at $${a.hourly}/hour`]]) {
     const row=element('span'); row.dataset.hurdle=key; row.dataset.value=String(value);
     row.textContent=(key==='monthlyRequired'?'$':'') + value.toLocaleString('en-US',{maximumFractionDigits:2}) + ' ' + label;
     supporting.append(row);
@@ -455,7 +455,9 @@ function leadershipCaseVisual() {
     const card=element('article','executive-lens'); card.style.setProperty('--sector',lens.color); card.dataset.lens=lens.id;
     card.append(element('h3','',lens.name),element('p','',lens.goal)); lenses.append(card);
   });
-  wrap.append(hero,lenses); return wrap;
+  wrap.append(hero);
+  if (!compact) wrap.append(lenses);
+  return wrap;
 }
 
 function submissionVisual(slide) {
@@ -476,6 +478,31 @@ function presenterDetail(slide) {
   return details;
 }
 
+function pitchSignals(slide) {
+  const group = element('div', 'pitch-signals');
+  group.setAttribute('aria-label', 'Leadership takeaways');
+  (slide.pitchSignals || []).forEach(signal => {
+    const card = element('article', 'pitch-signal');
+    card.append(element('h3', '', signal.title), element('p', '', signal.text));
+    group.append(card);
+  });
+  return group;
+}
+
+function miniPitchVisual(slide) {
+  const wrap = element('div', 'mini-focus-visual pitch-mechanism');
+  wrap.append(createMechanism(window.ContextMiniArchitectures.create(slide.miniArchitecture)));
+  wrap.append(element('p', 'provenance', slide.miniArchitecture.provenance || 'Proposal · not from the reference slides'));
+  if (slide.type === 'leadership-case') wrap.append(leadershipCaseVisual(true));
+  if (slide.pitchSignals?.length) wrap.append(pitchSignals(slide));
+  if (slide.items.length) {
+    const detail = presenterDetail(slide);
+    detail.classList.add('dev');
+    wrap.append(detail);
+  }
+  return wrap;
+}
+
 function developerDetails(slide) {
   const wrap=element('div','dev developer-content');
   wrap.append(element('p','detail-intro','Developer view keeps every original topic. Open a section for contracts, examples, checks, and source detail.'));
@@ -494,6 +521,7 @@ function consolidatedVisual(slide) {
   const diagram=element('div',slide.miniArchitecture?'mini-focus-visual':'leadonly');
   diagram.append(createMechanism(slide.miniArchitecture ? window.ContextMiniArchitectures.create(slide.miniArchitecture) : window.ContextDiagrams.createInfographic(slide.infographic)));
   diagram.append(element('p','provenance',(slide.miniArchitecture || slide.infographic).provenance || 'Proposal · not from the reference slides'));
+  if (slide.pitchSignals?.length) diagram.append(pitchSignals(slide));
   if (slide.agentExplanation) {
     const agent=slide.agentExplanation;
     const strip=element('div','agent-role-strip');
@@ -536,6 +564,8 @@ function costSuite(slide) {
 
 function renderSlide(slide, i) {
   const panel = element("section", `slide type-${slide.type}`);
+  if (slide.miniArchitecture) panel.classList.add('has-mini-architecture');
+  if (slide.pitchSignals?.length) panel.classList.add('has-pitch-signals');
   panel.id = `panel-${slide.id}`;
   panel.dataset.slide = slide.id;
   panel.setAttribute("aria-labelledby", `title-${slide.id}`);
@@ -544,7 +574,9 @@ function renderSlide(slide, i) {
   heading.id = `title-${slide.id}`;
   const eyebrow = element("p", "eyebrow", slide.eyebrow);
   const lead = element("p", "lead", slide.lead);
-  if (slide.type === "cover") {
+  if (slide.miniArchitecture && slide.type !== 'consolidated') {
+    panel.append(eyebrow, heading, lead, miniPitchVisual(slide));
+  } else if (slide.type === "cover") {
     const grid = element("div", "cover-grid");
     const words = element("div");
     const tags = element("div", "cover-tags");
@@ -585,7 +617,7 @@ function renderSlide(slide, i) {
     else panel.append(renderItems(slide.items));
   }
   if (slide.note) panel.append(element("p", "slide-note", slide.note));
-  if(!slide.sections&&slide.items.length&&['cover','leadership-case'].includes(slide.type)) {
+  if(!slide.miniArchitecture&&!slide.sections&&slide.items.length&&['cover','leadership-case'].includes(slide.type)) {
     const detail=presenterDetail(slide);detail.classList.add('dev');panel.append(detail);
   }
   return panel;
