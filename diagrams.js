@@ -7,6 +7,30 @@ window.ContextDiagrams = (() => {
   const C = { navy: "var(--navy, #172b4d)", ink: "var(--ink, #000000)", blue: "var(--blue, #000000)", cyan: "var(--cyan, #53c8d8)", gold: "var(--gold, #efb94e)", canvas: "var(--canvas, #eaf2f8)", white: "var(--white, #ffffff)" };
   let render = 0;
   const esc = value => String(value).replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&apos;" }[ch]));
+  function draw(svg, markup) {
+    // Authored SVG remains plain native elements. Build-time serialization has no DOM.
+    if(typeof DOMParser==='undefined'){svg.innerHTML=markup;return;}
+    const source=new DOMParser().parseFromString(`<svg xmlns="${NS}">${markup}</svg>`,'image/svg+xml');
+    if(source.querySelector('parsererror'))throw new Error('Invalid authored SVG markup.');
+    const copy=node=>{
+      if(node.nodeType===3)return document.createTextNode(node.textContent);
+      const out=document.createElementNS(NS,node.localName);
+      [...node.attributes].forEach(a=>out.setAttribute(a.name,a.value));
+      [...node.childNodes].forEach(child=>out.append(copy(child)));return out;
+    };
+    svg.replaceChildren(...[...source.documentElement.childNodes].map(copy));
+    svg.querySelectorAll('.m-node').forEach(group=>{
+      const box=group.querySelector('rect');if(!box)return;
+      const right=Number(box.getAttribute('x')||0)+Number(box.getAttribute('width'));
+      group.querySelectorAll('text').forEach(text=>{
+        const x=Number(text.getAttribute('x')||0),center=text.getAttribute('text-anchor')==='middle';
+        const available=center?Number(box.getAttribute('width'))-32:right-x-16;
+        if(available>0){text.dataset.fitWidth=String(available);text.dataset.fitFontSize=text.getAttribute('font-size')||'16';}
+      });
+    });
+    // Canvas measurements keep the authored node padding, including after font loading.
+    window.ContextMotion?.fitText(svg);
+  }
   function create(kind) {
     if (!["cover", "pipeline", "memory", "router"].includes(kind)) throw new Error(`Unknown diagram: ${kind}`);
     const id = `context-${kind}-${++render}`;
@@ -143,7 +167,7 @@ window.ContextDiagrams = (() => {
       add(text(260, 362, "A model cannot grant itself permission.", 15));
       footer();
     }
-    svg.innerHTML = markup;
+    draw(svg,markup);
     return svg;
   }
   function createIndustry(kind, input) {
@@ -220,7 +244,7 @@ window.ContextDiagrams = (() => {
       for (let i=0; i<100; i++) markup += `<circle class="chart-dot${i<sector.metric.rates[0] ? ' is-filled' : ''}" cx="${15+(i%10)*14}" cy="${13+Math.floor(i/10)*14}" r="5" fill="${i<sector.metric.rates[0] ? sector.color : '#dde4eb'}"/>`;
       markup += text(171, 45, "65 of 100", 26, undefined, "start", 700) + text(171, 73, "percentage points", 17) + text(171, 110, "Survey: 282 respondents", 16, "var(--muted, #50677b)");
     }
-    svg.innerHTML = markup;
+    draw(svg,markup);
     return svg;
   }
   function createArchitecture(plan) {
@@ -255,7 +279,7 @@ window.ContextDiagrams = (() => {
       markup += '</g>';
     });
     markup += `<g data-review="owner"><rect x="24" y="526" width="1212" height="24" rx="5" fill="${C.canvas}" stroke="${C.gold}"/>${text(36,543,plan.review,14,C.ink)}</g>`;
-    svg.innerHTML = markup;
+    draw(svg,markup);
     return svg;
   }
   function createProductFlow(plan) {
@@ -290,7 +314,9 @@ window.ContextDiagrams = (() => {
     }
     const id = `context-infographic-${++render}`;
     const svg = document.createElementNS(NS, 'svg');
-    svg.setAttribute('viewBox', plan.compact ? '0 0 1000 180' : '0 0 1000 340');
+    const projected=plan.projection===true;
+    const bottom=projected?40:0;
+    svg.setAttribute('viewBox', plan.compact ? '0 0 1000 180' : projected?'0 0 1000 300':'0 0 1000 340');
     svg.setAttribute('class', `motion-diagram infographic-svg infographic-${plan.layout}`);
     svg.setAttribute('role', 'img');
     svg.setAttribute('aria-labelledby', `${id}-title ${id}-desc`);
@@ -345,40 +371,40 @@ window.ContextDiagrams = (() => {
       markup += '</g>';
     };
     if (plan.layout === 'cycle') {
-      const positions = [{ x: 30, y: 15 }, { x: 660, y: 15 }, { x: 660, y: 221 }, { x: 30, y: 221 }];
+      const positions = [{ x: 30, y: 15 }, { x: 660, y: 15 }, { x: 660, y: 221-bottom }, { x: 30, y: 221-bottom }];
       edge(1, 'M340 67 H660', 'first-next');
-      edge(2, 'M815 119 V221', 'second-next');
-      edge(3, 'M660 273 H340', 'third-next');
-      edge(0, 'M185 221 V119', 'return-work');
+      edge(2, `M815 119 V${221-bottom}`, 'second-next');
+      edge(3, `M660 ${273-bottom} H340`, 'third-next');
+      edge(0, `M185 ${221-bottom} V119`, 'return-work');
       plan.stages.forEach((stage, index) => node(stage, index, { ...positions[index], width: 310, height: 104 }));
-      center(350, 131, 300, 78);
+      center(350, 131-bottom/2, 300, 78);
     } else if (plan.layout === 'hub') {
-      const positions = [{ x: 20, y: 20 }, { x: 670, y: 20 }, { x: 670, y: 216 }, { x: 20, y: 216 }];
-      const paths = ['M330 72 H368 V145 H385', 'M670 72 H632 V145 H615', 'M670 268 H632 V191 H615', 'M330 268 H368 V191 H385'];
+      const positions = [{ x: 20, y: 20 }, { x: 670, y: 20 }, { x: 670, y: 216-bottom }, { x: 20, y: 216-bottom }];
+      const paths = [`M330 72 H368 V${145-bottom/2} H385`, `M670 72 H632 V${145-bottom/2} H615`, `M670 ${268-bottom} H632 V${191-bottom/2} H615`, `M330 ${268-bottom} H368 V${191-bottom/2} H385`];
       paths.forEach((path, index) => edge(index, path, `record-link-${index}`, false));
       plan.stages.forEach((stage, index) => node(stage, index, { ...positions[index], width: 310, height: 104 }));
-      center(385, 124, 230, 88);
+      center(385, 124-bottom/2, 230, 88);
     } else if (plan.layout === 'matrix') {
       const columns = plan.compact ? 4 : plan.stages.length / 2;
       const width = columns === 2 ? 460 : columns === 3 ? 300 : 225;
       const gap = columns === 2 ? 40 : columns === 3 ? 30 : 20;
       plan.stages.forEach((stage, index) => node(stage, index, {
-        x: 20 + (index % columns) * (width + gap), y: index < columns ? 15 : 185,
+        x: 20 + (index % columns) * (width + gap), y: index < columns ? 15 : 185-bottom,
         width, height: 140, wide: columns === 2
       }));
     } else {
       const positions = [20, 265, 510, 755].map(x => ({ x, y: 20 }));
-      positions.push(...[755, 510, 265].map(x => ({ x, y: 205 })));
+      positions.push(...[755, 510, 265].map(x => ({ x, y: 205-bottom })));
       for (let index = 1; index < positions.length; index++) {
         const before = positions[index - 1], after = positions[index];
         const path = index < 4 ? `M${before.x + 225} 77 H${after.x}`
-          : index === 4 ? 'M867.5 134 V205'
-            : `M${before.x} 262 H${after.x + 225}`;
+          : index === 4 ? `M867.5 134 V${205-bottom}`
+            : `M${before.x} ${262-bottom} H${after.x + 225}`;
         edge(index, path, `delivery-${index}`);
       }
       plan.stages.forEach((stage, index) => node(stage, index, { ...positions[index], width: 225, height: 114 }));
     }
-    svg.innerHTML = markup;
+    draw(svg,markup);
     return svg;
   }
   function createTokenCost(plan) {
@@ -416,7 +442,7 @@ window.ContextDiagrams = (() => {
       markup += `<g class="token-bar"><rect class="token-bar-input" data-token-part="input" data-value="${stage.inputTokens}" x="335" y="${y + 24}" width="${inputWidth}" height="20" fill="${ink}"/><rect class="token-bar-output" data-token-part="output" data-value="${stage.outputTokens}" x="${335 + inputWidth}" y="${y + 24}" width="${outputWidth}" height="20" fill="${red}"/></g>${text(335, y + 70, `Input ${format(stage.inputTokens)}  +  output ${format(stage.outputTokens)}`, 15, muted)}</g>`;
     });
     markup += `<rect x="28" y="318" width="13" height="13" fill="${ink}"/>${text(48, 330, 'Input', 14)}<rect x="111" y="318" width="13" height="13" fill="${red}"/>${text(131, 330, 'Output', 14)}${text(260, 330, 'Illustrative token volume, not price', 15, muted)}`;
-    svg.innerHTML = markup;
+    draw(svg,markup);
     return svg;
   }
   return Object.freeze({ create, createIndustry, createArchitecture, createProductFlow, createInfographic, createTokenCost });

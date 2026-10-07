@@ -5,6 +5,11 @@ on:
     branches: [feature/context-presentation]
     paths:
       - index.html
+      - presentation-shell.html
+      - motion-runtime.js
+      - mini-architectures.js
+      - scripts/original-content-hashes.json
+      - scripts/check-coverage.cjs
       - styles.css
       - app.js
       - diagrams.js
@@ -33,6 +38,8 @@ jobs:
         uses: actions/checkout@v6
       - name: Validate static presentation
         run: |
+          node --check motion-runtime.js
+          node --check mini-architectures.js
           node --check app.js
           node --check diagrams.js
           node --check cost-lab.js
@@ -41,6 +48,7 @@ jobs:
           node --check scripts/verify-v7.cjs
           node scripts/build-static.cjs --check
           node scripts/check-static.mjs
+          node scripts/check-coverage.cjs
       - name: Install browser validation tools
         run: |
           npm install --no-save --package-lock=false playwright@1.62.1

@@ -2,7 +2,7 @@
 
 [Open the pitch](https://yashumani.github.io/Prefrontal-LLM-ASD-STE100/).
 
-This 31-slide presentation sells a proposed context product and a bounded pilot. The first four slides explain the buyer problem, product and investment case. Slide five shows the complete architecture. Developer detail follows: submissions, review, canonical IDs, semantic layers, model decisions, controlled delivery, economics and implementation gates.
+This 16-slide presentation sells a proposed context product and a bounded pilot. The first four slides explain the buyer problem, product and investment case. Slide five shows the complete architecture. Developer detail follows: submissions, review, canonical IDs, semantic layers, model decisions, controlled delivery, economics and implementation gates.
 
 The product accepts structured submissions from humans and agent loops. Human reviewers approve meaning for an exact record version. A context agent organizes approved records into Data, Metric, Ontology and Interpretation layers. Canonical IDs connect the layers. A controlled MCP server delivers permitted context to independent applications. New meaning and feedback return through preparation and review. Consumers control their own actions.
 
@@ -61,18 +61,42 @@ The source Flash rate is future-dated. Its Pro rate omits the stated long-contex
 
 ## View and present
 
-Arrow keys move between slides. **Slides** opens the overview. **Full screen** enlarges the deck. **Print / PDF** prints all 31 slides.
+Arrow keys move between slides. **Slides** opens the overview. **Full screen** enlarges the deck. **Print / PDF** prints all 16 leadership slides.
 
-Nine inline SVG diagrams share one stage controller. **Stage →** and **← Stage** select a stage and pause playback. **Play motion** resumes it. JavaScript moves the cursor every 2.4 seconds. Native SVG `animateMotion` moves dots along the visible directed paths. CSS highlights the current stage.
+The header switches between **Leader** and **Developer**. Leader view presents the consolidated mechanism. Developer view keeps all 31 original topics in expandable sections. Topic buttons open the relevant section directly. The first four slides and full architecture on slide five retain their original purpose. The cost suite combines task cost, hidden work, monthly budget, and call anatomy on one slide; its six presets, eight charts, 14 setting rows, six recommendations, editable rates and full-cost worksheet remain available.
 
-An `IntersectionObserver` permits playback only when at least one quarter of the active SVG is visible. Playback pauses on hidden slides, in the overview, when the document is hidden and during print. Reduced-motion settings keep diagrams still. At most one stage timer runs.
+The supplied `vz-motion-kit.zip` is the motion reference. Plain SVG elements use `document.createElementNS`; canvas measures node labels. One shared `requestAnimationFrame` dispatcher advances stages and samples positions along directed paths. An `IntersectionObserver` runs only visible, allowed figures. Each figure's **Pause motion** control stops all motion and shows the complete static mechanism. OS reduced motion does the same. Manual stage arrows let a presenter inspect one step. No stage intervals, outside chart libraries, or independent SVG animation clocks run.
 
-On small screens, architecture and workflow diagrams scroll within a focusable viewport. Focus the diagram and use arrow keys to scroll. The submission table also scrolls horizontally. The full no-JavaScript deck retains all copy, diagrams and the worked economic example.
+`index.html` is a generated, self-contained page with inline CSS, JavaScript and JSON. It works offline without external assets. To reuse it in Apps Script, paste it into an HTML file named **Index**. The build rejects template scriptlet markers. This change does not deploy an Apps Script backend or implement the proposed context product.
+
+Slides07,08,09,10,11,13,14 zoom into the full architecture. Each has a real processing path, an exception route and a policy boundary. The same diagram stays visible in both audience views. Developer view adds the agent steps, inputs, outputs and authority limits. The chosen model proposes typed signals; the code harness checks them. Human reviewers approve meaning and owners authorize releases. These are proposed capabilities, not an implemented agent runtime.
+
+Printing always exports the 16-slide Leader narrative. Developer detail remains inspectable in the web page and native disclosures in the no-JavaScript fallback. This avoids expanding the print deck back into 31 pages.
+
+## Consolidation coverage
+
+| Slide | Topics retained |
+|---|---|
+| 1–5 | Product, problem, service, investment, complete architecture |
+| 6 | Existing stack and eight context capabilities |
+| 7 | Submission contract, STE-inspired preparation, human review |
+| 8 | Canonical IDs, source mapping, four semantic categories |
+| 9 | Bounded model decisions and memory lifecycle |
+| 10 | Authorized delivery and failure contracts |
+| 11 | Controlled evolution and four browser contract examples |
+| 12 | Call anatomy, model cost planner, hidden work, monthly budget |
+| 13 | Full operating cost, cost controls, investment worksheet |
+| 14 | Pilot acceptance and current proof boundary |
+| 15 | Seven delivery stages, development gates, bounded pilot offer |
+| 16 | Eight primary references |
+
+Source record hashes verify that all 31 original slide records remain exact. Consolidated diagrams are new proposed mappings; their labels distinguish them from reference material. Prices, settings and outcomes remain editable examples, not verified quotes or measured product savings. Writing remains **STE-inspired**; full ASD-STE100 compliance has not been checked.
 
 ## Edit and verify
 
 - `presentation-content.json`: slide copy, submission template, architecture, cost inputs and references.
-- `app.js`, `diagrams.js`, `styles.css`: presentation interface and motion graphics.
+- `presentation-shell.html`: authored shell; `index.html` is the generated single-file page.
+- `app.js`, `diagrams.js`, `mini-architectures.js`, `motion-runtime.js`, `styles.css`: interface and shared SVG motion.
 - `cost-lab.js`, `cost-lab.css`: shared editable cost estimates and eight SVG charts.
 - `scripts/build-static.cjs`: no-JavaScript presentation generation in `index.html`.
 - `scripts/check-static.mjs`: static content, architecture and brand contracts.
@@ -88,6 +112,7 @@ python -m http.server 8893 --bind 127.0.0.1
 Validate from another terminal:
 
 ```powershell
+node --check mini-architectures.js
 node --check app.js
 node --check diagrams.js
 node --check scripts/build-static.cjs
@@ -95,10 +120,11 @@ node --check scripts/verify-browser.cjs
 node scripts/build-static.cjs
 node scripts/build-static.cjs --check
 node scripts/check-static.mjs
+node scripts/check-coverage.cjs
 node scripts/verify-browser.cjs
 ```
 
-Browser validation needs Playwright and Chromium. Set `PREFRONTAL_PLAYWRIGHT_MODULE` to use an existing installation. Set `PREFRONTAL_TEST_URL` to test the published deck. A `file:` URL can prevent loading the JSON; use HTTP.
+Browser validation needs Playwright and Chromium. Set `PREFRONTAL_PLAYWRIGHT_MODULE` to use an existing installation. Set `PREFRONTAL_BASE_URL` to test the published deck. The generated page also works at a local `file:` URL because it embeds the content.
 
 ## Publication and proof boundaries
 

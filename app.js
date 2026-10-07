@@ -20,81 +20,75 @@ const navButtons = [];
 const mechanisms = [];
 
 function syncMotion() {
-  const paused = motionPaused || reducedMotion.matches;
-  byId("motion-toggle").textContent = reducedMotion.matches ? "Motion off" : paused ? "Play motion" : "Pause motion";
-  byId("motion-toggle").disabled = reducedMotion.matches;
-  byId("motion-toggle").setAttribute("aria-pressed", String(paused));
-  mechanisms.forEach(controller => controller.setAllowed(!paused && !printing && !showingOverview && !document.hidden && controller.figure.closest(".slide") === panels[current]));
+  const paused = motionPaused || reducedMotion.matches || printing;
+  document.querySelectorAll('[data-motion]').forEach(button => {
+    button.textContent = reducedMotion.matches ? 'Motion off' : paused ? 'Play motion' : 'Pause motion';
+    button.disabled = reducedMotion.matches;
+    button.setAttribute('aria-pressed', String(paused));
+  });
+  window.ContextMotion.setReduced(reducedMotion.matches);
+  window.ContextMotion.setPaused(paused || showingOverview || document.hidden);
+  mechanisms.forEach(controller => controller.setAllowed(!paused && !showingOverview && !document.hidden && controller.figure.closest('.slide') === panels[current]));
 }
 
 function createMechanism(kind, onStage = () => {}) {
-  const figure = element("figure", "mechanism-figure");
-  const svg = typeof kind === "string" ? window.ContextDiagrams.create(kind) : kind;
-  const groups = [...svg.querySelectorAll("[data-step]")];
-  const stages = [...svg.querySelectorAll("[data-stage]")];
-  const caption = element("figcaption", "stage-caption");
-  const heading = element("strong", "stage-title");
-  const detail = element("p", "stage-detail");
-  const controls = element("div", "stage-controls");
-  const previous = element("button", "stage-prev", "← Stage");
-  const next = element("button", "stage-next", "Stage →");
-  previous.type = next.type = "button";
-  previous.setAttribute("aria-label", "Previous diagram stage");
-  next.setAttribute("aria-label", "Next diagram stage");
-  const count = element("span", "stage-count");
-  controls.append(previous, count, next);
-  caption.append(heading, detail, controls);
-  if (svg.classList.contains("industry-svg-flow") || svg.classList.contains("architecture-svg") || svg.classList.contains("product-flow-svg") || svg.classList.contains("infographic-svg")) {
-    const architecture = svg.classList.contains("architecture-svg");
-    const viewport = element("div", architecture ? "diagram-viewport architecture-viewport" : "diagram-viewport");
-    viewport.tabIndex = 0;
-    viewport.setAttribute("role", "region");
-    viewport.setAttribute("aria-label", architecture ? "Full architecture workflow diagram. Scroll horizontally on a small screen." : "Context workflow diagram. Scroll horizontally on a small screen.");
-    viewport.append(svg);
-    figure.append(viewport, element("p", "diagram-scroll-hint", "Swipe the diagram to follow the workflow. Focus it and use arrow keys to scroll."), caption);
-  } else figure.append(svg, caption);
-  let cursor = 0, visible = false, allowed = false, timer = null;
-  const select = index => {
-    cursor = (index + stages.length) % stages.length;
-    const stage = stages[cursor];
-    groups.forEach(group => group.classList.toggle("is-current", group.dataset.step === stage.dataset.step));
-    svg.dataset.currentStep = stage.dataset.step;
-    heading.textContent = stage.dataset.stage;
-    detail.textContent = stage.dataset.stageDetail;
-    count.textContent = `${cursor + 1} / ${stages.length}`;
-    onStage(cursor);
+  const figure = element('figure', 'mechanism-figure');
+  const svg = typeof kind === 'string' ? window.ContextDiagrams.create(kind) : kind;
+  const groups = [...svg.querySelectorAll('[data-step]')];
+  const stages = [...svg.querySelectorAll('[data-stage]')];
+  const caption = element('figcaption', 'stage-caption');
+  const heading = element('strong', 'stage-title');
+  const detail = element('p', 'stage-detail');
+  const controls = element('div', 'stage-controls');
+  const previous = element('button', 'stage-prev', '← Stage');
+  const next = element('button', 'stage-next', 'Stage →');
+  const pause = element('button', 'figure-motion', 'Pause motion');
+  pause.dataset.motion = '';
+  previous.type = next.type = pause.type = 'button';
+  previous.setAttribute('aria-label','Previous diagram stage');
+  next.setAttribute('aria-label','Next diagram stage');
+  const count = element('span','stage-count');
+  controls.append(previous,count,next,pause);
+  caption.append(heading,detail,controls);
+  const viewport = element('div', 'diagram-viewport' + (svg.classList.contains('architecture-svg') ? ' architecture-viewport' : ''));
+  viewport.tabIndex=0; viewport.setAttribute('role','region');
+  viewport.setAttribute('aria-label','Workflow diagram. Scroll horizontally on a small screen.');
+  viewport.append(svg);figure.append(viewport,caption);
+  // Native path geometry supplies packet positions. No independent SMIL clocks.
+  const packets = [...svg.querySelectorAll('.m-dot')].map(dot => {
+    const ref=dot.dataset.path || dot.querySelector('mpath')?.getAttribute('href');
+    const path=ref && svg.querySelector(ref);
+    dot.replaceChildren();
+    if (!path) return null;
+    const length=path.getTotalLength();
+    const points=Array.from({length:81},(_,i)=>{const p=path.getPointAtLength(length*i/80);return [p.x,p.y];});
+    return {dot,points};
+  }).filter(Boolean);
+  let cursor=0,base=0,lastTime=0;
+  const select=index=>{
+    cursor=(index+stages.length)%stages.length;
+    const stage=stages[cursor];if(!stage)return;
+    svg.classList.remove('is-static');
+    groups.forEach(group=>group.classList.toggle('is-current',(group.dataset.steps || group.dataset.step).split(',').includes(stage.dataset.step)));
+    svg.dataset.currentStep=stage.dataset.step;
+    heading.textContent=stage.dataset.stage;detail.textContent=stage.dataset.stageDetail;
+    count.textContent=`${cursor+1} / ${stages.length}`;onStage(cursor);
   };
-  const reconcile = () => {
-    const play = allowed && visible;
-    svg.dataset.playing = String(play);
-    if (play && timer === null) {
-      svg.unpauseAnimations?.();
-      timer = window.setInterval(() => select(cursor + 1), 2400);
-    } else if (!play) {
-      if (timer !== null) window.clearInterval(timer);
-      timer = null;
-      svg.pauseAnimations?.();
-    }
+  const finalFrame=()=>{
+    svg.classList.add('is-static');svg.dataset.playing='false';
+    heading.textContent='Complete mechanism';detail.textContent='Read every stage. Use the arrows to inspect one stage.';
   };
-  const controller = { figure, setAllowed(value) { allowed = value; reconcile(); } };
-  const manualStep = delta => {
-    motionPaused = true;
-    motionOverride = true;
-    syncMotion();
-    select(cursor + delta);
-  };
-  previous.addEventListener("click", () => manualStep(-1));
-  next.addEventListener("click", () => manualStep(1));
-  figure.selectStage = index => manualStep(index - cursor);
+  const runtime=window.ContextMotion.register({element:svg,staticFrame:finalFrame,frame:t=>{
+    lastTime=t;svg.dataset.playing='true';svg.dataset.elapsed=String(t);
+    const nextCursor=Math.floor((t-base)/2.4)%stages.length;
+    if(nextCursor!==cursor||svg.classList.contains('is-static'))select(nextCursor);
+    packets.forEach(({dot,points},i)=>{const f=((t/1.6+i*.17)%1)*80,j=Math.floor(f),r=f-j,a=points[j],b=points[Math.min(j+1,80)];dot.setAttribute('transform',`translate(${a[0]+(b[0]-a[0])*r} ${a[1]+(b[1]-a[1])*r})`);});
+  }});
+  const manualStep=delta=>{motionPaused=true;motionOverride=true;syncMotion();select(cursor+delta);base=lastTime-cursor*2.4;};
+  previous.addEventListener('click',()=>manualStep(-1));next.addEventListener('click',()=>manualStep(1));
+  figure.selectStage=index=>manualStep(index-cursor);
   select(0);
-  reconcile();
-  // The observer supplies visibility changes; no per-frame JavaScript runs.
-  const observer = new IntersectionObserver(entries => {
-    visible = entries[0].isIntersecting && entries[0].intersectionRatio >= .25;
-    reconcile();
-  }, { threshold: [0, .25] });
-  observer.observe(svg);
-  mechanisms.push(controller);
+  mechanisms.push({figure,setAllowed(value){svg.dataset.playing=String(value);runtime.setAllowed(value);if(!value&& (motionPaused||reducedMotion.matches||printing))finalFrame();}});
   return figure;
 }
 
@@ -482,6 +476,64 @@ function presenterDetail(slide) {
   return details;
 }
 
+function developerDetails(slide) {
+  const wrap=element('div','dev developer-content');
+  wrap.append(element('p','detail-intro','Developer view keeps every original topic. Open a section for contracts, examples, checks, and source detail.'));
+  slide.sections.forEach(source=>{
+    const disclosure=element('details','developer-topic');disclosure.dataset.sourceSlide=source.id;
+    disclosure.append(element('summary','',source.title));
+    const section=renderSlide(source,1);section.hidden=false;section.classList.remove('slide');section.classList.add('developer-section');section.removeAttribute('data-slide');section.id='detail-'+source.id;section.removeAttribute('aria-labelledby');section.setAttribute('aria-label',source.title);
+    section.querySelector('.eyebrow')?.remove();section.querySelector('h2')?.remove();
+    const presenter=section.querySelector('.presenter-detail');if(presenter)presenter.open=true;
+    if(source.items.length&&!section.querySelector('.items'))section.append(renderItems(source.items));
+    disclosure.append(section);wrap.append(disclosure);
+  });return wrap;
+}
+function consolidatedVisual(slide) {
+  const wrap=element('div','consolidated-visual');
+  const diagram=element('div',slide.miniArchitecture?'mini-focus-visual':'leadonly');
+  diagram.append(createMechanism(slide.miniArchitecture ? window.ContextMiniArchitectures.create(slide.miniArchitecture) : window.ContextDiagrams.createInfographic(slide.infographic)));
+  diagram.append(element('p','provenance',(slide.miniArchitecture || slide.infographic).provenance || 'Proposal · not from the reference slides'));
+  if (slide.agentExplanation) {
+    const agent=slide.agentExplanation;
+    const strip=element('div','agent-role-strip');
+    strip.dataset.agentExplanation=slide.id;
+    strip.append(element('strong','',agent.title),element('p','',agent.definition));
+    diagram.append(strip);
+    const detail=element('details','dev agent-detail developer-topic');
+    detail.append(element('summary','','Agent responsibilities and decision evidence'));
+    const body=element('div','agent-detail-body');
+    const steps=element('ol','agent-steps');
+    agent.steps.forEach(step=>{const row=element('li','');row.append(element('strong','',step.title),element('p','',step.text));steps.append(row);});
+    body.append(steps);
+    const contract=element('div','agent-contract');
+    [['Inputs',agent.inputs],['Outputs',agent.outputs],['Authority limits',agent.limits]].forEach(([title,values])=>{
+      const column=element('section','');column.append(element('h3','',title));const list=element('ul','');values.forEach(value=>list.append(element('li','',value)));column.append(list);contract.append(column);
+    });
+    body.append(contract);detail.append(body);diagram.append(detail);
+  }
+  const strip=element('div','topic-strip');
+  slide.sections.forEach((source,i)=>{const chip=element('button','',slide.detailLabels?.[i]||source.title);chip.type='button';chip.addEventListener('click',()=>{byId('audience-dev').click();const topic=wrap.querySelector('[data-source-slide="'+source.id+'"]');topic.open=true;topic.scrollIntoView({block:'start',behavior:'instant'});});strip.append(chip);});
+  if(slide.miniArchitecture){const map=element('button','full-map-link','Full architecture ↗');map.type='button';map.addEventListener('click',()=>showSlide(deckData.slides.findIndex(s=>s.id==='full-architecture')));strip.append(map);}
+  diagram.append(strip);wrap.append(diagram,developerDetails(slide));return wrap;
+}
+function costSuite(slide) {
+  const wrap=element('div','cost-suite');
+  const selector=element('div','suite-tabs');selector.setAttribute('role','group');selector.setAttribute('aria-label','Cost infographic view');
+  const pages=element('div','suite-pages');
+  const views=[['planner','Task cost'],['hidden','Hidden work'],['budget','Monthly budget'],['anatomy','Call anatomy']];
+  views.forEach(([view,label],i)=>{
+    const button=element('button','',label);button.type='button';button.dataset.costView=view;button.setAttribute('aria-pressed',String(i===0));
+    const page=element('div','suite-page');page.dataset.costPage=view;page.hidden=i!==0;
+    if(view==='anatomy')page.append(createMechanism(window.ContextDiagrams.createTokenCost(slide.sections[0].tokenCost)));
+    else page.append(window.ContextCostLab.create(view,deckData.costLab));
+    button.addEventListener('click',()=>{[...pages.children].forEach(p=>p.hidden=p!==page);[...selector.children].forEach(b=>b.setAttribute('aria-pressed',String(b===button)));syncMotion();});
+    selector.append(button);pages.append(page);
+  });wrap.append(selector,pages,element('p','provenance','Reference examples · CFP&A v7 cost section. Editable assumptions; no measured product savings.'));
+  const source=element('details','dev developer-topic');source.append(element('summary','','Original cost explanations and token assumptions'));
+  slide.sections.forEach(section=>{const block=element('article','cost-source-copy');block.dataset.sourceSlide=section.id;block.append(element('h3','',section.title),element('p','',section.lead),renderItems(section.items));if(section.note)block.append(element('p','',section.note));source.append(block);});wrap.append(source);return wrap;
+}
+
 function renderSlide(slide, i) {
   const panel = element("section", `slide type-${slide.type}`);
   panel.id = `panel-${slide.id}`;
@@ -502,7 +554,9 @@ function renderSlide(slide, i) {
   } else {
     panel.append(eyebrow, heading, lead);
     const visuals = { foundation: coreVisual, contract: contractVisual, pipeline: flowVisual, memory: memoryVisual, router: routerVisual };
-    if (slide.infographic) {
+    if (slide.type === "cost-suite") panel.append(costSuite(slide));
+    else if (slide.type === "consolidated") panel.append(consolidatedVisual(slide));
+    else if (slide.infographic) {
       panel.classList.add("has-infographic");
       panel.append(slide.type === "ste" ? steVisual(slide) : createMechanism(window.ContextDiagrams.createInfographic(slide.infographic)));
       if (slide.items.length) panel.append(presenterDetail(slide));
@@ -531,6 +585,9 @@ function renderSlide(slide, i) {
     else panel.append(renderItems(slide.items));
   }
   if (slide.note) panel.append(element("p", "slide-note", slide.note));
+  if(!slide.sections&&slide.items.length&&['cover','leadership-case'].includes(slide.type)) {
+    const detail=presenterDetail(slide);detail.classList.add('dev');panel.append(detail);
+  }
   return panel;
 }
 
@@ -566,14 +623,12 @@ function showSlide(index, updateHash = true) {
 
 function indexFromHash() {
   const id = decodeURIComponent(location.hash.slice(1));
-  return deckData.slides.findIndex(slide => slide.id === id);
+  return deckData.slides.findIndex(slide => slide.id === id || slide.covers?.includes(id));
 }
 
 async function initialize() {
   try {
-    const response = await fetch("presentation-content.json", { cache: "no-cache" });
-    if (!response.ok) throw new Error(`Content request failed (${response.status}).`);
-    deckData = await response.json();
+    deckData = JSON.parse(byId("presentation-data").textContent);
     if (!Array.isArray(deckData.slides) || !deckData.slides.length || !Array.isArray(deckData.sources)) throw new Error("The content file is incomplete.");
     const deck = byId("deck"); deck.replaceChildren();
     deckData.slides.forEach((slide, i) => {
@@ -594,7 +649,11 @@ async function initialize() {
     byId("next").addEventListener("click", () => showSlide(current + 1));
     byId("overview-toggle").addEventListener("click", () => setOverview(!showingOverview));
     byId("print").addEventListener("click", () => window.print());
-    byId("motion-toggle").addEventListener("click", () => { motionPaused = !motionPaused; motionOverride = true; syncMotion(); });
+    document.addEventListener('click',event=>{
+      if(event.target.closest('[data-motion]')){motionPaused=!motionPaused;motionOverride=true;syncMotion();}
+      const view=event.target.closest('[data-view]');
+      if(view){document.body.classList.toggle('devview',view.dataset.view==='dev');document.querySelectorAll('[data-view]').forEach(b=>b.setAttribute('aria-pressed',String(b===view)));syncMotion();}
+    });
     reducedMotion.addEventListener("change", event => { if (!motionOverride) motionPaused = event.matches; syncMotion(); });
     document.addEventListener("visibilitychange", syncMotion);
     window.addEventListener("beforeprint", () => { printing = true; syncMotion(); });

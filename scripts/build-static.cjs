@@ -4,12 +4,24 @@ const fs = require("node:fs");
 const vm = require("node:vm");
 const assert = require("node:assert/strict");
 const escape = value => String(value).replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch]));
+class SvgElement {
+  constructor(tag) { this.tag=tag; this.attrs={}; this.style={}; this.children=[]; this.markup=''; this.value=''; }
+  setAttribute(name,value) { this.attrs[name]=String(value); }
+  getAttribute(name) { return this.attrs[name]; }
+  appendChild(child) { this.children.push(child); return child; }
+  append(...children) { children.forEach(child=>this.appendChild(child)); }
+  set textContent(value) { this.value=String(value); this.children=[]; this.markup=''; }
+  get textContent() { return this.value; }
+  set innerHTML(value) { this.markup=String(value); this.children=[]; this.value=''; }
+  get innerHTML() { return this.markup || escape(this.value)+this.children.map(child=>child.serialize()).join(''); }
+  serialize() { return `<${this.tag} ${Object.entries(this.attrs).map(([key,value])=>`${key}="${escape(value)}"`).join(' ')}>${this.innerHTML}</${this.tag}>`; }
+}
 const sandbox = { window: {}, document: { createElementNS(ns, tag) {
-  assert.equal(tag, "svg");
-  return { attrs: {}, style: {}, innerHTML: "", setAttribute(name, value) { this.attrs[name] = value; } };
+  assert.equal(ns,'http://www.w3.org/2000/svg'); return new SvgElement(tag);
 } } };
 vm.runInNewContext(fs.readFileSync("diagrams.js", "utf8"), sandbox, { timeout: 1000 });
 vm.runInNewContext(fs.readFileSync("cost-lab.js", "utf8"), sandbox, { timeout: 1000 });
+vm.runInNewContext(fs.readFileSync("mini-architectures.js", "utf8"), sandbox, { timeout: 1000 });
 const serialize = svg => {
   // Static documents never run hidden native particle animation.
   const markup = svg.innerHTML.replace(/<circle class="m-dot"[\s\S]*?<\/circle>/g, "");
@@ -18,7 +30,7 @@ const serialize = svg => {
 const figure = svg => {
   const graphic = serialize(svg);
   const architecture = svg.attrs.class.includes('architecture-svg');
-  const flow = architecture || svg.attrs.class.includes('product-flow-svg') || svg.attrs.class.includes('infographic-svg');
+  const flow = architecture || svg.attrs.class.includes('product-flow-svg') || svg.attrs.class.includes('infographic-svg') || svg.attrs.class.includes('mini-architecture-svg');
   return `<figure class="mechanism-figure">${flow ? `<div class="diagram-viewport${architecture?' architecture-viewport':''}" tabindex="0" role="region" aria-label="${architecture?'Full architecture':'Context'} workflow diagram. Scroll horizontally on a small screen.">${graphic}</div><p class="diagram-scroll-hint">Swipe the diagram to follow the workflow. Focus it and use arrow keys to scroll.</p>` : graphic}<figcaption class="static-diagram-caption">Static diagram. Follow the arrows and read all stages.</figcaption></figure>`;
 };
 const diagram = kind => figure(sandbox.window.ContextDiagrams.create(kind));
@@ -59,7 +71,12 @@ review: owner + exact content hash
 access: operations-readers
 
 IDs identify records. IDs grant no access.</pre>`;
-const slides = deck.slides.map((slide, index) => {
+const agentDetail = (slide) => {
+  const a=slide.agentExplanation;
+  if(!a)return '';
+  return `<div class="agent-role-strip" data-agent-explanation="${escape(slide.id)}"><strong>${escape(a.title)}</strong><p>${escape(a.definition)}</p></div><details class="dev agent-detail developer-topic"><summary>Agent responsibilities and decision evidence</summary><div class="agent-detail-body"><ol class="agent-steps">${a.steps.map(s=>`<li><strong>${escape(s.title)}</strong><p>${escape(s.text)}</p></li>`).join('')}</ol><div class="agent-contract">${[['Inputs',a.inputs],['Outputs',a.outputs],['Authority limits',a.limits]].map(([title,values])=>`<section><h3>${title}</h3><ul>${values.map(v=>`<li>${escape(v)}</li>`).join('')}</ul></section>`).join('')}</div></div></details>`;
+};
+function renderStaticSlide(slide, index, nested=false) {
   const heading = index === 0 ? "h1" : "h2";
   const header = `<p class="eyebrow">${escape(slide.eyebrow)}</p><${heading}>${escape(slide.title)}</${heading}><p class="lead">${escape(slide.lead)}</p>`;
   let body = items(slide);
@@ -83,21 +100,33 @@ const slides = deck.slides.map((slide, index) => {
   else if (slide.type === 'product-flow') body = figure(sandbox.window.ContextDiagrams.createProductFlow(slide.flow)) + items(slide);
   else if (slide.type === 'architecture') body = figure(sandbox.window.ContextDiagrams.createArchitecture(deck.architecture)) + `<p class="architecture-legend">${escape(deck.architecture.legend)}</p>`;
   else if (slide.type === "upgrade") body = `<div class="diagram-grid">${contract}<div><div class="item"><h3>Illustrative contract checks</h3><p>The browser example accepts a change that preserves the record. It rejects missing evidence, a removed exception, or expanded permission. These checks do not call a model. Enable JavaScript to run the four examples.</p></div>${items(slide)}</div></div>`;
-  if (slide.infographic) {
+  if (slide.type === 'consolidated') {
+    body = `<div class="${slide.miniArchitecture?'mini-focus-visual':'leadonly'}">${figure(slide.miniArchitecture?sandbox.window.ContextMiniArchitectures.create(slide.miniArchitecture):sandbox.window.ContextDiagrams.createInfographic(slide.infographic))}<p class="provenance">${escape((slide.miniArchitecture||slide.infographic).provenance || 'Proposal · not from the reference slides')}</p>${agentDetail(slide)}<div class="topic-strip">${slide.sections.map((section,i)=>`<span>${escape(slide.detailLabels?.[i]||section.title)}</span>`).join('')}</div></div><div class="dev developer-content">${slide.sections.map(section=>`<details class="developer-topic" data-source-slide="${escape(section.id)}"><summary>${escape(section.title)}</summary>${renderStaticSlide(section,1,true)}</details>`).join('')}</div>`;
+  } else if (slide.type === 'cost-suite') {
+    body = `<p class="provenance">Reference examples · CFP&A v7 cost section. Editable assumptions; no measured product savings.</p><div class="static-cost-primary">${sandbox.window.ContextCostLab.renderStatic('planner',deck.costLab)}</div><div class="dev"><details class="developer-topic"><summary>Hidden model work</summary>${sandbox.window.ContextCostLab.renderStatic('hidden',deck.costLab)}</details><details class="developer-topic"><summary>Monthly model budget</summary>${sandbox.window.ContextCostLab.renderStatic('budget',deck.costLab)}</details><details class="developer-topic"><summary>Call anatomy</summary>${figure(sandbox.window.ContextDiagrams.createTokenCost(slide.sections[0].tokenCost))}</details>${slide.sections.map(section=>`<details class="developer-topic" data-source-slide="${escape(section.id)}"><summary>${escape(section.title)}</summary><p>${escape(section.lead)}</p>${items(section)}<p>${escape(section.note||'')}</p></details>`).join('')}</div>`;
+  } else if (slide.infographic) {
     const writing = slide.type === 'ste' ? `<div class="ste-example"><div class="example-panel"><span class="label">ORIGINAL · ILLUSTRATIVE</span><p>Reports should be retained for a period of 30 days, except where a dispute remains open, in which case retention continues until the review concludes.</p></div><div class="example-panel"><span class="label">STE-INSPIRED VIEW</span><p>You should keep reports for 30 days. If a dispute remains open, you should keep the report until the review ends.</p></div></div>` : '';
     body = writing + figure(sandbox.window.ContextDiagrams.createInfographic(slide.infographic)) + (slide.items.length ? `<details class="presenter-detail"><summary>Presenter detail</summary>${items(slide)}</details>` : '');
   } else if (slide.tokenCost) body = figure(sandbox.window.ContextDiagrams.createTokenCost(slide.tokenCost));
   else if (slide.type === 'cost-lab') body = sandbox.window.ContextCostLab.renderStatic(slide.costView,deck.costLab);
-  return `<section class="slide type-${escape(slide.type)}${slide.infographic?' has-infographic':''}" id="static-${escape(slide.id)}">${slide.type === "cover" ? "" : header}${body}${slide.note ? `<p class="slide-note">${escape(slide.note)}</p>` : ""}</section>`;
-}).join("\n");
+  if(nested&&slide.items.length&&['pitch-proof','pitch-calculator','upgrade','token-cost'].includes(slide.type))body+=items(slide);
+  return `<${nested?'article':'section'} class="${nested?'developer-section':'slide'} type-${escape(slide.type)}${slide.infographic?' has-infographic':''}" id="${nested?'detail-static-':'static-'}${escape(slide.id)}">${slide.type === "cover" ? "" : header}${body}${slide.note ? `<p class="slide-note">${escape(slide.note)}</p>` : ""}</${nested?'article':'section'}>`;
+}
+const slides=deck.slides.map((slide,index)=>renderStaticSlide(slide,index)).join("\n");
 const start = "<!-- STATIC PRESENTATION START -->";
 const end = "<!-- STATIC PRESENTATION END -->";
-const html = fs.readFileSync("index.html", "utf8").replace(/\r\n/g, "\n");
+const html = fs.readFileSync("presentation-shell.html", "utf8").replace(/\r\n/g, "\n");
 assert(html.includes(start) && html.includes(end), "Static presentation markers are required.");
 const replacement = `${start}\n  <noscript><main class="static-presentation"><p class="static-intro">Static presentation · all ${deck.slides.length} slides. Writing inspired by ASD-STE100; full compliance has not been checked.</p>\n${slides}\n</main></noscript>\n  ${end}`;
-const output = html.slice(0, html.indexOf(start)) + replacement + html.slice(html.indexOf(end) + end.length);
+let output = html.slice(0, html.indexOf(start)) + replacement + html.slice(html.indexOf(end) + end.length);
+const css=['styles.css','cost-lab.css'].map(file=>fs.readFileSync(file,'utf8')).join('\n');
+const scripts=['motion-runtime.js','diagrams.js','mini-architectures.js','cost-lab.js','app.js'].map(file=>fs.readFileSync(file,'utf8').replace(/<\/script/gi,'<\\/script')).join('\n');
+output=output.replace('<!-- BUNDLE STYLES -->',()=>`<style>${css}</style>`).replace('<!-- BUNDLE SCRIPTS -->',()=>`<script type="application/json" id="presentation-data">${JSON.stringify(deck).replace(/</g,'\\u003c')}</script>\n<script>${scripts}</script>`);
+assert(!output.includes('<'+'?')&&!output.includes('?' + '>'),'The single-file page must contain no Apps Script scriptlet markers.');
+assert(!/<(?:script|link)\b[^>]*(?:src|href)=/.test(output),'The generated page must use inline CSS, JS and content.');
+output=output.replace(/\r\n/g,'\n');
 if (process.argv.includes("--check")) {
-  assert.equal(html, output, "Static deck is stale. Run node scripts/build-static.cjs.");
+  assert.equal(fs.readFileSync("index.html","utf8").replace(/\r\n/g,"\n"), output, "Static deck is stale. Run node scripts/build-static.cjs.");
   const flows = (output.match(/<svg[^>]*class="[^"]*motion-diagram/g)||[]).length;
   console.log(`Static fallback: PASS (${deck.slides.length} slides, ${flows} flow SVGs match their sources)`);
 } else {
