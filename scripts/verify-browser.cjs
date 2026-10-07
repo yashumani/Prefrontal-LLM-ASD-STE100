@@ -5,9 +5,10 @@ const assert = require('node:assert/strict');
 (async () => {
   const base = process.env.PREFRONTAL_TEST_URL || 'http://127.0.0.1:8893/';
   const deck = JSON.parse(await readFile('presentation-content.json', 'utf8'));
-  const expectedSectors = ['telecom', 'utilities', 'healthcare', 'hospitality'];
-  assert.equal(deck.slides.length, 26, 'The agreed release contains 26 product-pitch and appendix slides.');
-  assert.deepEqual(deck.industries.map(industry => industry.id).sort(), [...expectedSectors].sort());
+  assert.equal(deck.slides.length, 26, 'The product pitch contains four leadership slides, architecture, existing-stack integration and developer detail.');
+  assert.equal(deck.slides[4].id, 'full-architecture', 'The complete architecture must be slide five.');
+  assert.equal(deck.slides[4].type, 'architecture');
+  assert(!deck.industries && !deck.industrySources && !deck.pitch.conference, 'The product pitch removes industry and conference narratives.');
   await mkdir('.validation', { recursive: true });
   const browser = await chromium.launch({ headless: true });
   const errors = [];
@@ -37,6 +38,25 @@ const assert = require('node:assert/strict');
     const metrics = await page.evaluate(() => ({ width: document.documentElement.clientWidth, scroll: document.documentElement.scrollWidth }));
     assert(metrics.scroll <= metrics.width + 1, `Horizontal overflow: ${JSON.stringify(metrics)}`);
   };
+  const assertBrand = async page => {
+    const brand = await page.evaluate(() => {
+      const root = getComputedStyle(document.documentElement), body = getComputedStyle(document.body);
+      return { accent: root.getPropertyValue('--red').trim().toUpperCase(), paper: root.getPropertyValue('--paper').trim().toLowerCase(), background: body.backgroundColor, foreground: body.color, font: body.fontFamily };
+    });
+    assert.equal(brand.accent, '#EE001E', 'The presentation must use the supplied red brand accent.');
+    assert(['#fff', '#ffffff'].includes(brand.paper), 'The paper token must remain white.');
+    assert.equal(brand.background, 'rgb(255, 255, 255)', 'The presentation background must match the white reference surface.');
+    assert.equal(brand.foreground, 'rgb(0, 0, 0)', 'The main brand foreground must be black.');
+    assert.match(brand.font, /Arial/i, 'The presentation must use the agreed Arial sans-serif font stack.');
+    const control = page.locator('.slide:visible .stage-next');
+    assert(await control.isVisible(), 'The branded stage control must remain visible.');
+    const shape = await control.evaluate(button => { const style = getComputedStyle(button); return { radius: parseFloat(style.borderTopLeftRadius), height: button.getBoundingClientRect().height }; });
+    assert(shape.radius >= shape.height / 2 - 1, 'The stage control must retain a pill shape: ' + JSON.stringify(shape));
+    await page.keyboard.press('Tab');
+    await control.focus();
+    const focus = await control.evaluate(button => { const style = getComputedStyle(button); return { visible: button.matches(':focus-visible'), color: style.outlineColor, width: parseFloat(style.outlineWidth), style: style.outlineStyle }; });
+    assert(focus.visible && focus.color === 'rgb(238, 0, 30)' && focus.width >= 2 && focus.style !== 'none', 'Keyboard focus must visibly use the brand red: ' + JSON.stringify(focus));
+  };
   const waitForMotion = async (page, selector, playing) => page.waitForFunction(({ selector, playing }) => {
     const svg = document.querySelector(selector);
     return svg && svg.dataset.playing === String(playing) && svg.animationsPaused() === !playing;
@@ -59,12 +79,14 @@ const assert = require('node:assert/strict');
       const selected = node.querySelector(`.m-node[data-stage][data-step="${step}"]`);
       return {
         matches: [...node.querySelectorAll('.m-stage')].every(group => group.classList.contains('is-current') === (group.dataset.step === step)),
-        width: selected && getComputedStyle(selected.querySelector('rect')).strokeWidth,
+        width: selected?.querySelector('rect') && getComputedStyle(selected.querySelector('rect')).strokeWidth,
+        edges: [...node.querySelectorAll('.m-edge.is-current')].length,
         stage: selected?.dataset.stage, title: node.closest('.mechanism-figure').querySelector('.stage-title').textContent
       };
     });
     assert(state.matches, 'Node and edge highlights must follow the diagram cursor.');
-    assert.equal(state.width, '3px', 'The current node must remain highlighted while paused.');
+    if (state.width) assert.equal(state.width, '3px', 'The current node must remain highlighted while paused.');
+    else assert(state.edges > 0, 'A node-free feedback stage must visibly highlight its return connectors.');
     assert.equal(state.title, state.stage, 'The caption must describe the selected SVG stage.');
   };
   const assertIntervals = async (page, count) => {
@@ -86,9 +108,11 @@ const assert = require('node:assert/strict');
   });
   const assertPdfPages = pdf => assert.equal((pdf.toString('latin1').match(/\/Type\s*\/Page\b/g) || []).length, deck.slides.length, `The PDF must contain all ${deck.slides.length} slides as separate pages.`);
   const coverSelector = `[data-slide="${deck.slides[0].id}"] svg.motion-diagram`;
-  const pipelineId = deck.slides.find(slide => slide.type === 'pipeline').id;
+  const pipelineId = 'product-overview';
   const pipelineSelector = `[data-slide="${pipelineId}"] svg.motion-diagram`;
-  const industryById = Object.fromEntries(deck.industries.map(industry => [industry.id, industry]));
+  const architectureId = 'full-architecture';
+  const architectureSelector = `[data-slide="${architectureId}"] svg.architecture-svg`;
+  const architectureConnections = Object.fromEntries(deck.architecture.edges.map(edge => [edge.id, [edge.from, edge.to]]));
   const normalized = text => text.replace(/\s+/g, ' ').trim();
   const assertProductNodeBounds = async svg => {
     const boxes = await svg.evaluate(node => [...node.querySelectorAll('.m-node[data-stage]')].map(group => {
@@ -102,7 +126,7 @@ const assert = require('node:assert/strict');
         })
       };
     }));
-    assert.equal(boxes.length, 5, 'The product map needs five visible boxed stages.');
+    assert.equal(boxes.length, 5, 'The product map needs four visible objectives and their shared governed context stage.');
     const horizontalPadding = 8;
     const verticalPadding = 6;
     for (const stage of boxes) {
@@ -116,59 +140,112 @@ const assert = require('node:assert/strict');
       }
     }
   };
+  const assertProductFlowNodeBounds = async (svg, flow) => {
+    const boxes = await svg.evaluate(node => [...node.querySelectorAll('[data-node]')].map(group => {
+      const bounds = group.querySelector('rect').getBBox();
+      return { id: group.dataset.node, box: { x: bounds.x, y: bounds.y, width: bounds.width, height: bounds.height }, labels: [...group.querySelectorAll('text')].map(text => { const b = text.getBBox(); return { text: text.textContent, x: b.x, y: b.y, width: b.width, height: b.height }; }) };
+    }));
+    assert.equal(boxes.length, 4, 'Each product flow needs four readable nodes.');
+    for (const node of boxes) {
+      const expected = flow.nodes.find(item => item.id === node.id);
+      assert(expected, node.id + ' must belong to its declared product flow.');
+      assert.deepEqual(node.labels.map(item => item.text), [expected.title, ...expected.lines], 'The flow must preserve every visible title and explanation.');
+      for (const label of node.labels) {
+        assert(label.width > 0 && label.height > 0);
+        assert(label.x >= node.box.x + 5 - 0.5 && label.x + label.width <= node.box.x + node.box.width - 5 + 0.5 && label.y >= node.box.y + 4 - 0.5 && label.y + label.height <= node.box.y + node.box.height - 4 + 0.5, 'Product flow labels must fit inside their node: ' + JSON.stringify({ node: node.id, label, box: node.box }));
+      }
+    }
+  };
   const expectedLenses = ['cost', 'performance', 'accuracy', 'trust'];
   const resultKeys = ['baseline', 'candidate', 'difference', 'yearOne', 'baselineUnit', 'candidateUnit'];
   const assumptionKeys = Object.keys(deck.pitch.businessCase.defaults);
   const slideForType = type => deck.slides.find(slide => slide.type === type);
   const assertPitchNarrative = async (root, staticMode = false) => {
-    const panelForType = async type => {
-      const slide = slideForType(type);
-      if (!staticMode) await goto(root, slide.id);
-      const panel = root.locator(staticMode ? `#static-${slide.id}` : `[data-slide="${slide.id}"]`);
-      assert(await panel.isVisible(), `${type} must have a readable buyer story.`);
+    const panelForId = async id => {
+      if (!staticMode) await goto(root, id);
+      const panel = root.locator(staticMode ? '#static-' + id : '[data-slide="' + id + '"]');
+      assert(await panel.isVisible(), id + ' must have a readable product story.');
       return panel;
     };
-    const opening = await panelForType('cover');
-    assert((await opening.innerText()).includes(deck.pitch.productName), 'The cover must sell the proposed product.');
-    assert.match(normalized(await opening.innerText()), /product concept.{0,60}pilot/i, 'The cover must state concept maturity and the pilot proposition.');
-    const insights = await panelForType('pitch-insights');
-    const insightText = normalized(await insights.innerText());
-    for (const insight of deck.pitch.conference.insights) {
-      for (const key of ['title', 'observation', 'application']) assert(insightText.includes(normalized(insight[key])), `The conference pitch must show ${key} without losing attribution.`);
-      assert(insightText.includes(normalized(insight.exhibits)), 'Each conference insight must retain its exhibit references.');
+    const opening = await panelForId('opening-thesis');
+    assert((await opening.innerText()).includes(deck.pitch.productName), 'The cover must identify the proposed product.');
+    assert.match(normalized(await opening.innerText()), /concept|proposed|pilot/i, 'The cover must state product maturity.');
+    assert.equal(await root.locator('.industry-case,.industry-overview-grid,.conference-insights').count(), 0, 'The new pitch must remove the previous sector and conference material.');
+    for (const id of ['fragmented-context', 'product-overview', 'investment-case']) {
+      const panel = await panelForId(id);
+      assert((await panel.locator('h2').innerText()).trim().length > 0);
+      assert((await panel.locator('.lead').innerText()).trim().length > 20);
+      if (!staticMode) await root.screenshot({ path: '.validation/architecture-' + id + '-desktop.png', fullPage: true });
     }
-    const citations = insights.locator('a.conference-citation');
-    assert((await citations.count()) >= 1, 'The insights slide must link directly to the supplied portfolio conference.');
-    for (const link of await citations.all()) assert.equal(await link.getAttribute('href'), deck.pitch.conference.url);
-    assert(insightText.includes(normalized(deck.pitch.conference.scope)), 'Conference notes must preserve the scope of the observation.');
-    assert(insightText.includes(normalized(deck.pitch.conference.eventDate)), 'Conference notes must retain the event date.');
-    if (!staticMode) await root.screenshot({ path: '.validation/pitch-insights-desktop.png', fullPage: true });
-    const value = await panelForType('pitch-value');
-    assert.equal(await value.locator('.value-lens').count(), expectedLenses.length);
-    for (const lens of deck.pitch.lenses) {
-      const card = value.locator(`.value-lens[data-lens="${lens.id}"]`);
-      assert.equal(await card.count(), 1, `The buyer story needs one ${lens.id} value card.`);
-      const text = normalized(await card.innerText());
-      for (const key of ['name', 'goal', 'mechanism', 'measure', 'guardrail']) assert(text.toLowerCase().includes(normalized(lens[key]).toLowerCase()), `${lens.id} value must preserve its ${key}.`);
+    const investment = await panelForId('investment-case');
+    assert.match(await investment.innerText(), /cost|spend|invest|overhead|budget/i, 'Leadership needs the economic reason to fund the architecture.');
+    assert.match(await investment.innerText(), /illustrative|assum|unmeasured|not.{0,40}measur/i, 'The investment case must distinguish assumptions from measured savings.');
+    const hurdleValues = { attempts: 1250, monthlyRequired: 1000 + 5000 / 12, perAttempt: (1000 + 5000 / 12) / 1250, handlingMinutes: (1000 + 5000 / 12) / 1250 };
+    for (const [key, expected] of Object.entries(hurdleValues)) {
+      const value = investment.locator('[data-hurdle="' + key + '"]');
+      assert.equal(await value.count(), 1, 'Leadership must see the ' + key + ' economic hurdle.');
+      assert(Math.abs(Number(await value.getAttribute('data-value')) - expected) < 0.000001, key + ' must use the complete setup and recurring overhead assumptions.');
     }
-    if (!staticMode) await root.screenshot({ path: '.validation/buyer-value-desktop.png', fullPage: true });
-    const proof = await panelForType('pitch-proof');
+    const stack = await panelForId('existing-stack');
+    const stackText = normalized(await stack.innerText());
+    for (const term of [/Looker/i, /LookML/i, /Zenlytics/i, /custom app/i]) assert.match(stackText, term, 'The visible stack story must name each existing analytics component.');
+    assert.match(stackText, /existing|current|reuse/i, 'The stack slide must explain reuse of the current investment.');
+    assert.match(stackText, /native.{0,35}(?:query|execution)|(?:query|execution).{0,35}native/i, 'The visible integration story must preserve native query execution.');
+    assert.match(stackText, /adapter/i, 'The integration story must show the adapter boundary.');
+    assert.match(stackText, /to verify|must verify|verify.{0,35}(?:adapter|contract|permission)|(?:adapter|contract|permission).{0,35}verif/i, 'The integration must not imply that adapter contracts and permissions are already qualified.');
+    const submission = await panelForId('submission-template');
+    assert.equal(await submission.locator('table').count(), 1, 'Developers need a single tabular submission contract.');
+    assert((await submission.locator('th').count()) >= 3, 'The submission contract must explain fields, examples and validation.');
+    const submissionText = normalized(await submission.innerText());
+    assert.match(submissionText, /source|evidence/i);
+    assert.match(submissionText, /valid|review|scope/i);
+    const contract = await panelForId('context-contract');
+    const mappingText = submissionText + ' ' + normalized(await contract.innerText());
+    for (const term of [/LookML/i, /model/i, /explore/i, /view/i, /measure/i, /Git.{0,25}(?:revision|commit)|(?:revision|commit).{0,25}Git/i]) assert.match(mappingText, term, 'The visible context contract must preserve versioned LookML source mapping.');
+    const costDiscipline = await panelForId('cost-discipline');
+    const disciplineText = normalized(await costDiscipline.innerText());
+    for (const term of [/code|SQL/i, /context/i, /cach/i, /valid|fresh|version/i, /retr(?:y|ies)/i]) assert.match(disciplineText, term, 'The cost discipline slide must retain deterministic methods, context limits, valid caching and retry limits.');
+    assert.match(disciplineText, /certified quer.{0,25}unchanged/i, 'Visible cost controls must preserve certified queries.');
+    assert.match(disciplineText, /review.{0,30}expert drafts.{0,30}reuse/i, 'The visible cost controls must require review before reusing expert drafts.');
+    const router = await panelForId('bounded-decision-router');
+    const routerText = normalized(await router.innerText());
+    for (const term of [/certified query references/i, /native execution/i, /access checks/i, /expert drafts/i, /review/i]) assert.match(routerText, term, 'The visible route must distinguish permission-checked certified references from expert drafts that require review.');
+    const costModel = await panelForId('value-assumptions');
+    const completeCostText = disciplineText + ' ' + normalized(await costModel.innerText());
+    for (const term of [/warehouse|BigQuery/i, /seat|licen[cs]e/i, /human|review/i, /existing|allocated/i, /incremental/i]) assert.match(completeCostText, term, 'The visible cost case must distinguish complete operating costs and existing versus incremental licensing.');
+    const plan = await panelForId('plan-alignment');
+    const planText = normalized(await plan.innerText());
+    assert.match(planText, /seven|7.{0,15}stage/i, 'The visible proposal must align with the seven-stage delivery journey.');
+    for (const stage of ['Intake/Vetting', 'Product Requirements', 'Product Design', 'Development', 'Testing', 'Launch', 'Maintenance']) {
+      assert(planText.toLowerCase().includes(stage.toLowerCase()), 'The visible proposal must preserve the supplied delivery stage: ' + stage + '.');
+    }
+    for (const term of [/owner/i, /review|govern/i, /pilot/i, /approv|gate/i]) assert.match(planText, term, 'The visible plan must explain ownership, governance and pilot approval gates.');
+    const ste = await panelForId('meaning-preserving-ste');
+    assert.match(await ste.innerText(), /STE-inspired|inspired by/i, 'The deck must not claim unchecked STE compliance.');
+    assert.match(await ste.innerText(), /dispute|exception/i, 'The rewriting example must preserve exceptions.');
+    const boundaries = await panelForId('evidence-boundary');
+    for (const state of ['Available now', 'Designed', 'To implement', 'To qualify']) assert((await boundaries.innerText()).includes(state), 'Readiness must distinguish ' + state + '.');
+    const proof = await panelForId('pilot-acceptance');
     assert.equal(await proof.locator('.proof-card').count(), expectedLenses.length);
     for (const item of deck.pitch.scorecard) {
-      const card = proof.locator(`.proof-card[data-lens="${item.id}"]`);
-      assert.equal(await card.count(), 1, `A buyer must see how ${item.id} will be proved.`);
-      const text = normalized(await card.innerText());
-      for (const key of ['name', 'metric', 'trial', 'decision']) assert(text.toLowerCase().includes(normalized(item[key]).toLowerCase()), `${item.id} proof must preserve its ${key}.`);
+      const card = proof.locator('.proof-card[data-lens="' + item.id + '"]');
+      assert.equal(await card.count(), 1);
+      const text = normalized(await card.innerText()).toLowerCase();
+      for (const key of ['name', 'metric', 'trial', 'decision']) assert(text.includes(normalized(item[key]).toLowerCase()), item.id + ' proof must preserve ' + key + '.');
     }
-    assert.match(await proof.innerText(), /pilot|not.{0,30}measured|unmeasured/i, 'Pilot evidence must not read as an achieved product benchmark.');
-    if (!staticMode) await root.screenshot({ path: '.validation/pilot-proof-desktop.png', fullPage: true });
-    for (const sector of expectedSectors) {
-      const id = `${sector}-context`;
-      if (!staticMode) await goto(root, id);
-      const panel = root.locator(staticMode ? `#static-${id}` : `[data-slide="${id}"]`);
-      const goal = panel.locator('.industry-value-note');
-      assert.equal(await goal.count(), 1, 'Industry examples must connect the task to a buyer value goal.');
-      assert.match(await goal.innerText(), /goal|pilot|hypothesis|proposed|test/i, 'Industry buyer value must remain a goal to test.');
+    assert.match(await proof.innerText(), /pilot|not.{0,30}measured|unmeasured/i, 'Planned pilot evidence must not read as achieved product benchmarks.');
+    if (!staticMode) await root.screenshot({ path: '.validation/architecture-pilot-proof-desktop.png', fullPage: true });
+    for (const slide of deck.slides.filter(item => item.type === 'product-flow')) {
+      const panel = await panelForId(slide.id);
+      const svg = panel.locator('svg.product-flow-svg');
+      assert.equal(await svg.count(), 1, slide.id + ' needs its explanatory flow.');
+      await assertProductFlowNodeBounds(svg, slide.flow);
+      const stages = await svg.locator('.m-node[data-stage]').evaluateAll(nodes => nodes.map(node => ({ title: node.dataset.stage, detail: node.dataset.stageDetail })));
+      assert.equal(stages.length, 4);
+      for (let index = 0; index < stages.length; index += 1) {
+        assert.equal(stages[index].title, slide.flow.nodes[index].title);
+        assert.equal(stages[index].detail, slide.flow.nodes[index].detail);
+      }
     }
   };
   const assertCostResults = async (model, expected, outcome, staticMode = false) => {
@@ -200,8 +277,8 @@ const assert = require('node:assert/strict');
     const panel = root.locator(staticMode ? `#static-${slide.id}` : `[data-slide="${slide.id}"]`);
     const model = panel.locator(staticMode ? '.business-case-static' : '.business-case');
     assert.equal(await model.count(), 1, 'The buyer story needs one cost model.');
-    const defaultResults = { baseline: 6500, candidate: 4375, difference: 2125, yearOne: 20500, baselineUnit: 6.5, candidateUnit: 4.375 };
-    await assertCostResults(model, defaultResults, 'lower-cost', staticMode);
+    const defaultResults = { baseline: 6500, candidate: 7500, difference: -1000, yearOne: -17000, baselineUnit: 6.5, candidateUnit: 7.5 };
+    await assertCostResults(model, defaultResults, 'higher-cost', staticMode);
     assert.match(await model.innerText(), /accepted.{0,30}task|task.{0,30}accepted/i, 'The cost model must compare a common accepted-task target.');
     assert.match(await model.innerText(), /USD|\$/, 'The cost model must label its currency.');
     const modelText = normalized(await model.innerText());
@@ -231,8 +308,10 @@ const assert = require('node:assert/strict');
     };
     // The same accepted-task target requires 2,000 candidate attempts at 50%
     // acceptance. This independently checks the model's quality adjustment.
-    await setInputs({ candidateAcceptance: 50 });
-    await assertCostResults(model, { baseline: 6500, candidate: 6400, difference: 100, yearOne: -3800, baselineUnit: 6.5, candidateUnit: 6.4 }, 'lower-cost');
+    await setInputs({ candidateMinutes: 2 });
+    await assertCostResults(model, { baseline: 6500, candidate: 5000, difference: 1500, yearOne: 13000, baselineUnit: 6.5, candidateUnit: 5 }, 'lower-cost');
+    await setInputs({ candidateMinutes: 4, candidateAcceptance: 50 });
+    await assertCostResults(model, { baseline: 6500, candidate: 11400, difference: -4900, yearOne: -63800, baselineUnit: 6.5, candidateUnit: 11.4 }, 'higher-cost');
     await setInputs({ candidateCost: 2, candidateMinutes: 8 });
     await assertCostResults(model, { baseline: 6500, candidate: 21000, difference: -14500, yearOne: -179000, baselineUnit: 6.5, candidateUnit: 21 }, 'higher-cost');
     assert.match(await model.innerText(), /higher|more expensive|increase/i, 'A negative case must state that the candidate costs more.');
@@ -253,155 +332,183 @@ const assert = require('node:assert/strict');
       await assertCostResults(model, { baseline: 4000, candidate: 2000, difference: 2000, yearOne: 24000, baselineUnit: 2, candidateUnit: 1 }, 'lower-cost');
     }
     await setInputs(deck.pitch.businessCase.defaults);
-    await assertCostResults(model, defaultResults, 'lower-cost');
-    await page.screenshot({ path: '.validation/pitch-calculator-desktop.png', fullPage: true });
+    await assertCostResults(model, defaultResults, 'higher-cost');
+    await page.screenshot({ path: '.validation/architecture-pitch-calculator-desktop.png', fullPage: true });
   };
-  const assertIndustryEvidence = async (root, staticMode = false) => {
-    for (const industry of deck.industries) {
-      const caseId = `${industry.id}-context`;
-      if (!staticMode) await goto(root, caseId);
-      const panel = root.locator(staticMode ? `#static-${caseId}` : `[data-slide="${caseId}"]`);
-      assert(await panel.isVisible(), `${industry.name} narrative must be visible during its acceptance check.`);
-      const text = normalized(await panel.innerText());
-      for (const key of ['value', 'label', 'scope', 'period', 'limitation', 'definition']) {
-        assert(text.includes(normalized(industry.metric[key])), `${industry.name} must retain its metric ${key} in readable copy.`);
+  const assertArchitectureNodeBounds = async svg => {
+    const geometry = await svg.evaluate(node => ({
+      view: { x: node.viewBox.baseVal.x, y: node.viewBox.baseVal.y, width: node.viewBox.baseVal.width, height: node.viewBox.baseVal.height },
+      labels: [...node.querySelectorAll('text')].map(text => {
+        const bounds = text.getBBox();
+        return { text: text.textContent, x: bounds.x, y: bounds.y, width: bounds.width, height: bounds.height };
+      }),
+      boxes: [...node.querySelectorAll('[data-node]')].map(group => {
+        const box = group.querySelector('rect').getBBox();
+        return {
+          id: group.dataset.node,
+          box: { x: box.x, y: box.y, width: box.width, height: box.height },
+          labels: [...group.querySelectorAll('text')].map(text => {
+            const bounds = text.getBBox();
+            return { text: text.textContent, x: bounds.x, y: bounds.y, width: bounds.width, height: bounds.height };
+          })
+        };
+      })
+    }));
+    assert.equal(geometry.boxes.length, 12, 'The complete product workflow needs twelve readable nodes.');
+    for (const label of geometry.labels) {
+      assert(label.x >= geometry.view.x - 0.5 && label.y >= geometry.view.y - 0.5 && label.x + label.width <= geometry.view.x + geometry.view.width + 0.5 && label.y + label.height <= geometry.view.y + geometry.view.height + 0.5,
+        `Every architecture label, including policy and review, must remain inside the SVG: ${JSON.stringify(label)}.`);
+    }
+    for (let index = 0; index < geometry.boxes.length; index += 1) {
+      for (const next of geometry.boxes.slice(index + 1)) {
+        const first = geometry.boxes[index];
+        const overlapWidth = Math.min(first.box.x + first.box.width, next.box.x + next.box.width) - Math.max(first.box.x, next.box.x);
+        const overlapHeight = Math.min(first.box.y + first.box.height, next.box.y + next.box.height) - Math.max(first.box.y, next.box.y);
+        assert(overlapWidth <= 0 || overlapHeight <= 0, `Architecture nodes ${first.id} and ${next.id} must not obscure one another.`);
       }
-      for (const key of staticMode ? ['task', 'problem', 'solution', 'output', 'humanGate'] : ['problem', 'solution', 'humanGate']) {
-        assert(text.includes(normalized(industry[key])), `${industry.name} must retain its ${key} narrative.`);
+    }
+    for (const node of geometry.boxes) {
+      const expected = deck.architecture.nodes.find(candidate => candidate.id === node.id);
+      assert(expected, `The architecture must use a declared node: ${node.id}.`);
+      assert.equal(node.labels.length, expected.lines.length + 1, `${node.id} must retain its title and all details.`);
+      assert(node.box.x >= geometry.view.x && node.box.y >= geometry.view.y && node.box.x + node.box.width <= geometry.view.x + geometry.view.width && node.box.y + node.box.height <= geometry.view.y + geometry.view.height, `${node.id} must remain within the SVG canvas.`);
+      for (const label of node.labels) {
+        assert(label.width > 0 && label.height > 0, `${node.id}: ${label.text} must render a measurable label.`);
+        assert(label.x >= node.box.x + 5 - 0.5 && label.x + label.width <= node.box.x + node.box.width - 5 + 0.5,
+          `Architecture label must fit inside its node with horizontal padding: ${JSON.stringify({ id: node.id, label, box: node.box })}`);
+        assert(label.y >= node.box.y + 4 - 0.5 && label.y + label.height <= node.box.y + node.box.height - 4 + 0.5,
+          `Architecture label must fit inside its node with vertical padding: ${JSON.stringify({ id: node.id, label, box: node.box })}`);
       }
-      if (!staticMode) {
-        const figure = panel.locator('.mechanism-figure');
-        const flow = figure.locator('svg.motion-diagram');
-        assert.equal((await diagramState(flow)).step, 0);
-        assert.equal(normalized(await figure.locator('.stage-detail').textContent()), normalized(industry.task), 'The first case stage must explain the task.');
+      for (let index = 1; index < node.labels.length; index += 1) {
+        const before = node.labels[index - 1], label = node.labels[index];
+        assert(before.y + before.height <= label.y + 0.5, `Architecture labels must not overlap inside ${node.id}: ${JSON.stringify({ before, label })}.`);
+      }
+    }
+  };
+  const assertArchitecture = async (page, root = page, staticMode = false) => {
+    if (!staticMode) await goto(page, architectureId);
+    const panel = root.locator(staticMode ? `#static-${architectureId}` : `[data-slide="${architectureId}"]`);
+    assert(await panel.isVisible(), 'The dedicated architecture must be readable.');
+    const svg = panel.locator('svg.architecture-svg');
+    assert.equal(await svg.count(), 1, 'One slide must contain the entire workflow in one SVG.');
+    assert.equal(await root.locator('svg.architecture-svg').count(), 1, 'The architecture must not become multiple dedicated slides.');
+    const text = normalized([await panel.innerText(), await svg.textContent()].join(' '));
+    for (const node of deck.architecture.nodes) {
+      assert.equal(await svg.locator(`[data-node="${node.id}"]`).count(), 1, `The architecture must show ${node.id}.`);
+      for (const value of [node.title, ...node.lines]) assert(text.includes(normalized(value)), `Architecture node ${node.id} must preserve ${value}.`);
+    }
+    const policy = svg.locator('[data-policy="external"]');
+    assert.equal(await policy.count(), 1, 'The model must not own its policy authority.');
+    for (const value of [deck.architecture.policy.title, deck.architecture.policy.detail]) assert(normalized(await policy.textContent()).includes(normalized(value)));
+    assert(await policy.evaluate(node => !node.closest('.m-stage')), 'Policy must remain outside the highlighted execution stages.');
+    const review = svg.locator('[data-review="owner"]');
+    assert.equal(await review.count(), 1, 'The workflow must keep a visible human owner review boundary.');
+    assert(normalized(await review.textContent()).includes(normalized(deck.architecture.review)));
+    assert(text.includes(normalized(deck.architecture.legend)), 'The one-slide diagram must explain approved processing, review returns and the ID permission boundary.');
+    assert.match(text, /proposed|proposal|not implemented/i, 'The architecture must preserve the product maturity boundary.');
+    const connections = await svg.evaluate(node => [...node.querySelectorAll('[data-edge]')].map(group => {
+      const path = group.querySelector('path');
+      const length = path.getTotalLength();
+      const start = path.getPointAtLength(0), end = path.getPointAtLength(length);
+      const motion = group.querySelector('animateMotion mpath');
+      return { id: group.dataset.edge, pathId: path.id, length, arrow: path.getAttribute('marker-end'), start: { x: start.x, y: start.y }, end: { x: end.x, y: end.y }, reference: motion?.getAttribute('href') };
+    }));
+    assert.deepEqual(connections.map(edge => edge.id).sort(), Object.keys(architectureConnections).sort(), 'All branches and the governed feedback path must remain visible.');
+    assert.equal(new Set(connections.map(edge => edge.pathId)).size, connections.length, 'Each visible connector must have its own unique motion path.');
+    const nearNode = (point, id) => {
+      const node = deck.architecture.nodes.find(candidate => candidate.id === id);
+      return point.x >= node.x - 12 && point.x <= node.x + node.width + 12 && point.y >= node.y - 12 && point.y <= node.y + node.height + 12;
+    };
+    for (const edge of connections) {
+      assert(edge.length > 0 && edge.arrow?.startsWith('url('), `${edge.id} must be a visible directed connection.`);
+      const [source, target] = architectureConnections[edge.id];
+      assert(nearNode(edge.start, source) && nearNode(edge.end, target), `${edge.id} must connect the intended ${source} and ${target} nodes: ${JSON.stringify(edge)}.`);
+      if (!staticMode) assert.equal(edge.reference, `#${edge.pathId}`, `${edge.id} motion must follow the same path as its visible arrow.`);
+    }
+    await assertArchitectureNodeBounds(svg);
+    const stages = await svg.locator('.m-node[data-stage]').evaluateAll(nodes => nodes.map(node => ({ step: Number(node.dataset.step), title: node.dataset.stage, detail: node.dataset.stageDetail })));
+    assert.equal(stages.length, 5, 'The full architecture needs five explanatory stages.');
+    for (let index = 0; index < stages.length; index += 1) assert.deepEqual(stages[index], { step: index, title: deck.architecture.stages[index].title, detail: deck.architecture.stages[index].detail });
+    if (!staticMode) {
+      const figure = panel.locator('.mechanism-figure');
+      for (let index = 0; index < stages.length; index += 1) {
+        assert.equal((await diagramState(svg)).step, index);
+        assert.equal(await figure.locator('.stage-title').innerText(), deck.architecture.stages[index].title);
+        assert.equal(await figure.locator('.stage-detail').innerText(), deck.architecture.stages[index].detail);
+        const bounds = await panel.evaluate(node => ({ top: node.getBoundingClientRect().top, bottom: node.getBoundingClientRect().bottom, viewport: innerHeight }));
+        assert(bounds.top >= -1 && bounds.bottom <= bounds.viewport + 1, `The complete architecture, stage controls and note must fit the desktop presentation viewport at stage ${index + 1}: ${JSON.stringify(bounds)}.`);
+        await assertHighlight(svg);
         await figure.locator('.stage-next').click();
-        const evidenceDetail = normalized(await figure.locator('.stage-detail').textContent());
-        for (const input of industry.inputs) assert(evidenceDetail.includes(normalized(input)), 'The evidence stage must explain every required input.');
-        await assertHighlight(flow);
-        await figure.locator('.stage-next').click();
-        assert.equal(normalized(await figure.locator('.stage-detail').textContent()), normalized(industry.humanGate));
-        await assertHighlight(flow);
-        await figure.locator('.stage-next').click();
-        const outputDetail = normalized(await figure.locator('.stage-detail').textContent());
-        assert(outputDetail.includes(normalized(industry.output)), 'The result stage must explain the sector output.');
-        assert(outputDetail.includes(normalized(industry.test)), 'The result stage must preserve its proposed acceptance check.');
-        await assertHighlight(flow);
       }
-      const citation = panel.locator('a.industry-citation, .industry-citation a');
-      assert.equal(await citation.count(), 1, `${industry.name} needs one direct primary-source citation.`);
-      assert.equal(new URL(await citation.getAttribute('href'), base).href, new URL(industry.metric.sourceUrl).href);
-      assert((await citation.textContent()).includes(industry.metric.sourceTitle));
-      const chart = panel.locator('svg.insight-chart');
-      assert.equal(await chart.count(), 1, `${industry.name} case needs its evidence chart.`);
-      if (!staticMode) await root.screenshot({ path: `.validation/${caseId}-desktop.png`, fullPage: true });
+      assert.equal((await diagramState(svg)).step, 0, 'Advancing the last architecture stage must wrap to the first.');
+      await figure.locator('.stage-prev').click();
+      assert.equal((await diagramState(svg)).step, 4, 'Previous stage must reach feedback and corrections from the beginning.');
+      await figure.locator('.stage-next').click();
+      await assertAllPaused(page);
     }
-    const sourceSlide = deck.slides.find(slide => slide.type === 'industry-sources');
-    if (!staticMode) await goto(root, sourceSlide.id);
-    const sourcePanel = root.locator(staticMode ? `#static-${sourceSlide.id}` : `[data-slide="${sourceSlide.id}"]`);
-    const sourceLinks = await sourcePanel.locator('a[href]').evaluateAll(nodes => nodes.map(node => ({ url: node.href, title: node.textContent })));
-    assert.equal(sourceLinks.length, 4, 'The industry source slide must show four distinct primary references.');
-    for (const source of deck.industrySources) {
-      assert(sourceLinks.some(link => link.url === source.url && link.title === source.title), `The industry source slide is missing ${source.title}.`);
-      assert(normalized(await sourcePanel.innerText()).includes(normalized(source.note)), 'Source notes must preserve the period, population, and limits.');
+    if (staticMode) await panel.scrollIntoViewIfNeeded();
+    await page.screenshot({ path: `.validation/architecture-full-${staticMode ? 'static-' : ''}desktop.png`, fullPage: !staticMode });
+  };
+  const assertMobileArchitecture = async (page, root = page, staticMode = false) => {
+    if (!staticMode) await goto(page, architectureId);
+    const panel = root.locator(staticMode ? `#static-${architectureId}` : `[data-slide="${architectureId}"]`);
+    const viewport = panel.locator('.architecture-viewport');
+    const svg = viewport.locator('svg.architecture-svg');
+    assert.equal(await viewport.getAttribute('role'), 'region', 'The full architecture needs a focusable scroll region on small screens.');
+    assert.equal(await viewport.getAttribute('tabindex'), '0');
+    assert(await panel.locator('.diagram-scroll-hint').isVisible());
+    assert.match(await panel.locator('.diagram-scroll-hint').innerText(), /swipe.*arrow keys/i);
+    const dimensions = await viewport.evaluate(node => ({ client: node.clientWidth, scroll: node.scrollWidth, overflow: getComputedStyle(node).overflowX, svg: node.querySelector('svg').getBoundingClientRect().width }));
+    assert(['auto', 'scroll'].includes(dimensions.overflow) && dimensions.svg >= 1259 && dimensions.scroll > dimensions.client + 100, `Mobile architecture labels must retain readable size inside the slide: ${JSON.stringify(dimensions)}.`);
+    await assertArchitectureNodeBounds(svg);
+    await viewport.evaluate(node => { node.scrollLeft = 0; });
+    await viewport.focus();
+    const originalUrl = page.url();
+    await page.keyboard.press('ArrowRight');
+    // Native scrolling also runs in the JavaScript-disabled presentation.
+    // Poll from Node so this check does not depend on document JavaScript.
+    let scrolled = false;
+    for (let attempt = 0; attempt < 5 && !scrolled; attempt += 1) {
+      scrolled = await viewport.evaluate(node => node.scrollLeft > 0);
+      if (!scrolled) await page.waitForTimeout(100);
     }
-    assert.equal(await root.locator('svg.insight-chart').count(), 8, 'The overview and four cases must each contain sector charts.');
-    for (const chart of await root.locator('svg.insight-chart').all()) {
-      assert.equal(await chart.locator('animateMotion').count(), 0, 'Evidence plots must stay static while flow diagrams play.');
-      assert(await chart.locator('title').textContent(), 'Every evidence chart needs an accessible title.');
-      assert(await chart.locator('desc').textContent(), 'Every evidence chart needs an accessible description.');
-      const sector = await chart.getAttribute('data-sector');
-      assert(expectedSectors.includes(sector), `Evidence chart must identify its sector: ${sector}.`);
-      if (sector === 'hospitality') {
-        assert.equal(await chart.locator('.chart-dot').count(), 100, 'Hospitality plots one dot per percentage point.');
-        assert.equal(await chart.locator('.chart-dot.is-filled').count(), 65, 'Exactly 65 of 100 hospitality dots must be filled.');
-        const positions = await chart.locator('.chart-dot').evaluateAll(nodes => nodes.map(node => `${node.getAttribute('cx')},${node.getAttribute('cy')}`));
-        assert.equal(new Set(positions).size, 100, 'Each hospitality percentage point needs a separate plotted dot.');
-      } else if (sector === 'healthcare') {
-        const bars = await chart.locator('rect[data-value]').evaluateAll(nodes => nodes.map(node => Number(node.dataset.value)));
-        assert.deepEqual(bars, [93, 79], 'Healthcare must show separate receive/integrate percentage bars.');
-        const widths = await chart.locator('rect[data-value]').evaluateAll(nodes => nodes.map(node => Number(node.getAttribute('width'))));
-        assert(Math.abs(widths[0] / widths[1] - 93 / 79) < 0.001, 'Hospital bar lengths must encode the reported rates on the same scale.');
-      } else if (sector === 'telecom') {
-        const values = await chart.locator('[data-value]').evaluateAll(nodes => nodes.map(node => Number(node.dataset.value)));
-        assert.deepEqual(values, [100, 123], 'Telecom must use a 100-to-123 index rather than a fabricated traffic volume.');
-        const widths = await chart.locator('rect[data-value]').evaluateAll(nodes => nodes.map(node => Number(node.getAttribute('width'))));
-        assert(Math.abs(widths[1] / widths[0] - 1.23) < 0.001, 'Telecom bar lengths must encode the source growth rate.');
-      } else if (sector === 'utilities') {
-        assert.equal(await chart.locator('.capacity-node').count(), 17, 'Utilities must plot seventeen 100 GW nodes.');
-        assert((await chart.textContent()).includes('100 GW'), 'Utility node units must remain visible.');
-      }
-    }
-    for (const sector of expectedSectors) {
-      assert.equal(await root.locator(`svg.insight-chart[data-sector="${sector}"]`).count(), 2, 'Each sector appears in both the overview and its case.');
-    }
+    assert(scrolled, 'The complete mobile architecture must respond to native ArrowRight scrolling.');
+    assert.equal(page.url(), originalUrl, 'Architecture keyboard scrolling must not navigate the deck.');
+    await viewport.evaluate(node => { node.scrollLeft = node.scrollWidth; });
+    const rightmost = await svg.locator('[data-node="consumers"]').evaluate(node => {
+      const region = node.closest('.architecture-viewport').getBoundingClientRect(), box = node.getBoundingClientRect();
+      return box.left >= region.left - 1 && box.right <= region.right + 1;
+    });
+    assert(rightmost, 'The consumer delivery node must be reachable at the right of the mobile architecture.');
+    await noOverflow(page);
+    await viewport.evaluate(node => { node.scrollLeft = 0; });
+    await viewport.scrollIntoViewIfNeeded();
+    await page.screenshot({ path: `.validation/architecture-full-${staticMode ? 'static-' : ''}mobile.png`, fullPage: !staticMode });
   };
   const assertProductValueCaptions = async (page, figure) => {
     const svg = figure.locator('svg.motion-diagram');
     const stages = await svg.locator('.m-node[data-stage]').evaluateAll(nodes => nodes.map(node => ({ step: Number(node.dataset.step), title: node.dataset.stage, detail: node.dataset.stageDetail })));
-    assert.equal(stages.length, 5, 'The product value map needs four buyer dimensions and a common product stage.');
+    assert.equal(stages.length, 5, 'The product value map needs four buyer objectives and their common context foundation.');
     const dimensions = [/cost/i, /performance|latency|speed/i, /accuracy/i, /trust/i];
     for (let index = 0; index < dimensions.length; index += 1) {
       assert.equal(stages[index].step, index);
       assert.match(stages[index].title, dimensions[index], 'Product stages must explain cost, performance, accuracy, and trust in that order.');
       assert(stages[index].detail.length > 30, 'Each product stage needs a readable explanation.');
     }
-    assert.match(stages[4].title, /prefrontal|governed|context/i, 'The common stage must identify the proposed product.');
+    assert.equal(stages[4].step, 4);
+    assert.match(stages[4].title, /Prefrontal.*governed context/i, 'The shared fifth stage must name the product foundation.');
+    assert.match(stages[4].detail, /proposed.*pilot/i, 'The context foundation must preserve the proposed-product and measured-pilot boundary.');
     await assertHighlight(svg);
     await assertAllPaused(page);
   };
-  const assertIndustryBridge = async page => {
-    const bridgeSlide = deck.slides.find(slide => slide.type === 'industry-bridge');
-    await goto(page, bridgeSlide.id);
-    const bridge = page.locator('.slide:visible .industry-bridge');
-    const selector = bridge.locator('.sector-selector button[data-sector]');
-    assert.equal(await selector.count(), expectedSectors.length);
-    const svg = bridge.locator('svg.motion-diagram');
-    const snapshot = async () => ({
-      sector: await bridge.getAttribute('data-sector'),
-      evidence: normalized(await bridge.locator('.bridge-evidence').textContent()),
-      output: normalized(await bridge.locator('.bridge-output').textContent()),
-      owner: normalized(await bridge.locator('.bridge-owner').textContent())
-    });
-    const states = [];
-    for (const [index, sector] of expectedSectors.entries()) {
-      await bridge.locator(`.sector-selector button[data-sector="${sector}"]`).click();
-      const state = await snapshot();
-      assert.equal(state.sector, sector, 'Selecting a sector must update the bridge case.');
-      assert.equal((await diagramState(svg)).step, index, 'Selecting a sector must update the atlas cursor.');
-      assert.equal(await bridge.locator(`button[data-sector="${sector}"]`).getAttribute('aria-pressed'), 'true');
-      assert.equal(await bridge.locator('.sector-selector button[aria-pressed="true"]').count(), 1);
-      assert.deepEqual(await bridge.locator('.bridge-evidence li').allTextContents(), industryById[sector].inputs, 'Bridge evidence must match the selected industry.');
-      assert(state.output.includes(normalized(industryById[sector].output)), 'The bridge output must belong to the selected sector.');
-      assert(state.owner.includes(normalized(industryById[sector].owner)), 'The bridge owner must belong to the selected sector.');
-      assert.equal(normalized(await bridge.locator('.bridge-task').textContent()), normalized(industryById[sector].task));
-      assert.equal(normalized(await bridge.locator('.bridge-test').textContent()), normalized(industryById[sector].test));
-      states.push(state);
-      await assertHighlight(svg);
-    }
-    assert.equal(new Set(states.map(state => state.evidence)).size, 4, 'All four bridge evidence cases must be distinct.');
-    assert.equal(new Set(states.map(state => state.output)).size, 4, 'All four bridge outputs must be distinct.');
-    assert.equal(new Set(states.map(state => state.owner)).size, 4, 'All four bridge owners must be distinct.');
-    await bridge.locator('button[data-sector="telecom"]').click();
-    await bridge.locator('.stage-next').click();
-    assert.equal((await snapshot()).sector, 'utilities', 'Manual map stepping must synchronize the case selector.');
-    assert.equal(await bridge.locator('button[data-sector="utilities"]').getAttribute('aria-pressed'), 'true');
-    await bridge.locator('.stage-prev').click();
-    assert.equal((await snapshot()).sector, 'telecom');
-    for (let index = 0; index < 4; index += 1) await bridge.locator('.stage-next').click();
-    assert.equal((await diagramState(svg)).step, 4);
-    assert.match((await diagramState(svg)).title, /shared|common/i, 'The fifth atlas stage must explain the common pattern.');
-    assert.equal((await snapshot()).sector, 'shared', 'The common stage must have its own labeled synthesis.');
-    assert.equal(await bridge.locator('.sector-selector button[aria-pressed="true"]').count(), 0, 'The common stage must not masquerade as an industry case.');
-    await page.screenshot({ path: '.validation/industry-bridge-desktop.png', fullPage: true });
-    await assertAllPaused(page);
-  };
   const assertMobileFlows = async (page, root = page, staticMode = false) => {
-    for (const sector of expectedSectors) {
-      const id = `${sector}-context`;
+    for (const slide of deck.slides.filter(item => item.type === 'product-flow')) {
+      const id = slide.id;
       if (!staticMode) await goto(page, id);
       const panel = root.locator(staticMode ? `#static-${id}` : `[data-slide="${id}"]`);
       const viewport = panel.locator('.diagram-viewport');
       const flow = viewport.locator('svg.motion-diagram');
+      await assertProductFlowNodeBounds(flow, slide.flow);
       assert.equal(await viewport.getAttribute('role'), 'region', 'A horizontally scrollable flow needs a focusable region.');
       assert.equal(await viewport.getAttribute('tabindex'), '0');
       assert(await panel.locator('.diagram-scroll-hint').isVisible(), 'Mobile users need the diagram scroll instructions.');
@@ -428,7 +535,7 @@ const assert = require('node:assert/strict');
           scrolled = await viewport.evaluate(node => node.scrollLeft > 0);
           if (!scrolled) await page.waitForTimeout(100);
         }
-        assert(scrolled, `${sector} static flow must respond to native ArrowRight scrolling.`);
+        assert(scrolled, `${id} static flow must respond to native ArrowRight scrolling.`);
       } else {
         await page.waitForFunction(selector => document.querySelector(selector).scrollLeft > 0, `[data-slide="${id}"] .diagram-viewport`, { timeout: 2000 });
       }
@@ -440,7 +547,7 @@ const assert = require('node:assert/strict');
         const draft = node.getBoundingClientRect();
         return draft.left >= region.left - 1 && draft.right <= region.right + 1;
       });
-      assert(visibleDraft, 'The final Draft node must be reachable inside the mobile flow viewport.');
+      assert(visibleDraft, 'The final product stage must be reachable inside the mobile flow viewport.');
       await noOverflow(page);
     }
   };
@@ -450,12 +557,14 @@ const assert = require('node:assert/strict');
     const page = await context.newPage();
     watchErrors(page);
     await goto(page, deck.slides[0].id);
+    await assertBrand(page);
     assert.equal(await page.locator('.slide').count(), deck.slides.length);
     assert.equal(await page.locator('.slide:visible').count(), 1);
-    assert.equal(await page.locator('.mechanism-figure').count(), 10);
-    assert.equal(await page.locator('svg.motion-diagram').count(), 10);
-    assert.equal(await page.locator('svg.insight-chart').count(), 8);
-    assert((await page.locator('svg.motion-diagram animateMotion').count()) >= 10);
+    assert.equal(await page.locator('.mechanism-figure').count(), 9);
+    assert.equal(await page.locator('svg.motion-diagram').count(), 9);
+    assert.equal(await page.locator('svg.product-flow-svg').count(), 5, 'The dynamic deck must retain all five explanatory product flows.');
+    assert.equal(await page.locator('svg.insight-chart').count(), 0);
+    assert((await page.locator('svg.motion-diagram animateMotion').count()) >= 9);
     assert(await page.getByRole('button', { name: 'Motion off', exact: true }).isDisabled(), 'Reduced motion must disable playback, including manual override.');
     await assertAllPaused(page);
     for (const svg of await page.locator('svg.motion-diagram').all()) {
@@ -475,21 +584,20 @@ const assert = require('node:assert/strict');
       return color;
     });
     assert.equal(inheritedColor, 'rgb(18, 52, 86)', 'SVG arrows must inherit the host CSS color variable.');
-    await page.screenshot({ path: '.validation/cover-desktop.png', fullPage: true });
+    await page.screenshot({ path: '.validation/architecture-cover-desktop.png', fullPage: true });
     await page.keyboard.press('ArrowRight');
     await page.locator(`[data-slide="${deck.slides[1].id}"]`).waitFor({ state: 'visible' });
-    await page.screenshot({ path: '.validation/buyer-problem-desktop.png', fullPage: true });
+    await page.screenshot({ path: '.validation/architecture-buyer-problem-desktop.png', fullPage: true });
     await page.getByRole('button', { name: 'Slides', exact: false }).click();
     assert.equal(await page.locator('.overview-card:visible').count(), deck.slides.length);
     await page.keyboard.press('Escape');
     assert(await page.locator('#overview').isHidden());
     for (const slide of deck.slides) { await goto(page, slide.id); await noOverflow(page); }
+    await assertArchitecture(page);
     await assertPitchNarrative(page);
     await assertBusinessCase(page);
-    await assertIndustryEvidence(page);
-    await assertIndustryBridge(page);
     await goto(page, 'human-review-routes');
-    await page.screenshot({ path: '.validation/governance-desktop.png', fullPage: true });
+    await page.screenshot({ path: '.validation/architecture-governance-desktop.png', fullPage: true });
     await goto(page, 'layered-memory');
     const memoryFigure = page.locator('.slide:visible .mechanism-figure');
     assert.equal(await memoryFigure.locator('.stage-title').innerText(), 'Original sources');
@@ -510,29 +618,26 @@ const assert = require('node:assert/strict');
       assert.equal(await page.locator('.demo-summary').getAttribute('data-outcome'), 'reject');
       assert((await page.locator('.check-mark.fail').count()) >= 1);
     }
-    await page.screenshot({ path: '.validation/upgrade-desktop.png', fullPage: true });
-    assertPdfPages(await page.pdf({ path: '.validation/pitch-deck.pdf', printBackground: true, preferCSSPageSize: true }));
+    await page.screenshot({ path: '.validation/architecture-upgrade-desktop.png', fullPage: true });
+    assertPdfPages(await page.pdf({ path: '.validation/architecture-deck.pdf', printBackground: true, preferCSSPageSize: true }));
     await page.setViewportSize({ width: 390, height: 844 });
     for (const slide of deck.slides) { await goto(page, slide.id); await noOverflow(page); }
+    await assertMobileArchitecture(page);
     await goto(page, slideForType('pitch-calculator').id);
     await page.locator('#bc-candidateAcceptance').fill('50');
-    await assertCostResults(page.locator('.slide:visible .business-case'), { baseline: 6500, candidate: 6400, difference: 100, yearOne: -3800, baselineUnit: 6.5, candidateUnit: 6.4 }, 'lower-cost');
+    await assertCostResults(page.locator('.slide:visible .business-case'), { baseline: 6500, candidate: 11400, difference: -4900, yearOne: -63800, baselineUnit: 6.5, candidateUnit: 11.4 }, 'higher-cost');
     await noOverflow(page);
-    await page.screenshot({ path: '.validation/pitch-calculator-mobile.png', fullPage: true });
+    await page.screenshot({ path: '.validation/architecture-pitch-calculator-mobile.png', fullPage: true });
     await page.locator('#bc-candidateAcceptance').fill(String(deck.pitch.businessCase.defaults.candidateAcceptance));
     await assertMobileFlows(page);
-    await goto(page, deck.slides.find(slide => slide.type === 'industry-overview').id);
-    await page.screenshot({ path: '.validation/industry-overview-mobile.png', fullPage: true });
-    await goto(page, 'healthcare-context');
-    await page.screenshot({ path: '.validation/healthcare-context-mobile.png', fullPage: true });
     await goto(page, deck.slides[0].id);
     await assertProductNodeBounds(page.locator(coverSelector));
-    await page.screenshot({ path: '.validation/cover-mobile.png', fullPage: true });
+    await page.screenshot({ path: '.validation/architecture-cover-mobile.png', fullPage: true });
     await goto(page, 'upgrade-example');
     await page.locator('#upgrade-kind').selectOption('lost-exception');
     await page.getByRole('button', { name: 'Run illustrative checks' }).click();
     assert.equal(await page.locator('.demo-summary').getAttribute('data-outcome'), 'reject');
-    await page.screenshot({ path: '.validation/upgrade-mobile.png', fullPage: true });
+    await page.screenshot({ path: '.validation/architecture-upgrade-mobile.png', fullPage: true });
     await page.emulateMedia({ media: 'print' });
     assert.equal(await page.locator('.slide:visible').count(), deck.slides.length);
     await assertAllPaused(page);
@@ -588,6 +693,26 @@ const assert = require('node:assert/strict');
     const pipelineStep = (await diagramState(pipeline)).step;
     await motionPage.waitForFunction(({ selector, step }) => Number(document.querySelector(selector).dataset.currentStep) !== step, { selector: pipelineSelector, step: pipelineStep }, { timeout: 4000 });
     assert.equal((await diagramState(cover)).step, inactiveStep, 'An inactive slide must retain its stage cursor.');
+    await assertIntervals(motionPage, 1);
+    await motionPage.locator('.nav-item').nth(4).click();
+    await waitForMotion(motionPage, architectureSelector, true);
+    const architectureSvg = motionPage.locator(architectureSelector);
+    const architectureFirst = await diagramState(architectureSvg);
+    await motionPage.waitForFunction(({ selector, step }) => Number(document.querySelector(selector).dataset.currentStep) !== step, { selector: architectureSelector, step: architectureFirst.step }, { timeout: 4000 });
+    assert((await diagramState(architectureSvg)).time > architectureFirst.time, 'The full architecture must share native SVG autoplay.');
+    assert((await dotsVisible(architectureSvg)) > 0, 'The highlighted architecture connection must show its traveling packet.');
+    assert((await diagramState(pipeline)).paused, 'The architecture must pause the previous slide and keep one active diagram.');
+    await assertHighlight(architectureSvg);
+    await assertIntervals(motionPage, 1);
+    await motionPage.locator('.slide:visible .stage-next').click();
+    await waitForMotion(motionPage, architectureSelector, false);
+    await assertHighlight(architectureSvg);
+    await assertIntervals(motionPage, 0);
+    await motionPage.getByRole('button', { name: 'Play motion', exact: true }).click();
+    await waitForMotion(motionPage, architectureSelector, true);
+    await motionPage.locator('.nav-item').nth(deck.slides.findIndex(slide => slide.id === pipelineId)).click();
+    await waitForMotion(motionPage, pipelineSelector, true);
+    assert((await diagramState(architectureSvg)).paused, 'Leaving the architecture slide must pause its native animation.');
     await assertIntervals(motionPage, 1);
     await motionPage.getByRole('button', { name: 'Slides', exact: false }).click();
     await assertAllPaused(motionPage);
@@ -645,8 +770,9 @@ const assert = require('node:assert/strict');
     const fallback = staticPage.locator('.static-presentation');
     assert(await fallback.isVisible(), 'JavaScript-disabled users need a readable presentation fallback.');
     assert.equal(await fallback.locator('.slide:visible').count(), deck.slides.length);
-    assert.equal(await fallback.locator('svg.motion-diagram').count(), 10);
-    assert.equal(await fallback.locator('svg.insight-chart').count(), 8);
+    assert.equal(await fallback.locator('svg.motion-diagram').count(), 9);
+    assert.equal(await fallback.locator('svg.product-flow-svg').count(), 5, 'The static deck must retain all five explanatory product flows.');
+    assert.equal(await fallback.locator('svg.insight-chart').count(), 0);
     assert.equal(await fallback.locator('animateMotion').count(), 0, 'Static fallback SVGs must contain no native motion.');
     assert.equal(await fallback.locator('.slide h1, .slide h2').count(), deck.slides.length);
     for (const svg of await fallback.locator('svg.motion-diagram').all()) {
@@ -656,18 +782,19 @@ const assert = require('node:assert/strict');
       assert((await svg.locator('text').count()) > 0, 'Static diagrams must preserve their visible labels.');
     }
     await assertProductNodeBounds(fallback.locator(`#static-${deck.slides[0].id} svg.product-map`));
+    await assertArchitecture(staticPage, fallback, true);
     await assertPitchNarrative(fallback, true);
     await assertBusinessCase(staticPage, true, fallback);
-    await assertIndustryEvidence(fallback, true);
     await noOverflow(staticPage);
-    assertPdfPages(await staticPage.pdf({ path: '.validation/pitch-static-deck.pdf', printBackground: true, preferCSSPageSize: true }));
+    assertPdfPages(await staticPage.pdf({ path: '.validation/architecture-static-deck.pdf', printBackground: true, preferCSSPageSize: true }));
     await staticPage.setViewportSize({ width: 390, height: 844 });
     assert.equal(await fallback.locator('.slide:visible').count(), deck.slides.length);
     await assertProductNodeBounds(fallback.locator(`#static-${deck.slides[0].id} svg.product-map`));
     await noOverflow(staticPage);
+    await assertMobileArchitecture(staticPage, fallback, true);
     await assertMobileFlows(staticPage, fallback, true);
     assert.deepEqual(errors, []);
-    console.log(`Browser checks: PASS (${deck.slides.length} desktop/mobile slides; product-first buyer story; 4 value lenses and pilot proof cards; attributed conference insights; cost model arithmetic, acceptance adjustment, negative case, 8 invalid cases and recovery; 10 SVG stage diagrams; 8 evidence charts; 4 cited industry cases; synchronized sector bridge; readable mobile flow scrolling and keyboard navigation; native autoplay/pause/manual/resume; one stage interval; inactive/overview/25% visibility pausing; reduced motion; inherited CSS color; navigation; 4 upgrade scenarios; PDF/print; ${deck.slides.length}-slide JavaScript-disabled fallback with worked cost example; no page errors)`);
+    console.log(`Browser checks: PASS (${deck.slides.length} desktop/mobile product slides; four leadership slides; full architecture on slide five with 12 contained nodes and ${deck.architecture.edges.length} directed paths; independent policy and human review; five manual architecture stages; five product-flow diagrams; existing-stack reuse, adapter verification and versioned LookML mapping; certified-query and reviewed-draft distinction; complete cost scope and seven-stage governance alignment; neutral overhead, positive and negative cost arithmetic, acceptance adjustment, eight invalid cases and recovery; four pilot dimensions; nine SVG diagrams; supplied white/black/red brand, Arial, pill controls and visible keyboard focus; mobile keyboard scrolling; native autoplay/pause/manual/resume and one active interval; inactive/overview/visibility pausing; reduced motion; inherited CSS color; navigation; four illustrative upgrade scenarios; PDF/print; full JavaScript-disabled fallback; no page errors)`);
     console.log(`Checked URL: ${base}`);
   } finally { await browser.close(); }
 })().catch(error => { console.error(error.stack || error.message); process.exitCode = 1; });

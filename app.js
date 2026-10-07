@@ -44,11 +44,12 @@ function createMechanism(kind, onStage = () => {}) {
   const count = element("span", "stage-count");
   controls.append(previous, count, next);
   caption.append(heading, detail, controls);
-  if (svg.classList.contains("industry-svg-flow")) {
-    const viewport = element("div", "diagram-viewport");
+  if (svg.classList.contains("industry-svg-flow") || svg.classList.contains("architecture-svg") || svg.classList.contains("product-flow-svg")) {
+    const architecture = svg.classList.contains("architecture-svg");
+    const viewport = element("div", architecture ? "diagram-viewport architecture-viewport" : "diagram-viewport");
     viewport.tabIndex = 0;
     viewport.setAttribute("role", "region");
-    viewport.setAttribute("aria-label", "Industry workflow diagram. Scroll horizontally on a small screen.");
+    viewport.setAttribute("aria-label", architecture ? "Full architecture workflow diagram. Scroll horizontally on a small screen." : "Context workflow diagram. Scroll horizontally on a small screen.");
     viewport.append(svg);
     figure.append(viewport, element("p", "diagram-scroll-hint", "Swipe the diagram to follow the workflow. Focus it and use arrow keys to scroll."), caption);
   } else figure.append(svg, caption);
@@ -221,13 +222,13 @@ function memoryVisual() {
 function routerVisual() {
   const visual = element("div", "router-visual");
   visual.append(createMechanism("router"),
-    element("p", "router-rule", "Application code checks permissions before retrieval or action. Model confidence cannot override this check."));
+    element("p", "router-rule", "The harness enforces policy and checks output schema. Human reviewers approve new meaning."));
   return visual;
 }
 
 function contractVisual() {
   const code = element("pre", "contract-card");
-  code.textContent = `record: claim-017\nsource: policy-v3, paragraph 4\nproject: example-project\nvalid_from: 2026-09-01\nstatus: supported\nclaim: Keep reports for 30 days.\nexception: Keep disputed reports\n           until review ends.\nauthority: read-only\n\nFormat can change through migration.\nMeaning and permissions must survive.`;
+  code.textContent = `canonical_id: interpretation:reports-retention\nversion: 3\nworkspace: operations\nsource: policy-v3, paragraph 4\nvalid_from: 2026-09-01\nstatus: approved\nclaim: Keep reports for 30 days.\nexception: Keep disputed reports\n           until review ends.\ninput_refs: [data:reports-policy@3]\nreview: owner + exact content hash\naccess: operations-readers\n\nIDs identify records. IDs grant no access.`;
   code.setAttribute("aria-label", "Illustrative context record with source, project, date, status, claim, exception and authority");
   return code;
 }
@@ -433,6 +434,46 @@ function businessCaseVisual() {
   return wrap;
 }
 
+function leadershipCaseVisual() {
+  const a = deckData.pitch.economicHurdle;
+  const attempts = a.acceptedTarget / (a.acceptancePercent / 100);
+  const monthlyRequired = a.monthlyOverhead + a.setup / a.months;
+  const perAttempt = monthlyRequired / attempts;
+  const handlingMinutes = perAttempt / (a.hourly / 60);
+  const wrap = element('div', 'leadership-case');
+  const hero = element('div', 'investment-hurdle');
+  hero.append(element('span', 'design-label', 'ILLUSTRATIVE BREAK-EVEN REQUIREMENT · USD'));
+  const amount = element('strong', 'hurdle-amount', '$' + perAttempt.toFixed(2));
+  amount.dataset.hurdle = 'perAttempt'; amount.dataset.value = String(perAttempt);
+  hero.append(amount, element('p', 'hurdle-unit', 'required benefit per attempt in year one'));
+  const assumptions = element('p', 'hurdle-assumptions', `${a.acceptedTarget.toLocaleString()} accepted tasks/month · ${a.acceptancePercent}% accepted attempts · $${a.monthlyOverhead.toLocaleString()} monthly overhead · $${a.setup.toLocaleString()} setup over ${a.months} months`);
+  const supporting = element('div', 'hurdle-support');
+  for (const [key,value,label] of [['attempts',attempts,'attempts per month'],['monthlyRequired',monthlyRequired,'required benefit per month'],['handlingMinutes',handlingMinutes,'handling minutes per attempt at $60/hour']]) {
+    const row=element('span'); row.dataset.hurdle=key; row.dataset.value=String(value);
+    row.textContent=(key==='monthlyRequired'?'$':'') + value.toLocaleString('en-US',{maximumFractionDigits:2}) + ' ' + label;
+    supporting.append(row);
+  }
+  hero.append(assumptions,supporting,element('p','hurdle-definition','Benefit may come from lower operating cost or separately evidenced business value. Avoid counting the same benefit twice.'));
+  const lenses=element('div','executive-lenses');
+  deckData.pitch.lenses.forEach(lens=>{
+    const card=element('article','executive-lens'); card.style.setProperty('--sector',lens.color); card.dataset.lens=lens.id;
+    card.append(element('h3','',lens.name),element('p','',lens.goal)); lenses.append(card);
+  });
+  wrap.append(hero,lenses); return wrap;
+}
+
+function submissionVisual(slide) {
+  const wrap=element('div','submission-layout');
+  const region=element('div','submission-table-region');region.tabIndex=0;region.setAttribute('role','region');region.setAttribute('aria-label','Illustrative submission review table');
+  const table=element('table','submission-table');
+  table.append(element('caption','','One proposed record · original evidence remains attached'));
+  const head=element('thead'), tr=element('tr');
+  ['Field','Illustrative value','Reviewer check'].forEach(label=>{const th=element('th','',label);th.scope='col';tr.append(th);});head.append(tr);table.append(head);
+  const body=element('tbody');
+  deckData.submission.forEach(row=>{const tr=element('tr'),th=element('th','',row.field);th.scope='row';tr.append(th,element('td','',row.value),element('td','',row.check));body.append(tr);});
+  table.append(body);region.append(table);wrap.append(region,renderItems(slide.items));return wrap;
+}
+
 function renderSlide(slide, i) {
   const panel = element("section", `slide type-${slide.type}`);
   panel.id = `panel-${slide.id}`;
@@ -465,6 +506,12 @@ function renderSlide(slide, i) {
     else if (slide.type === "pitch-value") panel.append(valueVisual());
     else if (slide.type === "pitch-proof") panel.append(proofVisual());
     else if (slide.type === "pitch-calculator") panel.append(businessCaseVisual());
+    else if (slide.type === "leadership-case") panel.append(leadershipCaseVisual());
+    else if (slide.type === "submission") panel.append(submissionVisual(slide));
+    else if (slide.type === "product-flow") panel.append(createMechanism(window.ContextDiagrams.createProductFlow(slide.flow)),renderItems(slide.items));
+    else if (slide.type === "architecture") {
+      panel.append(createMechanism(window.ContextDiagrams.createArchitecture(deckData.architecture)), element("p", "architecture-legend", deckData.architecture.legend));
+    }
     else if (slide.type === "upgrade") panel.append(upgradeVisual());
     else if (slide.type === "sources") panel.append(sourcesVisual());
     else panel.append(renderItems(slide.items));
@@ -518,7 +565,8 @@ async function initialize() {
     deckData.slides.forEach((slide, i) => {
       const panel = renderSlide(slide, i); panels.push(panel); deck.append(panel);
       const button = element("button", "nav-item"); button.type = "button";
-      const navLabel = slide.industry ? deckData.industries.find(sector => sector.id === slide.industry).shortName + " workflow" : slide.eyebrow.split(" · ")[0];
+      const navLabels = { 'opening-thesis':'The product', 'fragmented-context':'The recurring problem', 'product-overview':'One context service', 'investment-case':'Why fund it', 'full-architecture':'Full architecture', 'submission-template':'Submission contract', 'meaning-preserving-ste':'Clear review language', 'human-review-routes':'Human governance', 'context-contract':'Canonical identities', 'semantic-layers':'Four semantic layers', 'bounded-decision-router':'Model and harness', 'layered-memory':'Memory lifecycle', 'secure-delivery':'Secure MCP delivery', 'controlled-evolution':'Controlled upgrades', 'operating-cost':'Full operating cost', 'value-assumptions':'Investment worksheet', 'pilot-acceptance':'Pilot proof', 'upgrade-example':'Contract demo', 'evidence-boundary':'Current readiness', 'development-gates':'Build path', 'next-decisions':'The pilot offer', 'failure-contracts':'Failure behavior', 'primary-sources':'Primary references' };
+      const navLabel = navLabels[slide.id] || slide.eyebrow;
       button.append(element("span", "nav-index", String(i + 1).padStart(2, "0")), element("span", "", navLabel));
       button.addEventListener("click", () => showSlide(i));
       navButtons.push(button); byId("slide-nav").append(button);

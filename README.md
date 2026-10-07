@@ -1,88 +1,97 @@
-# Prefrontal · Controlled context for enterprise AI
+# Prefrontal · Governed context as a product
 
-A browser sales pitch for Prefrontal, a proposed governed context product for enterprise AI.
+[Open the pitch](https://yashumani.github.io/Prefrontal-LLM-ASD-STE100/).
 
-The 26 slides contain a 20-slide buyer story and six technical/source appendix slides. The product, shared buyer problem and four outcomes lead the story: cost, performance, accuracy and trust. Telecommunications, electricity utilities, healthcare and hospitality illustrate how the same foundation could adapt to different workflows. Their sourced pressure figures are application context, not product results. A pilot scorecard and editable business-case example make the proposed value inspectable. The upgrade example checks one illustrative record in the browser. Neither example calls a model or demonstrates production reliability.
+This 26-slide presentation sells a proposed context product and a bounded pilot. The first four slides explain the buyer problem, product and investment case. Slide five shows the complete architecture. Developer detail follows: submissions, review, canonical IDs, semantic layers, model decisions, controlled delivery, economics and implementation gates.
 
-## Conference material and buyer story
+The product accepts structured submissions from humans and agent loops. Human reviewers approve meaning for an exact record version. A context agent organizes approved records into Data, Metric, Ontology and Interpretation layers. Canonical IDs connect the layers. A controlled MCP server delivers permitted context to independent applications. New meaning and feedback return through preparation and review. Consumers control their own actions.
 
-[Yashu Sharma's AI Enterprise Conference 2026 field report](https://ai-enterprise-journey-2026.yashumani.chatgpt.site/) is linked from the [portfolio](https://yashumani.github.io/). It contains 19 conference concept reconstructions and one personal synthesis. These are independent field notes, not official conference slides. The pitch uses their themes of business meaning, reusable expert knowledge, appropriate task methods and lifecycle control. Vendor token reductions, overhead estimates and promotional savings are not used as Prefrontal results.
+## Brand reference
 
-The product is a concept seeking a pilot partner. Its proposed mechanisms need implementation and customer-specific integration. Cross-industry reuse requires domain definitions, connectors, permissions and acceptance cases. The pitch closes by asking for one workflow, its baseline, an accountable owner and agreed success gates. Dates and commercial terms remain open.
+The design follows the supplied `cfpa-use-case-journey-v6.zip`. Its `Index.html` establishes white paper, black text, pale-gray surfaces, red `#EE001E`, bold sans-serif headings, rounded cards, pill controls and semantic SVG highlights. The deck uses locally available Arial. It imports no reference application scripts, backend code or backend behavior. The pitch uses the supplied planning content as a reference, with evidence boundaries below.
 
-## Editable business case
+## Investment case
 
-The **Make the economics inspectable** slide compares the same monthly accepted-task target. An accepted task passes the buyer's task and quality criteria. The worksheet accounts for unsuccessful attempts through each process's acceptance rate. Digital cost covers inference, retrieval, tools and variable infrastructure. Human handling covers review, rework and escalation. Monthly fixed cost covers licensing and operations. One-time setup remains separate.
+Slide four states an illustrative year-one break-even requirement. Invented inputs: 1,000 accepted tasks per month, 80% acceptance, $1,000 monthly overhead and $5,000 setup over 12 months. These require about $1.13 benefit per attempt across 1,250 monthly attempts. This is a hurdle to test, not a quote or forecast.
+
+The editable worksheet begins with equal digital cost, handling time and acceptance for the current and proposed process. The proposed process adds operating overhead. This neutral case costs more. Buyers can inspect positive, negative and lower-acceptance scenarios.
 
 ```text
 Attempts = monthly accepted-task target / acceptance rate
-Monthly recurring cost = attempts * (digital cost + handling minutes * hourly rate / 60) + fixed cost
-Year-one net difference = 12 * monthly recurring difference - one-time setup
+Recurring cost = attempts × (digital cost + handling minutes × hourly rate / 60) + fixed cost
+Year-one net difference = 12 × monthly recurring difference − one-time setup
 ```
 
-Every default is an invented example assumption, not a measured saving or quote. The example assumes constant workload and rates for the year-one estimate. Invalid or overflowing values hide results. A higher-cost scenario remains visible. Positive economics never override quality or permission gates. The no-JavaScript deck includes the same worked example and assumptions.
+Digital cost includes inference, retrieval, warehouse queries, tools and variable infrastructure. Handling includes review, rework and escalation. Fixed cost includes seats, licenses, adapters and operations. Compare existing allocated and incremental costs consistently. Count each cost once. An accepted task meets the owner's task and quality criteria. Positive economics cannot override quality or access gates.
 
-## Industry evidence and linked workflows
+## Alignment with the supplied v6 plan
 
-Each chart keeps its date, population, unit and primary source. The signals use different units and populations. They must not be ranked, averaged or combined into one score.
+The existing stack is reported by the user and the supplied planning reference. Live connections have not been verified. The proposal extends Looker, LookML, Zenlytics and custom apps. It does not replace ERP systems or the warehouse.
 
-| Industry | Observed signal | Proposed workflow |
+LookML remains the native source for approved measures and query logic. A proposed Metric Passport binds its canonical ID and version to the LookML project, model, Explore, view, measure and Git revision, or a certified SQL revision. It records the owner, population, grain, unit, time window, exceptions, evidence and access. The consumer executes queries in its native service. New interpretations return to review.
+
+A source or consumer adapter must qualify its real API or MCP interface, identity mapping, source authorization, validity, revocation and failure behavior. A context ID grants no access. Permissions do not transfer automatically across products. Existing custom apps may provide submission and review workflows after qualification.
+
+The proposal maps to the reference's eight context capabilities:
+
+| Existing plan capability | Proposed product contribution | Acceptance still required |
 |---|---|---|
-| Telecommunications | Global mobile network data traffic grew 23% from Q2 2025 to Q2 2026, including fixed wireless access. [Ericsson](https://www.ericsson.com/en/reports-and-papers/mobility-report/dataforecasts/mobile-traffic-update) | Connect an alert to the affected service, dated telemetry, changes and approved runbook. |
-| Electricity utilities | At least 1,700 GW of advanced-stage renewable projects awaited connection globally in 2025. This is a capacity lower bound. [IEA](https://www.iea.org/reports/modernising-grids-in-the-age-of-electricity/executive-summary) | Assemble a connection review brief with current studies, model revisions and unresolved prerequisites. |
-| Healthcare | In 2025, 93% of U.S. non-federal acute-care hospitals reported receiving outside summary records; 79% reported integration. These are weighted capability estimates. [ONC](https://healthit.gov/data/quickstats/electronic-health-information-exchange-hospitals/) | Draft a cited handoff with patient identity, observation dates, conflicts and clinician ownership. |
-| Hospitality | 65% of 282 hotelier respondents reported staffing shortages in a survey conducted from 6 December 2024 to 3 January 2025. This dated, self-reported result is not a hotel census. [AHLA / Hireology](https://www.ahla.com/news/65-surveyed-hotels-report-staffing-shortages) | Carry an open guest request across shifts with verified status, owner, existing promises and escalation rules. |
+| One approved metric definition | Canonical identity and native LookML source binding | Verify the source revision and formula parity |
+| Certified SQL and answers | Deliver approved query references for native execution | Test known questions, current access and data validity |
+| SME knowledge library | Load relevant, approved expert context | Check source support and bounded retrieval |
+| Triage and escalation | Typed model decisions under a code harness | Qualify routing and appropriate abstention |
+| Compliance gate | Delivery policy checks and explicit consumer responsibilities | Test source and consumer permissions before execution |
+| Continuous QA | Owner-approved gold truth and standing regression cases | Exercise normal, stale, conflict and denial paths |
+| Auditability | Source, validator, date and exact approved version | Read back persistent evidence end to end |
+| Reviewed learning | Corrections and expert drafts reenter submission and review | Prevent drafts from silently becoming approved facts |
 
-The workflows are design proposals. The sources do not prove missing-context rates or operational benefits. The interactive **Reuse the foundation. Adapt the workflow.** slide connects each workflow to identity, time, conditions, evidence and authority. It keeps the industry records and permissions separate. Selecting an industry pauses playback and updates its task, evidence, owner, output and proposed acceptance check.
+The seven delivery stages are Intake/Vetting, Product Requirements, Product Design, Development, Testing, Launch and Maintenance. Catalog reuse precedes custom development. Pilot approval needs a named sponsor, reviewer, source owner, scope, setup ceiling, recurring budget and success criteria. Security/compliance review and leadership go/no-go precede operational launch. Change control, drift checks and value realization continue after launch.
+
+The v6 Best Practices section and cost scoring remain unapproved guidance. Candidate controls include deterministic methods, qualified model routing, bounded prompts and outputs, cache validity, batching when deadlines permit, step/retry limits, warehouse billing controls and license/role fit. The deck imports no vendor savings percentage or internal rate. Compare the same accepted workload, include cache writes/reads and storage, seats/concurrency, query charges, model calls, human review and operations, and retain failed or queued tasks in the evidence.
 
 ## View and present
 
-Open [the presentation](https://yashumani.github.io/Prefrontal-LLM-ASD-STE100/). Arrow keys move between slides. **Slides** opens the overview. The SVG diagrams highlight one stage at a time. Its caption explains the selected stage. **← Stage** and **Stage →** select a stage and pause playback. **Play motion** resumes it. Reduced-motion settings keep diagrams static. **Print / PDF** prints all slides. With JavaScript off, the page shows the complete static deck.
+Arrow keys move between slides. **Slides** opens the overview. **Full screen** enlarges the deck. **Print / PDF** prints all 26 slides.
 
-On a small screen, swipe within an industry workflow diagram to read its labels. Keyboard users can focus that diagram and scroll with the arrow keys. The stage caption remains below the diagram.
+Nine inline SVG diagrams share one stage controller. **Stage →** and **← Stage** select a stage and pause playback. **Play motion** resumes it. JavaScript moves the cursor every 2.4 seconds. Native SVG `animateMotion` moves dots along the visible directed paths. CSS highlights the current stage.
 
-## Reusable motion technique
+An `IntersectionObserver` permits playback only when at least one quarter of the active SVG is visible. Playback pauses on hidden slides, in the overview, when the document is hidden and during print. Reduced-motion settings keep diagrams still. At most one stage timer runs.
 
-The diagrams use inline SVG. CSS color variables reach the SVG directly. The current stage has a gold outline. During playback, CSS dims the other stages. Paused diagrams show every stage at full opacity.
+On small screens, architecture and workflow diagrams scroll within a focusable viewport. Focus the diagram and use arrow keys to scroll. The submission table also scrolls horizontally. The full no-JavaScript deck retains all copy, diagrams and the worked economic example.
 
-Each node declares `data-step`, `data-stage` and `data-stage-detail`. Incoming edges share the destination's step. One generic controller reads these attributes. A timer moves the stage cursor every 2.4 seconds. JavaScript does not animate each frame. The router's captions describe alternative routes; their presentation order does not prescribe an execution sequence.
+## Edit and verify
 
-Native SVG [`animateMotion`](https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/animateMotion) moves dots along the existing paths. CSS shows dots only on the selected edge during playback. The controller pauses the SVG's native timeline when playback stops.
+- `presentation-content.json`: slide copy, submission template, architecture, cost inputs and references.
+- `app.js`, `diagrams.js`, `styles.css`: presentation interface and motion graphics.
+- `scripts/build-static.cjs`: no-JavaScript presentation generation in `index.html`.
+- `scripts/check-static.mjs`: static content, architecture and brand contracts.
+- `scripts/verify-browser.cjs`: real Chromium arithmetic, geometry, motion, mobile, print and static checks.
 
-An [`IntersectionObserver`](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) permits playback when at least one quarter of the active SVG is visible. Playback also stops in the overview, on hidden slides, when the document is hidden, and during print. There is no offscreen stage timer.
-
-[`prefers-reduced-motion`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@media/prefers-reduced-motion) disables autoplay and hides dots. Manual stage controls remain available. Printing shows the entire diagram. The static generator includes all 26 slides, ten staged SVG diagrams and eight evidence charts in a no-JavaScript fallback. It removes the travelling dots and their animation elements. The evidence charts show the same final values at rest. CSS alone handles their brief entry animation. The cover map shows four product objectives; the industry map shows four application signals. Both use the same stage controller.
-
-To view locally, serve this folder over HTTP:
+Serve the canonical repository:
 
 ```powershell
 python -m http.server 8893 --bind 127.0.0.1
 ```
 
-Open `http://127.0.0.1:8893/`. Opening the HTML as a `file:` URL will not load the content file in browsers that restrict local fetch requests.
-
-## Edit and publish
-
-- `presentation-content.json` contains the slide copy and sources.
-- `index.html`, `styles.css`, `app.js` and `diagrams.js` contain the presentation interface and SVG motion graphics.
-- `scripts/check-static.mjs` checks the static package.
-- `scripts/build-static.cjs` regenerates the no-JavaScript fallback from the slide copy and SVG factory.
-- `scripts/verify-browser.cjs` checks the deck and playback behavior in Chromium.
-- `.github/workflows/pages.yml` validates and publishes the five public site files from `feature/context-presentation`.
+Validate from another terminal:
 
 ```powershell
 node --check app.js
 node --check diagrams.js
+node --check scripts/build-static.cjs
+node --check scripts/verify-browser.cjs
 node scripts/build-static.cjs
 node scripts/build-static.cjs --check
 node scripts/check-static.mjs
 node scripts/verify-browser.cjs
 ```
 
-Browser validation needs Playwright and its Chromium browser. The workflow installs pinned Playwright validation tools, runs the static and browser checks, then publishes the five site files. A local run needs the HTTP server shown above. Set `PREFRONTAL_PLAYWRIGHT_MODULE` if Playwright is available outside this repository. Set `PREFRONTAL_TEST_URL` to check a deployed site.
+Browser validation needs Playwright and Chromium. Set `PREFRONTAL_PLAYWRIGHT_MODULE` to use an existing installation. Set `PREFRONTAL_TEST_URL` to test the published deck. A `file:` URL can prevent loading the JSON; use HTTP.
 
-The workflow needs GitHub Pages configured to use GitHub Actions. Local research notes and validation artifacts are excluded from the published site. See [GitHub's custom Pages workflow documentation](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages).
+## Publication and proof boundaries
 
-## Evidence boundary
+The existing Pages workflow validates and publishes the five public files from `feature/context-presentation`. It checks freshness, syntax and browser acceptance before deployment. Research, the supplied ZIP, local architecture sidecars, PDFs and screenshots remain outside the public package.
 
-This is a development proposal. The context layer, model comparisons, personal memory ingestion and real upgrade/recovery tests remain unimplemented. Public model artifacts and framework documentation identify candidates; they do not qualify this system. The writing is inspired by ASD-STE100. Full compliance has not been checked.
+Working artifacts: the presentation, illustrative browser checks, editable worksheet and checked local architecture viewer. Still to implement and qualify: persistent admission, real decision-model integration, calibration, record-level authorization, MCP service, recovery, load and customer return.
+
+The writing is inspired by ASD-STE100. Full compliance has not been checked. Primary standards guide the proposal; they do not certify it. No flawless-operation, future-proofing, cost-saving or model-parity guarantee is claimed.

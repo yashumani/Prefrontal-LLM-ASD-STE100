@@ -4,7 +4,7 @@
 // The host selects a stage; CSS owns node highlighting and packet visibility.
 window.ContextDiagrams = (() => {
   const NS = "http://www.w3.org/2000/svg";
-  const C = { navy: "var(--navy, #172b4d)", ink: "var(--ink, #102d3e)", blue: "var(--blue, #2f5aa6)", cyan: "var(--cyan, #53c8d8)", gold: "var(--gold, #efb94e)", canvas: "var(--canvas, #eaf2f8)", white: "var(--white, #ffffff)" };
+  const C = { navy: "var(--navy, #172b4d)", ink: "var(--ink, #000000)", blue: "var(--blue, #000000)", cyan: "var(--cyan, #53c8d8)", gold: "var(--gold, #efb94e)", canvas: "var(--canvas, #eaf2f8)", white: "var(--white, #ffffff)" };
   let render = 0;
   const esc = value => String(value).replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&apos;" }[ch]));
   function create(kind) {
@@ -23,13 +23,13 @@ window.ContextDiagrams = (() => {
       cover: "Evidence becomes working context within a permission boundary",
       pipeline: "Evidence admission: capture, propose, validate and commit",
       memory: "Four memory layers with correction and invalidation",
-      router: "A bounded request router governed outside the model"
+      router: "A chosen model returns typed decisions inside an externally governed harness"
     };
     const descriptions = {
       cover: "Original sources link to structured memory, which supplies the current task context. Replaceable model, search and tool adapters consume this context. A permission boundary governs every layer. This is an unimplemented architecture proposal.",
       pipeline: "Capture preserves the original source. Propose creates candidate claims, not verified facts. A policy gate controls validation. Validate checks evidence, conflicts and scope before commit stores admitted claims with status. This is an unimplemented architecture proposal.",
       memory: "Original sources supply structured memory, rebuildable indexes and summaries, and the working task context. Correction or invalidation starts by checking the source, preserves original records, and rebuilds affected derived views under existing access and retention rules. Authority applies at every layer; a rebuilt view cannot grant permission. This is an unimplemented architecture proposal.",
-      router: "A request with a goal and constraints enters a bounded decision. Guard policy outside the model restricts routes to permitted memory access, authorized tools or labeled reasoning. A model cannot grant itself permission. This is an unimplemented architecture proposal."
+      router: "The application asks a defined judgment. A chosen model returns Choice, yes/no or rubric Score. The harness checks the schema, evidence and allowed operations. A model output cannot grant permission or approve new meaning. Calibration requires evaluation. This is a proposed decision interface."
     };
     let markup = `<title id="${id}-title">${titles[kind]}</title><desc id="${id}-desc">${descriptions[kind]}</desc><defs><marker id="${id}-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9 Z" fill="${C.blue}"/></marker><marker id="${id}-gold" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1 L9 5 L1 9 Z" fill="${C.gold}"/></marker></defs>`;
     const add = value => { markup += value; };
@@ -131,15 +131,15 @@ window.ContextDiagrams = (() => {
       edge(2, "decision-memory", "M260 218 V247 H96 V283");
       edge(3, "decision-tool", "M260 218 L260 283");
       edge(4, "decision-reasoning", "M260 218 V247 H424 V283");
-      captureGroup(0, () => box(111, 34, 298, 61, "Request + goal", "Scope · constraints · permissions"), "Request", "Establish the goal, scope, constraints, and existing permissions for the request.");
-      captureGroup(1, () => box(132, 152, 256, 66, "Bounded decision", "Only permitted routes", true), "Bounded decision", "External guard policy restricts the available branch alternatives for this request.");
-      captureGroup(2, () => box(27, 283, 138, 62, "Memory", "Evidence lookup"), "Memory option", "Memory lookup is a permitted branch alternative, not a required step before tools or reasoning.");
+      captureGroup(0, () => box(111, 34, 298, 61, "Defined judgment", "Evidence · schema · allowed values"), "Define the judgment", "Specify the question, allowed output values and evidence. Keep policy authority outside the model.");
+      captureGroup(1, () => box(132, 152, 256, 66, "Model + harness", "Checked typed outputs", true), "Bounded model interface", "The chosen model returns a typed judgment. Application code validates the schema, evidence and allowed operations.");
+      captureGroup(2, () => box(27, 283, 138, 62, "Choice", "One category"), "Choice signal", "Select one label from an allowed list, such as a semantic layer. A selected label is a proposal rather than human approval.");
       captureGroup(3, () => {
         add(rect(191, 283, 138, 62));
-        add(text(260, 307, "Authorized tool", 17, C.ink, "middle", 600));
-        add(text(260, 330, "Scoped action", 15, C.blue));
-      }, "Tool option", "An authorized tool is a scoped branch alternative, not a mandatory next step after memory.");
-      captureGroup(4, () => box(355, 283, 138, 62, "Reasoning", "Label inference"), "Reasoning option", "Labeled reasoning is a branch alternative, not a mandatory step after the other options.");
+        add(text(260, 307, "Yes / no", 17, C.ink, "middle", 600));
+        add(text(260, 330, "Defined condition", 15, C.blue));
+      }, "Yes/no signal", "Judge a defined condition against evidence. Deterministic application policy still enforces authorization.");
+      captureGroup(4, () => box(355, 283, 138, 62, "Rubric score", "Stated criteria"), "Rubric score", "Rate a property against stated criteria. A score is not automatically a probability. Reported probabilities require calibration checks.");
       add(text(260, 362, "A model cannot grant itself permission.", 15));
       footer();
     }
@@ -164,7 +164,7 @@ window.ContextDiagrams = (() => {
     const title = kind === "product" ? "Prefrontal connects cost, performance, accuracy and trust through governed context" : kind === "atlas" ? "Four industries connect to shared context checks in separate vaults" : plot ? `${sector.name}: ${sector.metric.value}. ${sector.metric.label}` : `${sector.name}: proposed evidence-to-review workflow`;
     const desc = kind === "product" ? "Four product objectives surround one proposed governed context layer. Cost, performance, accuracy and trust need agreed pilot measurements. This diagram reports no achieved result." : kind === "atlas" ? "Telecom, electricity utilities, healthcare and hospitality have different pressures. Each task needs its own evidence, time, scope and responsible owner. Connections illustrate shared design checks, not data sharing between industries. Industry metrics appear with dates and sources on the case slides. Proposed architecture, not implemented." : plot ? `${sector.metric.scope} ${sector.metric.period}. ${sector.metric.limitation} ${sector.metric.definition}` : `${sector.task} Link the evidence. ${sector.humanGate} Prepare: ${sector.output} This is an illustrative, unimplemented workflow.`;
     let markup = `<title id="${id}-title">${esc(title)}</title><desc id="${id}-desc">${esc(desc)}</desc>`;
-    const text = (x, y, value, size = 20, fill = "var(--ink, #102d3e)", anchor = "start", weight = 500) => `<text x="${x}" y="${y}" font-family="Segoe UI, Arial, sans-serif" font-size="${size}" font-weight="${weight}" text-anchor="${anchor}" fill="${fill}">${esc(value)}</text>`;
+    const text = (x, y, value, size = 20, fill = "var(--ink, #000000)", anchor = "start", weight = 500) => `<text x="${x}" y="${y}" font-family="Segoe UI, Arial, sans-serif" font-size="${size}" font-weight="${weight}" text-anchor="${anchor}" fill="${fill}">${esc(value)}</text>`;
     const rectangle = (x, y, width, height, fill, stroke, radius = 14) => `<rect x="${x}" y="${y}" width="${width}" height="${height}" rx="${radius}" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>`;
     const node = (step, title, detail, body) => `<g class="m-node m-stage" data-step="${step}" data-stage="${esc(title)}" data-stage-detail="${esc(detail)}">${body}</g>`;
     const edge = (step, name, path, color) => `<g class="m-edge m-stage" data-step="${step}"><path id="${id}-${name}" d="${path}" fill="none" stroke="${color}" stroke-width="2.5" marker-end="url(#${id}-arrow)"/><circle class="m-dot" r="5" fill="${color}"><animateMotion dur="1.6s" repeatCount="indefinite"><mpath href="#${id}-${name}"/></animateMotion></circle></g>`;
@@ -179,15 +179,15 @@ window.ContextDiagrams = (() => {
         if (kind === 'product') {
           const copy = {cost:['Task economics','Include the full cost'],performance:['Responsive work','Measure the full path'],accuracy:['Meaning + evidence','Check the task result'],trust:['Visible control','Keep the owner involved']}[s.id];
           markup += node(i,s.name,s.goal + '. Measure: ' + s.measure,
-            rectangle(x,y,240,112,'#12324a',color)+text(x+17,y+27,s.name.toUpperCase(),16,color,'start',700)+text(x+17,y+66,copy[0],22,'#f3f8ff','start',700)+text(x+17,y+94,copy[1],15,'#c5dbea'));
+            rectangle(x,y,240,112,'#ffffff',color)+text(x+17,y+27,s.name.toUpperCase(),16,color,'start',700)+text(x+17,y+66,copy[0],22,'#000000','start',700)+text(x+17,y+94,copy[1],15,'#6F7171'));
           return;
         }
         const brief = { telecom: "Traffic growth", utilities: "Queued renewables", healthcare: "Receive / integrate", hospitality: "Staffing shortages" }[s.id];
         markup += node(i, s.name, s.solution,
-          rectangle(x, y, 240, 112, "#12324a", color) + text(x + 17, y + 27, s.shortName.toUpperCase(), 16, color, "start", 700) + text(x + 17, y + 69, s.metric.value, 34, "#f3f8ff", "start", 700) + text(x + 17, y + 94, brief, 17, "#c5dbea"));
+          rectangle(x, y, 240, 112, "#ffffff", color) + text(x + 17, y + 27, s.shortName.toUpperCase(), 16, color, "start", 700) + text(x + 17, y + 69, s.metric.value, 34, "#000000", "start", 700) + text(x + 17, y + 94, brief, 17, "#6F7171"));
       });
-      markup += node(4, kind === 'product' ? 'Prefrontal · governed context' : "Shared checks, separate vaults", kind === 'product' ? 'One proposed context foundation. Configure each workflow. Prove its value and boundaries in a measured pilot.' : "Link evidence for one authorized task. Preserve time, conditions and authority. Keep industry and project records separate.", rectangle(267, 206, 186, 100, "#e8f4fc", "var(--cyan, #53c8d8)", 22) + text(360, 240, kind === 'product' ? 'Prefrontal' : "Governed", 24, "#102d3e", "middle", 700) + text(360, 269, "context", 24, "#102d3e", "middle", 700) + text(360, 290, "EVIDENCE + OWNER", 11, "#2f5aa6", "middle", 600));
-      markup += text(360, 493, kind === 'product' ? 'Product objectives · measured in the pilot' : "Shared checks do not mean shared private records.", 16, "#c5dbea", "middle");
+      markup += node(4, kind === 'product' ? 'Prefrontal · governed context' : "Shared checks, separate vaults", kind === 'product' ? 'One proposed context foundation. Configure each workflow. Prove its value and boundaries in a measured pilot.' : "Link evidence for one authorized task. Preserve time, conditions and authority. Keep industry and project records separate.", rectangle(267, 206, 186, 100, "#F6F6F6", "var(--cyan, #53c8d8)", 22) + text(360, 240, kind === 'product' ? 'Prefrontal' : "Governed", 24, "#000000", "middle", 700) + text(360, 269, "context", 24, "#000000", "middle", 700) + text(360, 290, "EVIDENCE + OWNER", 11, "#000000", "middle", 600));
+      markup += text(360, 493, kind === 'product' ? 'Product objectives · measured in the pilot' : "Shared checks do not mean shared private records.", 16, "#6F7171", "middle");
     } else if (kind === "flow") {
       const color = `var(--${sector.id}, ${sector.color})`;
       markup += text(22, 22, "PROPOSED WORKFLOW · REVIEWABLE OUTPUT", 13, "var(--muted, #50677b)");
@@ -223,5 +223,54 @@ window.ContextDiagrams = (() => {
     svg.innerHTML = markup;
     return svg;
   }
-  return Object.freeze({ create, createIndustry });
+  function createArchitecture(plan) {
+    const id = `context-architecture-${++render}`;
+    const svg = document.createElementNS(NS, 'svg');
+    svg.setAttribute('viewBox', `0 0 ${plan.viewBox[0]} ${plan.viewBox[1]}`);
+    svg.setAttribute('class', 'motion-diagram architecture-svg');
+    svg.setAttribute('role', 'img');
+    svg.setAttribute('aria-labelledby', `${id}-title ${id}-desc`);
+    svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+    const text = (x,y,value,size=15,fill=C.ink,weight=500) => `<text x="${x}" y="${y}" font-family="Segoe UI, Arial, sans-serif" font-size="${size}" font-weight="${weight}" fill="${fill}">${esc(value)}</text>`;
+    let markup = `<title id="${id}-title">Full proposed Prefrontal product: submissions, human governance, canonical IDs, model harness, four layers, MCP delivery and feedback</title><desc id="${id}-desc">${esc(plan.stages.map(stage=>stage.detail).join(' '))} ${esc(plan.legend)}</desc><defs><marker id="${id}-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M1 1 L9 5 L1 9 Z" fill="${C.blue}"/></marker><marker id="${id}-return" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M1 1 L9 5 L1 9 Z" fill="${C.gold}"/></marker></defs>`;
+    markup += `<g data-policy="external"><rect x="24" y="4" width="1212" height="40" rx="8" fill="${C.navy}"/>${text(38,29,plan.policy.title,16,C.white,650)}${text(482,29,plan.policy.detail,15,C.cyan)}</g>`;
+    markup += text(24,66,'SUBMISSION → HUMAN APPROVAL → CANONICAL IDENTITY',13,C.blue,650);
+    markup += text(750,270,'APPROVED RELEASE → PERMITTED OUTPUT',13,C.blue,650);
+    for (const edge of plan.edges) {
+      const color = edge.dashed ? C.gold : C.blue;
+      markup += `<g class="m-edge m-stage" data-step="${edge.step}" data-edge="${esc(edge.id)}"><path id="${id}-${esc(edge.id)}" d="${esc(edge.path)}" fill="none" stroke="${color}" stroke-width="2" ${edge.dashed?'stroke-dasharray="6 5"':''} marker-end="url(#${id}-${edge.dashed?'return':'arrow'})"/><circle class="m-dot" r="4" fill="${edge.dashed?C.gold:C.cyan}" stroke="${C.white}" stroke-width="1"><animateMotion dur="1.6s" repeatCount="indefinite"><mpath href="#${id}-${esc(edge.id)}"/></animateMotion></circle></g>`;
+    }
+    plan.stages.forEach((stage,step) => {
+      markup += `<g class="m-node m-stage" data-step="${step}" data-stage="${esc(stage.title)}" data-stage-detail="${esc(stage.detail)}">`;
+      plan.nodes.filter(node=>node.step===step).forEach(node => {
+        const {x,y,width,height} = node;
+        const compact = height<60;
+        const titleSize = width<200?17:18;
+        const titleBaseline = width<200?24:25;
+        const firstLine = compact || node.id==='writeback' ? 47 : 46;
+        markup += `<g data-node="${esc(node.id)}"><rect x="${x}" y="${y}" width="${width}" height="${height}" rx="9" fill="${node.dark?C.navy:C.white}" stroke="${C.blue}" stroke-width="1.5"/>${text(x+12,y+titleBaseline,node.title,titleSize,node.dark?C.white:C.ink,650)}`;
+        node.lines.forEach((line,index) => { markup += text(x+12,y+firstLine+index*22,line,15,node.dark?C.white:C.muted); });
+        markup += '</g>';
+      });
+      markup += '</g>';
+    });
+    markup += `<g data-review="owner"><rect x="24" y="526" width="1212" height="24" rx="5" fill="${C.canvas}" stroke="${C.gold}"/>${text(36,543,plan.review,14,C.ink)}</g>`;
+    svg.innerHTML = markup;
+    return svg;
+  }
+  function createProductFlow(plan) {
+    const id=`context-product-flow-${++render}`;
+    const svg=document.createElementNS(NS,'svg');
+    svg.setAttribute('viewBox','0 0 1000 180');svg.setAttribute('class','motion-diagram product-flow-svg');svg.setAttribute('role','img');
+    svg.setAttribute('aria-labelledby',`${id}-title ${id}-desc`);svg.setAttribute('preserveAspectRatio','xMidYMid meet');
+    let markup=`<title id="${id}-title">${esc(plan.title)}</title><desc id="${id}-desc">${esc(plan.nodes.map(n=>n.detail).join(' '))} Proposed design, not a running product.</desc><defs><marker id="${id}-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M1 1 L9 5 L1 9 Z" fill="${C.blue}"/></marker></defs>`;
+    plan.nodes.forEach((n,i)=>{
+      const x=20+i*250;
+      if(i>0)markup+=`<g class="m-edge m-stage" data-step="${i}"><path id="${id}-edge-${i}" d="M${x-30} 83 H${x}" fill="none" stroke="${C.blue}" stroke-width="2" marker-end="url(#${id}-arrow)"/><circle class="m-dot" r="4" fill="${C.cyan}"><animateMotion dur="1.6s" repeatCount="indefinite"><mpath href="#${id}-edge-${i}"/></animateMotion></circle></g>`;
+      const text=(y,v,size,fill,weight=500)=>`<text x="${x+14}" y="${y}" font-family="Segoe UI,Arial,sans-serif" font-size="${size}" fill="${fill}" font-weight="${weight}">${esc(v)}</text>`;
+      markup+=`<g class="m-node m-stage" data-node="${esc(n.id)}" data-step="${i}" data-stage="${esc(n.title)}" data-stage-detail="${esc(n.detail)}"><rect x="${x}" y="28" width="220" height="110" rx="10" fill="${i===2?C.navy:C.white}" stroke="${C.blue}" stroke-width="1.5"/>${text(55,n.title,18,i===2?C.white:C.ink,650)}${n.lines.map((line,j)=>text(82+j*23,line,15,i===2?C.white:C.blue)).join('')}</g>`;
+    });
+    svg.innerHTML=markup;return svg;
+  }
+  return Object.freeze({ create, createIndustry, createArchitecture, createProductFlow });
 })();

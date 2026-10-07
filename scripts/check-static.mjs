@@ -4,102 +4,164 @@ import assert from 'node:assert/strict';
 const files = ['index.html', 'styles.css', 'app.js', 'diagrams.js', 'presentation-content.json'];
 await Promise.all(files.map(file => access(file)));
 const deck = JSON.parse(await readFile('presentation-content.json', 'utf8'));
-const expectedSectors = ['telecom', 'utilities', 'healthcare', 'hospitality'];
-assert.equal(deck.slides.length, 26, 'Expected the agreed 26-slide product pitch and appendix.');
+const expectedSlides = [
+  ['opening-thesis', 'cover'], ['fragmented-context', 'problem'],
+  ['product-overview', 'product-flow'], ['investment-case', 'leadership-case'],
+  ['full-architecture', 'architecture'], ['existing-stack', 'product-flow'],
+  ['submission-template', 'submission'],
+  ['meaning-preserving-ste', 'ste'], ['human-review-routes', 'governance'],
+  ['context-contract', 'contract'], ['semantic-layers', 'product-flow'],
+  ['bounded-decision-router', 'router'], ['layered-memory', 'memory'],
+  ['secure-delivery', 'product-flow'], ['controlled-evolution', 'product-flow'],
+  ['operating-cost', 'problem'], ['cost-discipline', 'governance'],
+  ['value-assumptions', 'pitch-calculator'],
+  ['pilot-acceptance', 'pitch-proof'], ['upgrade-example', 'upgrade'],
+  ['evidence-boundary', 'evidence'], ['plan-alignment', 'governance'],
+  ['development-gates', 'roadmap'],
+  ['next-decisions', 'decisions'], ['failure-contracts', 'governance'],
+  ['primary-sources', 'sources']
+];
+assert.deepEqual(deck.slides.map(slide => [slide.id, slide.type]), expectedSlides, 'The product pitch must move from four leadership slides into slide-five architecture and developer detail.');
 assert.equal(new Set(deck.slides.map(slide => slide.id)).size, deck.slides.length, 'Slide IDs must be unique.');
-const allowed = new Set(['cover', 'problem', 'foundation', 'contract', 'pipeline', 'memory', 'router', 'ste', 'governance', 'upgrade', 'roadmap', 'evidence', 'decisions', 'sources', 'industry-overview', 'industry-case', 'industry-bridge', 'industry-sources', 'pitch-insights', 'pitch-value', 'pitch-calculator', 'pitch-proof']);
+assert(!('industries' in deck) && !('industrySources' in deck), 'The new pitch removes industry-specific examples and evidence.');
+assert(!deck.pitch?.conference, 'The new product pitch removes the conference narrative.');
 for (const slide of deck.slides) {
   assert.match(slide.id, /^[a-z0-9]+(?:-[a-z0-9]+)*$/);
-  assert(allowed.has(slide.type), `Unsupported slide type: ${slide.type}`);
   for (const key of ['eyebrow', 'title', 'lead']) assert.equal(typeof slide[key], 'string');
   assert(Array.isArray(slide.items));
+  assert(!/^industry-/.test(slide.type), 'No industry slides belong in this product pitch.');
 }
-assert(deck.slides.some(slide => slide.type === 'upgrade'), 'The interactive upgrade example is required.');
-assert.equal(deck.slides[0].type, 'cover', 'The buyer story must open with the product.');
-assert.equal(deck.slides[1].id, 'fragmented-context', 'The product opening must lead into the buyer problem.');
-for (const type of ['pitch-insights', 'pitch-value', 'pitch-calculator', 'pitch-proof']) {
-  assert.equal(deck.slides.filter(slide => slide.type === type).length, 1, `The buyer story needs one ${type} slide.`);
-  assert(deck.slides.findIndex(slide => slide.type === type) < 20, `${type} belongs in the twenty-slide buyer story.`);
+const byId = id => deck.slides.find(slide => slide.id === id);
+const slideText = id => JSON.stringify(byId(id));
+assert.match(slideText('opening-thesis'), /Prefrontal/i, 'Leadership must see the product name immediately.');
+assert.match(slideText('opening-thesis'), /propos|concept|pilot/i, 'The opening must preserve product maturity.');
+assert.match(slideText('product-overview'), /review|govern/i, 'The executive overview must explain the approval boundary.');
+assert.match(slideText('investment-case'), /cost|spend|invest|budget|overhead/i, 'The fourth slide must address whether the architecture is worth funding.');
+const stackText = slideText('existing-stack');
+for (const term of [/Looker/i, /LookML/i, /Zenlytics/i, /custom app/i]) assert.match(stackText, term, 'The integration story must name each part of the existing stack.');
+assert.match(stackText, /existing|current|reuse/i, 'The proposal must build on the existing analytics investment.');
+assert.match(stackText, /native.{0,35}(?:query|execution)|(?:query|execution).{0,35}native/i, 'The proposed context service must preserve native query execution.');
+assert.match(stackText, /adapter/i, 'The proposal must explain the adapter boundary.');
+assert.match(stackText, /to verify|must verify|verify.{0,35}(?:adapter|contract|permission)|(?:adapter|contract|permission).{0,35}verif/i, 'The integration must mark adapter contracts and permissions as requiring verification.');
+const mappingText = slideText('context-contract') + slideText('submission-template');
+for (const term of [/LookML/i, /model/i, /explore/i, /view/i, /measure/i, /Git.{0,25}(?:revision|commit)|(?:revision|commit).{0,25}Git/i]) assert.match(mappingText, term, 'The context contract must map approved metric identities to the versioned LookML source.');
+const costText = slideText('cost-discipline') + JSON.stringify(deck.pitch?.businessCase);
+for (const term of [/code|SQL/i, /context/i, /cach/i, /valid|fresh|version/i, /retr(?:y|ies)/i, /warehouse|BigQuery/i, /seat|licen[cs]e/i, /human|review/i, /existing|allocated/i, /incremental/i]) assert.match(costText, term, 'The complete cost case must retain deterministic methods, bounded context, valid caches, retries and human, warehouse and licensing costs.');
+assert.match(slideText('cost-discipline'), /certified quer.{0,25}unchanged/i, 'Cost controls must preserve certified queries.');
+assert.match(slideText('cost-discipline'), /review.{0,30}expert drafts.{0,30}reuse/i, 'Expert drafts must pass review before reuse.');
+const routerText = slideText('bounded-decision-router');
+for (const term of [/certified query references/i, /native execution/i, /access checks/i, /expert drafts/i, /review/i]) assert.match(routerText, term, 'The routing story must distinguish permission-checked certified query references from expert drafts that require review.');
+const planText = slideText('plan-alignment');
+assert.match(planText, /seven|7.{0,15}stage/i, 'The proposal must align with the seven-stage delivery journey.');
+for (const stage of ['Intake/Vetting', 'Product Requirements', 'Product Design', 'Development', 'Testing', 'Launch', 'Maintenance']) {
+  assert(planText.toLowerCase().includes(stage.toLowerCase()), `The proposal must preserve the supplied delivery stage: ${stage}.`);
 }
-assert(deck.slides.findIndex(slide => slide.type === 'pitch-insights') < deck.slides.findIndex(slide => slide.type === 'industry-overview'), 'Buyer insights must precede industry examples.');
-const expectedLenses = ['cost', 'performance', 'accuracy', 'trust'];
+for (const term of [/owner/i, /review|govern/i, /pilot/i, /approv|gate/i]) assert.match(planText, term, 'The delivery plan must retain ownership, governance and pilot approval gates.');
+assert.match(slideText('meaning-preserving-ste'), /inspired/i, 'The writing must be described as STE-inspired unless compliance was checked.');
+assert.match(slideText('meaning-preserving-ste'), /source|original/i, 'STE preparation must retain the original evidence.');
+assert.match(slideText('human-review-routes'), /version/i, 'Human approval must bind to the exact version.');
+assert.match(slideText('secure-delivery'), /authoriz|permission|access/i, 'MCP delivery must explain access control.');
+for (const state of ['Available now', 'Designed', 'To implement', 'To qualify']) assert(slideText('evidence-boundary').includes(state), `Readiness must distinguish ${state}.`);
+const productFlows = deck.slides.filter(slide => slide.type === 'product-flow');
+assert.equal(productFlows.length, 5, 'The source deck needs five overview, existing-stack and developer flow diagrams.');
+for (const slide of productFlows) {
+  assert.equal(slide.flow?.nodes?.length, 4, `${slide.id} needs four readable explanatory stages.`);
+  for (const stage of slide.flow.nodes) {
+    for (const key of ['title', 'detail']) assert(stage[key]?.trim(), `${slide.id} flow stage needs ${key}.`);
+  }
+}
+
+const architecture = deck.architecture;
+const expectedNodes = ['submissions', 'preparation', 'human-review', 'canonical-registry', 'context-agent', 'decision-model', 'data-layer', 'metric-layer', 'ontology-layer', 'interpretation-layer', 'mcp-delivery', 'consumers'];
+assert.equal(architecture?.stages?.length, 5, 'The full architecture needs five explanatory stages.');
+assert.deepEqual(architecture.nodes.map(node => node.id).sort(), [...expectedNodes].sort(), 'The architecture must retain submission, approval, identity, model/harness, four context layers and secure consumption.');
+for (const stage of architecture.stages) {
+  for (const key of ['title', 'detail']) assert(stage[key]?.trim(), `Each architecture stage needs ${key}.`);
+}
+for (const node of architecture.nodes) {
+  assert(Number.isInteger(node.step) && node.step >= 0 && node.step < architecture.stages.length, `${node.id} must belong to an explanatory stage.`);
+  assert(node.title?.trim() && node.lines?.length, `${node.id} must retain its readable explanation.`);
+  assert(node.lines.every(line => typeof line === 'string' && line.trim()));
+  for (const key of ['x', 'y', 'width', 'height']) assert(Number.isFinite(node[key]), `${node.id}.${key} must be a finite SVG coordinate.`);
+  assert(node.width > 0 && node.height > 0, `${node.id} must have a visible box.`);
+}
+const expectedConnections = {
+  'submit-prepare': ['submissions', 'preparation'], 'prepare-review': ['preparation', 'human-review'],
+  'review-registry': ['human-review', 'canonical-registry'], 'revise-preparation': ['human-review', 'preparation'],
+  'registry-agent': ['canonical-registry', 'context-agent'], 'derived-review': ['context-agent', 'preparation'],
+  'ask-model': ['context-agent', 'decision-model'], 'decision-signals': ['decision-model', 'context-agent'],
+  'place-ontology-layer': ['context-agent', 'ontology-layer'], 'place-data-layer': ['context-agent', 'data-layer'],
+  'place-metric-layer': ['context-agent', 'metric-layer'], 'place-interpretation-layer': ['context-agent', 'interpretation-layer'],
+  'publish-ontology-layer': ['ontology-layer', 'mcp-delivery'], 'publish-data-layer': ['data-layer', 'mcp-delivery'],
+  'publish-metric-layer': ['metric-layer', 'mcp-delivery'], 'publish-interpretation-layer': ['interpretation-layer', 'mcp-delivery'],
+  'deliver-consumer': ['mcp-delivery', 'consumers'], 'feedback-submission': ['consumers', 'submissions']
+};
+assert.deepEqual(Object.fromEntries(architecture.edges.map(edge => [edge.id, [edge.from, edge.to]])), expectedConnections, 'The architecture must preserve each intake, approval, bounded decision, layer, delivery and reviewed feedback relationship.');
+assert.equal(new Set(architecture.edges.map(edge => edge.id)).size, architecture.edges.length, 'Each architecture connector needs a unique ID.');
+for (const edge of architecture.edges) {
+  assert(Number.isInteger(edge.step) && edge.step >= 0 && edge.step < architecture.stages.length);
+  assert.match(edge.path, /^M\s*[\d.-]/, `${edge.id} must retain a real SVG connector path.`);
+}
+const nodeText = id => { const node = architecture.nodes.find(item => item.id === id); return [node.title, ...node.lines].join(' '); };
+assert.match(nodeText('submissions'), /template|evidence|submission/i);
+assert.match(nodeText('preparation'), /STE|source|original/i);
+assert.match(nodeText('human-review'), /human|review|approve/i);
+assert.match(nodeText('canonical-registry'), /ID|version/i);
+assert.match(nodeText('context-agent'), /harness|typed|bounded/i, 'The harness must constrain orchestration.');
+assert.match(nodeText('decision-model'), /choice|yes|score|calibrat/i, 'The chosen model must expose decision signals and calibration limits.');
+assert.match(nodeText('mcp-delivery'), /MCP|authoriz|publish/i);
+assert.match([architecture.policy?.title, architecture.policy?.detail].join(' '), /outside|external/i, 'Policy authority must remain outside the model.');
+for (const key of ['review', 'legend']) assert.equal(typeof architecture[key], 'string');
+assert.match(architecture.review, /owner|human|review/i);
+
 const pitch = deck.pitch;
-assert.equal(pitch?.productName, 'Prefrontal', 'The opening must identify the product being pitched.');
-assert.match(pitch.maturity, /concept.*pilot/i, 'The pitch must preserve the product concept and pilot maturity.');
-assert.match([deck.slides[0].eyebrow, deck.slides[0].title, deck.slides[0].lead].join(' '), /Prefrontal/i, 'The cover must identify the product.');
-assert.equal(new URL(pitch.conference.url).protocol, 'https:');
-assert.equal(pitch.conference.exhibits, 20, 'The portfolio conference contains twenty supplied exhibit images.');
-for (const key of ['title', 'eventDate', 'scope']) assert(pitch.conference[key]?.trim().length > 0, `Conference attribution must include ${key}.`);
-assert(pitch.conference.insights.length >= 3, 'The pitch needs specific conference observations and their product implications.');
-for (const insight of pitch.conference.insights) {
-  for (const key of ['title', 'observation', 'application']) assert(insight[key]?.trim().length > 0, `Each conference insight needs ${key}.`);
-  assert(insight.exhibits?.length > 0, 'Conference observations must point to the supplied exhibits.');
-}
-assert.deepEqual(pitch.lenses.map(lens => lens.id), expectedLenses, 'The buyer value story must explain all four agreed dimensions.');
-for (const lens of pitch.lenses) {
-  for (const key of ['name', 'goal', 'mechanism', 'measure', 'guardrail']) assert(lens[key]?.trim().length > 0, `${lens.id} must explain ${key}.`);
-}
-assert.deepEqual(pitch.scorecard.map(card => card.id), expectedLenses, 'Pilot proof must cover each value dimension.');
+const lenses = ['cost', 'performance', 'accuracy', 'trust'];
+assert.equal(pitch?.productName, 'Prefrontal');
+assert.match(pitch.maturity, /concept|proposed|pilot/i);
+assert.deepEqual(pitch.scorecard.map(card => card.id), lenses, 'The pilot must measure cost, performance, accuracy and trust.');
 for (const card of pitch.scorecard) {
-  for (const key of ['name', 'metric', 'trial', 'decision']) assert(card[key]?.trim().length > 0, `${card.id} proof must explain ${key}.`);
+  for (const key of ['name', 'metric', 'trial', 'decision']) assert(card[key]?.trim(), `${card.id} proof needs ${key}.`);
 }
 const assumptions = pitch.businessCase.defaults;
 const assumptionKeys = ['target', 'hourly', 'setup', 'baselineCost', 'candidateCost', 'baselineMinutes', 'candidateMinutes', 'baselineAcceptance', 'candidateAcceptance', 'baselineFixed', 'candidateFixed'];
-assert.deepEqual(Object.keys(assumptions).sort(), [...assumptionKeys].sort(), 'The cost model must state every recurring, handling, acceptance, and setup assumption.');
-for (const key of assumptionKeys) assert(Number.isFinite(assumptions[key]) && assumptions[key] >= 0, `${key} default must be finite and nonnegative.`);
-for (const key of ['baselineAcceptance', 'candidateAcceptance']) assert(assumptions[key] > 0 && assumptions[key] <= 100, `${key} must be a usable acceptance rate.`);
-assert(assumptions.target > 0, 'The monthly accepted-task target must be positive.');
-assert.equal(pitch.businessCase.currency, 'USD', 'The cost model must label its currency.');
-assert(deck.sources.some(source => source.url === pitch.conference.url), 'The portfolio conference must appear in the reference appendix.');
-assert.equal(deck.slides.filter(slide => slide.type === 'industry-overview').length, 1);
-assert.equal(deck.slides.filter(slide => slide.type === 'industry-bridge').length, 1);
-assert.equal(deck.slides.filter(slide => slide.type === 'industry-sources').length, 1);
-assert.equal(deck.slides.filter(slide => slide.type === 'industry-case').length, expectedSectors.length);
-assert.deepEqual(deck.industries.map(industry => industry.id).sort(), [...expectedSectors].sort(), 'All four agreed sectors need structured evidence.');
-assert.equal(deck.industrySources.length, expectedSectors.length, 'Industry evidence needs four primary references.');
-assert.equal(new Set(deck.industrySources.map(source => source.url)).size, expectedSectors.length, 'Industry references must be distinct.');
-for (const industry of deck.industries) {
-  assert.equal(typeof industry.name, 'string');
-  assert(industry.name.trim().length > 0);
-  const slide = deck.slides.find(candidate => candidate.id === `${industry.id}-context`);
-  assert.equal(slide?.type, 'industry-case', `Missing ${industry.name} case narrative.`);
-  assert.equal(slide.industry, industry.id);
-  for (const key of ['problem', 'task', 'solution', 'output', 'humanGate', 'owner', 'test']) {
-    assert.equal(typeof industry[key], 'string', `${industry.name} must explain ${key}.`);
-    assert(industry[key].trim().length > 0, `${industry.name} ${key} cannot be empty.`);
-  }
-  assert(industry.inputs.length >= 4, `${industry.name} must identify the context needed for its task.`);
-  assert.equal(industry.inputLabels.length, industry.inputs.length, 'Diagram labels must preserve every input.');
-  assert(slide.lead.trim().length > 30 && slide.note?.trim().length > 30, `${industry.name} needs a readable narrative and its limits.`);
-  for (const key of ['value', 'label', 'scope', 'period', 'sourceUrl', 'sourceTitle', 'limitation', 'definition']) {
-    assert.equal(typeof industry.metric[key], 'string', `${industry.name} metric.${key} must be explicit text.`);
-    assert(industry.metric[key].trim().length > 0, `${industry.name} metric.${key} cannot be empty.`);
-  }
-  assert.equal(new URL(industry.metric.sourceUrl).protocol, 'https:');
-  assert(deck.industrySources.some(source => source.url === industry.metric.sourceUrl && source.title === industry.metric.sourceTitle), `${industry.name} metric must link to an included primary reference.`);
+assert.deepEqual(Object.keys(assumptions).sort(), [...assumptionKeys].sort(), 'The cost model must state operating, handling, quality and setup assumptions.');
+for (const key of assumptionKeys) assert(Number.isFinite(assumptions[key]) && assumptions[key] >= 0);
+for (const key of ['baselineAcceptance', 'candidateAcceptance']) assert(assumptions[key] > 0 && assumptions[key] <= 100);
+assert(assumptions.target > 0);
+assert.equal(assumptions.baselineCost, assumptions.candidateCost, 'Neutral defaults must assume no inference savings.');
+assert.equal(assumptions.baselineMinutes, assumptions.candidateMinutes, 'Neutral defaults must assume no handling savings.');
+assert.equal(assumptions.baselineAcceptance, assumptions.candidateAcceptance, 'Neutral defaults must assume no quality uplift.');
+assert(assumptions.candidateFixed > assumptions.baselineFixed && assumptions.setup > 0, 'The neutral scenario must include context-service overhead and setup cost.');
+const hurdle = pitch.economicHurdle;
+assert.deepEqual(Object.keys(hurdle).sort(), ['acceptedTarget', 'acceptancePercent', 'monthlyOverhead', 'setup', 'months', 'hourly'].sort(), 'The leadership hurdle must declare all assumptions.');
+assert.equal(hurdle.acceptedTarget, assumptions.target);
+assert.equal(hurdle.acceptancePercent, assumptions.baselineAcceptance);
+assert.equal(hurdle.monthlyOverhead, assumptions.candidateFixed - assumptions.baselineFixed);
+assert.equal(hurdle.setup, assumptions.setup);
+assert.equal(hurdle.hourly, assumptions.hourly);
+assert.equal(hurdle.months, 12);
+assert.equal(pitch.businessCase.currency, 'USD');
+for (const key of ['formula', 'definition', 'limitation', 'costScope']) assert(pitch.businessCase[key]?.trim(), `The calculator needs its ${key}.`);
+assert.equal(deck.sources.length, 8, 'The appendix needs the five standards references and three official analytics-stack references.');
+for (const source of deck.sources) { assert.equal(new URL(source.url).protocol, 'https:'); assert(source.title?.trim()); }
+assert.equal(new Set(deck.sources.map(source => source.url)).size, deck.sources.length, 'References must be distinct.');
+for (const topic of [/looker.*lookml|lookml.*looker/i, /looker.*extension|extension.*looker/i, /bigquery.*cost|cost.*bigquery/i]) {
+  assert(deck.sources.some(source => topic.test(source.title + ' ' + source.url) && /(?:^|\.)cloud\.google\.com$/.test(new URL(source.url).hostname)), 'Stack and cost facts need official Google Cloud sources.');
 }
-const industryById = Object.fromEntries(deck.industries.map(industry => [industry.id, industry]));
-assert.deepEqual(industryById.telecom.metric.rates, [100, 123], 'Telecom uses the source growth rate as a 100-to-123 index.');
-assert.equal(industryById.utilities.metric.nodeCount * industryById.utilities.metric.unitPerNode, 1700, 'Utility nodes represent the reported 1,700 GW lower bound.');
-assert.equal(industryById.utilities.metric.nodeCount, 17);
-assert.equal(industryById.utilities.metric.unitPerNode, 100);
-assert.match(industryById.utilities.metric.value, /[≥>]\s*1,700\s*GW/, 'Utility capacity must retain its lower-bound qualifier and unit.');
-assert.deepEqual(industryById.healthcare.metric.rates, [93, 79], 'The hospital receiving and integration rates must remain distinct.');
-assert.deepEqual(industryById.hospitality.metric.rates, [65], 'The dated hospitality survey reports 65%.');
-assert.match(industryById.hospitality.metric.scope, /282/, 'The survey respondent population must remain explicit.');
-assert(deck.sources.length > 0, 'The presentation must include primary sources.');
-assert.equal(deck.sources.length, 13, 'The architecture/source appendix must preserve twelve references and add the portfolio conference.');
-for (const source of [...deck.sources, ...deck.industrySources]) {
-  assert.equal(new URL(source.url).protocol, 'https:');
-  assert.equal(typeof source.title, 'string');
-  assert(source.title.trim().length > 0);
-}
+
 const html = await readFile('index.html', 'utf8');
+const styles = await readFile('styles.css', 'utf8');
+assert.match(styles, /--red\s*:\s*#EE001E\s*[;}]/i, 'The agreed brand accent must retain #EE001E.');
+assert.match(styles, /--paper\s*:\s*#fff(?:fff)?\s*[;}]/i, 'The agreed brand paper token must be white.');
 assert(html.includes('href="styles.css"') && html.includes('src="app.js"') && html.includes('src="diagrams.js"'), 'Assets must use project-relative paths.');
 assert(html.includes('static-presentation'), 'A complete JavaScript-disabled fallback is required.');
 for (const slide of deck.slides) assert(html.includes(`id="static-${slide.id}"`), `Static fallback is missing ${slide.id}.`);
 const svgClasses = [...html.matchAll(/<svg\b[^>]*\bclass=["']([^"']+)["'][^>]*>/g)].map(match => match[1].split(/\s+/));
-assert.equal(svgClasses.filter(classes => classes.includes('motion-diagram')).length, 10, 'Static fallback must preserve all ten staged diagrams.');
-assert.equal(svgClasses.filter(classes => classes.includes('insight-chart')).length, 8, 'Static fallback must preserve all eight evidence charts.');
+assert.equal(svgClasses.filter(classes => classes.includes('motion-diagram')).length, 9, 'Static fallback must retain all nine staged diagrams.');
+assert.equal(svgClasses.filter(classes => classes.includes('architecture-svg')).length, 1, 'Exactly one complete architecture SVG belongs on slide five.');
+assert.equal(svgClasses.filter(classes => classes.includes('product-flow-svg')).length, 5, 'The product needs five readable overview, existing-stack and developer flow diagrams.');
+for (const id of expectedNodes) assert(html.includes(`data-node="${id}"`), `Static architecture is missing ${id}.`);
+for (const edge of architecture.edges) assert(html.includes(`data-edge="${edge.id}"`), `Static architecture is missing ${edge.id}.`);
+assert(html.includes('data-policy="external"') && html.includes('data-review="owner"'), 'The static architecture must preserve independent policy and human review.');
 assert(!/<animateMotion\b/.test(html), 'The JavaScript-disabled fallback must contain no native animation.');
-console.log(`Static checks: PASS (${deck.slides.length} slides, ${expectedSectors.length} industry cases, ${deck.industrySources.length} industry references, ${deck.sources.length} architecture references, 10 static diagrams, 8 evidence charts, ${files.length} site files)`);
+console.log(`Static checks: PASS (${deck.slides.length} product-first slides; four leadership slides; one full 12-node architecture on slide five; ${architecture.edges.length} directed connections; five product flow diagrams; existing-stack adapter and LookML mapping boundaries; certified-query and reviewed-draft distinction; complete cost scope and seven-stage governance alignment; neutral cost assumptions; four pilot dimensions; ${deck.sources.length} primary references; nine static SVG diagrams; supplied white/red brand tokens; complete no-JS fallback)`);
