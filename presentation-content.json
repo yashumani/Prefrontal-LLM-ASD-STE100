@@ -24,8 +24,8 @@
       "id": "fragmented-context",
       "type": "problem",
       "eyebrow": "Leadership · the recurring cost",
-      "title": "Your AI keeps paying to understand the same work.",
-      "lead": "Your stack already models data. The proposal addresses context that teams still reconcile across tools, owners and versions.",
+      "title": "Teams rebuild context across tools.",
+      "lead": "Your stack already models data. Teams may still repeat source checks, reconciliation and review.",
       "items": [
         {
           "title": "Preparation",
@@ -44,7 +44,61 @@
           "text": "Teams reconnect context when models or tools change."
         }
       ],
-      "note": "These are problem hypotheses. Establish their frequency and cost in the selected workflow."
+      "note": "These are problem hypotheses. Establish their frequency and cost in the selected workflow.",
+      "infographic": {
+        "layout": "cycle",
+        "title": "Where teams repeat context work",
+        "summary": "Problem hypothesis. Measure the frequency and effort in the selected workflow.",
+        "stages": [
+          {
+            "id": "find",
+            "title": "Find sources",
+            "lines": [
+              "Definitions + evidence",
+              "Owner + exceptions"
+            ],
+            "detail": "People connect existing metric definitions to evidence, exceptions and ownership.",
+            "icon": "source"
+          },
+          {
+            "id": "resolve",
+            "title": "Resolve differences",
+            "lines": [
+              "Versions + conflicts",
+              "Missing conditions"
+            ],
+            "detail": "People resolve conflicting versions and missing conditions.",
+            "icon": "link"
+          },
+          {
+            "id": "review",
+            "title": "Check the result",
+            "lines": [
+              "Source support",
+              "Suitable output"
+            ],
+            "detail": "People check unsupported or unsuitable outputs.",
+            "icon": "check"
+          },
+          {
+            "id": "reconnect",
+            "title": "Reconnect tools",
+            "lines": [
+              "Models + interfaces",
+              "Changed context"
+            ],
+            "detail": "Teams reconnect context when models or tools change.",
+            "icon": "tool"
+          }
+        ],
+        "center": {
+          "title": "Repeated work",
+          "lines": [
+            "Same business meaning",
+            "Across tasks and tools"
+          ]
+        }
+      }
     },
     {
       "id": "product-overview",
@@ -200,6 +254,102 @@
       }
     },
     {
+      "id": "context-capabilities",
+      "type": "infographic",
+      "eyebrow": "Product scope · eight context capabilities",
+      "title": "Eight capabilities. One context service.",
+      "lead": "The supplied plan names eight capabilities. These diagrams show how the proposed product would support them.",
+      "items": [],
+      "note": "The reference reports an existing service. Its operating claims have not been verified here. These are proposed Prefrontal capabilities.",
+      "infographic": {
+        "layout": "matrix",
+        "title": "Eight capabilities in the supplied context plan",
+        "summary": "Proposed product support. Platform and operational acceptance remain to verify.",
+        "stages": [
+          {
+            "id": "definition",
+            "title": "One definition",
+            "lines": [
+              "Canonical metric identity",
+              "Native LookML revision"
+            ],
+            "detail": "Reference one approved metric definition. Link it to canonical identity, owner and source revision.",
+            "icon": "data"
+          },
+          {
+            "id": "certified",
+            "title": "Certified logic",
+            "lines": [
+              "Approved query reference",
+              "Native execution"
+            ],
+            "detail": "Deliver approved query references for native execution. Recheck authorization, data validity and execution conditions.",
+            "icon": "code"
+          },
+          {
+            "id": "expert",
+            "title": "Expert knowledge",
+            "lines": [
+              "Relevant SME rules",
+              "Approved source evidence"
+            ],
+            "detail": "Load relevant subject matter expert (SME) knowledge within the request budget.",
+            "icon": "human"
+          },
+          {
+            "id": "triage",
+            "title": "Triage",
+            "lines": [
+              "Qualified fast path",
+              "Escalate uncertainty"
+            ],
+            "detail": "Route defined work through a qualified path. Escalate new or uncertain meaning for review.",
+            "icon": "model"
+          },
+          {
+            "id": "policy",
+            "title": "Policy gate",
+            "lines": [
+              "Access + purpose",
+              "Check before execution"
+            ],
+            "detail": "Check delivery permissions. The consumer must enforce its own source access and execution policies.",
+            "icon": "access"
+          },
+          {
+            "id": "qa",
+            "title": "Standing tests",
+            "lines": [
+              "Owner-approved gold truth",
+              "Known failure cases"
+            ],
+            "detail": "Keep standing quality tests against owner-approved reference answers. A test pass supports only its tested scope.",
+            "icon": "check"
+          },
+          {
+            "id": "audit",
+            "title": "Audit evidence",
+            "lines": [
+              "Source + validator + date",
+              "Exact approved version"
+            ],
+            "detail": "Preserve source, reviewer, date and exact version. Read back persistent evidence across the workflow.",
+            "icon": "source"
+          },
+          {
+            "id": "learning",
+            "title": "Reviewed change",
+            "lines": [
+              "Draft → human review",
+              "Approved release"
+            ],
+            "detail": "Reviewed learning: new drafts return to human review before an approved release.",
+            "icon": "update"
+          }
+        ]
+      }
+    },
+    {
       "id": "submission-template",
       "type": "submission",
       "eyebrow": "Developer view · the input contract",
@@ -222,7 +372,7 @@
       "type": "ste",
       "eyebrow": "Developer view · the writing layer",
       "title": "Clear language carries the original meaning.",
-      "lead": "Use STE-inspired text to help people review context. Structured fields carry the checks that prose cannot enforce.",
+      "lead": "This presentation uses STE-inspired writing. The review view preserves the original rule and its exception.",
       "items": [
         {
           "title": "Keep two views",
@@ -241,14 +391,62 @@
           "text": "Use the same term for the same governed concept."
         }
       ],
-      "note": "ASD-STE100 is a controlled writing specification. STE-inspired prose does not establish full compliance or factual correctness."
+      "note": "Presenter statement: “I used STE-inspired writing in this presentation. Each sentence carries one main idea. Full ASD-STE100 compliance has not been checked.”",
+      "infographic": {
+        "layout": "matrix",
+        "title": "Four writing rules used in this deck",
+        "summary": "STE-inspired writing supports review. It does not prove correctness or full compliance.",
+        "stages": [
+          {
+            "id": "short",
+            "title": "Short sentences",
+            "lines": [
+              "Keep the report.",
+              "Keep the condition."
+            ],
+            "detail": "Keep sentences short. Preserve necessary conditions and uncertainty. Keep the original source beside the review view.",
+            "icon": "source"
+          },
+          {
+            "id": "active",
+            "title": "Active verbs",
+            "lines": [
+              "Name who acts.",
+              "The reviewer approves."
+            ],
+            "detail": "Use active voice. Name the person or component that performs each action.",
+            "icon": "human"
+          },
+          {
+            "id": "terms",
+            "title": "Consistent terms",
+            "lines": [
+              "One concept.",
+              "One term."
+            ],
+            "detail": "Use the same term for the same concept. Define technical terms when the audience needs them.",
+            "icon": "link"
+          },
+          {
+            "id": "idea",
+            "title": "One main idea",
+            "lines": [
+              "State the rule.",
+              "Then state its exception."
+            ],
+            "detail": "Give each sentence one main idea. Use diagrams to show relationships and sequence.",
+            "icon": "check"
+          }
+        ],
+        "compact": true
+      }
     },
     {
       "id": "human-review-routes",
       "type": "governance",
       "eyebrow": "Developer view · human authority",
-      "title": "Approval is a decision about an exact version.",
-      "lead": "A responsible reviewer accepts, rejects or requests changes. The model can propose a record; it cannot approve its own meaning.",
+      "title": "Humans approve the exact version.",
+      "lead": "The agent proposes a record. The reviewer checks evidence, meaning and access before approval.",
       "items": [
         {
           "title": "Evidence review",
@@ -275,14 +473,81 @@
           "text": "An accountable owner accepts release and pilot evidence."
         }
       ],
-      "note": "HITL means human in the loop. All new or changed meaning requires review in this proposed admission workflow."
+      "note": "HITL means human in the loop. All new or changed meaning requires review in this proposed admission workflow.",
+      "infographic": {
+        "layout": "matrix",
+        "title": "Human review checks meaning before admission",
+        "summary": "All new or changed meaning requires review. Approval binds to an exact version.",
+        "stages": [
+          {
+            "id": "evidence",
+            "title": "Evidence",
+            "lines": [
+              "Source + date + scope",
+              "Unsupported claims"
+            ],
+            "detail": "Check sources, dates, scope and unsupported statements.",
+            "icon": "source"
+          },
+          {
+            "id": "meaning",
+            "title": "Meaning",
+            "lines": [
+              "Units + assumptions",
+              "Conflicts + exceptions"
+            ],
+            "detail": "Check definitions, units, assumptions and conflicts.",
+            "icon": "check"
+          },
+          {
+            "id": "access",
+            "title": "Access",
+            "lines": [
+              "Workspace + audience",
+              "Permitted purpose"
+            ],
+            "detail": "Confirm workspace, permitted audience and purpose.",
+            "icon": "access"
+          },
+          {
+            "id": "version",
+            "title": "Exact version",
+            "lines": [
+              "Content hash",
+              "Named reviewer"
+            ],
+            "detail": "Bind the reviewer decision to the submitted content hash.",
+            "icon": "approve"
+          },
+          {
+            "id": "derived",
+            "title": "New claims",
+            "lines": [
+              "Prepare the draft",
+              "Return to review"
+            ],
+            "detail": "Send new interpretation through preparation and review.",
+            "icon": "update"
+          },
+          {
+            "id": "release",
+            "title": "Release owner",
+            "lines": [
+              "Accept release evidence",
+              "Accountable decision"
+            ],
+            "detail": "An accountable owner accepts release and pilot evidence.",
+            "icon": "human"
+          }
+        ]
+      }
     },
     {
       "id": "context-contract",
       "type": "contract",
       "eyebrow": "Developer view · identity and version",
       "title": "Stable identities connect every layer.",
-      "lead": "A canonical ID names one governed object. A version names its state. Evidence references explain where that state came from.",
+      "lead": "A Metric Passport links a metric to its native definition and review history. The canonical ID stays stable as versions change.",
       "items": [
         {
           "title": "Resolve identity",
@@ -301,7 +566,61 @@
           "text": "An ID locates a record. Recheck access for each consumer and source query."
         }
       ],
-      "note": "A metric passport is a governed record of a metric definition and its source binding. Reference the approved LookML formula; avoid a competing copy."
+      "note": "Illustrative record. Canonical means the agreed identity for an object. The passport references approved LookML logic. The consumer still checks source access.",
+      "infographic": {
+        "layout": "hub",
+        "title": "A Metric Passport links source, meaning, review and access",
+        "summary": "Illustrative metric identity. A passport references native logic; it does not replace it.",
+        "stages": [
+          {
+            "id": "source",
+            "title": "Native source",
+            "lines": [
+              "LookML model + Explore",
+              "View + measure + Git revision"
+            ],
+            "detail": "Bind the metric to the approved LookML model, Explore, view, measure and Git revision. Reference the native formula or certified SQL revision.",
+            "icon": "source"
+          },
+          {
+            "id": "definition",
+            "title": "Metric meaning",
+            "lines": [
+              "Population + grain + unit",
+              "Time window + exceptions"
+            ],
+            "detail": "Keep the population, grain, unit, time window and exceptions together. Grain means the level represented by one data record.",
+            "icon": "data"
+          },
+          {
+            "id": "approval",
+            "title": "Review evidence",
+            "lines": [
+              "Owner + exact version",
+              "Source + content hash"
+            ],
+            "detail": "Record the responsible reviewer and the exact approved version. Retain source evidence, validity and audit history.",
+            "icon": "approve"
+          },
+          {
+            "id": "permission",
+            "title": "Access rules",
+            "lines": [
+              "Workspace + consumer",
+              "Check each request"
+            ],
+            "detail": "Resolve identity before creating another canonical ID. An ID grants no access. Recheck permissions for each consumer and source query.",
+            "icon": "access"
+          }
+        ],
+        "center": {
+          "title": "Metric Passport",
+          "lines": [
+            "metric:sample@3",
+            "Canonical ID + version"
+          ]
+        }
+      }
     },
     {
       "id": "semantic-layers",
@@ -533,11 +852,80 @@
       }
     },
     {
+      "id": "call-cost-anatomy",
+      "type": "token-cost",
+      "eyebrow": "Cost mechanism · one task can contain many calls",
+      "title": "A question is only part of each model call.",
+      "lead": "A call can include instructions, permitted records, history and tool results. Repeated calls can send that input again.",
+      "items": [],
+      "note": "Invented token counts. A token is a unit used to process text. History grows only in the stated scenario. Caching and provider billing can change charges. This chart shows volume, not price.",
+      "tokenCost": {
+        "title": "Illustrative token volume for one task",
+        "summary": "Each call returns 500 output tokens. First-call input is 4,000 tokens. These counts are invented.",
+        "stages": [
+          {
+            "id": "one",
+            "title": "One call",
+            "calls": 1,
+            "inputTokens": 4000,
+            "outputTokens": 500,
+            "detail": "One call sends 4,000 input tokens and returns 500 output tokens. Total volume is 4,500 tokens. No price or saving is implied."
+          },
+          {
+            "id": "repeat",
+            "title": "Four repeated calls",
+            "calls": 4,
+            "inputTokens": 16000,
+            "outputTokens": 2000,
+            "detail": "Four calls each send the same 4,000 input tokens and return 500 output tokens. Total volume is 18,000 tokens. This workload assumes repeated input."
+          },
+          {
+            "id": "history",
+            "title": "Four calls + history",
+            "calls": 4,
+            "inputTokens": 19000,
+            "outputTokens": 2000,
+            "detail": "Each later call also sends earlier 500-token answers. Inputs total 4,000+4,500+5,000+5,500=19,000 tokens. Outputs total 2,000 tokens. Total volume is 21,000 tokens. Other state and history strategies can behave differently."
+          }
+        ]
+      }
+    },
+    {
+      "id": "cost-workbench",
+      "type": "cost-lab",
+      "costView": "planner",
+      "eyebrow": "Model cost · choose a task",
+      "title": "Make each cost assumption visible.",
+      "lead": "Choose one of six source examples. Change the model, reasoning, answer length and context. Inspect the estimated cost before expanding use.",
+      "items": [],
+      "note": "The v7 planner is reproduced here with editable rates and shared settings. Every amount is an estimate. Model rates, cache eligibility and task volumes need validation."
+    },
+    {
+      "id": "cost-hidden-work",
+      "type": "cost-lab",
+      "costView": "hidden",
+      "eyebrow": "Model cost · inspect the hidden work",
+      "title": "One request can cause many billed calls.",
+      "lead": "Instructions, documents, history and tool results can repeat on each call. The breakdown shows where the estimate comes from.",
+      "items": [],
+      "note": "The same task settings carry across the cost slides. Cache writes have their own cost line. Retries are a cost allowance. These estimates do not prove product savings."
+    },
+    {
+      "id": "cost-budget-routing",
+      "type": "cost-lab",
+      "costView": "budget",
+      "eyebrow": "Model cost · control the monthly budget",
+      "title": "Match the task to a qualified budget.",
+      "lead": "Compare cost per person and per team. Inspect model size, thinking, output and cache settings. Choose a cheaper route only after it passes the task gates.",
+      "items": [],
+      "note": "The source settings and task recommendations are reference examples, not approved policy. Provider settings differ. The full-cost worksheet follows this model-only estimate."
+    },
+    {
       "id": "operating-cost",
       "type": "problem",
       "eyebrow": "The investment · where the money goes",
-      "title": "Count the whole operating process.",
-      "lead": "A context layer can add review, storage and maintenance cost. It creates value only when accepted outcomes repay that cost.",
+      "title": "Count the full cost of an accepted task.",
+      "lead": "Token cost is one part of the total. Include platform use, human work, operations and setup.",
       "items": [
         {
           "title": "Setup",
@@ -556,14 +944,68 @@
           "text": "Licenses, seats, source updates, access changes, upgrades and recovery."
         }
       ],
-      "note": "Separate existing allocated costs from incremental spending. Include both consistently in the baseline and candidate. Count each cost once."
+      "note": "Separate existing allocated costs from incremental spending. Include both consistently in the baseline and candidate. Count each cost once.",
+      "infographic": {
+        "layout": "hub",
+        "title": "The full cost of one accepted task",
+        "summary": "Cost categories have no assumed weight. Use measured utilization and agreed allocation.",
+        "stages": [
+          {
+            "id": "setup",
+            "title": "Setup",
+            "lines": [
+              "Contract + adapters",
+              "Deployment + tests"
+            ],
+            "detail": "Record contract, source mapping, adapters, deployment and acceptance tests.",
+            "icon": "tool"
+          },
+          {
+            "id": "platform",
+            "title": "Platform use",
+            "lines": [
+              "Tokens + queries + storage",
+              "Tools + delivery"
+            ],
+            "detail": "Tokens, warehouse queries, storage, tools, delivery and monitoring.",
+            "icon": "data"
+          },
+          {
+            "id": "people",
+            "title": "Human work",
+            "lines": [
+              "Review + corrections",
+              "Conflict + incident work"
+            ],
+            "detail": "Submission review, conflict resolution, corrections and incident handling.",
+            "icon": "human"
+          },
+          {
+            "id": "maintain",
+            "title": "Ongoing operations",
+            "lines": [
+              "Seats + licenses",
+              "Changes + recovery"
+            ],
+            "detail": "Licenses, seats, source updates, access changes, upgrades and recovery.",
+            "icon": "update"
+          }
+        ],
+        "center": {
+          "title": "Accepted task",
+          "lines": [
+            "Full recurring cost",
+            "Setup stays separate"
+          ]
+        }
+      }
     },
     {
       "id": "cost-discipline",
       "type": "governance",
       "eyebrow": "Cost design · qualify each saving",
-      "title": "Spend less only when the accepted result stays sound.",
-      "lead": "The updated plan supplies optimization candidates. Test them against the current workflow before claiming a benefit.",
+      "title": "Control the work. Preserve the result.",
+      "lead": "Choose the method, bound each call and verify reuse. Keep the same quality and access gates.",
       "items": [
         {
           "title": "Reuse approved code or SQL",
@@ -590,7 +1032,74 @@
           "text": "Track tokens, queries, seats, licenses and human review. Assign budget owners. Separate existing and incremental costs."
         }
       ],
-      "note": "These are proposed controls. The supplied v6 best practices remain unapproved team guidance. No percentage saving, vendor price or achieved product improvement is claimed."
+      "note": "Keep certified queries unchanged. Review expert drafts before reuse. The supplied v7 guidance is not approved policy. No saving has been measured.",
+      "infographic": {
+        "layout": "matrix",
+        "title": "Six cost controls preserve the task gates",
+        "summary": "Proposed controls. Validate their effect before claiming any saving.",
+        "stages": [
+          {
+            "id": "logic",
+            "title": "Approved logic",
+            "lines": [
+              "Code / SQL first",
+              "Review expert drafts"
+            ],
+            "detail": "Use deterministic logic for defined rules. Keep certified queries unchanged. Review expert drafts before reuse.",
+            "icon": "code"
+          },
+          {
+            "id": "bound",
+            "title": "Bound each call",
+            "lines": [
+              "Context + output tokens",
+              "Step + retry limits"
+            ],
+            "detail": "Limit permitted context, tokens, output, steps and retries. Batch work only when its deadline permits.",
+            "icon": "clock"
+          },
+          {
+            "id": "cache",
+            "title": "Valid cache",
+            "lines": [
+              "Version + access checks",
+              "Expiry + invalidation"
+            ],
+            "detail": "Check cache version, expiry, access and invalidation. Measure hit rate, writes, reads and storage.",
+            "icon": "cache"
+          },
+          {
+            "id": "route",
+            "title": "Qualified route",
+            "lines": [
+              "Small model if qualified",
+              "Escalate uncertain work"
+            ],
+            "detail": "Use a smaller model only if it passes the task gates. Escalate uncertain results.",
+            "icon": "model"
+          },
+          {
+            "id": "warehouse",
+            "title": "Warehouse limit",
+            "lines": [
+              "BigQuery query scans",
+              "Maximum bytes billed"
+            ],
+            "detail": "Estimate query work. For BigQuery on-demand queries, test maximum bytes billed. A row limit alone may not bound scans.",
+            "icon": "data"
+          },
+          {
+            "id": "total",
+            "title": "Full cost",
+            "lines": [
+              "Seats + licenses + review",
+              "Existing vs incremental"
+            ],
+            "detail": "Track tokens, queries, seats, licenses and human review. Assign budget owners. Separate existing and incremental costs.",
+            "icon": "cost"
+          }
+        ]
+      }
     },
     {
       "id": "value-assumptions",
@@ -632,8 +1141,8 @@
       "id": "evidence-boundary",
       "type": "evidence",
       "eyebrow": "Readiness · current proof",
-      "title": "The pitch is ready. The runtime still needs proof.",
-      "lead": "We can fund implementation against a visible architecture and explicit acceptance cases. We cannot yet sell proven operating results.",
+      "title": "The design is visible. The runtime needs proof.",
+      "lead": "Use the proposal to approve a bounded pilot. Operating results still require implementation and testing.",
       "items": [
         {
           "title": "Available now",
@@ -652,14 +1161,62 @@
           "text": "Live integration, calibration, access isolation, recovery, load and buyer return."
         }
       ],
-      "note": "Diagram and browser checks establish presentation behavior only. No production runtime or measured customer benefit is established here."
+      "note": "Diagram and browser checks establish presentation behavior only. No production runtime or measured customer benefit is established here.",
+      "infographic": {
+        "layout": "matrix",
+        "title": "Presentation proof and product proof are different",
+        "summary": "Current capability labels. This infographic does not imply progress percentages.",
+        "stages": [
+          {
+            "id": "available",
+            "title": "Available now",
+            "lines": [
+              "Presentation + worksheet",
+              "Reported analytics stack"
+            ],
+            "detail": "The presentation and worksheet. The current analytics stack is reported by the team.",
+            "icon": "check"
+          },
+          {
+            "id": "designed",
+            "title": "Designed",
+            "lines": [
+              "Governed context contract",
+              "Linked layers + delivery"
+            ],
+            "detail": "Submission governance, canonical identities, semantic layers and controlled delivery.",
+            "icon": "link"
+          },
+          {
+            "id": "implement",
+            "title": "To implement",
+            "lines": [
+              "Adapters + durable records",
+              "Model harness + MCP"
+            ],
+            "detail": "Source adapters, persistent governance, model harness, authorization and MCP delivery.",
+            "icon": "tool"
+          },
+          {
+            "id": "qualify",
+            "title": "To qualify",
+            "lines": [
+              "Live access + calibration",
+              "Load + buyer return"
+            ],
+            "detail": "Live integration, calibration, access isolation, recovery, load and buyer return.",
+            "icon": "approve"
+          }
+        ],
+        "compact": true
+      }
     },
     {
       "id": "plan-alignment",
       "type": "governance",
       "eyebrow": "Plan alignment · existing delivery journey",
       "title": "Put the product inside the delivery plan.",
-      "lead": "Use the seven-stage journey to govern this proposal. Reuse existing solutions before building another component.",
+      "lead": "The seven-stage plan already provides owners and gates. Use it to govern this pilot.",
       "items": [
         {
           "title": "Intake + requirements",
@@ -686,7 +1243,84 @@
           "text": "Review corrections and drift. Requalify source or model changes before expanding."
         }
       ],
-      "note": "Seven stages: intake/vetting, product requirements, product design, development, testing, launch and maintenance. Proposed mapping to the supplied plan. ERP or warehouse replacement is outside scope."
+      "note": "Seven stages: intake/vetting, product requirements, product design, development, testing, launch and maintenance. Proposed mapping to the supplied plan. ERP or warehouse replacement is outside scope.",
+      "infographic": {
+        "layout": "timeline",
+        "title": "Seven stages govern delivery",
+        "summary": "Intake/Vetting → Product Requirements → Product Design → Development → Testing → Launch → Maintenance.",
+        "stages": [
+          {
+            "id": "intake",
+            "title": "Intake / vetting",
+            "lines": [
+              "Owner + problem",
+              "Reuse catalog components"
+            ],
+            "detail": "Name the workflow and sponsor. Check the solution, agent, skill and MCP catalogs before custom development.",
+            "icon": "source"
+          },
+          {
+            "id": "requirements",
+            "title": "Requirements",
+            "lines": [
+              "Sources + baseline",
+              "Technical + business gates"
+            ],
+            "detail": "Map source definitions, current costs and permitted use. Agree technical and business success criteria.",
+            "icon": "check"
+          },
+          {
+            "id": "design",
+            "title": "Product design",
+            "lines": [
+              "Contract + roles",
+              "Approve pilot budget"
+            ],
+            "detail": "Approve the context contract, Metric Passport, review duties, success gates and pilot budget.",
+            "icon": "link"
+          },
+          {
+            "id": "development",
+            "title": "Development",
+            "lines": [
+              "One complete context path",
+              "Verify consumer adapter"
+            ],
+            "detail": "Build one complete context path. Reuse LookML and verify one consumer adapter.",
+            "icon": "code"
+          },
+          {
+            "id": "testing",
+            "title": "Testing",
+            "lines": [
+              "Gold truth + security",
+              "Leadership go / no-go"
+            ],
+            "detail": "Check owner-approved gold truth, standing QA, permissions and cost. Require security and leadership go/no-go.",
+            "icon": "approve"
+          },
+          {
+            "id": "launch",
+            "title": "Launch",
+            "lines": [
+              "Accepted release",
+              "Support + rollback"
+            ],
+            "detail": "Publish only the accepted release. Confirm operating owners, support and rollback.",
+            "icon": "tool"
+          },
+          {
+            "id": "maintenance",
+            "title": "Maintenance",
+            "lines": [
+              "Drift + change control",
+              "Measure ongoing value"
+            ],
+            "detail": "Review corrections and drift. Requalify source or model changes before expanding.",
+            "icon": "update"
+          }
+        ]
+      }
     },
     {
       "id": "development-gates",
@@ -752,8 +1386,8 @@
       "id": "failure-contracts",
       "type": "governance",
       "eyebrow": "Developer acceptance · failure behavior",
-      "title": "A failure must not silently become approved context.",
-      "lead": "Implement explicit holds and traceable decisions at each boundary.",
+      "title": "A failed check must not become approved context.",
+      "lead": "Reject, hold, invalidate or deny the request. Keep each decision traceable.",
       "items": [
         {
           "title": "Invalid or missing evidence",
@@ -780,7 +1414,74 @@
           "text": "Keep the prior release available. Do not expose a partial update."
         }
       ],
-      "note": "Proposed acceptance behaviors. The implementation must prove them with durable readback and failure tests."
+      "note": "Proposed acceptance behaviors. The implementation must prove them with durable readback and failure tests.",
+      "infographic": {
+        "layout": "matrix",
+        "title": "A controlled response for each failure",
+        "summary": "These are proposed acceptance behaviors. Verify durable state and response content.",
+        "stages": [
+          {
+            "id": "invalid",
+            "title": "Missing evidence",
+            "lines": [
+              "Reject malformed input",
+              "Hold unsupported claims"
+            ],
+            "detail": "Reject malformed data. Hold unsupported claims for revision.",
+            "icon": "source"
+          },
+          {
+            "id": "conflict",
+            "title": "Conflicting meaning",
+            "lines": [
+              "Record the conflict",
+              "Ask the reviewer"
+            ],
+            "detail": "Record the conflict. Ask the responsible reviewer.",
+            "icon": "human"
+          },
+          {
+            "id": "changed",
+            "title": "Changed record",
+            "lines": [
+              "New version + review",
+              "Keep prior audit history"
+            ],
+            "detail": "Require a new version and review. Keep the prior audit history.",
+            "icon": "update"
+          },
+          {
+            "id": "expired",
+            "title": "Expired input",
+            "lines": [
+              "Invalidate outputs",
+              "Rebuild permitted views"
+            ],
+            "detail": "Invalidate dependent output and cached views.",
+            "icon": "cache"
+          },
+          {
+            "id": "denied",
+            "title": "Access denied",
+            "lines": [
+              "Return controlled denial",
+              "No restricted content"
+            ],
+            "detail": "Return a controlled denial. Do not leak restricted record content.",
+            "icon": "access"
+          },
+          {
+            "id": "partial",
+            "title": "Publish failed",
+            "lines": [
+              "Keep the prior release",
+              "No partial update"
+            ],
+            "detail": "Keep the prior release available. Do not expose a partial update.",
+            "icon": "check"
+          }
+        ]
+      }
     },
     {
       "id": "primary-sources",
@@ -789,7 +1490,7 @@
       "title": "Inspect the foundations behind the proposal.",
       "lead": "Standards and platform documentation support the proposal. They do not establish runtime acceptance or business return.",
       "items": [],
-      "note": "The supplied v6 planning reference informs stack and journey alignment. It is not a measured product result or an approved optimization policy."
+      "note": "The supplied v7 planning reference guides the stack, journey and cost explanation. Example inputs and unverified service claims are not product results."
     }
   ],
   "sources": [
@@ -1320,5 +2021,550 @@
       "value": "Data / interpretation · input IDs",
       "check": "Review new IDs and derived meaning."
     }
-  ]
+  ],
+  "writing": {
+    "mode": "STE-inspired",
+    "complianceChecked": false,
+    "rules": [
+      "Use short sentences.",
+      "Use active voice.",
+      "Use one term for one concept.",
+      "Give each sentence one main idea.",
+      "Preserve conditions, evidence and uncertainty."
+    ],
+    "presenterStatement": "I used STE-inspired writing in this presentation. Each sentence carries one main idea. Full ASD-STE100 compliance has not been checked."
+  },
+  "referenceVersion": "cfpa-use-case-journey-v7.zip",
+  "costLab": {
+    "models": [
+      {
+        "id": "opus55",
+        "fam": "Claude",
+        "name": "Claude Opus 5.5",
+        "size": "Large",
+        "in": 4,
+        "cr": 0.2,
+        "out": 20,
+        "wr": 1.25,
+        "tok": 1.2,
+        "v": "cPrice",
+        "note": "Supplied v7 example, not a verified current rate. Replace with your applicable contract and billing rules."
+      },
+      {
+        "id": "opus48",
+        "fam": "Claude",
+        "name": "Claude Opus 4.8",
+        "size": "Large",
+        "in": 5,
+        "cr": 0.5,
+        "out": 25,
+        "wr": 1.25,
+        "tok": 1.2,
+        "v": "cPrice",
+        "src": "D199",
+        "note": "Supplied v7 example, not a verified current rate. Replace with your applicable contract and billing rules."
+      },
+      {
+        "id": "sonnet55",
+        "fam": "Claude",
+        "name": "Claude Sonnet 5.5",
+        "size": "Medium",
+        "in": 2,
+        "cr": 0.2,
+        "out": 10,
+        "wr": 1.25,
+        "tok": 1.3,
+        "v": "cPrice",
+        "note": "Supplied v7 example, not a verified current rate. Replace with your applicable contract and billing rules."
+      },
+      {
+        "id": "sonnet46",
+        "fam": "Claude",
+        "name": "Claude Sonnet 4.6",
+        "size": "Medium",
+        "in": 3,
+        "cr": 0.3,
+        "out": 15,
+        "wr": 1.25,
+        "tok": 1,
+        "v": "cPrice",
+        "src": "D199",
+        "note": "Supplied v7 example, not a verified current rate. Replace with your applicable contract and billing rules."
+      },
+      {
+        "id": "haiku45",
+        "fam": "Claude",
+        "name": "Claude Haiku 4.5",
+        "size": "Small",
+        "in": 1,
+        "cr": 0.1,
+        "out": 5,
+        "wr": 1.25,
+        "tok": 1,
+        "v": "cPrice",
+        "note": "Supplied v7 example, not a verified current rate. Replace with your applicable contract and billing rules."
+      },
+      {
+        "id": "gpro31",
+        "fam": "Gemini",
+        "name": "Gemini 3.1 Pro (preview)",
+        "size": "Large",
+        "in": 2,
+        "cr": 0.2,
+        "out": 12,
+        "wr": 1,
+        "tok": 1,
+        "v": "gPrice",
+        "src": "D199",
+        "note": "Supplied v7 example, not a verified current rate. Replace with your applicable contract and billing rules."
+      },
+      {
+        "id": "gflash",
+        "fam": "Gemini",
+        "name": "Gemini 3.8 Flash",
+        "size": "Medium",
+        "in": 1.5,
+        "cr": 0.15,
+        "out": 7.5,
+        "wr": 1,
+        "tok": 1,
+        "v": "gPrice",
+        "note": "Supplied v7 example, not a verified current rate. Replace with your applicable contract and billing rules."
+      },
+      {
+        "id": "gflite",
+        "fam": "Gemini",
+        "name": "Gemini 3.1 Flash-Lite",
+        "size": "Small",
+        "in": 0.25,
+        "cr": null,
+        "out": 1.5,
+        "wr": 1,
+        "tok": 1,
+        "v": "gPrice",
+        "note": "Supplied v7 example, not a verified current rate. Replace with your applicable contract and billing rules."
+      }
+    ],
+    "presets": [
+      {
+        "id": "chat",
+        "name": "Quick question in a chat",
+        "plain": "A person asks a few questions in a chat app.",
+        "unit": [
+          "conversation",
+          "conversations"
+        ],
+        "model": "gflash",
+        "people": 20,
+        "perDay": 10,
+        "a": {
+          "qWords": 40,
+          "sys": 1000,
+          "tools": 0,
+          "doc": 0,
+          "turns": 5,
+          "steps": 1,
+          "res": 0,
+          "stepOut": 0,
+          "think": 800,
+          "ansWords": 200,
+          "retry": 5,
+          "cache": 0
+        },
+        "why": "The instructions (1,000 tokens) are below the Gemini cache minimum, so nothing is cached."
+      },
+      {
+        "id": "summary",
+        "name": "Summarize a document",
+        "plain": "A 2,000-word document becomes a 500-word summary.",
+        "src": "D236",
+        "unit": [
+          "document",
+          "documents"
+        ],
+        "model": "sonnet46",
+        "people": 20,
+        "perDay": 5,
+        "a": {
+          "qWords": 30,
+          "sys": 500,
+          "tools": 0,
+          "doc": 2667,
+          "turns": 2,
+          "steps": 1,
+          "res": 0,
+          "stepOut": 0,
+          "think": 1500,
+          "ansWords": 500,
+          "retry": 5,
+          "cache": 50
+        },
+        "why": "One follow-up question. The second message reads the document from the cache."
+      },
+      {
+        "id": "sql",
+        "name": "Ask a data question",
+        "plain": "The AI writes SQL, runs it on BigQuery and explains the result.",
+        "unit": [
+          "question",
+          "questions"
+        ],
+        "model": "gflash",
+        "people": 20,
+        "perDay": 10,
+        "a": {
+          "qWords": 25,
+          "sys": 2000,
+          "tools": 1500,
+          "doc": 6000,
+          "turns": 3,
+          "steps": 3,
+          "res": 1200,
+          "stepOut": 250,
+          "think": 1500,
+          "ansWords": 150,
+          "retry": 10,
+          "cache": 60
+        },
+        "why": "Table schemas and certified definitions (6,000 tokens) go with each call. Three calls for each message: write the SQL, read the rows, answer."
+      },
+      {
+        "id": "agent",
+        "name": "Analysis agent",
+        "plain": "An agent plans, calls tools many times and writes a report.",
+        "unit": [
+          "report",
+          "reports"
+        ],
+        "model": "opus48",
+        "people": 5,
+        "perDay": 3,
+        "a": {
+          "qWords": 80,
+          "sys": 3000,
+          "tools": 4000,
+          "doc": 12000,
+          "turns": 2,
+          "steps": 12,
+          "res": 2000,
+          "stepOut": 300,
+          "think": 2500,
+          "ansWords": 600,
+          "retry": 10,
+          "cache": 70
+        },
+        "why": "Twelve model calls for each message. Each call sends all earlier tool results again."
+      },
+      {
+        "id": "batch",
+        "name": "Nightly batch job",
+        "plain": "The AI classifies records each night. Nobody waits for the answer.",
+        "unit": [
+          "record",
+          "records"
+        ],
+        "model": "gflite",
+        "people": 1,
+        "perDay": 1000,
+        "batch": true,
+        "a": {
+          "qWords": 120,
+          "sys": 400,
+          "tools": 0,
+          "doc": 0,
+          "turns": 1,
+          "steps": 1,
+          "res": 0,
+          "stepOut": 0,
+          "think": 0,
+          "ansWords": 8,
+          "retry": 2,
+          "cache": 0
+        },
+        "why": "One short call for each record, with no thinking and a one-word label. Batch price."
+      },
+      {
+        "id": "code",
+        "name": "Coding with Claude Code",
+        "plain": "A developer builds and fixes code during the day.",
+        "unit": [
+          "work session",
+          "work sessions"
+        ],
+        "model": "sonnet46",
+        "people": 10,
+        "perDay": 2,
+        "a": {
+          "qWords": 40,
+          "sys": 18000,
+          "tools": 0,
+          "doc": 5000,
+          "turns": 12,
+          "steps": 6,
+          "res": 1500,
+          "stepOut": 250,
+          "think": 1500,
+          "ansWords": 150,
+          "retry": 0,
+          "cache": 90
+        },
+        "why": "System prompt, tools and CLAUDE.md (18,000 tokens). Twelve prompts in a session, six tool calls for each prompt. Claude Code caches most of the input."
+      }
+    ],
+    "defaultPreset": "summary",
+    "days": 21,
+    "budget": 1000,
+    "params": [
+      {
+        "s": "Model",
+        "what": "Which model writes the answer.",
+        "cost": "Compare the applicable input and output rates. Qualify each model on the task before changing its size.",
+        "claude": "Source example — verify: Haiku 4.5 (small), Sonnet (medium), Opus (large).",
+        "gemini": "Source example — verify: Flash-Lite (small), Flash (medium), Pro (large).",
+        "cc": "Source example — verify: /model. Set model: haiku for simple subagents.",
+        "l": [
+          "cPrice",
+          "gPrice",
+          "ccCost"
+        ],
+        "bill": 1
+      },
+      {
+        "s": "Thinking depth",
+        "what": "How much the model reasons before it answers.",
+        "cost": "Thinking tokens are billed as output tokens, even when you do not see them.",
+        "claude": "Source example — verify: effort: low, medium, high, xhigh, max. Default: medium on Opus 5.5, high on Sonnet 5.5. Thinking is always on for these models.",
+        "gemini": "Source example — verify: thinking_level: minimal, low, medium, high. Default: high on 3.1 Pro and Flash, minimal on 3.1 Flash-Lite.",
+        "cc": "Source example — verify: /effort or CLAUDE_CODE_EFFORT_LEVEL. MAX_THINKING_TOKENS on models with a fixed budget.",
+        "l": [
+          "effort",
+          "gThink",
+          "ccEnv"
+        ],
+        "bill": 1
+      },
+      {
+        "s": "Output limit",
+        "what": "The maximum number of tokens that the model can write.",
+        "cost": "Limits the worst case. It does not make answers shorter. Ask for the length in the prompt. If the limit is too low, the answer stops early and you pay for a retry.",
+        "claude": "Source example — verify: max_tokens (required). A hard limit on thinking plus answer. For xhigh or max effort, start at 64k.",
+        "gemini": "Source example — verify: maxOutputTokens.",
+        "cc": "Source example — verify: CLAUDE_CODE_MAX_OUTPUT_TOKENS.",
+        "l": [
+          "opus55",
+          "gGen",
+          "ccEnv"
+        ],
+        "bill": 1
+      },
+      {
+        "s": "Temperature",
+        "what": "How random the word choice is.",
+        "cost": "No direct effect on the price.",
+        "claude": "Source example — verify: Range 0 to 1, default 1. Opus 4.7 and later and Sonnet 5.5 reject any other value (error 400). Sonnet 4.6 and Haiku 4.5 accept it.",
+        "gemini": "Source example — verify: Range 0 to 2. On Gemini 3, keep 1.0. A lower value can cause loops, and loops cost tokens.",
+        "cc": "Source example — verify: Not a setting.",
+        "l": [
+          "sonnet55",
+          "g3"
+        ],
+        "bill": 0
+      },
+      {
+        "s": "Top-P",
+        "what": "Uses only the most likely words that together reach probability P.",
+        "cost": "No direct effect on the price.",
+        "claude": "Source example — verify: Same model rules as temperature. Do not set temperature and top_p together.",
+        "gemini": "Source example — verify: topP.",
+        "cc": "Source example — verify: Not a setting.",
+        "l": [
+          "msgs",
+          "gGen"
+        ],
+        "bill": 0
+      },
+      {
+        "s": "Top-K",
+        "what": "Uses only the K most likely next tokens.",
+        "cost": "No direct effect on the price.",
+        "claude": "Source example — verify: Same model rules as temperature.",
+        "gemini": "Source example — verify: topK.",
+        "cc": "Source example — verify: Not a setting.",
+        "l": [
+          "msgs",
+          "gGen"
+        ],
+        "bill": 0
+      },
+      {
+        "s": "Stop sequences",
+        "what": "Stops the answer at a text that you specify.",
+        "cost": "Fewer output tokens when the model would continue past the part that you need.",
+        "claude": "Source example — verify: stop_sequences.",
+        "gemini": "Source example — verify: stopSequences.",
+        "cc": "Source example — verify: Not a setting.",
+        "l": [
+          "msgs",
+          "gGen"
+        ],
+        "bill": 1
+      },
+      {
+        "s": "Number of answers",
+        "what": "How many answers the model writes for one request.",
+        "cost": "Additional candidates can add output cost. Check billing and task quality before changing the count.",
+        "claude": "Source example — verify: One answer for each request.",
+        "gemini": "Source example — verify: candidateCount.",
+        "cc": "Source example — verify: Not a setting.",
+        "l": [
+          "gGen"
+        ],
+        "bill": 1
+      },
+      {
+        "s": "Output format",
+        "what": "Makes the answer follow a JSON schema.",
+        "cost": "A schema can reduce format errors. Validate the result. Keep an explicit retry policy.",
+        "claude": "Source example — verify: output_config.format (structured outputs).",
+        "gemini": "Source example — verify: responseMimeType and responseJsonSchema.",
+        "cc": "Source example — verify: Not a setting.",
+        "l": [
+          "so",
+          "gSo"
+        ],
+        "bill": 1,
+        "src": "D240"
+      },
+      {
+        "s": "Image and PDF resolution",
+        "what": "How many tokens each image or PDF page uses.",
+        "cost": "Resolution can change input token use. Measure the cost and task accuracy. The supplied token counts and medium-resolution advice are unverified examples.",
+        "claude": "Source example — verify: Image tokens grow with the image size. Send smaller images.",
+        "gemini": "Source example — verify: media_resolution: low, medium, high, ultra_high.",
+        "cc": "Source example — verify: Not a setting.",
+        "l": [
+          "gMedia"
+        ],
+        "bill": 1
+      },
+      {
+        "s": "Caching",
+        "what": "Keeps the start of the prompt so the next request reads it at a low price.",
+        "cost": "Read, write and storage charges differ by provider and lifetime. Enter the applicable rates. Verify eligibility, expiry and hit rate.",
+        "claude": "Source example — verify: cache_control. Lifetime 5 minutes by default, or 1 hour.",
+        "gemini": "Source example — verify: Implicit caching is on by default. Context caching for a fixed context. Gemini 3.x Flash caches only prompts of 4,096 tokens or more.",
+        "cc": "Source example — verify: Automatic. /usage shows the cache hit rate.",
+        "l": [
+          "cache",
+          "gCache",
+          "ccCost"
+        ],
+        "bill": 1
+      },
+      {
+        "s": "Batch",
+        "what": "Sends many requests to run within 24 hours.",
+        "cost": "The source assumes a 0.5 price multiplier. Verify applicable pricing, deadlines and support before using it.",
+        "claude": "Source example — verify: Message Batches API.",
+        "gemini": "Source example — verify: Batch Mode.",
+        "cc": "Source example — verify: Not a setting.",
+        "l": [
+          "batch",
+          "gBatch"
+        ],
+        "bill": 1
+      },
+      {
+        "s": "Speed and region",
+        "what": "Faster answers or a fixed data region.",
+        "cost": "The source assumes optional multipliers. Verify the applicable product, region, speed and contract charges.",
+        "claude": "Source example — verify: Fast mode on Opus 5.5: $8 input and $40 output (2 times). US data residency: 1.1 times.",
+        "gemini": "Source example — verify: Not in this table.",
+        "cc": "Source example — verify: Fast mode, when your plan has it.",
+        "l": [
+          "cPrice"
+        ],
+        "bill": 1
+      },
+      {
+        "s": "Seed and penalties",
+        "what": "Repeatable answers, or fewer repeated words.",
+        "cost": "No direct effect on the price.",
+        "claude": "Source example — verify: Not available.",
+        "gemini": "Source example — verify: seed, presencePenalty, frequencyPenalty.",
+        "cc": "Source example — verify: Not a setting.",
+        "l": [
+          "gGen"
+        ],
+        "bill": 0
+      }
+    ],
+    "recs": [
+      [
+        "Extract or classify",
+        "Small: Claude Haiku 4.5 or Gemini Flash-Lite",
+        "Off or minimal",
+        "50 to 300 tokens",
+        "Lower sampling may reduce variation where supported. It does not guarantee identical answers. Test the provider setting.",
+        "JSON schema"
+      ],
+      [
+        "Summarize",
+        "Medium: Claude Sonnet or Gemini Flash",
+        "Low",
+        "About 2 times the length that you ask for",
+        "Default",
+        "Bullets with a length limit. Use STE-inspired writing unless full compliance is checked."
+      ],
+      [
+        "Data question (SQL)",
+        "Medium",
+        "Medium",
+        "1,000 to 2,000 tokens",
+        "Default, or 0 on models that accept it",
+        "JSON that contains the SQL"
+      ],
+      [
+        "Analysis agent",
+        "Large model to plan, small model for simple steps",
+        "Medium. High only for difficult steps.",
+        "16k to 64k tokens (thinking needs room)",
+        "Default",
+        "Structured tool calls and a step limit"
+      ],
+      [
+        "Draft text for people",
+        "Medium",
+        "Low",
+        "About 2 times the length that you ask for",
+        "Default",
+        "Text with a word limit"
+      ],
+      [
+        "Coding with Claude Code",
+        "Sonnet by default, Opus for architecture, Haiku for subagents",
+        "/effort medium. High for difficult problems.",
+        "Default",
+        "Not a setting",
+        "Not applicable"
+      ]
+    ],
+    "reference": "cfpa-use-case-journey-v7.zip",
+    "rateStatus": "Supplied example rates. Not checked against current provider prices. All rates are editable.",
+    "scope": "Model calls only. Excludes warehouse, seats, hosting, setup and human review. Use the full-cost worksheet for the investment decision.",
+    "sourceLimitations": [
+      "Cache share is an assumption. Confirm eligible prefixes, expiry, writes and storage with your provider.",
+      "The retry input adds an expected cost allowance. It does not simulate additional calls.",
+      "The source simple comparison prices the question and answer only. It excludes tools, context, history and thinking.",
+      "The source Flash example uses a future full rate. Its Pro example omits the stated long-context tier. Enter the rate that applies to your workload.",
+      "All non-question input is cache-eligible in the source calculation. Check each real provider prefix. The first-call write premium uses the full instructions, tools and document prefix.",
+      "Instruction, document and tool token fields are baseline estimates. Set the tokenizer factor to 1 for measured target-model token counts.",
+      "The question-and-answer comparison applies the selected tokenizer and region factors consistently. This corrects omissions in the source comparison. It is not a return-on-investment baseline."
+    ],
+    "summaryExample": {
+      "wordsIn": 2000,
+      "wordsOut": 500,
+      "outputPriceRatio": 4.5
+    }
+  }
 }

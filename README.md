@@ -2,13 +2,13 @@
 
 [Open the pitch](https://yashumani.github.io/Prefrontal-LLM-ASD-STE100/).
 
-This 26-slide presentation sells a proposed context product and a bounded pilot. The first four slides explain the buyer problem, product and investment case. Slide five shows the complete architecture. Developer detail follows: submissions, review, canonical IDs, semantic layers, model decisions, controlled delivery, economics and implementation gates.
+This 31-slide presentation sells a proposed context product and a bounded pilot. The first four slides explain the buyer problem, product and investment case. Slide five shows the complete architecture. Developer detail follows: submissions, review, canonical IDs, semantic layers, model decisions, controlled delivery, economics and implementation gates.
 
 The product accepts structured submissions from humans and agent loops. Human reviewers approve meaning for an exact record version. A context agent organizes approved records into Data, Metric, Ontology and Interpretation layers. Canonical IDs connect the layers. A controlled MCP server delivers permitted context to independent applications. New meaning and feedback return through preparation and review. Consumers control their own actions.
 
 ## Brand reference
 
-The design follows the supplied `cfpa-use-case-journey-v6.zip`. Its `Index.html` establishes white paper, black text, pale-gray surfaces, red `#EE001E`, bold sans-serif headings, rounded cards, pill controls and semantic SVG highlights. The deck uses locally available Arial. It imports no reference application scripts, backend code or backend behavior. The pitch uses the supplied planning content as a reference, with evidence boundaries below.
+The design follows the supplied `cfpa-use-case-journey-v7.zip`. Its `Index.html` establishes white paper, black text, pale-gray surfaces, red `#EE001E`, bold sans-serif headings, rounded cards, pill controls and semantic SVG highlights. The deck uses locally available Arial. It executes no reference application scripts or backend code. The pitch uses the supplied planning content as a reference, with evidence boundaries below.
 
 ## Investment case
 
@@ -24,7 +24,7 @@ Year-one net difference = 12 × monthly recurring difference − one-time setup
 
 Digital cost includes inference, retrieval, warehouse queries, tools and variable infrastructure. Handling includes review, rework and escalation. Fixed cost includes seats, licenses, adapters and operations. Compare existing allocated and incremental costs consistently. Count each cost once. An accepted task meets the owner's task and quality criteria. Positive economics cannot override quality or access gates.
 
-## Alignment with the supplied v6 plan
+## Alignment with the supplied v7 plan
 
 The existing stack is reported by the user and the supplied planning reference. Live connections have not been verified. The proposal extends Looker, LookML, Zenlytics and custom apps. It does not replace ERP systems or the warehouse.
 
@@ -47,11 +47,21 @@ The proposal maps to the reference's eight context capabilities:
 
 The seven delivery stages are Intake/Vetting, Product Requirements, Product Design, Development, Testing, Launch and Maintenance. Catalog reuse precedes custom development. Pilot approval needs a named sponsor, reviewer, source owner, scope, setup ceiling, recurring budget and success criteria. Security/compliance review and leadership go/no-go precede operational launch. Change control, drift checks and value realization continue after launch.
 
-The v6 Best Practices section and cost scoring remain unapproved guidance. Candidate controls include deterministic methods, qualified model routing, bounded prompts and outputs, cache validity, batching when deadlines permit, step/retry limits, warehouse billing controls and license/role fit. The deck imports no vendor savings percentage or internal rate. Compare the same accepted workload, include cache writes/reads and storage, seats/concurrency, query charges, model calls, human review and operations, and retain failed or queued tasks in the evidence.
+The v7 Best Practices section and cost scoring remain unapproved guidance. Candidate controls include deterministic methods, qualified model routing, bounded prompts and outputs, cache validity, batching when deadlines permit, step/retry limits, warehouse billing controls and license/role fit. The deck imports no vendor savings percentage or internal negotiated rate. Compare the same accepted workload, include cache writes/reads and storage, seats/concurrency, query charges, model calls, human review and operations, and retain failed or queued tasks in the evidence.
+
+## V7 cost section
+
+Three linked slides reproduce the supplied cost work. The planner carries six task presets, eight public example model-rate records and editable call assumptions. The hidden-work slide separates visible writing from instructions, tools, documents, history, thinking, retries and cache writes. The budget slide shows cost per person and per team, model settings and task routing. The eight SVG visuals include the token flow, summary token/cost bars, iceberg, repeated calls, cost categories, monthly budget, settings dials and model routes.
+
+Developer detail includes the fourteen source setting rows and six task-setting examples. These are unapproved reference advice. A schema does not eliminate every format error. Sampling does not guarantee identical answers. Resolution must qualify against the task. Model labels and rate values reproduce the supplied file; they are not verified current vendor availability, pricing or contract terms. Enter actual rates before using the estimate.
+
+The six preset task totals match the supplied calculation. The estimate prices each call, growing history, cache reads, the first-call cache-write premium and output. It applies batch and region multipliers once, then adds a retry allowance. Cache writes have their own cost line. The question-and-answer comparison consistently applies tokenizer and region factors, correcting omissions in the source. Token-flow inputs consistently show task totals. Token fields are baseline estimates; use a tokenizer factor of one for measured target-model counts.
+
+The source Flash rate is future-dated. Its Pro rate omits the stated long-context tier. Source cache eligibility is broad and excludes real expiry and storage rules. These limits appear in developer detail. The model-only estimate excludes warehouse, seats, hosting, setup and human review. Keep it separate from the full accepted-task investment worksheet. No model calls run in this browser calculator.
 
 ## View and present
 
-Arrow keys move between slides. **Slides** opens the overview. **Full screen** enlarges the deck. **Print / PDF** prints all 26 slides.
+Arrow keys move between slides. **Slides** opens the overview. **Full screen** enlarges the deck. **Print / PDF** prints all 31 slides.
 
 Nine inline SVG diagrams share one stage controller. **Stage →** and **← Stage** select a stage and pause playback. **Play motion** resumes it. JavaScript moves the cursor every 2.4 seconds. Native SVG `animateMotion` moves dots along the visible directed paths. CSS highlights the current stage.
 
@@ -63,9 +73,11 @@ On small screens, architecture and workflow diagrams scroll within a focusable v
 
 - `presentation-content.json`: slide copy, submission template, architecture, cost inputs and references.
 - `app.js`, `diagrams.js`, `styles.css`: presentation interface and motion graphics.
+- `cost-lab.js`, `cost-lab.css`: shared editable cost estimates and eight SVG charts.
 - `scripts/build-static.cjs`: no-JavaScript presentation generation in `index.html`.
 - `scripts/check-static.mjs`: static content, architecture and brand contracts.
 - `scripts/verify-browser.cjs`: real Chromium arithmetic, geometry, motion, mobile, print and static checks.
+- `scripts/verify-v7.cjs`: source cost goldens, independent arithmetic and visual/control checks.
 
 Serve the canonical repository:
 
@@ -90,7 +102,7 @@ Browser validation needs Playwright and Chromium. Set `PREFRONTAL_PLAYWRIGHT_MOD
 
 ## Publication and proof boundaries
 
-The existing Pages workflow validates and publishes the five public files from `feature/context-presentation`. It checks freshness, syntax and browser acceptance before deployment. Research, the supplied ZIP, local architecture sidecars, PDFs and screenshots remain outside the public package.
+The existing Pages workflow validates and publishes the seven public files from `feature/context-presentation`. It checks freshness, syntax and browser acceptance before deployment. Research, the supplied ZIP, local architecture sidecars, PDFs and screenshots remain outside the public package.
 
 Working artifacts: the presentation, illustrative browser checks, editable worksheet and checked local architecture viewer. Still to implement and qualify: persistent admission, real decision-model integration, calibration, record-level authorization, MCP service, recovery, load and customer return.
 

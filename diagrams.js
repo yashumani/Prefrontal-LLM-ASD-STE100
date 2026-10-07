@@ -272,5 +272,152 @@ window.ContextDiagrams = (() => {
     });
     svg.innerHTML=markup;return svg;
   }
-  return Object.freeze({ create, createIndustry, createArchitecture, createProductFlow });
+  function createInfographic(plan) {
+    const counts = { cycle: [4], hub: [4], matrix: [4, 6, 8], timeline: [7] };
+    if (!plan || !counts[plan.layout] || !Array.isArray(plan.stages) || !counts[plan.layout].includes(plan.stages.length)) {
+      throw new Error('Infographic needs a supported layout and its required number of stages.');
+    }
+    if (plan.layout === 'hub' && !plan.center) throw new Error('A relationship infographic needs a center record.');
+    const keys = new Set();
+    for (const stage of plan.stages) {
+      if (!stage.id || keys.has(stage.id) || !stage.title || !Array.isArray(stage.lines) || stage.lines.length > 2) {
+        throw new Error('Infographic stages need unique IDs, titles and no more than two visible lines.');
+      }
+      keys.add(stage.id);
+    }
+    if (plan.center && (!plan.center.title || !Array.isArray(plan.center.lines) || plan.center.lines.length > 2)) {
+      throw new Error('An infographic center needs a title and no more than two visible lines.');
+    }
+    const id = `context-infographic-${++render}`;
+    const svg = document.createElementNS(NS, 'svg');
+    svg.setAttribute('viewBox', plan.compact ? '0 0 1000 180' : '0 0 1000 340');
+    svg.setAttribute('class', `motion-diagram infographic-svg infographic-${plan.layout}`);
+    svg.setAttribute('role', 'img');
+    svg.setAttribute('aria-labelledby', `${id}-title ${id}-desc`);
+    svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+    const ink = 'var(--ink, #000000)', red = 'var(--red, #EE001E)', paper = 'var(--paper, #ffffff)';
+    const muted = 'var(--muted, #6F7171)', mist = 'var(--mist, #F6F6F6)', lineColor = 'var(--line, #D8DADA)';
+    const text = (x, y, value, size = 15, fill = ink, weight = 500, anchor = 'start') => `<text x="${x}" y="${y}" font-family="Arial,sans-serif" font-size="${size}" font-weight="${weight}" fill="${fill}" text-anchor="${anchor}">${esc(value)}</text>`;
+    const rect = (x, y, width, height, fill = paper, stroke = lineColor) => `<rect x="${x}" y="${y}" width="${width}" height="${height}" rx="12" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>`;
+    // These pictograms express the record, check, role or method in each stage.
+    // The browser animates only real transfer paths; relationship grids remain still.
+    const pictures = {
+      source: '<path d="M7 3h12l6 6v20H7z M19 3v7h6 M11 15h10 M11 20h10 M11 25h7"/>',
+      check: '<rect x="4" y="4" width="24" height="24" rx="4"/><path d="m9 16 5 5 10-11"/>',
+      link: '<path d="m13 10 4-4a7 7 0 0 1 10 10l-4 4 M19 22l-4 4A7 7 0 0 1 5 16l4-4 M11 21l10-10"/>',
+      access: '<path d="M16 3 27 7v9c0 6-5 10-11 13C10 26 5 22 5 16V7z"/><rect x="11" y="13" width="10" height="9" rx="2"/><path d="M13 13v-3a3 3 0 0 1 6 0v3 M16 17v2"/>',
+      code: '<path d="m10 8-7 8 7 8 M22 8l7 8-7 8 M19 4l-6 24"/>',
+      cache: '<ellipse cx="14" cy="6" rx="10" ry="4"/><path d="M4 6v16c0 5 14 6 19 2 M4 14c0 5 20 5 20 0 M24 6v8 M22 15a8 8 0 1 1-6 14 M22 15v6h6"/>',
+      model: '<path d="M13 5a5 5 0 0 0-8 5 5 5 0 0 0-1 9 6 6 0 0 0 9 8 M19 5a5 5 0 0 1 8 5 5 5 0 0 1 1 9 6 6 0 0 1-9 8 M16 3v26 M8 11l8 5 8-5 M9 23l7-7 7 7"/><circle cx="16" cy="16" r="3"/>',
+      data: '<ellipse cx="16" cy="6" rx="11" ry="4"/><path d="M5 6v19c0 5 22 5 22 0V6 M5 15c0 5 22 5 22 0 M5 23c0 5 22 5 22 0"/>',
+      cost: '<circle cx="16" cy="16" r="13"/><path d="M21 10h-7a4 4 0 0 0 0 8h4a4 4 0 0 1 0 8h-7 M16 5v23"/>',
+      human: '<circle cx="16" cy="9" r="6"/><path d="M5 29v-5c0-11 22-11 22 0v5 M10 29v-6 M22 29v-6"/>',
+      tool: '<path d="M28 5 21 12l-5-5 7-7a10 10 0 0 0-13 12L2 25a4 4 0 0 0 5 5l12-10A10 10 0 0 0 28 5z"/>',
+      clock: '<circle cx="16" cy="16" r="13"/><path d="M16 8v9l7 4 M16 3v2 M29 16h-2 M16 29v-2 M3 16h2"/>',
+      update: '<path d="M26 11A12 12 0 0 0 5 8L2 12 M2 4v8h8 M6 21a12 12 0 0 0 21 3l3-4 M30 28v-8h-8"/>',
+      approve: '<circle cx="16" cy="16" r="13"/><path d="m8 16 6 6 11-12"/>'
+    };
+    const icon = (name, x, y, size = 30) => {
+      if (!pictures[name]) throw new Error(`Unknown infographic icon: ${name}`);
+      return `<g class="infographic-icon" transform="translate(${x} ${y}) scale(${size / 32})" fill="none" stroke="${red}" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${pictures[name]}</g>`;
+    };
+    let markup = `<title id="${id}-title">${esc(plan.title)}</title><desc id="${id}-desc">${esc(plan.summary || '')} ${esc(plan.stages.map(stage => stage.detail || stage.title).join(' '))}</desc><defs><marker id="${id}-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M1 1 L9 5 L1 9 Z" fill="${ink}"/></marker></defs>`;
+    const edge = (step, path, name, directed = true) => {
+      markup += `<g class="m-edge m-stage" data-step="${step}" data-edge="${esc(name)}"><path id="${id}-${esc(name)}" d="${path}" fill="none" stroke="${directed ? ink : lineColor}" stroke-width="2" ${directed ? `marker-end="url(#${id}-arrow)"` : ''}/>`;
+      if (directed) markup += `<circle class="m-dot" r="4" fill="${red}"><animateMotion dur="1.6s" repeatCount="indefinite" calcMode="linear"><mpath href="#${id}-${esc(name)}"/></animateMotion></circle>`;
+      markup += '</g>';
+    };
+    const node = (stage, index, position) => {
+      const { x, y, width, height, wide = false } = position;
+      const titleX = x + (wide ? 94 : 54);
+      const labelX = wide ? titleX : x + 16;
+      const titleY = y + (wide ? 42 : 33);
+      const firstY = y + (wide ? 75 : 66);
+      markup += `<g class="m-node m-stage" data-node="${esc(stage.id)}" data-step="${index}" data-stage="${esc(stage.title)}" data-stage-detail="${esc(stage.detail || '')}">${rect(x, y, width, height)}${icon(stage.icon || 'source', x + 16, y + (wide ? 35 : 12), wide ? 52 : 28)}${text(titleX, titleY, stage.title, 19, ink, 700)}`;
+      stage.lines.forEach((value, i) => { markup += text(labelX, firstY + i * 23, value, 15, muted); });
+      markup += '</g>';
+    };
+    const center = (x, y, width, height) => {
+      if (!plan.center) return;
+      const mid = x + width / 2;
+      markup += `<g class="infographic-center" data-center="record">${rect(x, y, width, height, mist, red)}${text(mid, y + 27, plan.center.title, 19, ink, 700, 'middle')}`;
+      plan.center.lines.forEach((value, index) => { markup += text(mid, y + 49 + index * 20, value, 14, muted, 500, 'middle'); });
+      markup += '</g>';
+    };
+    if (plan.layout === 'cycle') {
+      const positions = [{ x: 30, y: 15 }, { x: 660, y: 15 }, { x: 660, y: 221 }, { x: 30, y: 221 }];
+      edge(1, 'M340 67 H660', 'first-next');
+      edge(2, 'M815 119 V221', 'second-next');
+      edge(3, 'M660 273 H340', 'third-next');
+      edge(0, 'M185 221 V119', 'return-work');
+      plan.stages.forEach((stage, index) => node(stage, index, { ...positions[index], width: 310, height: 104 }));
+      center(350, 131, 300, 78);
+    } else if (plan.layout === 'hub') {
+      const positions = [{ x: 20, y: 20 }, { x: 670, y: 20 }, { x: 670, y: 216 }, { x: 20, y: 216 }];
+      const paths = ['M330 72 H368 V145 H385', 'M670 72 H632 V145 H615', 'M670 268 H632 V191 H615', 'M330 268 H368 V191 H385'];
+      paths.forEach((path, index) => edge(index, path, `record-link-${index}`, false));
+      plan.stages.forEach((stage, index) => node(stage, index, { ...positions[index], width: 310, height: 104 }));
+      center(385, 124, 230, 88);
+    } else if (plan.layout === 'matrix') {
+      const columns = plan.compact ? 4 : plan.stages.length / 2;
+      const width = columns === 2 ? 460 : columns === 3 ? 300 : 225;
+      const gap = columns === 2 ? 40 : columns === 3 ? 30 : 20;
+      plan.stages.forEach((stage, index) => node(stage, index, {
+        x: 20 + (index % columns) * (width + gap), y: index < columns ? 15 : 185,
+        width, height: 140, wide: columns === 2
+      }));
+    } else {
+      const positions = [20, 265, 510, 755].map(x => ({ x, y: 20 }));
+      positions.push(...[755, 510, 265].map(x => ({ x, y: 205 })));
+      for (let index = 1; index < positions.length; index++) {
+        const before = positions[index - 1], after = positions[index];
+        const path = index < 4 ? `M${before.x + 225} 77 H${after.x}`
+          : index === 4 ? 'M867.5 134 V205'
+            : `M${before.x} 262 H${after.x + 225}`;
+        edge(index, path, `delivery-${index}`);
+      }
+      plan.stages.forEach((stage, index) => node(stage, index, { ...positions[index], width: 225, height: 114 }));
+    }
+    svg.innerHTML = markup;
+    return svg;
+  }
+  function createTokenCost(plan) {
+    if (!plan || !Array.isArray(plan.stages) || plan.stages.length !== 3) {
+      throw new Error('A token-volume infographic needs exactly three cases.');
+    }
+    const keys = new Set();
+    const totals = plan.stages.map(stage => {
+      if (!stage.id || keys.has(stage.id) || !stage.title || !Number.isSafeInteger(stage.calls) || stage.calls < 1 ||
+          !Number.isSafeInteger(stage.inputTokens) || stage.inputTokens < 0 || !Number.isSafeInteger(stage.outputTokens) || stage.outputTokens < 0) {
+        throw new Error('Token cases need unique IDs, titles, positive call counts and non-negative whole token counts.');
+      }
+      keys.add(stage.id);
+      return stage.inputTokens + stage.outputTokens;
+    });
+    const scaleMax = Math.max(...totals);
+    if (!Number.isSafeInteger(scaleMax) || scaleMax < 1) throw new Error('A token-volume infographic needs a positive total.');
+    const id = `context-token-volume-${++render}`;
+    const svg = document.createElementNS(NS, 'svg');
+    svg.setAttribute('viewBox', '0 0 1000 340');
+    svg.setAttribute('class', 'motion-diagram infographic-svg token-cost-svg');
+    svg.setAttribute('role', 'img');
+    svg.setAttribute('aria-labelledby', `${id}-title ${id}-desc`);
+    svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+    svg.setAttribute('data-scale-max', String(scaleMax));
+    const ink = 'var(--ink, #000000)', red = 'var(--red, #EE001E)', muted = 'var(--muted, #6F7171)';
+    const format = value => value.toLocaleString('en-US');
+    const text = (x, y, value, size = 15, fill = ink, weight = 500) => `<text x="${x}" y="${y}" font-family="Arial,sans-serif" font-size="${size}" font-weight="${weight}" fill="${fill}">${esc(value)}</text>`;
+    let markup = `<title id="${id}-title">${esc(plan.title)}</title><desc id="${id}-desc">${esc(plan.summary || '')} ${esc(plan.stages.map((stage, index) => `${stage.title}: ${stage.calls} calls, ${stage.inputTokens} input tokens, ${stage.outputTokens} output tokens, ${totals[index]} total tokens. ${stage.detail || ''}`).join(' '))} All three bars use the same token scale. Illustrative token volume, not price.</desc>`;
+    plan.stages.forEach((stage, index) => {
+      const y = 12 + index * 97;
+      const inputWidth = stage.inputTokens / scaleMax * 620;
+      const outputWidth = stage.outputTokens / scaleMax * 620;
+      markup += `<g class="m-node m-stage" data-node="${esc(stage.id)}" data-step="${index}" data-stage="${esc(stage.title)}" data-stage-detail="${esc(stage.detail || '')}"><rect x="20" y="${y}" width="960" height="91" rx="12" fill="var(--paper, #ffffff)" stroke="var(--line, #D8DADA)" stroke-width="1.5"/>${text(40, y + 27, stage.title, 19, ink, 700)}${text(40, y + 52, `${stage.calls} ${stage.calls === 1 ? 'call' : 'calls'} · ${format(totals[index])} tokens`, 15, muted)}`;
+      markup += `<g class="token-bar"><rect class="token-bar-input" data-token-part="input" data-value="${stage.inputTokens}" x="335" y="${y + 24}" width="${inputWidth}" height="20" fill="${ink}"/><rect class="token-bar-output" data-token-part="output" data-value="${stage.outputTokens}" x="${335 + inputWidth}" y="${y + 24}" width="${outputWidth}" height="20" fill="${red}"/></g>${text(335, y + 70, `Input ${format(stage.inputTokens)}  +  output ${format(stage.outputTokens)}`, 15, muted)}</g>`;
+    });
+    markup += `<rect x="28" y="318" width="13" height="13" fill="${ink}"/>${text(48, 330, 'Input', 14)}<rect x="111" y="318" width="13" height="13" fill="${red}"/>${text(131, 330, 'Output', 14)}${text(260, 330, 'Illustrative token volume, not price', 15, muted)}`;
+    svg.innerHTML = markup;
+    return svg;
+  }
+  return Object.freeze({ create, createIndustry, createArchitecture, createProductFlow, createInfographic, createTokenCost });
 })();

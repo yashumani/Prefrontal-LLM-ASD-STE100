@@ -1,19 +1,19 @@
 import { readFile, access } from 'node:fs/promises';
 import assert from 'node:assert/strict';
 
-const files = ['index.html', 'styles.css', 'app.js', 'diagrams.js', 'presentation-content.json'];
+const files = ['index.html', 'styles.css', 'app.js', 'diagrams.js', 'cost-lab.js', 'cost-lab.css', 'presentation-content.json'];
 await Promise.all(files.map(file => access(file)));
 const deck = JSON.parse(await readFile('presentation-content.json', 'utf8'));
 const expectedSlides = [
   ['opening-thesis', 'cover'], ['fragmented-context', 'problem'],
   ['product-overview', 'product-flow'], ['investment-case', 'leadership-case'],
   ['full-architecture', 'architecture'], ['existing-stack', 'product-flow'],
-  ['submission-template', 'submission'],
+  ['context-capabilities','infographic'], ['submission-template', 'submission'],
   ['meaning-preserving-ste', 'ste'], ['human-review-routes', 'governance'],
   ['context-contract', 'contract'], ['semantic-layers', 'product-flow'],
   ['bounded-decision-router', 'router'], ['layered-memory', 'memory'],
   ['secure-delivery', 'product-flow'], ['controlled-evolution', 'product-flow'],
-  ['operating-cost', 'problem'], ['cost-discipline', 'governance'],
+  ['call-cost-anatomy','token-cost'], ['cost-workbench','cost-lab'], ['cost-hidden-work','cost-lab'], ['cost-budget-routing','cost-lab'], ['operating-cost', 'problem'], ['cost-discipline', 'governance'],
   ['value-assumptions', 'pitch-calculator'],
   ['pilot-acceptance', 'pitch-proof'], ['upgrade-example', 'upgrade'],
   ['evidence-boundary', 'evidence'], ['plan-alignment', 'governance'],
@@ -32,6 +32,17 @@ for (const slide of deck.slides) {
   assert(!/^industry-/.test(slide.type), 'No industry slides belong in this product pitch.');
 }
 const byId = id => deck.slides.find(slide => slide.id === id);
+assert.equal(deck.referenceVersion,'cfpa-use-case-journey-v7.zip');
+assert.equal(deck.writing.mode,'STE-inspired');
+assert.equal(deck.writing.complianceChecked,false);
+assert.equal(deck.costLab.presets.length,6,'Keep all six supplied task examples.');
+assert.equal(deck.costLab.models.length,8,'Keep the eight public rate examples.');
+assert(!deck.costLab.models.some(model=>model.id==='amp'),'Internal negotiated rates must stay outside the public deck.');
+assert.equal(deck.costLab.params.length,14,'Retain the source setting reference.');
+assert.equal(deck.costLab.recs.length,6,'Retain all six qualified task-setting examples.');
+assert.match(deck.costLab.rateStatus,/not checked|not verified/i);
+assert.equal(deck.slides.filter(slide=>slide.infographic).length,10);
+assert.equal(deck.slides.filter(slide=>slide.tokenCost).length,1);
 const slideText = id => JSON.stringify(byId(id));
 assert.match(slideText('opening-thesis'), /Prefrontal/i, 'Leadership must see the product name immediately.');
 assert.match(slideText('opening-thesis'), /propos|concept|pilot/i, 'The opening must preserve product maturity.');
@@ -157,11 +168,11 @@ assert(html.includes('href="styles.css"') && html.includes('src="app.js"') && ht
 assert(html.includes('static-presentation'), 'A complete JavaScript-disabled fallback is required.');
 for (const slide of deck.slides) assert(html.includes(`id="static-${slide.id}"`), `Static fallback is missing ${slide.id}.`);
 const svgClasses = [...html.matchAll(/<svg\b[^>]*\bclass=["']([^"']+)["'][^>]*>/g)].map(match => match[1].split(/\s+/));
-assert.equal(svgClasses.filter(classes => classes.includes('motion-diagram')).length, 9, 'Static fallback must retain all nine staged diagrams.');
+assert.equal(svgClasses.filter(classes => classes.includes('motion-diagram')).length, 20, 'Static fallback must retain all twenty staged diagrams.');
 assert.equal(svgClasses.filter(classes => classes.includes('architecture-svg')).length, 1, 'Exactly one complete architecture SVG belongs on slide five.');
 assert.equal(svgClasses.filter(classes => classes.includes('product-flow-svg')).length, 5, 'The product needs five readable overview, existing-stack and developer flow diagrams.');
 for (const id of expectedNodes) assert(html.includes(`data-node="${id}"`), `Static architecture is missing ${id}.`);
 for (const edge of architecture.edges) assert(html.includes(`data-edge="${edge.id}"`), `Static architecture is missing ${edge.id}.`);
 assert(html.includes('data-policy="external"') && html.includes('data-review="owner"'), 'The static architecture must preserve independent policy and human review.');
 assert(!/<animateMotion\b/.test(html), 'The JavaScript-disabled fallback must contain no native animation.');
-console.log(`Static checks: PASS (${deck.slides.length} product-first slides; four leadership slides; one full 12-node architecture on slide five; ${architecture.edges.length} directed connections; five product flow diagrams; existing-stack adapter and LookML mapping boundaries; certified-query and reviewed-draft distinction; complete cost scope and seven-stage governance alignment; neutral cost assumptions; four pilot dimensions; ${deck.sources.length} primary references; nine static SVG diagrams; supplied white/red brand tokens; complete no-JS fallback)`);
+console.log(`Static checks: PASS (${deck.slides.length} product-first slides; four leadership slides; one full 12-node architecture on slide five; ${architecture.edges.length} directed connections; five product flow diagrams; existing-stack adapter and LookML mapping boundaries; certified-query and reviewed-draft distinction; complete cost scope and seven-stage governance alignment; neutral cost assumptions; four pilot dimensions; ${deck.sources.length} primary references; twenty static SVG diagrams; supplied white/red brand tokens; complete no-JS fallback)`);

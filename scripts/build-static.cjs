@@ -9,6 +9,7 @@ const sandbox = { window: {}, document: { createElementNS(ns, tag) {
   return { attrs: {}, style: {}, innerHTML: "", setAttribute(name, value) { this.attrs[name] = value; } };
 } } };
 vm.runInNewContext(fs.readFileSync("diagrams.js", "utf8"), sandbox, { timeout: 1000 });
+vm.runInNewContext(fs.readFileSync("cost-lab.js", "utf8"), sandbox, { timeout: 1000 });
 const serialize = svg => {
   // Static documents never run hidden native particle animation.
   const markup = svg.innerHTML.replace(/<circle class="m-dot"[\s\S]*?<\/circle>/g, "");
@@ -17,7 +18,7 @@ const serialize = svg => {
 const figure = svg => {
   const graphic = serialize(svg);
   const architecture = svg.attrs.class.includes('architecture-svg');
-  const flow = architecture || svg.attrs.class.includes('product-flow-svg');
+  const flow = architecture || svg.attrs.class.includes('product-flow-svg') || svg.attrs.class.includes('infographic-svg');
   return `<figure class="mechanism-figure">${flow ? `<div class="diagram-viewport${architecture?' architecture-viewport':''}" tabindex="0" role="region" aria-label="${architecture?'Full architecture':'Context'} workflow diagram. Scroll horizontally on a small screen.">${graphic}</div><p class="diagram-scroll-hint">Swipe the diagram to follow the workflow. Focus it and use arrow keys to scroll.</p>` : graphic}<figcaption class="static-diagram-caption">Static diagram. Follow the arrows and read all stages.</figcaption></figure>`;
 };
 const diagram = kind => figure(sandbox.window.ContextDiagrams.create(kind));
@@ -71,7 +72,7 @@ const slides = deck.slides.map((slide, index) => {
   }
   else if (slide.type === 'industry-bridge') body = `<div class="industry-bridge-grid">${industryDiagram('atlas',deck.industries)}<div class="static-bridge-cases">${deck.industries.map(sector=>`<article><h3>${escape(sector.shortName)}</h3><p>${escape(sector.task)}</p><p>${escape(sector.output)}</p><strong>${escape(sector.owner)}</strong></article>`).join('')}</div></div>`;
   else if (slide.type === 'industry-sources') body = `<div class="source-grid">${deck.industrySources.map(source=>`<article class="source-card"><a href="${escape(source.url)}">${escape(source.title)}</a><p>${escape(source.note)}</p></article>`).join('')}</div>`;
-  else if (slide.type === "ste") body = `<div class="ste-example"><div class="example-panel"><span class="label">ORIGINAL · ILLUSTRATIVE</span><p>Reports should be retained for a period of 30 days, except where a dispute remains open, in which case retention continues until the review concludes.</p></div><div class="example-panel"><span class="label">STE-INSPIRED VIEW</span><p>Keep reports for 30 days. If a dispute remains open, keep the report until the review ends.</p></div></div>${items(slide)}`;
+  else if (slide.type === "ste") body = `<div class="ste-example"><div class="example-panel"><span class="label">ORIGINAL · ILLUSTRATIVE</span><p>Reports should be retained for a period of 30 days, except where a dispute remains open, in which case retention continues until the review concludes.</p></div><div class="example-panel"><span class="label">STE-INSPIRED VIEW</span><p>You should keep reports for 30 days. If a dispute remains open, you should keep the report until the review ends.</p></div></div>${items(slide)}`;
   else if (slide.type === "sources") body = `<div class="source-grid">${deck.sources.map(source => `<article class="source-card"><a href="${escape(source.url)}">${escape(source.title)}</a><p>${escape(source.note)}</p></article>`).join("")}</div>`;
   else if (slide.type === 'pitch-insights') body = conference();
   else if (slide.type === 'pitch-value') body = value();
@@ -82,7 +83,12 @@ const slides = deck.slides.map((slide, index) => {
   else if (slide.type === 'product-flow') body = figure(sandbox.window.ContextDiagrams.createProductFlow(slide.flow)) + items(slide);
   else if (slide.type === 'architecture') body = figure(sandbox.window.ContextDiagrams.createArchitecture(deck.architecture)) + `<p class="architecture-legend">${escape(deck.architecture.legend)}</p>`;
   else if (slide.type === "upgrade") body = `<div class="diagram-grid">${contract}<div><div class="item"><h3>Illustrative contract checks</h3><p>The browser example accepts a change that preserves the record. It rejects missing evidence, a removed exception, or expanded permission. These checks do not call a model. Enable JavaScript to run the four examples.</p></div>${items(slide)}</div></div>`;
-  return `<section class="slide type-${escape(slide.type)}" id="static-${escape(slide.id)}">${slide.type === "cover" ? "" : header}${body}${slide.note ? `<p class="slide-note">${escape(slide.note)}</p>` : ""}</section>`;
+  if (slide.infographic) {
+    const writing = slide.type === 'ste' ? `<div class="ste-example"><div class="example-panel"><span class="label">ORIGINAL · ILLUSTRATIVE</span><p>Reports should be retained for a period of 30 days, except where a dispute remains open, in which case retention continues until the review concludes.</p></div><div class="example-panel"><span class="label">STE-INSPIRED VIEW</span><p>You should keep reports for 30 days. If a dispute remains open, you should keep the report until the review ends.</p></div></div>` : '';
+    body = writing + figure(sandbox.window.ContextDiagrams.createInfographic(slide.infographic)) + (slide.items.length ? `<details class="presenter-detail"><summary>Presenter detail</summary>${items(slide)}</details>` : '');
+  } else if (slide.tokenCost) body = figure(sandbox.window.ContextDiagrams.createTokenCost(slide.tokenCost));
+  else if (slide.type === 'cost-lab') body = sandbox.window.ContextCostLab.renderStatic(slide.costView,deck.costLab);
+  return `<section class="slide type-${escape(slide.type)}${slide.infographic?' has-infographic':''}" id="static-${escape(slide.id)}">${slide.type === "cover" ? "" : header}${body}${slide.note ? `<p class="slide-note">${escape(slide.note)}</p>` : ""}</section>`;
 }).join("\n");
 const start = "<!-- STATIC PRESENTATION START -->";
 const end = "<!-- STATIC PRESENTATION END -->";

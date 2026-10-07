@@ -44,7 +44,7 @@ function createMechanism(kind, onStage = () => {}) {
   const count = element("span", "stage-count");
   controls.append(previous, count, next);
   caption.append(heading, detail, controls);
-  if (svg.classList.contains("industry-svg-flow") || svg.classList.contains("architecture-svg") || svg.classList.contains("product-flow-svg")) {
+  if (svg.classList.contains("industry-svg-flow") || svg.classList.contains("architecture-svg") || svg.classList.contains("product-flow-svg") || svg.classList.contains("infographic-svg")) {
     const architecture = svg.classList.contains("architecture-svg");
     const viewport = element("div", architecture ? "diagram-viewport architecture-viewport" : "diagram-viewport");
     viewport.tabIndex = 0;
@@ -238,13 +238,15 @@ function steVisual(slide) {
   const example = element("div", "ste-example");
   for (const [label, text] of [
     ["ORIGINAL · ILLUSTRATIVE", "Reports should be retained for a period of 30 days, except where a dispute remains open, in which case retention continues until the review concludes."],
-    ["STE-INSPIRED VIEW", "Keep reports for 30 days. If a dispute remains open, keep the report until the review ends."]
+    ["STE-INSPIRED VIEW", "You should keep reports for 30 days. If a dispute remains open, you should keep the report until the review ends."]
   ]) {
     const panel = element("div", "example-panel");
     panel.append(element("span", "label", label), element("p", "", text));
     example.append(panel);
   }
-  wrap.append(example, renderItems(slide.items));
+  wrap.append(example);
+  if (slide.infographic) wrap.append(createMechanism(window.ContextDiagrams.createInfographic(slide.infographic)));
+  else wrap.append(renderItems(slide.items));
   return wrap;
 }
 
@@ -474,6 +476,12 @@ function submissionVisual(slide) {
   table.append(body);region.append(table);wrap.append(region,renderItems(slide.items));return wrap;
 }
 
+function presenterDetail(slide) {
+  const details = element("details", "presenter-detail");
+  details.append(element("summary", "", "Presenter detail"), renderItems(slide.items));
+  return details;
+}
+
 function renderSlide(slide, i) {
   const panel = element("section", `slide type-${slide.type}`);
   panel.id = `panel-${slide.id}`;
@@ -494,7 +502,13 @@ function renderSlide(slide, i) {
   } else {
     panel.append(eyebrow, heading, lead);
     const visuals = { foundation: coreVisual, contract: contractVisual, pipeline: flowVisual, memory: memoryVisual, router: routerVisual };
-    if (visuals[slide.type]) {
+    if (slide.infographic) {
+      panel.classList.add("has-infographic");
+      panel.append(slide.type === "ste" ? steVisual(slide) : createMechanism(window.ContextDiagrams.createInfographic(slide.infographic)));
+      if (slide.items.length) panel.append(presenterDetail(slide));
+    } else if (slide.tokenCost) panel.append(createMechanism(window.ContextDiagrams.createTokenCost(slide.tokenCost)));
+    else if (slide.type === "cost-lab") panel.append(window.ContextCostLab.create(slide.costView, deckData.costLab));
+    else if (visuals[slide.type]) {
       const grid = element("div", "diagram-grid");
       grid.append(visuals[slide.type](), renderItems(slide.items)); panel.append(grid);
     } else if (slide.type === "ste") panel.append(steVisual(slide));
@@ -565,7 +579,7 @@ async function initialize() {
     deckData.slides.forEach((slide, i) => {
       const panel = renderSlide(slide, i); panels.push(panel); deck.append(panel);
       const button = element("button", "nav-item"); button.type = "button";
-      const navLabels = { 'opening-thesis':'The product', 'fragmented-context':'The recurring problem', 'product-overview':'One context service', 'investment-case':'Why fund it', 'full-architecture':'Full architecture', 'submission-template':'Submission contract', 'meaning-preserving-ste':'Clear review language', 'human-review-routes':'Human governance', 'context-contract':'Canonical identities', 'semantic-layers':'Four semantic layers', 'bounded-decision-router':'Model and harness', 'layered-memory':'Memory lifecycle', 'secure-delivery':'Secure MCP delivery', 'controlled-evolution':'Controlled upgrades', 'operating-cost':'Full operating cost', 'value-assumptions':'Investment worksheet', 'pilot-acceptance':'Pilot proof', 'upgrade-example':'Contract demo', 'evidence-boundary':'Current readiness', 'development-gates':'Build path', 'next-decisions':'The pilot offer', 'failure-contracts':'Failure behavior', 'primary-sources':'Primary references' };
+      const navLabels = { 'opening-thesis':'The product', 'fragmented-context':'The recurring problem', 'product-overview':'One context service', 'investment-case':'Why fund it', 'full-architecture':'Full architecture', 'submission-template':'Submission contract', 'meaning-preserving-ste':'Clear review language', 'human-review-routes':'Human governance', 'context-contract':'Canonical identities', 'semantic-layers':'Four semantic layers', 'bounded-decision-router':'Model and harness', 'layered-memory':'Memory lifecycle', 'secure-delivery':'Secure MCP delivery', 'controlled-evolution':'Controlled upgrades', 'context-capabilities':'Eight capabilities', 'call-cost-anatomy':'What a call carries', 'cost-workbench':'Model cost planner', 'cost-hidden-work':'Hidden model work', 'cost-budget-routing':'Monthly model budget', 'operating-cost':'Full operating cost', 'value-assumptions':'Investment worksheet', 'pilot-acceptance':'Pilot proof', 'upgrade-example':'Contract demo', 'evidence-boundary':'Current readiness', 'development-gates':'Build path', 'next-decisions':'The pilot offer', 'failure-contracts':'Failure behavior', 'primary-sources':'Primary references' };
       const navLabel = navLabels[slide.id] || slide.eyebrow;
       button.append(element("span", "nav-index", String(i + 1).padStart(2, "0")), element("span", "", navLabel));
       button.addEventListener("click", () => showSlide(i));
