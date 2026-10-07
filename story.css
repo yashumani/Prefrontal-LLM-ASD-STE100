@@ -56,3 +56,33 @@ body[data-presentation="story"].motion-paused .story-arrived>.chapter-number{ani
 @media(max-width:600px){body[data-presentation="story"] .topbar{gap:8px;padding:10px 14px}.story-menu>summary{gap:8px;font-size:11px}.story-position{display:none}.story-insights{grid-template-columns:1fr}.story-step h3{font-size:22px}body[data-presentation="story"] .story-chapter:before{left:7px}body[data-presentation="story"] .story-chapter{padding-left:18px;padding-right:18px}body[data-presentation="story"] .story-sticky{padding:7px}body[data-presentation="story"] .tools{gap:6px}.presentation-format{font-size:10px}body[data-presentation="story"] #print{display:none}body[data-presentation="story"] .story-chapter>h1,body[data-presentation="story"] .story-chapter>h2{font-size:38px}}
 @media(prefers-reduced-motion:reduce){.story-step{transform:none!important}.story-arrived>.chapter-number{animation:none!important}}
 @media print{body[data-presentation="story"] .topbar,.story-progress,.presentation-format{display:none!important}body[data-presentation="story"] .slide{height:auto!important;min-height:0!important;break-after:auto!important;page-break-after:auto!important;overflow:visible!important}body[data-presentation="story"] .story-chapter{padding:25px 0!important}body[data-presentation="story"] .story-scene{display:block}body[data-presentation="story"] .story-sticky{position:static;box-shadow:none;break-inside:avoid}body[data-presentation="story"] .story-insights{display:block}.story-step{min-height:0;padding:12px;break-inside:avoid}.story-step h3{font-size:16px}.story-step p{font-size:12px}.story-chapter:before{display:none}body[data-presentation="story"] .dev{display:block!important}body[data-presentation="story"] .slide-note{font-size:10px}body[data-presentation="story"] .chapter-number{margin:15px 0}}
+/* Spatial story: a source plane, a working plane and the active foreground. */
+.story-depth-toggle{border-color:var(--red)!important}
+.story-depth-toggle[aria-pressed="true"]{background:var(--ink)!important;color:white!important}
+.story-focus-guide{position:relative;z-index:2;padding:3px 5px 16px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.story-scroll-cue{font:11px Arial,sans-serif;color:var(--muted);margin:0 0 12px}
+.story-focus-heading{display:flex;gap:12px;align-items:baseline}
+.story-focus-count{font:700 12px monospace;color:var(--red);white-space:nowrap}
+.story-focus-title{font:700 16px/1.35 Arial,sans-serif}
+.story-step-jumps{display:flex;gap:7px;margin-top:14px;flex-wrap:wrap}
+.story-step-jump{border:1px solid var(--line);border-radius:6px;background:var(--paper);min-width:38px;min-height:32px;padding:5px 10px;font:700 12px monospace;cursor:pointer;transition:background .25s,color .25s,box-shadow .25s}
+.story-step-jump[aria-pressed="true"]{background:var(--red);color:white;border-color:var(--red);box-shadow:0 4px 0 #990013}
+.story-step-jump:focus-visible,.story-depth-toggle:focus-visible{outline:3px solid var(--red);outline-offset:4px}
+body[data-presentation="story"] .story-sticky{perspective:1500px;isolation:isolate;padding:18px 20px 14px;box-shadow:0 30px 60px -35px #0005}
+.story-depth-stage{position:relative;transform-style:preserve-3d;transform:rotateX(var(--tilt-x,3deg)) rotateY(var(--tilt-y,-3deg));margin:10px 0 26px;transition:transform .22s ease-out}
+.story-depth-stage:before,.story-depth-stage:after{content:'';position:absolute;inset:5px 0;border:1px solid #c8cbcb;border-radius:10px;pointer-events:none;background:#f0f1f1;transform:translate3d(7px,12px,-16px);box-shadow:0 12px 22px #0000000b}
+.story-depth-stage:after{background:#fafafa;transform:translate3d(3px,6px,-8px);border-bottom:3px solid var(--red)}
+body[data-presentation="story"] .story-depth-stage>.diagram-viewport{position:relative;background:white;border:1px solid var(--line);border-radius:9px;transform:translateZ(var(--lift,12px));box-shadow:0 18px 28px -20px #0007;transition:transform .22s ease-out}
+body[data-presentation="story"] .story-depth-stage .m-node.is-current>rect{filter:drop-shadow(0px 3px 2px #0003)}
+body[data-presentation="story"] .story-sticky .stage-title{display:none}
+body[data-presentation="story"] .story-sticky .stage-caption{border:0;margin-top:0;padding-top:0}
+body[data-presentation="story"] .story-sticky .stage-controls{margin-top:4px}
+body[data-presentation="story"] .story-step.is-reading{background:linear-gradient(90deg,#fff2f4,transparent 90%);box-shadow:-8px 0 18px -18px #ee001e}
+body[data-depth="off"] .story-depth-stage,body.motion-paused .story-depth-stage,body[data-depth="off"] .story-depth-stage>.diagram-viewport,body.motion-paused .story-depth-stage>.diagram-viewport{transform:none!important;transition:none!important}
+body[data-depth="off"] .story-depth-stage:before,body[data-depth="off"] .story-depth-stage:after,body.motion-paused .story-depth-stage:before,body.motion-paused .story-depth-stage:after{display:none}
+body[data-depth="off"] .story-depth-stage .m-node>rect,body.motion-paused .story-depth-stage .m-node>rect{filter:none!important}
+@media(max-width:1100px){.story-depth-stage{transform:none!important}.story-depth-stage>.diagram-viewport{transform:none!important}.story-depth-stage:before{display:none}.story-focus-guide{margin-bottom:14px}body[data-presentation="story"] .story-sticky{padding:12px}.story-step-jump{min-height:40px}.story-depth-stage{margin-bottom:15px}}
+@media(max-width:600px){body[data-presentation="story"] .story-menu>summary{font-size:10px;gap:5px}body[data-presentation="story"] .topbar{padding:8px 10px;gap:5px}.story-depth-toggle{font-size:10px!important;padding:6px!important}.story-focus-title{font-size:14px}.story-scroll-cue{font-size:10px}}
+@media(prefers-reduced-motion:reduce){.story-depth-stage,.story-depth-stage>.diagram-viewport{transform:none!important;transition:none!important}.story-depth-stage:before,.story-depth-stage:after{display:none}.story-depth-stage .m-node>rect{filter:none!important}}
+@media print{.story-depth-stage,.story-depth-stage>.diagram-viewport{transform:none!important;box-shadow:none!important}.story-depth-stage:before,.story-depth-stage:after,.story-step-jumps,.story-scroll-cue{display:none!important}.story-focus-guide{margin-bottom:8px}.story-depth-stage{margin:0}}
+body[data-presentation="story"] .story-sticky .stage-caption{display:none}

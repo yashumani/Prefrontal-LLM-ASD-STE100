@@ -27,10 +27,26 @@
     document.querySelector('.topbar').prepend(menu);
     const progress=make('div','story-progress');progress.setAttribute('aria-hidden','true');document.body.append(progress);
     const reduce=matchMedia('(prefers-reduced-motion: reduce)');
+    const depthToggle=make('button','story-depth-toggle','3D view');depthToggle.type='button';
+    depthToggle.setAttribute('aria-pressed','true');depthToggle.setAttribute('aria-label','Toggle three-dimensional diagram depth');
+    document.body.dataset.depth='on';document.querySelector('.tools').prepend(depthToggle);
+    depthToggle.addEventListener('click',()=>{const on=document.body.dataset.depth!=='on';document.body.dataset.depth=on?'on':'off';depthToggle.setAttribute('aria-pressed',String(on));});
+    const syncDepthPreference=()=>{depthToggle.disabled=reduce.matches;depthToggle.textContent=reduce.matches?'Flat view':'3D view';};
+    reduce.addEventListener('change',syncDepthPreference);syncDepthPreference();
+    const selectInsight=(scene,card)=>{
+      scene.querySelectorAll('.story-step').forEach(item=>item.classList.toggle('is-reading',item===card));
+      const index=Number(card.dataset.stageIndex);
+      scene.querySelectorAll('.story-step-jump').forEach((button,i)=>{button.setAttribute('aria-pressed',String(i===index));});
+      scene.querySelector('.story-focus-title').textContent=card.querySelector('h3').textContent;
+      scene.querySelector('.story-focus-count').textContent=String(index+1).padStart(2,'0')+' / '+scene.querySelectorAll('.story-step').length;
+      scene.querySelector('.mechanism-figure').scrollStage(index);
+    };
     const stageObserver=new IntersectionObserver(entries=>{
-      entries.filter(e=>e.isIntersecting).forEach(({target})=>{
-        const scene=target.closest('.story-scene');scene.querySelectorAll('.story-step').forEach(card=>card.classList.toggle('is-reading',card===target));
-        scene.querySelector('.mechanism-figure').scrollStage(Number(target.dataset.stageIndex));
+      const scenes=new Set(entries.filter(e=>e.isIntersecting).map(e=>e.target.closest('.story-scene')));
+      scenes.forEach(scene=>{
+        const cards=[...scene.querySelectorAll('.story-step')],line=innerHeight*.425;
+        const card=cards.find(card=>{const box=card.getBoundingClientRect();return box.top<=line&&box.bottom>=line;});
+        if(card)selectInsight(scene,card);
       });
     },{rootMargin:'-30% 0px -45% 0px',threshold:0});
     const reveal=new IntersectionObserver(entries=>entries.forEach(({target,isIntersecting})=>{if(isIntersecting){target.classList.add('story-arrived');reveal.unobserve(target);}}),{threshold:0.08});
@@ -51,10 +67,25 @@
         if(stages.length){
           const scene=make('div','story-scene'),insights=make('div','story-insights');
           figure.before(scene);scene.append(figure,insights);figure.classList.add('story-sticky');
+          const guide=make('div','story-focus-guide'),focus=make('div','story-focus-heading');
+          focus.append(make('span','story-focus-count','01 / '+stages.length),make('strong','story-focus-title',stages[0].dataset.stage));
+          const jumps=make('div','story-step-jumps');jumps.setAttribute('role','group');jumps.setAttribute('aria-label','Choose a diagram step');
+          guide.append(make('p','story-scroll-cue','Scroll to follow the flow · or choose a step'),focus,jumps);figure.prepend(guide);
+          const viewport=figure.querySelector('.diagram-viewport'),depth=make('div','story-depth-stage');
+          viewport.before(depth);depth.append(viewport);depth.setAttribute('data-depth-scene','');
+          const depthMotion=global.ContextMotion.register({element:depth,staticFrame:()=>{depth.style.setProperty('--tilt-x','0deg');depth.style.setProperty('--tilt-y','0deg');depth.style.setProperty('--lift','0px');},frame:()=>{
+            const box=scene.getBoundingClientRect(),span=Math.max(1,box.height-innerHeight*.5);
+            const progress=Math.max(0,Math.min(1,(innerHeight*.3-box.top)/span));
+            depth.style.setProperty('--tilt-x',(3-progress*6).toFixed(2)+'deg');
+            depth.style.setProperty('--tilt-y',(-3+progress*6).toFixed(2)+'deg');
+            depth.style.setProperty('--lift',(12+Math.sin(progress*Math.PI)*8).toFixed(2)+'px');
+          }});depthMotion.setAllowed(true);
           stages.forEach((stage,i)=>{
             const card=make('article','story-step');card.dataset.stageIndex=String(i);card.tabIndex=0;
             card.append(make('span','story-step-number',String(i+1).padStart(2,'0')+' / '+stages.length),make('h3','',stage.dataset.stage),make('p','',stage.dataset.stageDetail));
-            card.addEventListener('focus',()=>figure.scrollStage(i));insights.append(card);stageObserver.observe(card);
+            const jump=make('button','story-step-jump',String(i+1).padStart(2,'0'));jump.type='button';jump.title=stage.dataset.stage;jump.setAttribute('aria-label','Step '+(i+1)+': '+stage.dataset.stage);jump.setAttribute('aria-pressed',String(i===0));
+            jump.addEventListener('click',()=>{card.scrollIntoView({behavior:'instant',block:'center'});selectInsight(scene,card);card.focus({preventScroll:true});});jumps.append(jump);
+            card.addEventListener('focus',()=>selectInsight(scene,card));insights.append(card);stageObserver.observe(card);
           });
           figure.dataset.scrollStage='0';
         }
