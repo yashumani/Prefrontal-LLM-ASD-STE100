@@ -34,6 +34,13 @@
   .pitch-signals .pitch-signal:last-child { border-right:0; }
   .pitch-signal h3 { color:#141414;font-size:14px;margin-bottom:7px; }
   .pitch-signal p { font-size:13px;line-height:1.5;color:#454545; }
+  .cortex-intro-reference { margin:4px 0 6px;border-top:2px solid #141414; }
+  .cortex-intro-reference .pitch-signals { border-top:0;margin:0!important; }
+  .cortex-intro-reference .pitch-signal:first-child h3 { color:#a90016; }
+  .has-cortex-reference .cortex-intro-reference .pitch-signal { padding-top:6px;padding-bottom:6px; }
+  .cortex-intro-sources { display:flex;flex-wrap:wrap;gap:4px 10px;font:11px/1.5 Arial,sans-serif;color:#545454;margin:2px 0 0; }
+  .cortex-intro-sources a { color:#545454;text-underline-offset:3px; }
+  .cortex-intro-detail { margin-left:auto; }
   .item,.source-card,.developer-topic,.presenter-detail,.agent-role-strip { border-radius:0;box-shadow:none;background:#fff; }
   .source-grid { gap:0 28px; }
   .source-card { border:0;border-top:1px solid #bbb;padding:20px 0; }
@@ -115,6 +122,9 @@
 @media screen and (min-width:1101px) {
   /* The projected deck has a fixed reading frame; scrolling views keep their measure. */
   body:not([data-presentation="story"]) .slide>.product-actions { margin:10px 0 14px; }
+  body:not([data-presentation="story"]) .has-cortex-reference>.product-actions { margin:8px 0; }
+  body:not([data-presentation="story"]) .has-mini-architecture.has-pitch-signals.has-cortex-reference { padding-top:6px;padding-bottom:6px; }
+  .has-cortex-reference .product-actions .product-audience { margin:0 0 0 auto; }
   body:not([data-presentation="story"]) :is(.type-architecture,.type-cost-suite)>.lead { max-width:none; }
 }
 @media screen and (max-width:1100px) {
@@ -130,6 +140,7 @@
   #inspector h2 { font-size:21px; }
 }
 @media screen and (max-width:760px) {
+  .product-actions .product-audience { order:-1;flex-basis:100%;margin:0; }
   .topbar .tools { justify-content:flex-start;gap:6px 12px; }
   .tools .view-switch { order:5; }.tools #motion-toggle { order:6; }.tools #overview-toggle { order:7; }
   .presentation-options { margin-left:auto; }
@@ -160,3 +171,10 @@
   body:has(.map-scroll)>header .controls button { font-size:11px;padding:8px; }
 }
 @media print { .product-intro,.product-actions,.product-audience,.presentation-options,.diagram-pan-hint { display:none!important; } }
+@media print {
+  .cortex-intro-reference { margin:6px 0 10px;border-top:1px solid #141414; }
+  .cortex-intro-reference .pitch-signals { margin:4px 0; }
+  .cortex-intro-sources { font:8px/1.4 Arial,sans-serif;margin:3px 0; }
+  .cortex-intro-sources a { color:#555;margin-right:8px; }
+  .cortex-intro-detail { display:none; }
+}

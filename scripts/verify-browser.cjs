@@ -23,6 +23,13 @@ async function checkLeadershipSignals(region,slide){
   assert(await cards.nth(index).isVisible(),slide.id+' leadership takeaway is visible');
   assert.equal(norm(await cards.nth(index).innerText()),norm(slide.pitchSignals[index].title+' '+slide.pitchSignals[index].text),slide.id+' leadership takeaway retains authored wording');
  }
+ if(slide.cortexReference){
+  const reference=region.locator('.cortex-intro-reference');assert(await reference.isVisible());
+  const referenceBox=await reference.boundingBox(),diagramBox=await region.locator('.mechanism-figure').first().boundingBox();
+  assert(referenceBox.y+referenceBox.height<=diagramBox.y+1,'The brain reference precedes architecture in reading order');
+  for(const source of slide.cortexReference.sources){const link=reference.locator('a').filter({hasText:source.label});assert(await link.isVisible());assert.equal(await link.getAttribute('href'),source.url);}
+  assert.equal(await reference.locator('.cortex-intro-detail').getAttribute('href'),'story.html#why-prefrontal');
+ }
 }
 async function checkEconomicHurdle(region){
  for(const [key,value]of Object.entries(hurdleValues)){

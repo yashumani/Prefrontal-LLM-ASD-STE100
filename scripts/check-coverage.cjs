@@ -5,6 +5,14 @@ const sources=d.slides.flatMap(slide=>slide.sections||[{...slide,covers:undefine
 assert.equal(d.slides.length,16);assert.equal(d.slides[4].id,'full-architecture');
 assert.equal(sources.length,31);assert.deepEqual([...d.slides.flatMap(s=>s.covers)].sort(),Object.keys(originals).sort());
 assert.equal(new Set(sources.map(s=>s.id)).size,31);
+const cortex=JSON.parse(fs.readFileSync('cortex-content.json','utf8'));
+assert.deepEqual(d.slides.filter(s=>s.cortexReference).map(s=>s.id),d.slides.slice(0,3).map(s=>s.id),'Brain references belong to the first three slides');
+for(const slide of d.slides.slice(0,3)){
+ assert(slide.cortexReference.sources.length>0,'Each brain reference must cite a source');
+ for(const source of slide.cortexReference.sources){const canonical=cortex.sources.find(s=>s.id===source.id);assert(canonical&&source.url===canonical.url&&source.title===canonical.title,'Reuse the verified neuroscience sources');}
+ assert.match(slide.pitchSignals.map(s=>s.title).join(' '),/Brain reference.*Design analogy/,'Distinguish biology and proposed software behavior');
+ assert.match(JSON.stringify(slide.pitchSignals)+slide.note,/does not|not a brain|not proven|does not reproduce/,'Keep the analogy limits explicit');
+}
 for(const s of sources){const hash=crypto.createHash('sha256').update(JSON.stringify(s)).digest('hex');assert.equal(hash,originals[s.id],s.id+' original content changed');}
 for(const s of d.slides.filter(s=>s.type==='consolidated'))assert.match(s.infographic.provenance,/reference|not from/i);
 assert.equal(d.costLab.presets.length,6);assert.equal(d.costLab.models.length,8);assert.equal(d.costLab.params.length,14);assert.equal(d.costLab.recs.length,6);

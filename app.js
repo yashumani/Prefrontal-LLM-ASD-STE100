@@ -493,12 +493,28 @@ function pitchSignals(slide) {
   return group;
 }
 
+function cortexReference(slide) {
+  const section=element('section','cortex-intro-reference');
+  section.setAttribute('aria-label','Brain reference and proposed software analogy');
+  section.append(pitchSignals(slide));
+  const sources=element('p','cortex-intro-sources');
+  sources.append(document.createTextNode('Brain sources: '));
+  slide.cortexReference.sources.forEach((source,index)=>{
+    if(index)sources.append(document.createTextNode(' · '));
+    const link=element('a','',source.label);link.href=source.url;link.title=source.title;sources.append(link);
+  });
+  const detail=element('a','cortex-intro-detail','Explore the brain reference ↗');
+  detail.href=slide.cortexReference.detailUrl;sources.append(detail);section.append(sources);
+  return section;
+}
+
 function miniPitchVisual(slide) {
   const wrap = element('div', 'mini-focus-visual pitch-mechanism');
+  if(slide.cortexReference)wrap.append(cortexReference(slide));
   wrap.append(createMechanism(window.ContextMiniArchitectures.create(slide.miniArchitecture)));
   wrap.append(element('p', 'provenance', slide.miniArchitecture.provenance || 'Proposal · not from the reference slides'));
   if (slide.type === 'leadership-case') wrap.append(leadershipCaseVisual(true));
-  if (slide.pitchSignals?.length) wrap.append(pitchSignals(slide));
+  if (slide.pitchSignals?.length && !slide.cortexReference) wrap.append(pitchSignals(slide));
   if (slide.items.length) {
     const detail = presenterDetail(slide);
     detail.classList.add('dev');
@@ -570,6 +586,7 @@ function renderSlide(slide, i) {
   const panel = element("section", `slide type-${slide.type}`);
   if (slide.miniArchitecture) panel.classList.add('has-mini-architecture');
   if (slide.pitchSignals?.length) panel.classList.add('has-pitch-signals');
+  if (slide.cortexReference) panel.classList.add('has-cortex-reference');
   panel.id = `panel-${slide.id}`;
   panel.dataset.slide = slide.id;
   panel.setAttribute("aria-labelledby", `title-${slide.id}`);
@@ -626,7 +643,8 @@ function renderSlide(slide, i) {
     [['primary-action','Explore the architecture ↗','full-architecture'],['secondary-action','Review the pilot →','pilot-acceptance']].forEach(([cls,label,id])=>{
       const link=element('a',cls,label);link.href='#'+id;actions.append(link);
     });
-    lead.after(audience,actions);
+    actions.append(audience);
+    lead.after(actions);
   }
   if (slide.note) panel.append(element("p", "slide-note", slide.note));
   if(!slide.miniArchitecture&&!slide.sections&&slide.items.length&&['cover','leadership-case'].includes(slide.type)) {

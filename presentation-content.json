@@ -5,8 +5,8 @@
     {
       "id": "opening-thesis",
       "type": "cover",
-      "eyebrow": "Prefrontal · the context product",
-      "title": "Give AI approved context it can reuse.",
+      "eyebrow": "Prefrontal cortex · the name",
+      "title": "Why Prefrontal? Give context a control layer.",
       "lead": "Prefrontal turns business knowledge into versioned context. Your applications receive only the context they may use.",
       "items": [
         {
@@ -16,13 +16,7 @@
         {
           "title": "A funded proof of value",
           "text": "Start with one workflow. Measure the return before expansion."
-        }
-      ],
-      "note": "Product concept and pilot proposal. Writing inspired by ASD-STE100; full compliance has not been checked.",
-      "covers": [
-        "opening-thesis"
-      ],
-      "pitchSignals": [
+        },
         {
           "title": "What you buy",
           "text": "A service to prepare, govern, organize and deliver context."
@@ -34,6 +28,28 @@
         {
           "title": "What we prove",
           "text": "Useful reuse at an acceptable cost, speed and quality."
+        },
+        {
+          "title": "Original product framing",
+          "text": "Give AI approved context it can reuse."
+        }
+      ],
+      "note": "This is a software analogy, not a brain replica. Product concept and pilot proposal; writing is STE-inspired, with compliance unchecked.",
+      "covers": [
+        "opening-thesis"
+      ],
+      "pitchSignals": [
+        {
+          "title": "Brain reference",
+          "text": "The prefrontal cortex works within wider networks to support executive functions: processes that guide behavior toward goals."
+        },
+        {
+          "title": "Design analogy",
+          "text": "A control layer connects approved knowledge, task goals and rules before an application uses context."
+        },
+        {
+          "title": "Product purpose",
+          "text": "Give AI approved context it can reuse. Test the value in one workflow before expanding."
         }
       ],
       "miniArchitecture": {
@@ -239,13 +255,30 @@
           }
         ],
         "provenance": "Proposal · not from the reference slides"
+      },
+      "cortexReference": {
+        "sources": [
+          {
+            "id": "N01",
+            "title": "NIMH · The Teen Brain: 7 Things to Know",
+            "url": "https://www.nimh.nih.gov/health/publications/the-teen-brain-7-things-to-know",
+            "label": "N01 · NIMH"
+          },
+          {
+            "id": "N03",
+            "title": "Cole and Schneider (2007) · The cognitive control network: Integrated cortical regions with dissociable functions",
+            "url": "https://pubmed.ncbi.nlm.nih.gov/17553704/",
+            "label": "N03 · Cole & Schneider, 2007"
+          }
+        ],
+        "detailUrl": "story.html#why-prefrontal"
       }
     },
     {
       "id": "fragmented-context",
       "type": "problem",
-      "eyebrow": "Leadership · the recurring cost",
-      "title": "New tasks can restart the same work.",
+      "eyebrow": "Prefrontal cortex · working memory",
+      "title": "Hold the goal. Keep the right context.",
       "lead": "Existing tools may hold the data and formulas. Teams still reconnect meaning, evidence and permissions for each use.",
       "items": [
         {
@@ -263,9 +296,25 @@
         {
           "title": "Change management",
           "text": "Teams reconnect context when models or tools change."
+        },
+        {
+          "title": "Cost to measure",
+          "text": "Time spent finding, explaining and reviewing the same context."
+        },
+        {
+          "title": "Risk to test",
+          "text": "Different versions or missing conditions can change an answer."
+        },
+        {
+          "title": "Opportunity",
+          "text": "Reuse approved meaning while checking each new use."
+        },
+        {
+          "title": "Original product framing",
+          "text": "New tasks can restart the same work."
         }
       ],
-      "note": "These are problem hypotheses. Establish their frequency and cost in the selected workflow.",
+      "note": "Repeated preparation remains a problem hypothesis. Measure its frequency and cost; neuroscience does not prove product savings.",
       "infographic": {
         "layout": "cycle",
         "title": "Where teams repeat context work",
@@ -325,16 +374,16 @@
       ],
       "pitchSignals": [
         {
-          "title": "Cost to measure",
-          "text": "Time spent finding, explaining and reviewing the same context."
+          "title": "Brain reference",
+          "text": "Working memory holds information for a task. Studies link lateral prefrontal regions to maintaining and reorganizing that information."
         },
         {
-          "title": "Risk to test",
-          "text": "Different versions or missing conditions can change an answer."
+          "title": "Design analogy",
+          "text": "Keep the current goal and permitted evidence together. Load only the context the task needs."
         },
         {
-          "title": "Opportunity",
-          "text": "Reuse approved meaning while checking each new use."
+          "title": "Design limit",
+          "text": "Task context is temporary. Approved records remain separate. Software does not reproduce biological working memory."
         }
       ],
       "miniArchitecture": {
@@ -527,13 +576,30 @@
           }
         ],
         "provenance": "Proposal · not from the reference slides"
+      },
+      "cortexReference": {
+        "sources": [
+          {
+            "id": "N02",
+            "title": "D'Esposito et al. (1999) · Maintenance versus manipulation of information held in working memory",
+            "url": "https://pubmed.ncbi.nlm.nih.gov/10536086/",
+            "label": "N02 · D’Esposito et al., 1999"
+          },
+          {
+            "id": "N03",
+            "title": "Cole and Schneider (2007) · The cognitive control network: Integrated cortical regions with dissociable functions",
+            "url": "https://pubmed.ncbi.nlm.nih.gov/17553704/",
+            "label": "N03 · Cole & Schneider, 2007"
+          }
+        ],
+        "detailUrl": "story.html#why-prefrontal"
       }
     },
     {
       "id": "product-overview",
       "type": "product-flow",
-      "eyebrow": "Leadership · what you would buy",
-      "title": "One governed path. Many ways to use the output.",
+      "eyebrow": "Prefrontal cortex · inhibition",
+      "title": "Check before use. Keep people in charge.",
       "lead": "People approve the meaning. The agent organizes approved records. The delivery service checks each request.",
       "items": [
         {
@@ -543,9 +609,25 @@
         {
           "title": "Clear product boundary",
           "text": "Your applications consume context and control their own actions."
+        },
+        {
+          "title": "A reusable record",
+          "text": "A canonical ID, approved version, source evidence and owner."
+        },
+        {
+          "title": "A clear boundary",
+          "text": "The agent proposes changes. A reviewer approves new meaning."
+        },
+        {
+          "title": "A usable output",
+          "text": "Apps receive permitted parameters and source references."
+        },
+        {
+          "title": "Original product framing",
+          "text": "One governed path. Many ways to use the output."
         }
       ],
-      "note": "Proposed workflow. Human approval and access controls must work before context reaches a consumer.",
+      "note": "Proposed workflow. Model decisions cannot grant access or replace human approval. The analogy explains restraint, not proven security.",
       "flow": {
         "title": "The product in one view",
         "nodes": [
@@ -592,16 +674,16 @@
       ],
       "pitchSignals": [
         {
-          "title": "A reusable record",
-          "text": "A canonical ID, approved version, source evidence and owner."
+          "title": "Brain reference",
+          "text": "Inhibition means stopping a response. A network including right inferior frontal cortex helps stop or slow motor responses."
         },
         {
-          "title": "A clear boundary",
-          "text": "The agent proposes changes. A reviewer approves new meaning."
+          "title": "Design analogy",
+          "text": "People approve meaning. Code checks permission and current validity. Failed checks stop context delivery."
         },
         {
-          "title": "A usable output",
-          "text": "Apps receive permitted parameters and source references."
+          "title": "Design limit",
+          "text": "A permission gate does not reproduce neural inhibition. Security depends on implemented controls and pilot evidence."
         }
       ],
       "miniArchitecture": {
@@ -854,6 +936,17 @@
           }
         ],
         "provenance": "Proposal · not from the reference slides"
+      },
+      "cortexReference": {
+        "sources": [
+          {
+            "id": "N04",
+            "title": "Aron et al. (2007) · Triangulating a cognitive control network using diffusion-weighted MRI and functional MRI",
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6672420/",
+            "label": "N04 · Aron et al., 2007"
+          }
+        ],
+        "detailUrl": "story.html#why-prefrontal"
       }
     },
     {
