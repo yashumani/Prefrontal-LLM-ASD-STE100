@@ -18,12 +18,13 @@ const base=process.env.PREFRONTAL_BASE_URL||'http://127.0.0.1:8893/';
   const dot=section.locator('.cortex-packet'),first=await dot.getAttribute('cx');await page.waitForTimeout(180);assert.notEqual(await dot.getAttribute('cx'),first,'Path marker moves when visible');
   await section.locator('.cortex-motion').click();const paused=await dot.getAttribute('cx');await page.waitForTimeout(180);assert.equal(await dot.getAttribute('cx'),paused,'Local pause stops this visual');
   await section.locator('.cortex-motion').click();
-  const valuation=section.locator('[data-cortex-region="valuation"]');
+  await page.locator('.cortex-shortcuts>summary').click();
+  const valuation=page.locator('.sidebar-cortex-links [data-cortex-region="valuation"]');
   await valuation.scrollIntoViewIfNeeded();
   await valuation.evaluate(link=>{
    window.cortexClickSelections=[];let record=false;
    link.addEventListener('click',()=>{record=true;},{once:true});
-   addEventListener('scroll',()=>{if(record)window.cortexClickSelections.push(link.closest('.cortex-section').querySelector('[aria-current="location"]')?.dataset.cortexRegion);},{passive:true});
+   addEventListener('scroll',()=>{if(record)window.cortexClickSelections.push(document.querySelector('.sidebar-cortex-links [aria-current="location"]')?.dataset.cortexRegion);},{passive:true});
   });
   await valuation.click();assert.equal(await valuation.getAttribute('aria-current'),'location');
   await page.waitForFunction(()=>Math.abs(document.getElementById('cortex-valuation').getBoundingClientRect().top-110)<=2);

@@ -10,17 +10,19 @@ const delay=ms=>new Promise(resolve=>setTimeout(resolve,ms));
   await page.goto(base+file);await page.waitForFunction(()=>Boolean(window.ContextMotion));
   for(const width of [1440,1024,768,375]){
    await page.setViewportSize({width,height:900});await page.evaluate(()=>scrollTo(0,0));
-   const action=page.locator(file==='index.html'?'.slide:not([hidden]) .primary-action':'.product-intro .primary-action');
+   if(width<=800)await page.locator('.sidebar-toggle').click();
+   const action=page.locator('.sidebar-actions .primary-action');
    await action.waitFor({state:'visible'});const box=await action.boundingBox();
    assert(box.y>=0&&box.y+box.height<=900,`${file} primary action above fold at ${width}`);
    assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`${file} width ${width}`);
    assert(await page.locator(file==='index.html'?'.product-audience:visible':'.product-kicker').textContent().then(t=>/AI.*data.*governance/i.test(t)),`${file} audience explicit`);
+   if(width<=800)await page.locator('.sidebar-toggle').click();
    if(width<=1100)assert.equal(await page.evaluate(()=>ContextMotion.stats().activeDepth),0,'No mobile depth work');
    if(width===1440||width===375)await page.screenshot({path:'.validation/hierarchy-after-'+file.replace('.html','')+'-'+width+'.png'});
   }
   await page.setViewportSize({width:1440,height:960});
   if(file==='index.html'){
-   await page.locator('.slide:not([hidden]) .primary-action').click();await page.locator('[data-slide="full-architecture"]:visible').waitFor();
+   await page.locator('.sidebar-actions .primary-action').click();await page.locator('[data-slide="full-architecture"]:visible').waitFor();
    await page.locator('#next').click();await page.locator('[data-slide="existing-stack"]:visible').waitFor();
    await page.evaluate(()=>{document.getElementById('next').click();document.getElementById('next').click();});
    await page.locator('[data-slide="context-contract"]:visible').waitFor();
@@ -37,7 +39,7 @@ const delay=ms=>new Promise(resolve=>setTimeout(resolve,ms));
     await page.waitForFunction(()=>{
      const button=document.querySelector('.node.active .node-button');if(!button)return false;
      const box=button.getBoundingClientRect();
-     return box.top>=document.querySelector('header').getBoundingClientRect().bottom&&box.bottom<=innerHeight&&button.dataset.playing==='true';
+     return box.top>=0&&box.bottom<=innerHeight&&button.dataset.playing==='true';
     });
     await page.locator('#flat').click();assert.equal(await page.evaluate(()=>ContextMotion.state().depth),false);
     const dot=page.locator('.route.selected .flow-dot').first();const position=()=>dot.evaluate(e=>[e.getAttribute('cx'),e.getAttribute('cy')].join(','));
@@ -58,7 +60,7 @@ const delay=ms=>new Promise(resolve=>setTimeout(resolve,ms));
   await page.emulateMedia({reducedMotion:'no-preference'});
  }
  await page.goto(base+'motion-preview.html');assert.equal(await page.locator('.variant').count(),3);
- await page.locator('#pause').click();await page.waitForTimeout(80);assert.equal(await page.evaluate(()=>PreviewMotion.stats().scheduled),false);
+ if(await page.locator('.sidebar-toggle').isVisible())await page.locator('.sidebar-toggle').click();await page.locator('#pause').click();await page.waitForTimeout(80);assert.equal(await page.evaluate(()=>PreviewMotion.stats().scheduled),false);
  // A bounded desktop sample under 4x CPU slowdown; not a device-wide fps claim.
  await page.setViewportSize({width:1440,height:960});await page.goto(base+'story.html#bounded-decision-router');
  const cdp=await page.context().newCDPSession(page);await cdp.send('Emulation.setCPUThrottlingRate',{rate:4});await cdp.send('Performance.enable');

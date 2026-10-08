@@ -185,7 +185,8 @@ assert.match(styles, /--paper\s*:\s*#fff(?:fff)?\s*[;}]/i, 'The agreed brand pap
 assert(html.includes('id="presentation-data"') && !/<(?:script|link)\b[^>]*(?:src|href)=/.test(html), 'The single-file page must work without external assets.');
 assert(html.includes('static-presentation'), 'A complete JavaScript-disabled fallback is required.');
 for (const slide of deck.slides) assert(html.includes(`id="static-${slide.id}"`), `Static fallback is missing ${slide.id}.`);
-const staticHTML=html.slice(html.indexOf('<noscript>'),html.indexOf('</noscript>'));
+const staticStart=html.indexOf('<main class="static-presentation">');
+const staticHTML=html.slice(staticStart,html.indexOf('</noscript>',staticStart));
 const svgClasses = [...staticHTML.matchAll(/<svg\b[^>]*\bclass=["']([^"']+)["'][^>]*>/g)].map(match => match[1].split(/\s+/));
 assert(svgClasses.filter(classes=>classes.includes('motion-diagram')).length>=20,'Keep the original diagrams and new composite infographics in the no-JS detail.');
 assert.equal(svgClasses.filter(classes => classes.includes('mini-architecture-svg')).length, 12, 'The twelve requested slides need static mini architectures.');

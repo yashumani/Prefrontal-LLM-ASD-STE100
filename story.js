@@ -25,7 +25,7 @@
     const menu=make('details','story-menu'),summary=make('summary','','Explore the story');
     const position=make('span','story-position','01 / 16');summary.append(position);menu.append(summary);
     const links=make('nav','story-chapters');links.setAttribute('aria-label','Story chapters');menu.append(links);
-    document.querySelector('.topbar').prepend(menu);
+    document.querySelector('.sidebar-sections').append(menu);menu.open=true;
     const progress=make('div','story-progress');progress.setAttribute('aria-hidden','true');document.body.append(progress);
     const reduce=matchMedia('(prefers-reduced-motion: reduce)');
     const depthToggle=make('button','story-depth-toggle','3D view');depthToggle.type='button';
@@ -58,7 +58,7 @@
       panel.hidden=false;panel.classList.add('story-chapter');panel.style.setProperty('--chapter',index);
       panel.prepend(make('p','chapter-number',String(index+1).padStart(2,'0')+' / '+String(panels.length)));
       const link=make('a','',String(index+1).padStart(2,'0')+'  '+data.slides[index].title);link.href='#'+data.slides[index].id;
-      link.addEventListener('click',event=>{event.preventDefault();menu.open=false;navigate(index);});links.append(link);
+      link.addEventListener('click',event=>{event.preventDefault();navigate(index);});links.append(link);
       // Every authored topic is open in this format. Readers can collapse detail.
       panel.querySelectorAll('details').forEach(detail=>{detail.open=true;});
       panel.querySelectorAll('.detail-intro').forEach(n=>n.textContent='All original topics are included below. Collapse any detail after reading it.');
@@ -81,9 +81,9 @@
             const box=scene.getBoundingClientRect(),span=Math.max(1,box.height-innerHeight*.5);
             return Math.max(0,Math.min(1,(innerHeight*.3-box.top)/span));
           },frame:(_t,_delta,progress)=>{
-            depth.style.setProperty('--tilt-x',(2-progress*4).toFixed(2)+'deg');
-            depth.style.setProperty('--tilt-y',(-2+progress*4).toFixed(2)+'deg');
-            depth.style.setProperty('--lift',(Math.sin(progress*Math.PI)*10).toFixed(2)+'px');
+            depth.style.setProperty('--tilt-x',((1-progress*2)*global.ContextMotion.profile.tiltDegrees).toFixed(2)+'deg');
+            depth.style.setProperty('--tilt-y',((-1+progress*2)*global.ContextMotion.profile.tiltDegrees).toFixed(2)+'deg');
+            depth.style.setProperty('--lift',(Math.sin(progress*Math.PI)*global.ContextMotion.profile.liftPx).toFixed(2)+'px');
           }});depthMotion.setAllowed(true);
           stages.forEach((stage,i)=>{
             const card=make('article','story-step');card.dataset.stageIndex=String(i);card.tabIndex=0;

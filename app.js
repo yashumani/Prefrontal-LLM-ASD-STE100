@@ -83,11 +83,11 @@ function createMechanism(kind, onStage = () => {}) {
   };
   const runtime=window.ContextMotion.register({element:svg,staticFrame:finalFrame,frame:t=>{
     lastTime=t;svg.dataset.playing='true';svg.dataset.elapsed=String(t);
-    const nextCursor=storyMode && figure.dataset.scrollStage !== undefined ? Number(figure.dataset.scrollStage) : Math.floor((t-base)/2.4)%stages.length;
+    const nextCursor=storyMode && figure.dataset.scrollStage !== undefined ? Number(figure.dataset.scrollStage) : Math.floor((t-base)/window.ContextMotion.profile.stageSeconds)%stages.length;
     if(nextCursor!==cursor||svg.classList.contains('is-static'))select(nextCursor);
-    packets.forEach(({dot,points},i)=>{const f=((t/1.6+i*.17)%1)*80,j=Math.floor(f),r=f-j,a=points[j],b=points[Math.min(j+1,80)];dot.setAttribute('transform',`translate(${a[0]+(b[0]-a[0])*r} ${a[1]+(b[1]-a[1])*r})`);});
+    packets.forEach(({dot,points},i)=>{const f=((t/window.ContextMotion.profile.packetSeconds+i*.17)%1)*80,j=Math.floor(f),r=f-j,a=points[j],b=points[Math.min(j+1,80)];dot.setAttribute('transform',`translate(${a[0]+(b[0]-a[0])*r} ${a[1]+(b[1]-a[1])*r})`);});
   }});
-  const manualStep=delta=>{window.ContextMotion.setPaused(true);select(cursor+delta);base=lastTime-cursor*2.4;};
+  const manualStep=delta=>{window.ContextMotion.setPaused(true);select(cursor+delta);base=lastTime-cursor*window.ContextMotion.profile.stageSeconds;};
   previous.addEventListener('click',()=>manualStep(-1));next.addEventListener('click',()=>manualStep(1));
   figure.selectStage=index=>manualStep(index-cursor);
   figure.scrollStage=index=>{figure.dataset.scrollStage=String(index);if(!motionPaused&&!reducedMotion.matches&&!printing){select(index);svg.dataset.playing='true';}};
@@ -97,13 +97,9 @@ function createMechanism(kind, onStage = () => {}) {
 }
 
 function renderItems(items = []) {
-  const group = element("div", "items");
-  for (const item of items) {
-    const card = element("article", "item");
-    card.append(element("h3", "", item.title), element("p", "", item.text));
-    group.append(card);
-  }
-  return group;
+  const group = element("div");
+  group.innerHTML=window.ContextPractices.items(items);
+  return group.firstElementChild;
 }
 
 function coreVisual() {
@@ -656,8 +652,7 @@ function renderSlide(slide, i) {
 function setOverview(show) {
   showingOverview = show;
   byId("overview").hidden = !show;
-  byId("deck").hidden = show;
-  byId("deck").style.display = show ? "none" : "";
+  byId("deck").hidden = false;
   byId("overview-toggle").setAttribute("aria-expanded", String(show));
   if (show) byId("overview").querySelector("button")?.focus();
   window.ContextMotion.setSuspended(show || printing);

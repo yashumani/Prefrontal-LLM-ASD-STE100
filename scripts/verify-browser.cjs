@@ -57,12 +57,12 @@ async function main(){
   assert.equal(brand.red.toUpperCase(),'#EE001E');assert.equal(brand.background,'rgb(255, 255, 255)');assert.match(brand.font,/Arial/);
   await p.waitForFunction(()=>ContextMotion.stats().frames>3);
   const first=await p.evaluate(()=>({stats:ContextMotion.stats(),probe:__motionProbe()}));assert.equal(first.stats.active,1);assert.equal(first.probe.peak,1);assert.equal(first.probe.intervals,0);
-  await p.locator('.slide:visible .figure-motion').click();await p.waitForTimeout(120);
+  await p.locator('#motion-toggle').click();await p.waitForTimeout(120);
   assert.equal(await p.evaluate(()=>ContextMotion.stats().scheduled),false);const frozen=await p.evaluate(()=>ContextMotion.stats().frames);await p.waitForTimeout(100);assert.equal(await p.evaluate(()=>ContextMotion.stats().frames),frozen);
   assert(await p.locator('.slide:visible svg').evaluate(svg=>svg.classList.contains('is-static')),'Pause shows the final static mechanism.');
   await p.locator('#motion-toggle').click();await p.waitForFunction(()=>ContextMotion.stats().active===1);
   const svg=p.locator('.slide:visible svg.motion-diagram');const before=await svg.getAttribute('data-current-step');await p.waitForTimeout(2500);assert.notEqual(await svg.getAttribute('data-current-step'),before,'Shared RAF advances the stage.');
-  await p.locator('.slide:visible .stage-next').click();assert.equal(await p.evaluate(()=>ContextMotion.stats().scheduled),false);
+  await p.locator('#sidebar-stage-next').click();assert.equal(await p.evaluate(()=>ContextMotion.stats().scheduled),false);
   await p.locator('#overview-toggle').click();assert.equal(await p.locator('.overview-card').count(),16);assert.equal(await p.evaluate(()=>ContextMotion.stats().active),0);await p.keyboard.press('Escape');
   const containment=[];
   for(const slide of deck.slides){
@@ -119,13 +119,13 @@ async function main(){
    await goto(p,slide.id);await p.locator('[data-view=dev]').click();assert(await p.evaluate(()=>document.body.classList.contains('devview')));
    for(const source of slide.sections){
     const detail=p.locator('[data-source-slide="'+source.id+'"]');await detail.locator(':scope>summary').click();assert(await detail.locator('.developer-section').isVisible());
-    const text=norm(await detail.innerText());assert(text.includes(norm(source.lead)),source.id+' source lead survives');
+    const text=norm(await detail.textContent());assert(text.includes(norm(source.lead)),source.id+' source lead survives');
     for(const item of source.items){assert(text.includes(norm(item.title)));assert(text.includes(norm(item.text)),source.id+' item survives');}
     if(source.note)assert(text.includes(norm(source.note)),source.id+' uncertainty survives');
     await p.screenshot({path:'.validation/developer-'+source.id+'.png',fullPage:true});await detail.locator(':scope>summary').click();topics++;
    }await p.locator('[data-view=leader]').click();
   }assert.equal(topics,21);
-  await goto(p,'submission-template');await p.locator('.slide:visible .topic-strip button').first().click();assert(await p.evaluate(()=>document.body.classList.contains('devview')));assert(await p.locator('[data-source-slide=submission-template]').getAttribute('open')!==null);
+  await goto(p,'submission-template');await p.locator('#sidebar-topic').selectOption('0');assert(await p.evaluate(()=>document.body.classList.contains('devview')));assert(await p.locator('[data-source-slide=submission-template]').getAttribute('open')!==null);
   assert.equal(await p.locator('.submission-table tbody tr').count(),deck.submission.length);
   await p.locator('[data-source-slide=meaning-preserving-ste]>summary').click();const ste=await p.locator('.ste-example').innerText();assert.match(ste,/should/);assert.match(ste,/dispute remains open/);assert.match(ste,/until the review ends/);assert.match(await p.locator('.slide:visible').innerText(),/compliance has not been checked|compliance.*unchecked/i);
   await goto(p,'operating-cost');await p.locator('[data-view=dev]').click();await p.locator('[data-source-slide=value-assumptions]>summary').click();
@@ -139,14 +139,14 @@ async function main(){
   for(const [scenario,outcome]of [['compatible','accept'],['lost-evidence','reject'],['lost-exception','reject'],['permission-change','reject']]){await p.locator('.upgrade-controls select').selectOption(scenario);await p.getByRole('button',{name:'Run illustrative checks'}).click();assert.equal(await p.locator('.demo-summary').getAttribute('data-outcome'),outcome);}
   await p.locator('[data-view=leader]').click();await verifyVisuals(p,deck,goto);await p.locator('[data-view=leader]').click();
   await goto(p,'cost-budget-routing');assert(await p.locator('#panel-call-cost-anatomy').isVisible(),'Old URLs resolve to the consolidated page.');
-  await goto(p,'call-cost-anatomy');await p.locator('.suite-tabs [data-cost-view=anatomy]').click();assert.equal(await p.locator('.suite-page:visible .m-node').count(),3);
+  await goto(p,'call-cost-anatomy');await p.locator('#sidebar-cost').selectOption({label:'Call anatomy'});assert.equal(await p.locator('.suite-page:visible .m-node').count(),3);
   await p.emulateMedia({reducedMotion:'reduce'});await p.waitForTimeout(120);assert.equal(await p.evaluate(()=>ContextMotion.stats().active),0);assert.equal(await p.evaluate(()=>ContextMotion.stats().scheduled),false);assert(await p.locator('#motion-toggle').isDisabled());assert(await p.locator('.suite-page:visible svg').evaluate(s=>s.classList.contains('is-static')));await p.emulateMedia({reducedMotion:'no-preference'});
   await goto(p,'primary-sources');assert.equal(await p.locator('.slide:visible .source-card a').count(),8);
   await p.setViewportSize({width:390,height:844});
   for(const id of [...new Set(['opening-thesis','full-architecture','call-cost-anatomy','plan-alignment',...deck.slides.filter(s=>s.miniArchitecture).map(s=>s.id)])]){
    await goto(p,id);assert((await p.evaluate(()=>document.documentElement.scrollWidth))<=391,id+' mobile horizontal containment');await p.screenshot({path:'.validation/mobile-'+id+'.png',fullPage:true});
   }
-  await goto(p,'submission-template');await p.locator('[data-view=dev]').click();const mobileTopic=p.locator('[data-source-slide=submission-template]');if(await mobileTopic.getAttribute('open')===null)await mobileTopic.locator(':scope>summary').click();assert(await p.locator('.submission-table-region').isVisible());assert((await p.evaluate(()=>document.documentElement.scrollWidth))<=391);await p.locator('[data-view=leader]').click();await p.setViewportSize({width:1440,height:900});
+  await goto(p,'submission-template');await p.locator('.sidebar-toggle').click();await p.locator('[data-view=dev]').click();await p.locator('.sidebar-toggle').click();const mobileTopic=p.locator('[data-source-slide=submission-template]');if(await mobileTopic.getAttribute('open')===null)await mobileTopic.locator(':scope>summary').click();assert(await p.locator('.submission-table-region').isVisible());assert((await p.evaluate(()=>document.documentElement.scrollWidth))<=391);await p.locator('.sidebar-toggle').click();await p.locator('[data-view=leader]').click();await p.locator('.sidebar-toggle').click();await p.setViewportSize({width:1440,height:900});
   const pdf=await p.pdf({path:'.validation/architecture-deck.pdf',format:'A4',landscape:true,printBackground:true,preferCSSPageSize:true});assert.equal(pages(pdf),16);
   const offline=await context.newPage();let external=0;offline.on('request',r=>{if(/^https?:/.test(r.url()))external++});offline.on('pageerror',e=>errors.push(e.message));await offline.goto(pathToFileURL(path.resolve('index.html')).href);await offline.locator('[data-slide=opening-thesis]').waitFor({state:'visible'});assert.equal(external,0);await offline.close();
   const staticContext=await browser.newContext({javaScriptEnabled:false,viewport:{width:1440,height:900}});const stat=await staticContext.newPage();await stat.goto(base);

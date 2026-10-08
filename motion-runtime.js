@@ -5,6 +5,15 @@
 (function (global) {
   "use strict";
 
+  // Keep every motion cue with a smaller range. Timing belongs to consumers:
+  // slowing packets must not delay stage selection or the shared frame clock.
+  const profile = Object.freeze({
+    name: 'calm',
+    tiltDegrees: 1,
+    liftPx: 4,
+    packetSeconds: 2.4,
+    stageSeconds: 2.4
+  });
   const doc = typeof document === "undefined" ? null : document;
   const items = new Set();
   const byElement = new WeakMap();
@@ -327,6 +336,7 @@
   }
 
   global.ContextMotion = {
+    profile,
     register, setPaused, setReduced, setSuspended, setDepth, state, subscribe,
     samplePath, arrive, transition, bindPauseControl, measure, wrap, fitText,
     stats() {

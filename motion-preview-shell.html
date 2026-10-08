@@ -10,123 +10,18 @@
 @media(max-width:760px){main{padding-top:36px}.variants{grid-template-columns:1fr}.variant p{min-height:0}.demo svg{max-height:300px}.variant-details{display:grid;grid-template-columns:1fr 1fr;gap:12px}.variant-actions{grid-column:1/-1}.numbers{margin:0}.curve-row{margin:0}.scroll-story{grid-template-columns:1fr;gap:10px}.scroll-stage{position:relative;top:0;margin-bottom:28px}.stack,.stack:before,.stack:after{transform:none!important}.stack:before,.stack:after{display:none}.scroll-card{min-height:180px}.scope{gap:18px}.controls{align-items:stretch}.controls label{padding-left:0}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important;animation:none!important}.stack,.scroll-card{transform:none!important}.stack:before,.stack:after,.packet{display:none!important}}
 @media print{.controls,.variant-actions,.packet{display:none}.variants{display:block}.variant{break-inside:avoid;margin-bottom:20px}.scroll-stage{position:static}.stack,.scroll-card{transform:none!important}.stack:before,.stack:after{display:none}.scroll-story{display:block}.scroll-card{min-height:0}.divider{margin-top:25px}main{padding-top:15px}}
-
-/* One quiet navigation rail across every reading format. */
-@media screen {
- :root{--sidebar-width:244px}
- .site-navigation{position:fixed;inset:0 auto 0 0;width:var(--sidebar-width);z-index:60;border:0;margin:0;padding:0;background:#fff}
- .site-navigation>.sidebar-toggle{display:none}
- .site-navigation>.site-sidebar{display:flex!important;flex-direction:column;gap:16px;position:static;inset:auto;width:100%;height:100dvh;max-height:none;overflow-y:auto;overscroll-behavior:contain;border:0;border-right:1px solid #d3d3d0;border-radius:0;margin:0;padding:24px 18px;background:#f6f6f3;color:#171717;box-shadow:none}
- .site-sidebar .identity{display:block;flex:none;font-size:16px;line-height:1.3;letter-spacing:.04em;text-decoration:none;color:#171717}
- .site-sidebar .identity strong{font-size:9px;letter-spacing:.12em;font-weight:500}
- .site-sidebar .rail-caption{font-size:10px;line-height:1.5;margin:-8px 0 0;color:#666}
- .site-sidebar nav,.site-sidebar .tools,.site-sidebar .controls{display:flex;position:static;flex-direction:column;align-items:stretch;flex-wrap:nowrap;gap:4px;padding:0;background:none;box-shadow:none;width:100%;min-width:0}
- .site-sidebar .site-formats{gap:0;border-top:1px solid #d3d3d0;border-bottom:1px solid #d3d3d0;padding:7px 0}
- .site-sidebar .site-formats a{display:flex;justify-content:space-between;gap:8px;padding:9px 8px;font-size:13px;font-weight:500;text-decoration:none;border:0;border-radius:0;background:none;color:#171717;line-height:1.4}
- .site-sidebar .site-formats a span{color:#777;font-weight:400}
- .site-sidebar .site-formats a[aria-current]{border-left:3px solid #ed001c;padding-left:5px;background:#fff;font-weight:750}
- .site-sidebar button,.site-sidebar summary{font:inherit;font-size:11px;color:#333;border:0;border-radius:0;background:none;box-shadow:none;padding:8px;text-align:left;cursor:pointer;width:auto;min-height:32px;margin:0;line-height:1.4}
- .site-sidebar button:hover,.site-sidebar a:hover{background:#e9e9e5}
- .site-sidebar :is(button,a,summary):focus-visible,.sidebar-toggle:focus-visible{outline:2px solid #c6001c;outline-offset:3px}
- .site-sidebar .sidebar-actions{display:grid;gap:5px}
- .site-sidebar .primary-action{display:block;margin:0;padding:12px 10px;background:#171717;color:#fff;border:1px solid #171717;border-radius:0;font-size:12px;text-decoration:none;line-height:1.5}
- .site-sidebar .primary-action:hover{background:#b90017}
- .site-sidebar .secondary-action{display:block;padding:4px 10px;font-size:11px;line-height:1.5;text-decoration:none;border:0}
- .site-sidebar .view-switch{display:flex;width:100%;border:1px solid #c8c8c5;border-radius:0;overflow:hidden;padding:0}
- .site-sidebar .view-switch button{flex:1;text-align:center}
- .site-sidebar .view-switch [aria-pressed=true]{background:#171717;color:#fff}
- .site-sidebar .presentation-options{position:static;border:0;padding:0;margin:0;font-size:11px}
- .site-sidebar .option-panel{position:static;display:flex;flex-direction:column;min-width:0;box-shadow:none;border:0;background:none;padding:0 8px}
- .site-sidebar>*{flex-shrink:0}
- .site-sidebar .sidebar-sections{border-top:1px solid #d3d3d0;padding-top:9px;min-height:80px;flex:1 1 auto;overflow-y:auto;overscroll-behavior:contain}
- .site-sidebar :is(.section-menu,.story-menu){position:static;margin:0;padding:0;border:0;width:100%;background:none;color:#171717}
- .site-sidebar :is(.section-menu,.story-menu)>summary{font-weight:700;padding:4px 8px 10px;display:list-item;list-style:disclosure-open}
- .site-sidebar details:not([open])>summary{list-style:disclosure-closed}
- .site-sidebar :is(.section-menu,.story-menu):not([open])>nav{display:none}
- .site-sidebar .story-position{font-size:10px;float:right;color:#666;margin:0}
- .site-sidebar :is(.story-chapters,.phases,.practice-chapters,.static-slide-nav){position:static;max-height:none;overflow:visible;border:0;border-radius:0;box-shadow:none;padding:0;margin:0;background:none;width:100%;color:inherit}
- .site-sidebar :is(.nav-item,.story-chapters a,.phases a,.practice-chapters a,.static-slide-nav a){display:flex;align-items:baseline;gap:8px;width:100%;border:0;border-left:2px solid transparent;border-radius:0;padding:7px 8px;text-decoration:none;font-size:11px;line-height:1.4;font-weight:400;letter-spacing:0;color:#444;background:none}
- .site-sidebar :is(.nav-item,.story-chapters a,.phases a,.practice-chapters a)[aria-current]{border-left-color:#ed001c;color:#171717;background:#e9e9e5;font-weight:700}
- .site-sidebar .nav-index{color:#777;font-size:9px;min-width:17px}
- .site-sidebar .sidebar-bottom{border-top:1px solid #d3d3d0;padding-top:12px;display:grid;gap:9px;margin-top:auto;font-size:11px}
- .site-sidebar .sidebar-bottom>a{padding:0 8px;text-decoration:none}
- .site-sidebar .sidebar-bottom small{font-size:9px;color:#777;line-height:1.5;padding:0 8px}
- .site-sidebar .pager{display:flex;align-items:center;justify-content:space-between;gap:2px}
- .site-sidebar .pager button{font-size:10px;padding:6px 2px;min-width:0;width:auto}
- .site-sidebar #slide-count{font-size:10px;white-space:nowrap;color:#555}
- .site-sidebar button:disabled{opacity:.4;cursor:default}
- body>.deck-shell,body[data-presentation=story]>.deck-shell{display:block;margin-left:var(--sidebar-width);min-width:0}
- .deck-shell>.main-shell,body[data-presentation=story] .main-shell{margin:0;display:block;width:auto;min-width:0;grid-column:auto}
- .deck-shell .topbar{display:none!important}
- .deck-shell .deck-footer{justify-content:flex-end;min-height:26px;padding:4px 28px}
- body:has(>.site-navigation)>.static-presentation,body:has(>.site-navigation)>noscript>.static-presentation{margin-left:var(--sidebar-width)}
- body:has(>.site-navigation)>main{margin-left:var(--sidebar-width)}
- .site-navigation~main .workspace{grid-template-columns:minmax(0,1fr) 250px}
- .site-navigation~main #inspector{top:24px}
- .site-navigation~main .node{scroll-margin-top:30px}
- body[data-presentation=story] .story-chapter{scroll-margin-top:24px}
- body[data-presentation=story] .story-sticky{top:80px}
- body[data-presentation=story] .product-intro{padding-top:48px}
- body[data-presentation=story] .story-menu .story-chapters a{white-space:normal}
- body[data-presentation=story] .sidebar-bottom .pager{display:none}
- body[data-presentation=story] .site-sidebar #slide-nav{display:none!important}
- .product-actions :is(.primary-action,.secondary-action){display:none!important}
- .product-actions{min-height:0!important;gap:0!important;margin:10px 0!important}
- .product-actions .product-audience{margin:0!important}
- .practice-relocation{border-left:2px solid #c8c8c4;padding:9px 12px;margin:12px 0;font-size:12px;line-height:1.6;color:#555}
- .practice-relocation a{color:#a00016;text-underline-offset:3px}
- .practice-print-original{display:none}
- .sidebar-context{border-top:1px solid #d3d3d0;padding-top:12px;font-size:11px;line-height:1.5}
- .sidebar-context [data-stage-label]{display:block;margin-bottom:8px}
- .sidebar-context .context-buttons{display:flex;justify-content:space-between}
- .sidebar-context[hidden]{display:none}
- .sidebar-context [hidden]{display:none!important}
- .site-sidebar .overview{position:static;display:grid;grid-template-columns:1fr;gap:0;max-width:100%;padding:0;margin:0;overflow:visible;background:none}
- .site-sidebar .overview[hidden]{display:none}
- .site-sidebar .overview-card{min-height:0;padding:10px 8px;border-bottom:1px solid #d3d3d0}
- .site-sidebar .overview-card strong{font-size:12px;line-height:1.5}
- body:has(.site-sidebar .overview:not([hidden])) .site-sidebar .section-menu{display:none}
- .sidebar-context select{display:block;max-width:100%;width:100%;font:inherit;padding:8px 4px;border:1px solid #ccc;background:#fff;color:#171717;margin-top:6px}
- .sidebar-context label{display:block;margin-top:8px;font-size:10px}
- body[data-sidebar-ready=true] :is(.stage-controls,.story-step-jumps,.topic-strip,.suite-tabs,.cortex-tabs){display:none!important}
- .deck-shell #deck>.slide{padding-top:26px}
- .site-sidebar .cortex-shortcuts{border:0;font-size:11px}
- .site-sidebar .cortex-shortcuts nav a{font-size:10px;padding:7px 8px}
- @media(max-width:1000px){
-  :root{--sidebar-width:228px}
-  .site-navigation~main .workspace{grid-template-columns:minmax(0,1fr)}
- }
- @media(max-width:800px){
-  :root{--sidebar-width:260px}
-  .site-navigation{inset:0 auto auto 0;width:0;background:none}
-  .site-navigation>.sidebar-toggle{display:flex;position:fixed;top:0;left:0;gap:24px;align-items:center;justify-content:space-between;width:100vw;height:48px;padding:0 18px;border:0;border-bottom:1px solid #d3d3d0;background:#f6f6f3;color:#171717;font-size:11px;letter-spacing:.08em;cursor:pointer}
-  .site-navigation:not([open])>.site-sidebar{display:none!important}
-  .site-navigation[open]{height:100dvh;width:var(--sidebar-width);box-shadow:0 0 0 100vmax #0004}
-  .site-navigation>.site-sidebar{margin-top:48px;height:calc(100dvh - 48px);padding:20px 14px;position:relative;z-index:1}
-  .site-sidebar .identity,.site-sidebar .rail-caption{display:none}
-  .site-sidebar button,.site-sidebar .site-formats a,.site-sidebar .nav-item,.site-sidebar summary,.site-sidebar nav a{min-height:44px;display:flex;align-items:center}
-  body>.deck-shell,body[data-presentation=story]>.deck-shell,body:has(>.site-navigation)>main,body:has(>.site-navigation)>noscript>.static-presentation{margin-left:0;padding-top:48px}
-  body:has(>.site-navigation)>noscript>.cortex-section{padding-top:48px}
-  .site-navigation~main #inspector{top:auto}
-  body[data-presentation=story] .story-sticky{top:64px}
- }
-}
-@media print{.site-navigation{display:none!important}.practice-relocation{display:none!important}.practice-print-original{display:block!important}}
-
-@media screen{.no-js .site-sidebar :is(.tools,.controls,.pager,.js-only){display:none!important}.static-anchor{display:block;scroll-margin-top:60px}}
-
-.practice-print-original{display:none}@media print{.practice-print-original{display:block}.practice-relocation{display:none}}</style>
-<body><details class="site-navigation" open><summary class="sidebar-toggle"><span>PREFRONTAL</span><span>Menu</span></summary><aside class="site-sidebar rail" aria-label="Site navigation"><a class="identity" href="index.html"><span>PREFRONTAL<br><strong>GOVERNED CONTEXT</strong></span></a><p class="rail-caption">Product concept · pilot pitch</p><nav class="site-formats" aria-label="Presentation format"><a class="" href="index.html">Presentation<span aria-hidden="true">↗</span></a><a class="" href="story.html">Scroll story<span aria-hidden="true">↗</span></a><a class="decision-format" href="decisions.html">Decision tree<span aria-hidden="true">↗</span></a><a class="" href="best-practices.html">Best Practices<span aria-hidden="true">↗</span></a></nav><div class="sidebar-actions"><a class="primary-action" href="index.html#full-architecture">Explore the architecture ↗</a><a class="secondary-action" href="index.html#pilot-acceptance">Review the pilot →</a></div><div class="controls">
+</style>
+<header><strong>Prefrontal</strong><span class="tag">Motion study · Review only</span></header>
+<main>
+<div class="eyebrow">Genjutsu / Cast / Interaction thesis</div>
+<h1>Follow the context.<br><span>See each decision.</span></h1>
+<p class="lead">Use motion to show what changed, where context moves, and why it stops. Keep the text still while people read. Add depth to diagrams when it helps explain their layers.</p>
+<div class="controls">
 <button class="primary" id="replay-all">Replay all three</button>
 <button id="pause" aria-pressed="false">Pause motion</button>
 <label><input id="reduce" type="checkbox"> Preview reduced motion</label>
 <label><input id="flat" type="checkbox"> Flat view</label>
-</div><div class="sidebar-sections"><details open class="section-menu"><summary>Practice topics</summary><nav class="practice-chapters" aria-label="Practice topics"><a href="#variants"><span class="nav-index">01</span>Compare directions</a><a href="#scroll-story"><span class="nav-index">02</span>Scroll and depth</a></nav></details></div><div class="sidebar-context" hidden></div><div class="sidebar-bottom"><a class="cortex-nav-link js-only" href="story.html#why-prefrontal">Why Prefrontal?</a><noscript><a href="story.html#static-why-prefrontal">Why Prefrontal?</a></noscript><a href="motion-preview.html">Motion reference ↗</a><small>STE-inspired · compliance unchecked</small></div></aside></details>
-<main>
-<div class="eyebrow">Genjutsu / Cast / Interaction thesis</div>
-<h1>Follow the context.<br><span>See each decision.</span></h1>
-<p class="lead practice-print-original">Use motion to show what changed, where context moves, and why it stops. Keep the text still while people read. Add depth to diagrams when it helps explain their layers.</p>
-
+</div>
 <div class="status" id="motion-status" role="status">Motion runs only while a diagram is visible.</div>
 <section class="variants" aria-label="Compare three motion directions" id="variants"></section>
 <section class="divider" aria-labelledby="scroll-title">
@@ -154,7 +49,7 @@
 </div></div>
 </section>
 <section class="divider"><div class="eyebrow">Whole-site application</div><h2 class="section-title">One motion language.<br>Four places to use it.</h2>
-<p class="practice-relocation">Motion and reading guidance moved to <a href="best-practices.html#presentation-motion">Best Practices</a>.</p><div class="scope practice-print-original">
+<div class="scope">
 <article><span>01 / DECK</span><h3>Stage handoff</h3><p>Use a brief exit and arrival when a slide changes. Keep navigation immediate. Preserve the 16-slide print deck.</p></article>
 <article><span>02 / STORY</span><h3>Reading focus</h3><p>Keep the diagram beside the current explanation. Use bounded depth. Preserve all 16 chapters and 31 topics.</p></article>
 <article><span>03 / DECISIONS</span><h3>Route continuity</h3><p>Highlight the selected node and its outcomes. Move only along its routes. Preserve all 57 nodes and 70 routes.</p></article>
@@ -207,69 +102,3 @@ document.querySelector('#replay-all').addEventListener('click',()=>cards.forEach
 window.PreviewMotion={stats:()=>({frames,scheduled:raf!==null,paused:effectiveStatic(),flat,selected:chosen.id})};sync();cards.forEach(replay);
 </script>
 </html>
-
-<script>/* Sidebar navigation shares the existing controls and their event handlers. */
-(function(){
- 'use strict';
- const rail=document.querySelector('.site-navigation');if(!rail)return;
- const mobile=matchMedia('(max-width:800px)'),toggle=rail.querySelector('summary');
- const sync=()=>{rail.open=!mobile.matches;};sync();mobile.addEventListener('change',sync);
- rail.addEventListener('toggle',()=>{toggle.setAttribute('aria-expanded',String(rail.open));});
- rail.addEventListener('click',event=>{
-  const target=event.target.closest('a,.nav-item,.story-chapters a');
-  if(target&&mobile.matches){rail.open=false;}
- });
- document.addEventListener('keydown',event=>{if(event.key==='Escape'&&mobile.matches&&rail.open){rail.open=false;toggle.focus();}});
- document.addEventListener('pointerdown',event=>{if(mobile.matches&&rail.open&&!rail.contains(event.target))rail.open=false;});
- // Preserve native hash navigation and the deck's canonical slide handler.
- rail.querySelectorAll('.sidebar-actions a').forEach(link=>link.addEventListener('click',()=>{
-  if(link.hash&&link.pathname===location.pathname&&typeof showSlide==='function'){
-   const index=deckData.slides.findIndex(slide=>slide.id===link.hash.slice(1));if(index>=0)showSlide(index);
-  }
- }));
- document.getElementById('practice-print')?.addEventListener('click',()=>window.print());
- const cortexTabs=document.querySelector('.cortex-tabs');
- if(cortexTabs){const detail=document.createElement('details');detail.className='cortex-shortcuts';detail.innerHTML='<summary>Brain reference sections</summary>';const nav=cortexTabs;nav.className='sidebar-cortex-links';detail.append(nav);rail.querySelector('.sidebar-sections').append(detail);}
- const context=rail.querySelector('.sidebar-context');
- const deck=document.getElementById('deck');
- const overview=document.getElementById('overview');if(overview)rail.querySelector('.sidebar-sections').append(overview);
- if(deck&&context){
-  let currentPanel=null,currentFigure=null;
-  context.innerHTML='<strong data-stage-label>Diagram steps</strong><div class="context-buttons"><button id="sidebar-stage-prev" type="button" aria-label="Previous diagram stage">← Stage</button><span id="sidebar-stage-count"></span><button id="sidebar-stage-next" type="button" aria-label="Next diagram stage">Stage →</button></div><label class="sidebar-step-label" hidden>Diagram step<select id="sidebar-step"></select></label><label class="sidebar-topic-label" hidden>Detail section<select id="sidebar-topic"></select></label><label class="sidebar-cost-label" hidden>Cost view<select id="sidebar-cost"></select></label>';
-  const count=context.querySelector('#sidebar-stage-count'),step=context.querySelector('#sidebar-step'),topic=context.querySelector('#sidebar-topic'),cost=context.querySelector('#sidebar-cost');
-  function fill(select,buttons){select.replaceChildren();buttons.forEach((button,i)=>{const option=document.createElement('option');option.value=i;option.textContent=button.getAttribute('aria-label')||button.textContent;select.append(option);});select.parentElement.hidden=!buttons.length;}
-  function refresh(){
-   if(!currentPanel)return;
-   const figure=[...currentPanel.querySelectorAll('.mechanism-figure')].find(e=>e.checkVisibility());
-   currentFigure=figure||null;
-   context.querySelector('.context-buttons').hidden=!figure;
-   count.textContent=figure?.querySelector('.stage-count')?.textContent||'';
-   context.querySelector('[data-stage-label]').textContent=figure?'Diagram steps':'Reading controls';
-   if(step.options.length&&figure)step.value=figure.querySelector('svg')?.dataset.currentStep||'0';
-  }
-  function selectPanel(panel){
-   if(!panel||panel===currentPanel)return;
-   currentPanel=panel;context.hidden=false;
-   fill(topic,[...panel.querySelectorAll('.topic-strip button')]);
-   if(topic.options.length){const hint=document.createElement('option');hint.value='';hint.textContent='Choose detail…';hint.disabled=true;hint.selected=true;topic.prepend(hint);}
-   fill(cost,[...panel.querySelectorAll('.suite-tabs button')]);
-   fill(step,[...panel.querySelectorAll('.story-scene .story-step-jump')]);
-   refresh();
-  }
-  function stage(delta){if(!currentFigure)return;const scene=currentFigure.closest('.story-scene');if(scene){const cards=[...scene.querySelectorAll('.story-step')];const n=Math.max(0,Math.min(cards.length-1,Number(currentFigure.dataset.scrollStage||0)+delta));scene.querySelectorAll('.story-step-jump')[n]?.click();}else currentFigure.querySelector(delta>0?'.stage-next':'.stage-prev')?.click();refresh();}
-  context.querySelector('#sidebar-stage-prev').addEventListener('click',()=>stage(-1));context.querySelector('#sidebar-stage-next').addEventListener('click',()=>stage(1));
-  const closeMobile=()=>{if(mobile.matches)rail.open=false;};
-  step.addEventListener('change',()=>{currentPanel.querySelectorAll('.story-step-jump')[Number(step.value)]?.click();closeMobile();});
-  topic.addEventListener('change',()=>{currentPanel.querySelectorAll('.topic-strip button')[Number(topic.value)]?.click();closeMobile();});
-  cost.addEventListener('change',()=>{if(document.body.dataset.presentation==='story')currentPanel.querySelectorAll('.suite-page')[Number(cost.value)]?.scrollIntoView({behavior:'instant',block:'start'});else currentPanel.querySelectorAll('.suite-tabs button')[Number(cost.value)]?.click();refresh();closeMobile();});
-  // Mutation events mirror the existing animation cursor; no second clock.
-  new MutationObserver(()=>{if(document.body.dataset.presentation!=='story')selectPanel([...deck.children].find(e=>e.matches('.slide:not([hidden])')));refresh();}).observe(deck,{subtree:true,attributes:true,attributeFilter:['hidden','data-current-step','data-scroll-stage']});
-  if(document.body.dataset.presentation==='story'){
-   const observer=new IntersectionObserver(entries=>{const hit=entries.filter(e=>e.isIntersecting).sort((a,b)=>a.boundingClientRect.top-b.boundingClientRect.top)[0];if(hit)selectPanel(hit.target);},{rootMargin:'-10% 0px -65% 0px'});deck.querySelectorAll('.slide').forEach(e=>observer.observe(e));
-  }
-  selectPanel([...deck.children].find(e=>e.matches('.slide:not([hidden])')));
- }
- document.body.dataset.sidebarReady='true';
-})();
-</script>
-</body>

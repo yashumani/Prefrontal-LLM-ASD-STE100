@@ -1,0 +1,4150 @@
+{
+  "title": "Best Practices",
+  "subtitle": "Guidance from every product view, with source context preserved.",
+  "notice": "The source settings and task recommendations are reference examples, not approved policy. Provider settings differ. The full-cost worksheet follows this model-only estimate.",
+  "schemaVersion": 1,
+  "sections": [
+    {
+      "id": "writing",
+      "title": "Writing and meaning",
+      "summary": "This presentation uses STE-inspired writing. The review view preserves the original rule and its exception.",
+      "items": [
+        {
+          "id": "writing-01",
+          "title": "Use short sentences.",
+          "text": "Use short sentences.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/writing/rules/0",
+            "href": "story.html#submission-template",
+            "label": "Use short sentences. · source"
+          },
+          "move": true
+        },
+        {
+          "id": "writing-02",
+          "title": "Use active voice.",
+          "text": "Use active voice.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/writing/rules/1",
+            "href": "story.html#submission-template",
+            "label": "Use active voice. · source"
+          },
+          "move": true
+        },
+        {
+          "id": "writing-03",
+          "title": "Use one term for one concept.",
+          "text": "Use one term for one concept.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/writing/rules/2",
+            "href": "story.html#submission-template",
+            "label": "Use one term for one concept. · source"
+          },
+          "move": true
+        },
+        {
+          "id": "writing-04",
+          "title": "Give each sentence one main idea.",
+          "text": "Give each sentence one main idea.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/writing/rules/3",
+            "href": "story.html#submission-template",
+            "label": "Give each sentence one main idea. · source"
+          },
+          "move": true
+        },
+        {
+          "id": "writing-05",
+          "title": "Preserve conditions, evidence and uncertainty.",
+          "text": "Preserve conditions, evidence and uncertainty.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/writing/rules/4",
+            "href": "story.html#submission-template",
+            "label": "Preserve conditions, evidence and uncertainty. · source"
+          },
+          "move": true
+        },
+        {
+          "id": "writing-06",
+          "title": "Keep two views",
+          "text": "Store the original text and the clearer review view.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/6/sections/1/items/0/text",
+            "href": "story.html#submission-template",
+            "label": "Keep two views · source"
+          },
+          "move": true
+        },
+        {
+          "id": "writing-07",
+          "title": "Keep every condition",
+          "text": "Preserve the 30-day rule and the dispute exception.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/6/sections/1/items/1/text",
+            "href": "story.html#submission-template",
+            "label": "Keep every condition · source"
+          },
+          "move": true
+        },
+        {
+          "id": "writing-08",
+          "title": "Use one term",
+          "text": "Use the same term for the same governed concept.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/6/sections/1/items/3/text",
+            "href": "story.html#submission-template",
+            "label": "Use one term · source"
+          },
+          "move": true
+        },
+        {
+          "id": "writing-09",
+          "title": "Review the transformation",
+          "text": "A fluent rewrite can still change meaning.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/6/sections/1/items/2/text",
+            "href": "story.html#submission-template",
+            "label": "Review the transformation · source"
+          },
+          "move": false
+        },
+        {
+          "id": "writing-10",
+          "title": "Short sentences",
+          "text": "Keep sentences short. Preserve necessary conditions and uncertainty. Keep the original source beside the review view.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/6/sections/1/infographic/stages/0/detail",
+            "href": "story.html#submission-template",
+            "label": "Short sentences · source"
+          },
+          "move": false
+        },
+        {
+          "id": "writing-11",
+          "title": "Active verbs",
+          "text": "Use active voice. Name the person or component that performs each action.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/6/sections/1/infographic/stages/1/detail",
+            "href": "story.html#submission-template",
+            "label": "Active verbs · source"
+          },
+          "move": false
+        },
+        {
+          "id": "writing-12",
+          "title": "Consistent terms",
+          "text": "Use the same term for the same concept. Define technical terms when the audience needs them.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/6/sections/1/infographic/stages/2/detail",
+            "href": "story.html#submission-template",
+            "label": "Consistent terms · source"
+          },
+          "move": false
+        },
+        {
+          "id": "writing-13",
+          "title": "One main idea",
+          "text": "Give each sentence one main idea. Use diagrams to show relationships and sequence.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/6/sections/1/infographic/stages/3/detail",
+            "href": "story.html#submission-template",
+            "label": "One main idea · source"
+          },
+          "move": false
+        },
+        {
+          "id": "writing-14",
+          "title": "Preserve meaning",
+          "text": "Retain dates, units, negation, exceptions and uncertainty.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/6/sections/0/items/0/text",
+            "href": "story.html#submission-template",
+            "label": "Preserve meaning · source"
+          },
+          "move": true
+        },
+        {
+          "id": "writing-15",
+          "title": "STE-inspired writing",
+          "text": "I used STE-inspired writing in this presentation. Each sentence carries one main idea. Full ASD-STE100 compliance has not been checked.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/writing/presenterStatement",
+            "href": "story.html#submission-template",
+            "label": "STE-inspired writing · source"
+          },
+          "move": false
+        }
+      ]
+    },
+    {
+      "id": "submission-review",
+      "title": "Submission and human review",
+      "summary": "The agent proposes a record. The reviewer checks evidence, meaning and access before approval.",
+      "items": [
+        {
+          "id": "submission-review-01",
+          "title": "Check before review",
+          "text": "Reject malformed input. Hold unsupported or conflicting claims.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/6/sections/0/items/1/text",
+            "href": "story.html#submission-template",
+            "label": "Check before review · source"
+          },
+          "move": true
+        },
+        {
+          "id": "submission-review-02",
+          "title": "Evidence review",
+          "text": "Check sources, dates, scope and unsupported statements.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/6/sections/2/items/0/text",
+            "href": "story.html#submission-template",
+            "label": "Evidence review · source"
+          },
+          "move": true,
+          "references": [
+            {
+              "file": "presentation-content.json",
+              "pointer": "/slides/6/sections/2/infographic/stages/0/detail",
+              "href": "story.html#submission-template",
+              "label": "Evidence review · parallel source",
+              "move": false
+            }
+          ]
+        },
+        {
+          "id": "submission-review-03",
+          "title": "Meaning review",
+          "text": "Check definitions, units, assumptions and conflicts.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/6/sections/2/items/1/text",
+            "href": "story.html#submission-template",
+            "label": "Meaning review · source"
+          },
+          "move": true,
+          "references": [
+            {
+              "file": "presentation-content.json",
+              "pointer": "/slides/6/sections/2/infographic/stages/1/detail",
+              "href": "story.html#submission-template",
+              "label": "Meaning review · parallel source",
+              "move": false
+            }
+          ]
+        },
+        {
+          "id": "submission-review-04",
+          "title": "Access review",
+          "text": "Confirm workspace, permitted audience and purpose.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/6/sections/2/items/2/text",
+            "href": "story.html#submission-template",
+            "label": "Access review · source"
+          },
+          "move": true,
+          "references": [
+            {
+              "file": "presentation-content.json",
+              "pointer": "/slides/6/sections/2/infographic/stages/2/detail",
+              "href": "story.html#submission-template",
+              "label": "Access review · parallel source",
+              "move": false
+            }
+          ]
+        },
+        {
+          "id": "submission-review-05",
+          "title": "Version-bound approval",
+          "text": "Bind the reviewer decision to the submitted content hash.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/6/sections/2/items/3/text",
+            "href": "story.html#submission-template",
+            "label": "Version-bound approval · source"
+          },
+          "move": true,
+          "references": [
+            {
+              "file": "presentation-content.json",
+              "pointer": "/slides/6/sections/2/infographic/stages/3/detail",
+              "href": "story.html#submission-template",
+              "label": "Version-bound approval · parallel source",
+              "move": false
+            }
+          ]
+        },
+        {
+          "id": "submission-review-06",
+          "title": "Derived claims",
+          "text": "Send new interpretation through preparation and review.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/6/sections/2/items/4/text",
+            "href": "story.html#submission-template",
+            "label": "Derived claims · source"
+          },
+          "move": true,
+          "references": [
+            {
+              "file": "presentation-content.json",
+              "pointer": "/slides/6/sections/2/infographic/stages/4/detail",
+              "href": "story.html#submission-template",
+              "label": "Derived claims · parallel source",
+              "move": false
+            }
+          ]
+        },
+        {
+          "id": "submission-review-07",
+          "title": "Release ownership",
+          "text": "An accountable owner accepts release and pilot evidence.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/6/sections/2/items/5/text",
+            "href": "story.html#submission-template",
+            "label": "Release ownership · source"
+          },
+          "move": true,
+          "references": [
+            {
+              "file": "presentation-content.json",
+              "pointer": "/slides/6/sections/2/infographic/stages/5/detail",
+              "href": "story.html#submission-template",
+              "label": "Release ownership · parallel source",
+              "move": false
+            }
+          ]
+        },
+        {
+          "id": "submission-review-08",
+          "title": "Submission + workspace",
+          "text": "Resolve scope and duplicates.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/submission/0/check",
+            "href": "story.html#submission-template",
+            "label": "Submission + workspace · source"
+          },
+          "move": false
+        },
+        {
+          "id": "submission-review-09",
+          "title": "Kind + proposed meaning",
+          "text": "Preserve the dispute exception.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/submission/1/check",
+            "href": "story.html#submission-template",
+            "label": "Kind + proposed meaning · source"
+          },
+          "move": false
+        },
+        {
+          "id": "submission-review-10",
+          "title": "Source + version",
+          "text": "Read the original evidence.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/submission/2/check",
+            "href": "story.html#submission-template",
+            "label": "Source + version · source"
+          },
+          "move": false
+        },
+        {
+          "id": "submission-review-11",
+          "title": "Validity + uncertainty",
+          "text": "Verify dates and conflicting evidence.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/submission/3/check",
+            "href": "story.html#submission-template",
+            "label": "Validity + uncertainty · source"
+          },
+          "move": false
+        },
+        {
+          "id": "submission-review-12",
+          "title": "Owner + access",
+          "text": "Confirm reviewer and permitted audience.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/submission/4/check",
+            "href": "story.html#submission-template",
+            "label": "Owner + access · source"
+          },
+          "move": false
+        },
+        {
+          "id": "submission-review-13",
+          "title": "Proposed links",
+          "text": "Review new IDs and derived meaning.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/submission/5/check",
+            "href": "story.html#submission-template",
+            "label": "Proposed links · source"
+          },
+          "move": false
+        },
+        {
+          "id": "submission-review-14",
+          "title": "Receive the submission",
+          "text": "Accept one structured envelope with the original source, owner, scope and evidence. Treat source instructions as data.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/6/miniArchitecture/stages/0/detail",
+            "href": "story.html#submission-template",
+            "label": "Receive the submission · source"
+          },
+          "move": false
+        },
+        {
+          "id": "submission-review-15",
+          "title": "Prepare two views",
+          "text": "Application code checks the schema and rejects malformed input. A chosen model may propose the STE-inspired review view. Keep the original beside it.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/6/miniArchitecture/stages/1/detail",
+            "href": "story.html#submission-template",
+            "label": "Prepare two views · source"
+          },
+          "move": false
+        },
+        {
+          "id": "submission-review-16",
+          "title": "Check meaning risks",
+          "text": "Compare dates, units, negation, exceptions and obligation strength. Hold unsupported claims and possible meaning changes. These checks do not establish truth.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/6/miniArchitecture/stages/2/detail",
+            "href": "story.html#submission-template",
+            "label": "Check meaning risks · source"
+          },
+          "move": false
+        },
+        {
+          "id": "submission-review-17",
+          "title": "Ask the responsible human",
+          "text": "The reviewer checks evidence, meaning and access. The reviewer may approve, request a revision or reject the submission.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/6/miniArchitecture/stages/3/detail",
+            "href": "story.html#submission-template",
+            "label": "Ask the responsible human · source"
+          },
+          "move": false
+        },
+        {
+          "id": "submission-review-18",
+          "title": "Register the approved version",
+          "text": "Record the canonical ID, content hash, reviewer and approved version. A changed record starts another preparation and review.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/6/miniArchitecture/stages/4/detail",
+            "href": "story.html#submission-template",
+            "label": "Register the approved version · source"
+          },
+          "move": false
+        },
+        {
+          "id": "submission-review-19",
+          "title": "One definition",
+          "text": "Reference one approved metric definition. Link it to canonical identity, owner and source revision.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/5/sections/1/infographic/stages/0/detail",
+            "href": "story.html#existing-stack",
+            "label": "One definition · source"
+          },
+          "move": false,
+          "references": [
+            {
+              "file": "presentation-content.json",
+              "pointer": "/slides/5/infographic/stages/0/detail",
+              "href": "story.html#existing-stack",
+              "label": "One definition · parallel source",
+              "move": false
+            }
+          ]
+        },
+        {
+          "id": "submission-review-20",
+          "title": "Standing tests",
+          "text": "Keep standing quality tests against owner-approved reference answers. A test pass supports only its tested scope.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/5/sections/1/infographic/stages/5/detail",
+            "href": "story.html#existing-stack",
+            "label": "Standing tests · source"
+          },
+          "move": false,
+          "references": [
+            {
+              "file": "presentation-content.json",
+              "pointer": "/slides/5/infographic/stages/5/detail",
+              "href": "story.html#existing-stack",
+              "label": "Standing tests · parallel source",
+              "move": false
+            }
+          ]
+        },
+        {
+          "id": "submission-review-21",
+          "title": "Audit evidence",
+          "text": "Preserve source, reviewer, date and exact version. Read back persistent evidence across the workflow.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/5/sections/1/infographic/stages/6/detail",
+            "href": "story.html#existing-stack",
+            "label": "Audit evidence · source"
+          },
+          "move": false,
+          "references": [
+            {
+              "file": "presentation-content.json",
+              "pointer": "/slides/5/infographic/stages/6/detail",
+              "href": "story.html#existing-stack",
+              "label": "Audit evidence · parallel source",
+              "move": false
+            }
+          ]
+        },
+        {
+          "id": "submission-review-22",
+          "title": "Reviewed change",
+          "text": "Reviewed learning: new drafts return to human review before an approved release.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/5/sections/1/infographic/stages/7/detail",
+            "href": "story.html#existing-stack",
+            "label": "Reviewed change · source"
+          },
+          "move": false,
+          "references": [
+            {
+              "file": "presentation-content.json",
+              "pointer": "/slides/5/infographic/stages/7/detail",
+              "href": "story.html#existing-stack",
+              "label": "Reviewed change · parallel source",
+              "move": false
+            }
+          ]
+        },
+        {
+          "id": "submission-review-23",
+          "title": "Keep people in charge of priorities",
+          "text": "Owners define priorities and acceptable trade-offs. A human reviews the evidence and approves an exact version. Model scores cannot replace that decision authority.",
+          "source": {
+            "file": "cortex-content.json",
+            "pointer": "/mappings/2/analogy",
+            "href": "story.html#why-prefrontal",
+            "label": "Keep people in charge of priorities · source"
+          },
+          "move": false,
+          "details": [
+            {
+              "label": "Analogy boundary",
+              "text": "Owner-defined rules are explicit software inputs. The product does not gain empathy, emotions or moral judgment from this analogy.",
+              "source": {
+                "file": "cortex-content.json",
+                "pointer": "/mappings/2/boundary",
+                "href": "story.html#why-prefrontal",
+                "label": "Keep people in charge of priorities · boundary"
+              }
+            }
+          ]
+        },
+        {
+          "id": "submission-review-24",
+          "title": "Is the record complete?",
+          "text": "Reject malformed data. Do not invent missing evidence.",
+          "source": {
+            "file": "decision-tree.json",
+            "pointer": "/nodes/5/detail",
+            "href": "decisions.html#complete",
+            "label": "Is the record complete? · source"
+          },
+          "move": false
+        },
+        {
+          "id": "submission-review-25",
+          "title": "Does the meaning match?",
+          "text": "Hold unsupported or conflicting claims. Shorter English must not remove an exception or change a formula.",
+          "source": {
+            "file": "decision-tree.json",
+            "pointer": "/nodes/7/detail",
+            "href": "decisions.html#meaning",
+            "label": "Does the meaning match? · source"
+          },
+          "move": false
+        }
+      ]
+    },
+    {
+      "id": "identity-lifecycle",
+      "title": "Identity, versions and lifecycle",
+      "summary": "A canonical ID gives one object a stable identity. Versioned records link facts, measures, concepts, and meaning.",
+      "items": [
+        {
+          "id": "identity-lifecycle-01",
+          "title": "Resolve identity",
+          "text": "Match the existing object before creating another canonical ID.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/7/sections/0/items/0/text",
+            "href": "story.html#context-contract",
+            "label": "Resolve identity · source"
+          },
+          "move": true
+        },
+        {
+          "id": "identity-lifecycle-02",
+          "title": "Bind the semantic source",
+          "text": "For metrics, map the LookML model, Explore, view and measure to a Git revision.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/7/sections/0/items/1/text",
+            "href": "story.html#context-contract",
+            "label": "Bind the semantic source · source"
+          },
+          "move": true
+        },
+        {
+          "id": "identity-lifecycle-03",
+          "title": "Version the meaning",
+          "text": "Keep the owner, approval, population, grain, unit, time window and exceptions with each version.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/7/sections/0/items/2/text",
+            "href": "story.html#context-contract",
+            "label": "Version the meaning · source"
+          },
+          "move": true
+        },
+        {
+          "id": "identity-lifecycle-04",
+          "title": "Enforce permissions",
+          "text": "An ID locates a record. Recheck access for each consumer and source query.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/7/sections/0/items/3/text",
+            "href": "story.html#context-contract",
+            "label": "Enforce permissions · source"
+          },
+          "move": true
+        },
+        {
+          "id": "identity-lifecycle-05",
+          "title": "Governed links",
+          "text": "Derived records reference approved input IDs and versions.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/7/sections/1/items/1/text",
+            "href": "story.html#context-contract",
+            "label": "Governed links · source"
+          },
+          "move": false
+        },
+        {
+          "id": "identity-lifecycle-06",
+          "title": "Canonical records",
+          "text": "Keep sources, approved versions, status and review history.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/8/sections/1/items/0/text",
+            "href": "story.html#bounded-decision-router",
+            "label": "Canonical records · source"
+          },
+          "move": true
+        },
+        {
+          "id": "identity-lifecycle-07",
+          "title": "Corrections",
+          "text": "Update or invalidate indexes after approved source changes, expiry, withdrawal or revoked access. Recheck canonical state before delivery. Preserve IDs, versions, formulas, units and validity dates.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/8/sections/1/items/3/text",
+            "href": "story.html#bounded-decision-router",
+            "label": "Corrections · source"
+          },
+          "move": true
+        },
+        {
+          "id": "identity-lifecycle-08",
+          "title": "Changed approved record",
+          "text": "Require a new version and review. Keep the prior audit history.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/9/sections/1/items/2/text",
+            "href": "story.html#secure-delivery",
+            "label": "Changed approved record · source"
+          },
+          "move": true,
+          "references": [
+            {
+              "file": "presentation-content.json",
+              "pointer": "/slides/9/sections/1/infographic/stages/2/detail",
+              "href": "story.html#secure-delivery",
+              "label": "Changed approved record · parallel source",
+              "move": false
+            }
+          ]
+        },
+        {
+          "id": "identity-lifecycle-09",
+          "title": "Expired or withdrawn input",
+          "text": "Invalidate dependent output, search indexes and cached views. Rebuild from approved releases. Block stale or revoked content at delivery.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/9/sections/1/items/3/text",
+            "href": "story.html#secure-delivery",
+            "label": "Expired or withdrawn input · source"
+          },
+          "move": true
+        },
+        {
+          "id": "identity-lifecycle-10",
+          "title": "Publication failure",
+          "text": "Do not expose a partial update. Keep the prior release available only while it remains valid and permitted.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/9/sections/1/items/5/text",
+            "href": "story.html#secure-delivery",
+            "label": "Publication failure · source"
+          },
+          "move": true
+        },
+        {
+          "id": "identity-lifecycle-11",
+          "title": "Resolve the approved identity",
+          "text": "Match an existing canonical object before creating another ID. Load its approved version and permitted workspace.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/7/miniArchitecture/stages/0/detail",
+            "href": "story.html#context-contract",
+            "label": "Resolve the approved identity · source"
+          },
+          "move": false
+        },
+        {
+          "id": "identity-lifecycle-12",
+          "title": "Ask the organizer",
+          "text": "The harness asks the chosen model for a typed category or link proposal. Code validates allowed categories, identity references and versions.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/7/miniArchitecture/stages/1/detail",
+            "href": "story.html#context-contract",
+            "label": "Ask the organizer · source"
+          },
+          "move": false
+        },
+        {
+          "id": "identity-lifecycle-13",
+          "title": "Build the versioned bundle",
+          "text": "Link records to approved input IDs and versions. A Metric Passport retains the LookML project, model, Explore, view, measure and Git revision.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/7/miniArchitecture/stages/3/detail",
+            "href": "story.html#context-contract",
+            "label": "Build the versioned bundle · source"
+          },
+          "move": false
+        },
+        {
+          "id": "identity-lifecycle-14",
+          "title": "Return new meaning to review",
+          "text": "A new interpretation or changed definition is a submission. Keep it out of the approved bundle until exact-version human review succeeds.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/7/miniArchitecture/stages/4/detail",
+            "href": "story.html#context-contract",
+            "label": "Return new meaning to review · source"
+          },
+          "move": false
+        },
+        {
+          "id": "identity-lifecycle-15",
+          "title": "Native source",
+          "text": "Bind the metric to the approved LookML model, Explore, view, measure and Git revision. Reference the native formula or certified SQL revision.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/7/sections/0/infographic/stages/0/detail",
+            "href": "story.html#context-contract",
+            "label": "Native source · source"
+          },
+          "move": false
+        },
+        {
+          "id": "identity-lifecycle-16",
+          "title": "Metric meaning",
+          "text": "Keep the population, grain, unit, time window and exceptions together. Grain means the level represented by one data record.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/7/sections/0/infographic/stages/1/detail",
+            "href": "story.html#context-contract",
+            "label": "Metric meaning · source"
+          },
+          "move": false
+        },
+        {
+          "id": "identity-lifecycle-17",
+          "title": "Review evidence",
+          "text": "Record the responsible reviewer and the exact approved version. Retain source evidence, validity and audit history.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/7/sections/0/infographic/stages/2/detail",
+            "href": "story.html#context-contract",
+            "label": "Review evidence · source"
+          },
+          "move": false
+        },
+        {
+          "id": "identity-lifecycle-18",
+          "title": "Access rules",
+          "text": "Resolve identity before creating another canonical ID. An ID grants no access. Recheck permissions for each consumer and source query.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/7/sections/0/infographic/stages/3/detail",
+            "href": "story.html#context-contract",
+            "label": "Access rules · source"
+          },
+          "move": false
+        },
+        {
+          "id": "identity-lifecycle-19",
+          "title": "Data",
+          "text": "Preserve source facts, fields, values, dates, units and versions.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/7/infographic/stages/0/detail",
+            "href": "story.html#context-contract",
+            "label": "Data · source"
+          },
+          "move": false
+        },
+        {
+          "id": "identity-lifecycle-20",
+          "title": "Metric",
+          "text": "Bind the LookML project, model, Explore, view, measure and Git revision, or certified SQL revision. Keep population, grain, unit, period and exceptions. Preserve native calculation logic.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/7/infographic/stages/1/detail",
+            "href": "story.html#context-contract",
+            "label": "Metric · source"
+          },
+          "move": false
+        },
+        {
+          "id": "identity-lifecycle-21",
+          "title": "Ontology",
+          "text": "An ontology defines concepts and their relationships. Link aliases to governed entity IDs.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/7/infographic/stages/2/detail",
+            "href": "story.html#context-contract",
+            "label": "Ontology · source"
+          },
+          "move": false
+        },
+        {
+          "id": "identity-lifecycle-22",
+          "title": "Interpretation",
+          "text": "Explain meaning under stated assumptions. New derived claims require human review and approved input references.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/7/infographic/stages/3/detail",
+            "href": "story.html#context-contract",
+            "label": "Interpretation · source"
+          },
+          "move": false
+        },
+        {
+          "id": "identity-lifecycle-23",
+          "title": "Review what changes",
+          "text": "Record outcomes and source changes. Invalidate withdrawn or expired views. Return changed meaning to human review before reuse.",
+          "source": {
+            "file": "cortex-content.json",
+            "pointer": "/mappings/3/analogy",
+            "href": "story.html#why-prefrontal",
+            "label": "Review what changes · source"
+          },
+          "move": false,
+          "details": [
+            {
+              "label": "Analogy boundary",
+              "text": "A feedback log is not biological learning. Changed meaning still needs approval; a successful output does not make it true.",
+              "source": {
+                "file": "cortex-content.json",
+                "pointer": "/mappings/3/boundary",
+                "href": "story.html#why-prefrontal",
+                "label": "Review what changes · boundary"
+              }
+            }
+          ]
+        },
+        {
+          "id": "identity-lifecycle-24",
+          "title": "Hold publication",
+          "text": "Do not publish a derived object whose evidence or dependency is invalid. Resubmit changed meaning.",
+          "source": {
+            "file": "decision-tree.json",
+            "pointer": "/nodes/23/detail",
+            "href": "decisions.html#hold-dependencies",
+            "label": "Hold publication · source"
+          },
+          "move": false
+        },
+        {
+          "id": "identity-lifecycle-25",
+          "title": "Did publication succeed?",
+          "text": "A completed write request is not proof of a valid release.",
+          "source": {
+            "file": "decision-tree.json",
+            "pointer": "/nodes/25/detail",
+            "href": "decisions.html#release",
+            "label": "Did publication succeed? · source"
+          },
+          "move": false
+        },
+        {
+          "id": "identity-lifecycle-26",
+          "title": "Use valid prior release",
+          "text": "If no valid prior release exists, hold delivery. Repair the publication fault and retry.",
+          "source": {
+            "file": "decision-tree.json",
+            "pointer": "/nodes/26/detail",
+            "href": "decisions.html#prior",
+            "label": "Use valid prior release · source"
+          },
+          "move": false
+        },
+        {
+          "id": "identity-lifecycle-27",
+          "title": "Has source state changed?",
+          "text": "A lifecycle event can occur after delivery. Revoke invalid views immediately; approve changed meaning before reuse.",
+          "source": {
+            "file": "decision-tree.json",
+            "pointer": "/nodes/53/detail",
+            "href": "decisions.html#change",
+            "label": "Has source state changed? · source"
+          },
+          "move": false
+        },
+        {
+          "id": "identity-lifecycle-28",
+          "title": "Invalidate dependent views",
+          "text": "Rebuild indexes only from current approved releases. A source change that changes meaning must also become a reviewed submission.",
+          "source": {
+            "file": "decision-tree.json",
+            "pointer": "/nodes/55/detail",
+            "href": "decisions.html#invalidate",
+            "label": "Invalidate dependent views · source"
+          },
+          "move": false
+        }
+      ]
+    },
+    {
+      "id": "retrieval",
+      "title": "Retrieval and bounded orchestration",
+      "summary": "A context vault is a workspace with controlled records and access rules. A consumer receives a permitted view, not the whole vault.",
+      "items": [
+        {
+          "id": "retrieval-01",
+          "title": "Calibration",
+          "text": "Check reported probabilities against observed outcomes before using risk thresholds.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/8/sections/0/items/3/text",
+            "href": "story.html#bounded-decision-router",
+            "label": "Calibration · source"
+          },
+          "move": true
+        },
+        {
+          "id": "retrieval-02",
+          "title": "Retrieval route",
+          "text": "Use exact ID lookup first when identity is known. Otherwise combine keyword and semantic search, or follow approved links. Code enforces permissions independently of model signals.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/8/sections/0/items/4/text",
+            "href": "story.html#bounded-decision-router",
+            "label": "Retrieval route · source"
+          },
+          "move": true
+        },
+        {
+          "id": "retrieval-03",
+          "title": "Choice",
+          "text": "Select one category from an allowed list.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/8/sections/0/items/0/text",
+            "href": "story.html#bounded-decision-router",
+            "label": "Choice · source"
+          },
+          "move": false
+        },
+        {
+          "id": "retrieval-04",
+          "title": "Yes / no",
+          "text": "Judge a defined condition. Policy checks still enforce access.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/8/sections/0/items/1/text",
+            "href": "story.html#bounded-decision-router",
+            "label": "Yes / no · source"
+          },
+          "move": false
+        },
+        {
+          "id": "retrieval-05",
+          "title": "Rubric score",
+          "text": "Rate a property against stated criteria. A score is not a probability.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/8/sections/0/items/2/text",
+            "href": "story.html#bounded-decision-router",
+            "label": "Rubric score · source"
+          },
+          "move": false
+        },
+        {
+          "id": "retrieval-06",
+          "title": "Working context",
+          "text": "Load relevant subject matter expert (SME) knowledge within the request budget.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/8/sections/1/items/2/text",
+            "href": "story.html#bounded-decision-router",
+            "label": "Working context · source"
+          },
+          "move": true,
+          "references": [
+            {
+              "file": "presentation-content.json",
+              "pointer": "/slides/5/sections/1/infographic/stages/2/detail",
+              "href": "story.html#existing-stack",
+              "label": "Working context · parallel source",
+              "move": false
+            },
+            {
+              "file": "presentation-content.json",
+              "pointer": "/slides/5/infographic/stages/2/detail",
+              "href": "story.html#existing-stack",
+              "label": "Working context · parallel source",
+              "move": false
+            }
+          ]
+        },
+        {
+          "id": "retrieval-07",
+          "title": "Derived views",
+          "text": "Build a rebuildable index of approved descriptions and linked evidence. Hybrid search combines keyword matches and semantic similarity. An embedding is a numerical representation used to compare meaning.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/8/sections/1/items/1/text",
+            "href": "story.html#bounded-decision-router",
+            "label": "Derived views · source"
+          },
+          "move": false
+        },
+        {
+          "id": "retrieval-08",
+          "title": "Scope the request",
+          "text": "Authenticate the caller. Restrict the workspace and records before retrieval. Natural-language questions do not need STE formatting.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/8/miniArchitecture/stages/0/detail",
+            "href": "story.html#bounded-decision-router",
+            "label": "Scope the request · source"
+          },
+          "move": false
+        },
+        {
+          "id": "retrieval-09",
+          "title": "Use an exact identifier",
+          "text": "When the canonical ID and version are known, use deterministic lookup. A model call is not required.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/8/miniArchitecture/stages/1/detail",
+            "href": "story.html#bounded-decision-router",
+            "label": "Use an exact identifier · source"
+          },
+          "move": false
+        },
+        {
+          "id": "retrieval-10",
+          "title": "Search words and meaning",
+          "text": "Hybrid search combines keyword matches and semantic similarity. Search approved descriptions and linked evidence. An embedding is a numerical representation used to compare meaning.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/8/miniArchitecture/stages/2/detail",
+            "href": "story.html#bounded-decision-router",
+            "label": "Search words and meaning · source"
+          },
+          "move": false
+        },
+        {
+          "id": "retrieval-11",
+          "title": "Follow approved relationships",
+          "text": "Use approved links for related context. Each linked record needs its own permission and validity check.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/8/miniArchitecture/stages/3/detail",
+            "href": "story.html#bounded-decision-router",
+            "label": "Follow approved relationships · source"
+          },
+          "move": false
+        },
+        {
+          "id": "retrieval-12",
+          "title": "Resolve and bound the result",
+          "text": "Resolve candidates to current canonical records. Recheck access, approval, units, period and validity. Return IDs, versions, evidence and limits within budget.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/8/miniArchitecture/stages/4/detail",
+            "href": "story.html#bounded-decision-router",
+            "label": "Resolve and bound the result · source"
+          },
+          "move": false
+        },
+        {
+          "id": "retrieval-13",
+          "title": "Hold unsupported interpretation",
+          "text": "An optional model may supply choice, yes/no or rubric signals. Code validates them. Hold ambiguity and return new meaning or conflicts to human review. Routine permitted retrieval needs no new approval.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/8/miniArchitecture/stages/5/detail",
+            "href": "story.html#bounded-decision-router",
+            "label": "Hold unsupported interpretation · source"
+          },
+          "move": false
+        },
+        {
+          "id": "retrieval-14",
+          "title": "Choice",
+          "text": "Select one category from an allowed list. Reject invalid output and keep access enforcement outside the model.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/8/infographic/stages/0/detail",
+            "href": "story.html#bounded-decision-router",
+            "label": "Choice · source"
+          },
+          "move": false
+        },
+        {
+          "id": "retrieval-15",
+          "title": "Yes / no",
+          "text": "Judge a defined condition. Reported confidence cannot grant access or bypass human review.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/8/infographic/stages/1/detail",
+            "href": "story.html#bounded-decision-router",
+            "label": "Yes / no · source"
+          },
+          "move": false
+        },
+        {
+          "id": "retrieval-16",
+          "title": "Rubric score",
+          "text": "Rate a property against stated criteria. A score is not a probability. Check reported probabilities against observed outcomes before using risk thresholds.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/8/infographic/stages/2/detail",
+            "href": "story.html#bounded-decision-router",
+            "label": "Rubric score · source"
+          },
+          "move": false
+        },
+        {
+          "id": "retrieval-17",
+          "title": "Derived views",
+          "text": "Build derived views only when the use case needs them. Invalidate them when inputs expire, change or lose access. A cache is not an approval authority.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/8/infographic/stages/4/detail",
+            "href": "story.html#bounded-decision-router",
+            "label": "Derived views · source"
+          },
+          "move": false
+        },
+        {
+          "id": "retrieval-18",
+          "title": "Working context",
+          "text": "Load relevant subject matter expert knowledge within the request budget. Deliver approved query references for familiar tasks. Prepare and review expert drafts for new meaning.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/8/infographic/stages/5/detail",
+            "href": "story.html#bounded-decision-router",
+            "label": "Working context · source"
+          },
+          "move": false
+        },
+        {
+          "id": "retrieval-19",
+          "title": "Triage",
+          "text": "Route defined work through a qualified path. Escalate new or uncertain meaning for review.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/5/sections/1/infographic/stages/3/detail",
+            "href": "story.html#existing-stack",
+            "label": "Triage · source"
+          },
+          "move": false,
+          "references": [
+            {
+              "file": "presentation-content.json",
+              "pointer": "/slides/5/infographic/stages/3/detail",
+              "href": "story.html#existing-stack",
+              "label": "Triage · parallel source",
+              "move": false
+            }
+          ]
+        },
+        {
+          "id": "retrieval-20",
+          "title": "Hold the right task context",
+          "text": "Keep the current goal, permitted evidence and task state available. The proposed orchestration code limits the context and work budget.",
+          "source": {
+            "file": "cortex-content.json",
+            "pointer": "/mappings/0/analogy",
+            "href": "story.html#why-prefrontal",
+            "label": "Hold the right task context · source"
+          },
+          "move": false,
+          "details": [
+            {
+              "label": "Analogy boundary",
+              "text": "A context window is a software resource. It does not reproduce biological working memory or store the whole knowledge base.",
+              "source": {
+                "file": "cortex-content.json",
+                "pointer": "/mappings/0/boundary",
+                "href": "story.html#why-prefrontal",
+                "label": "Hold the right task context · boundary"
+              }
+            }
+          ]
+        },
+        {
+          "id": "retrieval-21",
+          "title": "Choose an allowed path",
+          "text": "Choose an allowed retrieval path: exact ID, hybrid search or approved relationships. Request clarification when evidence is insufficient. Keep every route within the permitted scope.",
+          "source": {
+            "file": "cortex-content.json",
+            "pointer": "/mappings/4/analogy",
+            "href": "story.html#why-prefrontal",
+            "label": "Choose an allowed path · source"
+          },
+          "move": false,
+          "details": [
+            {
+              "label": "Analogy boundary",
+              "text": "The router follows engineered rules and evaluated signals. This mapping does not claim human planning or an optimal choice.",
+              "source": {
+                "file": "cortex-content.json",
+                "pointer": "/mappings/4/boundary",
+                "href": "story.html#why-prefrontal",
+                "label": "Choose an allowed path · boundary"
+              }
+            }
+          ]
+        },
+        {
+          "id": "retrieval-22",
+          "title": "Stop invalid work",
+          "text": "Keep the failure visible. Correct the input or model response before another attempt.",
+          "source": {
+            "file": "decision-tree.json",
+            "pointer": "/nodes/18/detail",
+            "href": "decisions.html#invalid-signal",
+            "label": "Stop invalid work · source"
+          },
+          "move": false
+        },
+        {
+          "id": "retrieval-23",
+          "title": "Follow approved links",
+          "text": "Follow only approved relationships. Check access on every linked record.",
+          "source": {
+            "file": "decision-tree.json",
+            "pointer": "/nodes/37/detail",
+            "href": "decisions.html#links",
+            "label": "Follow approved links · source"
+          },
+          "move": false
+        },
+        {
+          "id": "retrieval-24",
+          "title": "Is the evidence sufficient?",
+          "text": "Do not turn the nearest match into an unsupported answer.",
+          "source": {
+            "file": "decision-tree.json",
+            "pointer": "/nodes/39/detail",
+            "href": "decisions.html#matches",
+            "label": "Is the evidence sufficient? · source"
+          },
+          "move": false
+        },
+        {
+          "id": "retrieval-25",
+          "title": "Resolve canonical records",
+          "text": "Treat index hits as candidates. Resolve their source IDs and versions before delivery.",
+          "source": {
+            "file": "decision-tree.json",
+            "pointer": "/nodes/42/detail",
+            "href": "decisions.html#resolve",
+            "label": "Resolve canonical records · source"
+          },
+          "move": false
+        },
+        {
+          "id": "retrieval-26",
+          "title": "Within the response budget?",
+          "text": "Preserve evidence and material exceptions. Do not silently trim meaning to fit.",
+          "source": {
+            "file": "decision-tree.json",
+            "pointer": "/nodes/45/detail",
+            "href": "decisions.html#budget",
+            "label": "Within the response budget? · source"
+          },
+          "move": false
+        },
+        {
+          "id": "retrieval-27",
+          "title": "Narrow or hold the request",
+          "text": "A revised request passes through access checks again.",
+          "source": {
+            "file": "decision-tree.json",
+            "pointer": "/nodes/46/detail",
+            "href": "decisions.html#narrow",
+            "label": "Narrow or hold the request · source"
+          },
+          "move": false
+        }
+      ]
+    },
+    {
+      "id": "security-delivery",
+      "title": "Access, delivery and failure handling",
+      "summary": "The MCP server exposes permitted context. The server must enforce the product’s record and workspace policies.",
+      "items": [
+        {
+          "id": "security-delivery-01",
+          "title": "Structured output",
+          "text": "Return IDs, versions, evidence, validity and unresolved limits.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/9/sections/0/items/0/text",
+            "href": "story.html#secure-delivery",
+            "label": "Structured output · source"
+          },
+          "move": true
+        },
+        {
+          "id": "security-delivery-02",
+          "title": "Access at use",
+          "text": "Authorize and filter before retrieval. Resolve candidates to canonical records. Recheck current permissions, versions, approval and validity before delivery.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/9/sections/0/items/1/text",
+            "href": "story.html#secure-delivery",
+            "label": "Access at use · source"
+          },
+          "move": true
+        },
+        {
+          "id": "security-delivery-03",
+          "title": "Bounded search response",
+          "text": "Return only permitted context. Treat empty or ambiguous matches as a hold or clarification. A similarity score cannot approve a claim.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/9/sections/0/items/2/text",
+            "href": "story.html#secure-delivery",
+            "label": "Bounded search response · source"
+          },
+          "move": true
+        },
+        {
+          "id": "security-delivery-04",
+          "title": "Invalid or missing evidence",
+          "text": "Reject malformed data. Hold unsupported claims for revision.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/9/sections/1/items/0/text",
+            "href": "story.html#secure-delivery",
+            "label": "Invalid or missing evidence · source"
+          },
+          "move": true,
+          "references": [
+            {
+              "file": "presentation-content.json",
+              "pointer": "/slides/9/sections/1/infographic/stages/0/detail",
+              "href": "story.html#secure-delivery",
+              "label": "Invalid or missing evidence · parallel source",
+              "move": false
+            }
+          ]
+        },
+        {
+          "id": "security-delivery-05",
+          "title": "Uncertain or conflicting meaning",
+          "text": "Record the conflict. Ask the responsible reviewer.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/9/sections/1/items/1/text",
+            "href": "story.html#secure-delivery",
+            "label": "Uncertain or conflicting meaning · source"
+          },
+          "move": true,
+          "references": [
+            {
+              "file": "presentation-content.json",
+              "pointer": "/slides/9/sections/1/infographic/stages/1/detail",
+              "href": "story.html#secure-delivery",
+              "label": "Uncertain or conflicting meaning · parallel source",
+              "move": false
+            }
+          ]
+        },
+        {
+          "id": "security-delivery-06",
+          "title": "Denied consumer access",
+          "text": "Return a controlled denial. Do not leak restricted record content.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/9/sections/1/items/4/text",
+            "href": "story.html#secure-delivery",
+            "label": "Denied consumer access · source"
+          },
+          "move": true,
+          "references": [
+            {
+              "file": "presentation-content.json",
+              "pointer": "/slides/9/sections/1/infographic/stages/4/detail",
+              "href": "story.html#secure-delivery",
+              "label": "Denied consumer access · parallel source",
+              "move": false
+            }
+          ]
+        },
+        {
+          "id": "security-delivery-07",
+          "title": "Empty or ambiguous search",
+          "text": "Return a controlled hold or clarification. Route new interpretation or conflicting meaning to human review.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/9/sections/1/items/6/text",
+            "href": "story.html#secure-delivery",
+            "label": "Empty or ambiguous search · source"
+          },
+          "move": true
+        },
+        {
+          "id": "security-delivery-08",
+          "title": "Verify and restrict",
+          "text": "Authenticate the caller. Enforce workspace, purpose and record permissions before retrieval. Deny the request without exposing restricted text.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/9/miniArchitecture/stages/0/detail",
+            "href": "story.html#secure-delivery",
+            "label": "Verify and restrict · source"
+          },
+          "move": false
+        },
+        {
+          "id": "security-delivery-09",
+          "title": "Find permitted candidates",
+          "text": "Use exact ID lookup, hybrid search or approved links within the permitted scope. Empty or ambiguous results return a controlled hold or clarification.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/9/miniArchitecture/stages/1/detail",
+            "href": "story.html#secure-delivery",
+            "label": "Find permitted candidates · source"
+          },
+          "move": false
+        },
+        {
+          "id": "security-delivery-10",
+          "title": "Recheck current canonical records",
+          "text": "Resolve candidates to canonical IDs and versions. Check current permission, approval, validity and complete release state. Exclude expired, withdrawn or revoked records.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/9/miniArchitecture/stages/2/detail",
+            "href": "story.html#secure-delivery",
+            "label": "Recheck current canonical records · source"
+          },
+          "move": false
+        },
+        {
+          "id": "security-delivery-11",
+          "title": "Return a bounded bundle",
+          "text": "Return permitted IDs, versions, evidence, validity and unresolved limits through MCP. Do not expose a partial release. Reuse a prior release only if it is still valid and permitted.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/9/miniArchitecture/stages/3/detail",
+            "href": "story.html#secure-delivery",
+            "label": "Return a bounded bundle · source"
+          },
+          "move": false
+        },
+        {
+          "id": "security-delivery-12",
+          "title": "Review changes and repair views",
+          "text": "New meaning returns to submission and human review. Source updates, withdrawal and expiry invalidate dependent indexes. Rebuild from approved releases. Routine search does not approve records.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/9/miniArchitecture/stages/4/detail",
+            "href": "story.html#secure-delivery",
+            "label": "Review changes and repair views · source"
+          },
+          "move": false
+        },
+        {
+          "id": "security-delivery-13",
+          "title": "Certified logic",
+          "text": "Deliver approved query references for native execution. Recheck authorization, data validity and execution conditions.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/5/sections/1/infographic/stages/1/detail",
+            "href": "story.html#existing-stack",
+            "label": "Certified logic · source"
+          },
+          "move": false,
+          "references": [
+            {
+              "file": "presentation-content.json",
+              "pointer": "/slides/5/infographic/stages/1/detail",
+              "href": "story.html#existing-stack",
+              "label": "Certified logic · parallel source",
+              "move": false
+            }
+          ]
+        },
+        {
+          "id": "security-delivery-14",
+          "title": "Policy gate",
+          "text": "Check delivery permissions. The consumer must enforce its own source access and execution policies.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/5/sections/1/infographic/stages/4/detail",
+            "href": "story.html#existing-stack",
+            "label": "Policy gate · source"
+          },
+          "move": false,
+          "references": [
+            {
+              "file": "presentation-content.json",
+              "pointer": "/slides/5/infographic/stages/4/detail",
+              "href": "story.html#existing-stack",
+              "label": "Policy gate · parallel source",
+              "move": false
+            }
+          ]
+        },
+        {
+          "id": "security-delivery-15",
+          "title": "MCP and application authorization",
+          "text": "MCP defines context exchange. Authentication and application authorization still require implementation. The protocol alone does not make a product secure.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/9/sections/0/note",
+            "href": "story.html#secure-delivery",
+            "label": "MCP and application authorization · source"
+          },
+          "move": false
+        },
+        {
+          "id": "security-delivery-16",
+          "title": "Stop at the permission gate",
+          "text": "Check permission before retrieval. Stop the request when its scope fails policy. Recheck current records before delivery. Code enforces these gates.",
+          "source": {
+            "file": "cortex-content.json",
+            "pointer": "/mappings/1/analogy",
+            "href": "story.html#why-prefrontal",
+            "label": "Stop at the permission gate · source"
+          },
+          "move": false,
+          "details": [
+            {
+              "label": "Analogy boundary",
+              "text": "Stopping a movement and denying data access are different mechanisms. The analogy explains restraint; it does not establish security.",
+              "source": {
+                "file": "cortex-content.json",
+                "pointer": "/mappings/1/boundary",
+                "href": "story.html#why-prefrontal",
+                "label": "Stop at the permission gate · boundary"
+              }
+            }
+          ]
+        },
+        {
+          "id": "security-delivery-17",
+          "title": "May we accept this source?",
+          "text": "Admission policy runs outside the model. An available connector is not permission.",
+          "source": {
+            "file": "decision-tree.json",
+            "pointer": "/nodes/2/detail",
+            "href": "decisions.html#admit",
+            "label": "May we accept this source? · source"
+          },
+          "move": false
+        },
+        {
+          "id": "security-delivery-18",
+          "title": "Deny admission",
+          "text": "Record a permitted audit receipt. A source owner must resolve access before another submission.",
+          "source": {
+            "file": "decision-tree.json",
+            "pointer": "/nodes/3/detail",
+            "href": "decisions.html#deny-intake",
+            "label": "Deny admission · source"
+          },
+          "move": false
+        },
+        {
+          "id": "security-delivery-19",
+          "title": "Receive a context request",
+          "text": "Resolve caller, workspace, purpose and requested context. The request does not inherit the submitter’s permissions.",
+          "source": {
+            "file": "decision-tree.json",
+            "pointer": "/nodes/28/detail",
+            "href": "decisions.html#request",
+            "label": "Receive a context request · source"
+          },
+          "move": false
+        },
+        {
+          "id": "security-delivery-20",
+          "title": "Deny restricted access",
+          "text": "No title, excerpt or record body may leak through a failed access check.",
+          "source": {
+            "file": "decision-tree.json",
+            "pointer": "/nodes/33/detail",
+            "href": "decisions.html#deny-scope",
+            "label": "Deny restricted access · source"
+          },
+          "move": false
+        },
+        {
+          "id": "security-delivery-21",
+          "title": "Consumer uses the context",
+          "text": "Context delivery does not authorize a purchase, message, trade or other external action.",
+          "source": {
+            "file": "decision-tree.json",
+            "pointer": "/nodes/48/detail",
+            "href": "decisions.html#consume",
+            "label": "Consumer uses the context · source"
+          },
+          "move": false
+        }
+      ]
+    },
+    {
+      "id": "component-change",
+      "title": "Component qualification and release",
+      "summary": "Versioned contracts let us evaluate new models, retrieval systems and interfaces while preserving governed context.",
+      "items": [
+        {
+          "id": "component-change-01",
+          "title": "Qualification cost",
+          "text": "Budget evaluation, migration, rollback and maintenance.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/10/sections/0/items/1/text",
+            "href": "story.html#controlled-evolution",
+            "label": "Qualification cost · source"
+          },
+          "move": true
+        },
+        {
+          "id": "component-change-02",
+          "title": "Describe one candidate change",
+          "text": "Identify the model, index or adapter, version and affected interface. Keep the current approved release available.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/10/miniArchitecture/stages/0/detail",
+            "href": "story.html#controlled-evolution",
+            "label": "Describe one candidate change · source"
+          },
+          "move": false
+        },
+        {
+          "id": "component-change-03",
+          "title": "Plan the comparison",
+          "text": "The coordinator selects agreed held-out cases and failure scenarios. Compare the same approved inputs, permissions and expected outcomes.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/10/miniArchitecture/stages/1/detail",
+            "href": "story.html#controlled-evolution",
+            "label": "Plan the comparison · source"
+          },
+          "move": false
+        },
+        {
+          "id": "component-change-04",
+          "title": "Test the contract",
+          "text": "Check meaning, exceptions, evidence, access, full cost and service behavior. The current browser rehearsal tests deterministic examples only.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/10/miniArchitecture/stages/2/detail",
+            "href": "story.html#controlled-evolution",
+            "label": "Test the contract · source"
+          },
+          "move": false
+        },
+        {
+          "id": "component-change-05",
+          "title": "Ask the release owner",
+          "text": "An accountable owner reviews persistent qualification evidence. A failed check or missing evidence retains the current compatible release.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/10/miniArchitecture/stages/3/detail",
+            "href": "story.html#controlled-evolution",
+            "label": "Ask the release owner · source"
+          },
+          "move": false
+        },
+        {
+          "id": "component-change-06",
+          "title": "Publish or roll back",
+          "text": "Publish a complete validated release only after owner acceptance. Invalidate affected views. Use a tested rollback when a release problem appears.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/10/miniArchitecture/stages/4/detail",
+            "href": "story.html#controlled-evolution",
+            "label": "Publish or roll back · source"
+          },
+          "move": false
+        },
+        {
+          "id": "component-change-07",
+          "title": "Keep the contract",
+          "text": "Preserve meaning, source evidence, conditions, permissions and version rules across component changes.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/10/infographic/stages/0/detail",
+            "href": "story.html#controlled-evolution",
+            "label": "Keep the contract · source"
+          },
+          "move": false
+        },
+        {
+          "id": "component-change-08",
+          "title": "Connect a candidate",
+          "text": "Connect the candidate behind a versioned interface. A familiar interface does not prove compatible behavior.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/10/infographic/stages/1/detail",
+            "href": "story.html#controlled-evolution",
+            "label": "Connect a candidate · source"
+          },
+          "move": false
+        },
+        {
+          "id": "component-change-09",
+          "title": "Compare outcomes",
+          "text": "Test evidence loss, exception loss and expanded permission alongside a compatible scenario. The browser rehearsal uses deterministic examples. Real qualification requires implementation, persistent evidence and authenticated readback.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/10/infographic/stages/2/detail",
+            "href": "story.html#controlled-evolution",
+            "label": "Compare outcomes · source"
+          },
+          "move": false
+        },
+        {
+          "id": "component-change-10",
+          "title": "Release or retain",
+          "text": "Release only after owner acceptance. Retain the prior compatible release on failure. Budget evaluation, migration, rollback and maintenance. Invalidate affected caches.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/10/infographic/stages/3/detail",
+            "href": "story.html#controlled-evolution",
+            "label": "Release or retain · source"
+          },
+          "move": false
+        },
+        {
+          "id": "component-change-11",
+          "title": "Browser rehearsal evidence",
+          "text": "A browser rehearsal demonstrates the intended contract. It does not validate a model, server, database or operational outcome.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/10/sections/1/note",
+            "href": "story.html#controlled-evolution",
+            "label": "Browser rehearsal evidence · source"
+          },
+          "move": false
+        }
+      ]
+    },
+    {
+      "id": "pilot-proof",
+      "title": "Pilot, acceptance and delivery plan",
+      "summary": "Run a baseline and a candidate on the same workload. Use held-out cases and complete cost evidence.",
+      "items": [
+        {
+          "id": "pilot-proof-01",
+          "title": "A funded proof of value",
+          "text": "Start with one workflow. Measure the return before expansion.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/0/items/1/text",
+            "href": "story.html#opening-thesis",
+            "label": "A funded proof of value · source"
+          },
+          "move": false
+        },
+        {
+          "id": "pilot-proof-02",
+          "title": "Retrieval trial",
+          "text": "Compare exact and keyword lookup with hybrid search on held-out questions. Test paraphrases, wrong units or periods, empty matches, ambiguity, expiry, revocation, cross-vault access and source-update rebuilds. Measure relevance, incorrect matches, latency, full cost and access-control results. Agree thresholds with the owner before testing.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/13/sections/0/items/0/text",
+            "href": "story.html#pilot-acceptance",
+            "label": "Retrieval trial · source"
+          },
+          "move": true
+        },
+        {
+          "id": "pilot-proof-03",
+          "title": "Intake + requirements",
+          "text": "Name the workflow and owners. Reuse catalog components. Map sources, baseline cost and success criteria.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/14/sections/0/items/0/text",
+            "href": "story.html#plan-alignment",
+            "label": "Intake + requirements · source"
+          },
+          "move": true
+        },
+        {
+          "id": "pilot-proof-04",
+          "title": "Product design",
+          "text": "Approve the context contract, Metric Passport, review duties, success gates and pilot budget.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/14/sections/0/items/1/text",
+            "href": "story.html#plan-alignment",
+            "label": "Product design · source"
+          },
+          "move": true,
+          "references": [
+            {
+              "file": "presentation-content.json",
+              "pointer": "/slides/14/sections/0/infographic/stages/2/detail",
+              "href": "story.html#plan-alignment",
+              "label": "Product design · parallel source",
+              "move": false
+            },
+            {
+              "file": "presentation-content.json",
+              "pointer": "/slides/14/infographic/stages/2/detail",
+              "href": "story.html#plan-alignment",
+              "label": "Product design · parallel source",
+              "move": false
+            }
+          ]
+        },
+        {
+          "id": "pilot-proof-05",
+          "title": "Development",
+          "text": "Build one complete context path. Reuse LookML and verify one consumer adapter.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/14/sections/0/items/2/text",
+            "href": "story.html#plan-alignment",
+            "label": "Development · source"
+          },
+          "move": true,
+          "references": [
+            {
+              "file": "presentation-content.json",
+              "pointer": "/slides/14/sections/0/infographic/stages/3/detail",
+              "href": "story.html#plan-alignment",
+              "label": "Development · parallel source",
+              "move": false
+            },
+            {
+              "file": "presentation-content.json",
+              "pointer": "/slides/14/infographic/stages/3/detail",
+              "href": "story.html#plan-alignment",
+              "label": "Development · parallel source",
+              "move": false
+            }
+          ]
+        },
+        {
+          "id": "pilot-proof-06",
+          "title": "Testing",
+          "text": "Check owner-approved gold truth, standing QA, permissions and cost. Require security and leadership go/no-go.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/14/sections/0/items/3/text",
+            "href": "story.html#plan-alignment",
+            "label": "Testing · source"
+          },
+          "move": true,
+          "references": [
+            {
+              "file": "presentation-content.json",
+              "pointer": "/slides/14/sections/0/infographic/stages/4/detail",
+              "href": "story.html#plan-alignment",
+              "label": "Testing · parallel source",
+              "move": false
+            },
+            {
+              "file": "presentation-content.json",
+              "pointer": "/slides/14/infographic/stages/4/detail",
+              "href": "story.html#plan-alignment",
+              "label": "Testing · parallel source",
+              "move": false
+            }
+          ]
+        },
+        {
+          "id": "pilot-proof-07",
+          "title": "Launch",
+          "text": "Publish only the accepted release. Confirm operating owners, support and rollback.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/14/sections/0/items/4/text",
+            "href": "story.html#plan-alignment",
+            "label": "Launch · source"
+          },
+          "move": true,
+          "references": [
+            {
+              "file": "presentation-content.json",
+              "pointer": "/slides/14/sections/0/infographic/stages/5/detail",
+              "href": "story.html#plan-alignment",
+              "label": "Launch · parallel source",
+              "move": false
+            },
+            {
+              "file": "presentation-content.json",
+              "pointer": "/slides/14/infographic/stages/5/detail",
+              "href": "story.html#plan-alignment",
+              "label": "Launch · parallel source",
+              "move": false
+            }
+          ]
+        },
+        {
+          "id": "pilot-proof-08",
+          "title": "Maintenance",
+          "text": "Review corrections and drift. Requalify source or model changes before expanding.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/14/sections/0/items/5/text",
+            "href": "story.html#plan-alignment",
+            "label": "Maintenance · source"
+          },
+          "move": true,
+          "references": [
+            {
+              "file": "presentation-content.json",
+              "pointer": "/slides/14/sections/0/infographic/stages/6/detail",
+              "href": "story.html#plan-alignment",
+              "label": "Maintenance · parallel source",
+              "move": false
+            },
+            {
+              "file": "presentation-content.json",
+              "pointer": "/slides/14/infographic/stages/6/detail",
+              "href": "story.html#plan-alignment",
+              "label": "Maintenance · parallel source",
+              "move": false
+            }
+          ]
+        },
+        {
+          "id": "pilot-proof-09",
+          "title": "Agree the contract",
+          "text": "Reuse existing solutions. Set source bindings, reviewer authority, output schema and success gates.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/14/sections/1/items/0/text",
+            "href": "story.html#plan-alignment",
+            "label": "Agree the contract · source"
+          },
+          "move": true
+        },
+        {
+          "id": "pilot-proof-10",
+          "title": "Implement admission",
+          "text": "Use one custom-app workflow to submit, review, version and persist an approved record.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/14/sections/1/items/1/text",
+            "href": "story.html#plan-alignment",
+            "label": "Implement admission · source"
+          },
+          "move": true
+        },
+        {
+          "id": "pilot-proof-11",
+          "title": "Link and publish",
+          "text": "Build its layer references and publish an atomic approved release.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/14/sections/1/items/2/text",
+            "href": "story.html#plan-alignment",
+            "label": "Link and publish · source"
+          },
+          "move": true
+        },
+        {
+          "id": "pilot-proof-12",
+          "title": "Consume securely",
+          "text": "Verify one consumer adapter. Check identity, permissions and bounded context delivery.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/14/sections/1/items/3/text",
+            "href": "story.html#plan-alignment",
+            "label": "Consume securely · source"
+          },
+          "move": true
+        },
+        {
+          "id": "pilot-proof-13",
+          "title": "Test failure paths",
+          "text": "Exercise rejection, conflict, withdrawal, expiry and failed publication.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/14/sections/1/items/4/text",
+            "href": "story.html#plan-alignment",
+            "label": "Test failure paths · source"
+          },
+          "move": true
+        },
+        {
+          "id": "pilot-proof-14",
+          "title": "Measure and decide",
+          "text": "Compare accepted-task cost, quality and latency. Expand only after owner acceptance.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/14/sections/1/items/5/text",
+            "href": "story.html#plan-alignment",
+            "label": "Measure and decide · source"
+          },
+          "move": true
+        },
+        {
+          "id": "pilot-proof-15",
+          "title": "Pilot deliverable",
+          "text": "A reusable context release linked to LookML, plus replayable acceptance evidence.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/14/sections/2/items/0/text",
+            "href": "story.html#plan-alignment",
+            "label": "Pilot deliverable · source"
+          },
+          "move": true
+        },
+        {
+          "id": "pilot-proof-16",
+          "title": "Buyer contribution",
+          "text": "One workflow, source owner, baseline, reviewer time and permitted test access.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/14/sections/2/items/1/text",
+            "href": "story.html#plan-alignment",
+            "label": "Buyer contribution · source"
+          },
+          "move": true
+        },
+        {
+          "id": "pilot-proof-17",
+          "title": "Investment decision",
+          "text": "Approve a setup ceiling, recurring budget and named delivery responsibilities.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/14/sections/2/items/2/text",
+            "href": "story.html#plan-alignment",
+            "label": "Investment decision · source"
+          },
+          "move": true
+        },
+        {
+          "id": "pilot-proof-18",
+          "title": "Expansion decision",
+          "text": "Accept the result only when economics, quality and control meet the agreed gates.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/14/sections/2/items/3/text",
+            "href": "story.html#plan-alignment",
+            "label": "Expansion decision · source"
+          },
+          "move": true
+        },
+        {
+          "id": "pilot-proof-19",
+          "title": "Agree the test and thresholds",
+          "text": "Agree owner thresholds first. Include paraphrases, exact IDs, wrong units or periods, empty matches, stale records, revoked access and cross-vault requests.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/13/miniArchitecture/stages/0/detail",
+            "href": "story.html#pilot-acceptance",
+            "label": "Agree the test and thresholds · source"
+          },
+          "move": false
+        },
+        {
+          "id": "pilot-proof-20",
+          "title": "Run both paths",
+          "text": "Compare exact and keyword lookup with hybrid search. Use the same held-out tasks, approved records and access rules. Count retries and review queues.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/13/miniArchitecture/stages/1/detail",
+            "href": "story.html#pilot-acceptance",
+            "label": "Run both paths · source"
+          },
+          "move": false
+        },
+        {
+          "id": "pilot-proof-21",
+          "title": "Collect comparable evidence",
+          "text": "Measure relevance, incorrect matches, full cost, latency and access behavior against owner-reviewed records. Preserve failed results.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/13/miniArchitecture/stages/2/detail",
+            "href": "story.html#pilot-acceptance",
+            "label": "Collect comparable evidence · source"
+          },
+          "move": false
+        },
+        {
+          "id": "pilot-proof-22",
+          "title": "Review the evidence",
+          "text": "The owner checks thresholds, audit readback and remaining limits. An agent report is evidence, not approval.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/13/miniArchitecture/stages/3/detail",
+            "href": "story.html#pilot-acceptance",
+            "label": "Review the evidence · source"
+          },
+          "move": false
+        },
+        {
+          "id": "pilot-proof-23",
+          "title": "Accept a bounded next step",
+          "text": "Expand only within accepted scope and budget. Recheck changed components before wider use.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/13/miniArchitecture/stages/4/detail",
+            "href": "story.html#pilot-acceptance",
+            "label": "Accept a bounded next step · source"
+          },
+          "move": false
+        },
+        {
+          "id": "pilot-proof-24",
+          "title": "Hold and correct gaps",
+          "text": "Missing evidence or a material access failure blocks expansion. Resolve the cause and rerun affected cases.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/13/miniArchitecture/stages/5/detail",
+            "href": "story.html#pilot-acceptance",
+            "label": "Hold and correct gaps · source"
+          },
+          "move": false
+        },
+        {
+          "id": "pilot-proof-25",
+          "title": "Name the problem and owners",
+          "text": "Intake/Vetting selects one workflow. Product Requirements records source owners, baseline, scope and acceptance criteria.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/14/miniArchitecture/stages/0/detail",
+            "href": "story.html#plan-alignment",
+            "label": "Name the problem and owners · source"
+          },
+          "move": false
+        },
+        {
+          "id": "pilot-proof-26",
+          "title": "Approve the design and budget",
+          "text": "Product Design defines the context contract, reviewer duties, access boundaries and funding ceiling. Reuse catalog components.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/14/miniArchitecture/stages/1/detail",
+            "href": "story.html#plan-alignment",
+            "label": "Approve the design and budget · source"
+          },
+          "move": false
+        },
+        {
+          "id": "pilot-proof-27",
+          "title": "Build one complete path",
+          "text": "Development connects submission, human review, persistent layers and authenticated readback through one consumer adapter.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/14/miniArchitecture/stages/2/detail",
+            "href": "story.html#plan-alignment",
+            "label": "Build one complete path · source"
+          },
+          "move": false
+        },
+        {
+          "id": "pilot-proof-28",
+          "title": "Test the product and its failures",
+          "text": "Testing compares the baseline and candidate. Exercise rejection, stale data, conflict, withdrawal and failed publication.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/14/miniArchitecture/stages/3/detail",
+            "href": "story.html#plan-alignment",
+            "label": "Test the product and its failures · source"
+          },
+          "move": false
+        },
+        {
+          "id": "pilot-proof-29",
+          "title": "Launch only the accepted release",
+          "text": "Security review and leadership go/no-go precede Launch. Name the operating owner and verify support and rollback.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/14/miniArchitecture/stages/4/detail",
+            "href": "story.html#plan-alignment",
+            "label": "Launch only the accepted release · source"
+          },
+          "move": false
+        },
+        {
+          "id": "pilot-proof-30",
+          "title": "Maintain and requalify changes",
+          "text": "Maintenance checks drift, cost and value. New meaning returns to review. Source or model changes need qualification before expansion.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/14/miniArchitecture/stages/5/detail",
+            "href": "story.html#plan-alignment",
+            "label": "Maintain and requalify changes · source"
+          },
+          "move": false
+        },
+        {
+          "id": "pilot-proof-31",
+          "title": "Intake / vetting",
+          "text": "Name the workflow and sponsor. Check the solution, agent, skill and MCP catalogs before custom development.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/14/sections/0/infographic/stages/0/detail",
+            "href": "story.html#plan-alignment",
+            "label": "Intake / vetting · source"
+          },
+          "move": false,
+          "references": [
+            {
+              "file": "presentation-content.json",
+              "pointer": "/slides/14/infographic/stages/0/detail",
+              "href": "story.html#plan-alignment",
+              "label": "Intake / vetting · parallel source",
+              "move": false
+            }
+          ]
+        },
+        {
+          "id": "pilot-proof-32",
+          "title": "Requirements",
+          "text": "Map source definitions, current costs and permitted use. Agree technical and business success criteria.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/14/sections/0/infographic/stages/1/detail",
+            "href": "story.html#plan-alignment",
+            "label": "Requirements · source"
+          },
+          "move": false,
+          "references": [
+            {
+              "file": "presentation-content.json",
+              "pointer": "/slides/14/infographic/stages/1/detail",
+              "href": "story.html#plan-alignment",
+              "label": "Requirements · parallel source",
+              "move": false
+            }
+          ]
+        },
+        {
+          "id": "pilot-proof-33",
+          "title": "Cost · trial",
+          "text": "Compare the same accepted-task target. Record token and query charges, allocated and incremental licenses, adapters, operations and human handling without double counting.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/pitch/scorecard/0/trial",
+            "href": "story.html#pilot-acceptance",
+            "label": "Cost · trial · source"
+          },
+          "move": false
+        },
+        {
+          "id": "pilot-proof-34",
+          "title": "Cost · acceptance",
+          "text": "Expand only when the agreed economic case holds after full cost readback.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/pitch/scorecard/0/decision",
+            "href": "story.html#pilot-acceptance",
+            "label": "Cost · acceptance · source"
+          },
+          "move": false
+        },
+        {
+          "id": "pilot-proof-35",
+          "title": "Performance · trial",
+          "text": "Measure submit-to-approved-delivery latency and consuming-task completion separately. Include review queues and p95 at agreed load.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/pitch/scorecard/1/trial",
+            "href": "story.html#pilot-acceptance",
+            "label": "Performance · trial · source"
+          },
+          "move": false
+        },
+        {
+          "id": "pilot-proof-36",
+          "title": "Performance · acceptance",
+          "text": "Meet the owner’s service target without hiding failed, queued or held tasks.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/pitch/scorecard/1/decision",
+            "href": "story.html#pilot-acceptance",
+            "label": "Performance · acceptance · source"
+          },
+          "move": false
+        },
+        {
+          "id": "pilot-proof-37",
+          "title": "Accuracy · trial",
+          "text": "Test held-out questions against approved LookML definitions and owner-reviewed gold truth. Check grain, unit, time window and exceptions.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/pitch/scorecard/2/trial",
+            "href": "story.html#pilot-acceptance",
+            "label": "Accuracy · trial · source"
+          },
+          "move": false
+        },
+        {
+          "id": "pilot-proof-38",
+          "title": "Accuracy · acceptance",
+          "text": "Meet agreed quality gates. Investigate failures before expanding scope.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/pitch/scorecard/2/decision",
+            "href": "story.html#pilot-acceptance",
+            "label": "Accuracy · acceptance · source"
+          },
+          "move": false
+        },
+        {
+          "id": "pilot-proof-39",
+          "title": "Trust · trial",
+          "text": "Test source and consumer access, revoked permissions, hostile instructions, cross-vault retrieval and exact-version audit readback.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/pitch/scorecard/3/trial",
+            "href": "story.html#pilot-acceptance",
+            "label": "Trust · trial · source"
+          },
+          "move": false
+        },
+        {
+          "id": "pilot-proof-40",
+          "title": "Trust · acceptance",
+          "text": "Hold release for a material access failure. Assess user confidence separately.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/pitch/scorecard/3/decision",
+            "href": "story.html#pilot-acceptance",
+            "label": "Trust · acceptance · source"
+          },
+          "move": false
+        },
+        {
+          "id": "pilot-proof-41",
+          "title": "Runtime evidence boundary",
+          "text": "Diagram and browser checks establish presentation behavior only. No production runtime or measured customer benefit is established here.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/13/sections/1/note",
+            "href": "story.html#pilot-acceptance",
+            "label": "Runtime evidence boundary · source"
+          },
+          "move": false
+        },
+        {
+          "id": "pilot-proof-42",
+          "title": "Pilot and expansion approval",
+          "text": "Approval funds a scoped pilot. Expansion requires a separate evidence-based decision. Price, dates and thresholds remain to agree.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/14/sections/2/note",
+            "href": "story.html#plan-alignment",
+            "label": "Pilot and expansion approval · source"
+          },
+          "move": false
+        },
+        {
+          "id": "pilot-proof-43",
+          "title": "Performance",
+          "text": "Use bounded decisions and fast paths. Escalate when the task needs more work.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/pitch/lenses/1/mechanism",
+            "href": "story.html#pilot-acceptance",
+            "label": "Performance · source"
+          },
+          "move": false
+        },
+        {
+          "id": "pilot-proof-44",
+          "title": "Performance · boundary",
+          "text": "p95 is the time within which 95% of measured tasks finish. Compare the same workload and quality gates.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/pitch/lenses/1/guardrail",
+            "href": "story.html#pilot-acceptance",
+            "label": "Performance · boundary · source"
+          },
+          "move": false
+        },
+        {
+          "id": "pilot-proof-45",
+          "title": "Accuracy",
+          "text": "Carry source links, dates, conditions and conflicts. Check derived statements.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/pitch/lenses/2/mechanism",
+            "href": "story.html#pilot-acceptance",
+            "label": "Accuracy · source"
+          },
+          "move": false
+        },
+        {
+          "id": "pilot-proof-46",
+          "title": "Accuracy · boundary",
+          "text": "Abstention means withholding a conclusion when evidence is insufficient. A correct format does not prove a correct answer.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/pitch/lenses/2/guardrail",
+            "href": "story.html#pilot-acceptance",
+            "label": "Accuracy · boundary · source"
+          },
+          "move": false
+        },
+        {
+          "id": "pilot-proof-47",
+          "title": "Trust",
+          "text": "Enforce scope and permission. Show the evidence, owner and review decision.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/pitch/lenses/3/mechanism",
+            "href": "story.html#pilot-acceptance",
+            "label": "Trust · source"
+          },
+          "move": false
+        },
+        {
+          "id": "pilot-proof-48",
+          "title": "Trust · boundary",
+          "text": "Measure user confidence separately from correctness. Model confidence cannot create authority.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/pitch/lenses/3/guardrail",
+            "href": "story.html#pilot-acceptance",
+            "label": "Trust · boundary · source"
+          },
+          "move": false
+        },
+        {
+          "id": "pilot-proof-49",
+          "title": "Record outcome and cost",
+          "text": "Measure cost, latency, accuracy and access behavior. The owner decides pilot acceptance; no savings are proven by this diagram.",
+          "source": {
+            "file": "decision-tree.json",
+            "pointer": "/nodes/52/detail",
+            "href": "decisions.html#audit",
+            "label": "Record outcome and cost · source"
+          },
+          "move": false
+        }
+      ]
+    },
+    {
+      "id": "cost-discipline",
+      "title": "Cost discipline and full economics",
+      "summary": "Choose the method, bound each call and verify reuse. Keep the same quality and access gates.",
+      "items": [
+        {
+          "id": "cost-discipline-01",
+          "title": "Setup",
+          "text": "Record contract, source mapping, adapters, deployment and acceptance tests. Include initial embeddings and search index creation.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/12/sections/0/items/0/text",
+            "href": "story.html#operating-cost",
+            "label": "Setup · source"
+          },
+          "move": true
+        },
+        {
+          "id": "cost-discipline-02",
+          "title": "Recurring platform",
+          "text": "Tokens, warehouse queries, storage, tools, delivery and monitoring. Include query embeddings, search and optional result ranking.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/12/sections/0/items/1/text",
+            "href": "story.html#operating-cost",
+            "label": "Recurring platform · source"
+          },
+          "move": true
+        },
+        {
+          "id": "cost-discipline-03",
+          "title": "Human operations",
+          "text": "Submission review, conflict resolution, corrections and incident handling.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/12/sections/0/items/2/text",
+            "href": "story.html#operating-cost",
+            "label": "Human operations · source"
+          },
+          "move": true,
+          "references": [
+            {
+              "file": "presentation-content.json",
+              "pointer": "/slides/12/sections/0/infographic/stages/2/detail",
+              "href": "story.html#operating-cost",
+              "label": "Human operations · parallel source",
+              "move": false
+            }
+          ]
+        },
+        {
+          "id": "cost-discipline-04",
+          "title": "Maintenance",
+          "text": "Licenses, seats, source updates, access changes, upgrades and recovery. Include index updates, rebuilds and invalidation.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/12/sections/0/items/3/text",
+            "href": "story.html#operating-cost",
+            "label": "Maintenance · source"
+          },
+          "move": true
+        },
+        {
+          "id": "cost-discipline-05",
+          "title": "Reuse approved code or SQL",
+          "text": "Use deterministic logic for defined rules. Keep certified queries unchanged. Review expert drafts before reuse.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/12/sections/1/items/0/text",
+            "href": "story.html#operating-cost",
+            "label": "Reuse approved code or SQL · source"
+          },
+          "move": true,
+          "references": [
+            {
+              "file": "presentation-content.json",
+              "pointer": "/slides/12/sections/1/infographic/stages/0/detail",
+              "href": "story.html#operating-cost",
+              "label": "Reuse approved code or SQL · parallel source",
+              "move": false
+            }
+          ]
+        },
+        {
+          "id": "cost-discipline-06",
+          "title": "Bound context and output",
+          "text": "Limit permitted context, tokens, output, steps and retries. Batch work only when its deadline permits.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/12/sections/1/items/1/text",
+            "href": "story.html#operating-cost",
+            "label": "Bound context and output · source"
+          },
+          "move": true,
+          "references": [
+            {
+              "file": "presentation-content.json",
+              "pointer": "/slides/12/sections/1/infographic/stages/1/detail",
+              "href": "story.html#operating-cost",
+              "label": "Bound context and output · parallel source",
+              "move": false
+            }
+          ]
+        },
+        {
+          "id": "cost-discipline-07",
+          "title": "Reuse valid context",
+          "text": "Check cache version, expiry, access and invalidation. Measure hit rate, writes, reads and storage.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/12/sections/1/items/2/text",
+            "href": "story.html#operating-cost",
+            "label": "Reuse valid context · source"
+          },
+          "move": true,
+          "references": [
+            {
+              "file": "presentation-content.json",
+              "pointer": "/slides/12/sections/1/infographic/stages/2/detail",
+              "href": "story.html#operating-cost",
+              "label": "Reuse valid context · parallel source",
+              "move": false
+            }
+          ]
+        },
+        {
+          "id": "cost-discipline-08",
+          "title": "Qualify the model route",
+          "text": "Use a smaller model only if it passes the task gates. Escalate uncertain results.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/12/sections/1/items/3/text",
+            "href": "story.html#operating-cost",
+            "label": "Qualify the model route · source"
+          },
+          "move": true,
+          "references": [
+            {
+              "file": "presentation-content.json",
+              "pointer": "/slides/12/sections/1/infographic/stages/3/detail",
+              "href": "story.html#operating-cost",
+              "label": "Qualify the model route · parallel source",
+              "move": false
+            }
+          ]
+        },
+        {
+          "id": "cost-discipline-09",
+          "title": "Control warehouse cost",
+          "text": "Estimate query work. For BigQuery on-demand queries, test maximum bytes billed. A row limit alone may not bound scans.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/12/sections/1/items/4/text",
+            "href": "story.html#operating-cost",
+            "label": "Control warehouse cost · source"
+          },
+          "move": true,
+          "references": [
+            {
+              "file": "presentation-content.json",
+              "pointer": "/slides/12/sections/1/infographic/stages/4/detail",
+              "href": "story.html#operating-cost",
+              "label": "Control warehouse cost · parallel source",
+              "move": false
+            }
+          ]
+        },
+        {
+          "id": "cost-discipline-10",
+          "title": "Count every cost once",
+          "text": "Track tokens, queries, seats, licenses and human review. Assign budget owners. Separate existing and incremental costs. Count index build, update, storage and query costs once. Enter observed search charges into the existing platform and setup totals; source model rates remain unchanged.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/12/sections/1/items/5/text",
+            "href": "story.html#operating-cost",
+            "label": "Count every cost once · source"
+          },
+          "move": true
+        },
+        {
+          "id": "cost-discipline-11",
+          "title": "Define one comparison target",
+          "text": "Agree the same workload and number of accepted tasks for baseline and candidate. Record acceptance rates and review effort.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/12/miniArchitecture/stages/0/detail",
+            "href": "story.html#operating-cost",
+            "label": "Define one comparison target · source"
+          },
+          "move": false
+        },
+        {
+          "id": "cost-discipline-12",
+          "title": "Choose a qualified route",
+          "text": "Use approved code or SQL where suitable. Reuse valid approved context. Use a smaller model only after task qualification. Bound tokens, queries, steps and retries.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/12/miniArchitecture/stages/1/detail",
+            "href": "story.html#operating-cost",
+            "label": "Choose a qualified route · source"
+          },
+          "move": false
+        },
+        {
+          "id": "cost-discipline-13",
+          "title": "Count permitted execution",
+          "text": "Count model, search, ranking, warehouse and delivery work. Include cache reads and writes. Measure each charge; do not assume savings.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/12/miniArchitecture/stages/2/detail",
+            "href": "story.html#operating-cost",
+            "label": "Count permitted execution · source"
+          },
+          "move": false
+        },
+        {
+          "id": "cost-discipline-14",
+          "title": "Count human handling",
+          "text": "Include review, rework, conflicts and incidents. Hold tasks that fail quality or access. An inexpensive rejected task is not an accepted result.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/12/miniArchitecture/stages/3/detail",
+            "href": "story.html#operating-cost",
+            "label": "Count human handling · source"
+          },
+          "move": false
+        },
+        {
+          "id": "cost-discipline-15",
+          "title": "Count only accepted results",
+          "text": "Use owner-defined acceptance gates. Include failed attempts and retries in the costs required to reach the same accepted-task target.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/12/miniArchitecture/stages/4/detail",
+            "href": "story.html#operating-cost",
+            "label": "Count only accepted results · source"
+          },
+          "move": false
+        },
+        {
+          "id": "cost-discipline-16",
+          "title": "Compare the full cost",
+          "text": "Separate setup from recurring cost. Include initial index build, updates, rebuilds, storage and queries. Allocate each charge once. Keep existing costs distinct from added spending.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/12/miniArchitecture/stages/5/detail",
+            "href": "story.html#operating-cost",
+            "label": "Compare the full cost · source"
+          },
+          "move": false
+        },
+        {
+          "id": "cost-discipline-17",
+          "title": "Full cost",
+          "text": "Track tokens, queries, seats, licenses and human review. Assign budget owners. Separate existing and incremental costs.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/12/sections/1/infographic/stages/5/detail",
+            "href": "story.html#operating-cost",
+            "label": "Full cost · source"
+          },
+          "move": false
+        },
+        {
+          "id": "cost-discipline-18",
+          "title": "Comparable cost allocation",
+          "text": "Separate existing allocated costs from incremental spending. Include both consistently in the baseline and candidate. Count each cost once.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/12/sections/0/note",
+            "href": "story.html#operating-cost",
+            "label": "Comparable cost allocation · source"
+          },
+          "move": false
+        },
+        {
+          "id": "cost-discipline-19",
+          "title": "Full cost scope",
+          "text": "Digital cost includes model tokens, retrieval, warehouse queries, tools and variable infrastructure per attempt. Handling includes review, rework and escalation. Fixed cost includes seats, licenses, adapters and operations. Compare existing and incremental costs consistently; count each once. Setup stays separate.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/pitch/businessCase/costScope",
+            "href": "story.html#pilot-acceptance",
+            "label": "Full cost scope · source"
+          },
+          "move": false
+        },
+        {
+          "id": "cost-discipline-20",
+          "title": "Illustrative assumptions",
+          "text": "Invented example assumptions, not a quote or measured savings. The neutral starting case assumes no improvement. Rates and workload stay constant for the annual estimate. Validate the inputs and all quality gates.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/pitch/businessCase/limitation",
+            "href": "story.html#pilot-acceptance",
+            "label": "Illustrative assumptions · source"
+          },
+          "move": false
+        },
+        {
+          "id": "cost-discipline-21",
+          "title": "Match the task to a qualified budget.",
+          "text": "Compare cost per person and per team. Inspect model size, thinking, output and cache settings. Choose a cheaper route only after it passes the task gates.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/11/sections/3/lead",
+            "href": "story.html#call-cost-anatomy",
+            "label": "Match the task to a qualified budget. · source"
+          },
+          "move": false
+        },
+        {
+          "id": "cost-discipline-22",
+          "title": "Task guidance status",
+          "text": "The source settings and task recommendations are reference examples, not approved policy. Provider settings differ. The full-cost worksheet follows this model-only estimate.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/slides/11/sections/3/note",
+            "href": "story.html#call-cost-anatomy",
+            "label": "Task guidance status · source"
+          },
+          "move": false
+        },
+        {
+          "id": "cost-discipline-23",
+          "title": "Cost",
+          "text": "Bound context size. Reuse valid views. Choose a capable route.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/pitch/lenses/0/mechanism",
+            "href": "story.html#pilot-acceptance",
+            "label": "Cost · source"
+          },
+          "move": false
+        },
+        {
+          "id": "cost-discipline-24",
+          "title": "Cost · boundary",
+          "text": "Include review, rework, retrieval and operations. Token savings alone do not establish value.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/pitch/lenses/0/guardrail",
+            "href": "story.html#pilot-acceptance",
+            "label": "Cost · boundary · source"
+          },
+          "move": false
+        },
+        {
+          "id": "cost-discipline-25",
+          "title": "Source calculation limitation 1",
+          "text": "Cache share is an assumption. Confirm eligible prefixes, expiry, writes and storage with your provider.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/costLab/sourceLimitations/0",
+            "href": "story.html#call-cost-anatomy",
+            "label": "Source calculation limitation 1 · source"
+          },
+          "move": false
+        },
+        {
+          "id": "cost-discipline-26",
+          "title": "Source calculation limitation 2",
+          "text": "The retry input adds an expected cost allowance. It does not simulate additional calls.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/costLab/sourceLimitations/1",
+            "href": "story.html#call-cost-anatomy",
+            "label": "Source calculation limitation 2 · source"
+          },
+          "move": false
+        },
+        {
+          "id": "cost-discipline-27",
+          "title": "Source calculation limitation 3",
+          "text": "The source simple comparison prices the question and answer only. It excludes tools, context, history and thinking.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/costLab/sourceLimitations/2",
+            "href": "story.html#call-cost-anatomy",
+            "label": "Source calculation limitation 3 · source"
+          },
+          "move": false
+        },
+        {
+          "id": "cost-discipline-28",
+          "title": "Source calculation limitation 4",
+          "text": "The source Flash example uses a future full rate. Its Pro example omits the stated long-context tier. Enter the rate that applies to your workload.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/costLab/sourceLimitations/3",
+            "href": "story.html#call-cost-anatomy",
+            "label": "Source calculation limitation 4 · source"
+          },
+          "move": false
+        },
+        {
+          "id": "cost-discipline-29",
+          "title": "Source calculation limitation 5",
+          "text": "All non-question input is cache-eligible in the source calculation. Check each real provider prefix. The first-call write premium uses the full instructions, tools and document prefix.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/costLab/sourceLimitations/4",
+            "href": "story.html#call-cost-anatomy",
+            "label": "Source calculation limitation 5 · source"
+          },
+          "move": false
+        },
+        {
+          "id": "cost-discipline-30",
+          "title": "Source calculation limitation 6",
+          "text": "Instruction, document and tool token fields are baseline estimates. Set the tokenizer factor to 1 for measured target-model token counts.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/costLab/sourceLimitations/5",
+            "href": "story.html#call-cost-anatomy",
+            "label": "Source calculation limitation 6 · source"
+          },
+          "move": false
+        },
+        {
+          "id": "cost-discipline-31",
+          "title": "Source calculation limitation 7",
+          "text": "The question-and-answer comparison applies the selected tokenizer and region factors consistently. This corrects omissions in the source comparison. It is not a return-on-investment baseline.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/costLab/sourceLimitations/6",
+            "href": "story.html#call-cost-anatomy",
+            "label": "Source calculation limitation 7 · source"
+          },
+          "move": false
+        }
+      ]
+    },
+    {
+      "id": "model-settings",
+      "title": "Model settings",
+      "summary": "Supplied example rates. Not checked against current provider prices. All rates are editable.",
+      "items": [
+        {
+          "id": "model-settings-01",
+          "title": "Model",
+          "text": "Compare the applicable input and output rates. Qualify each model on the task before changing its size.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/costLab/params/0/cost",
+            "href": "story.html#call-cost-anatomy",
+            "label": "Model · source"
+          },
+          "move": true,
+          "details": [
+            {
+              "label": "Purpose",
+              "text": "Which model writes the answer.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/0/what",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Model · Purpose"
+              }
+            },
+            {
+              "label": "Claude example",
+              "text": "Source example — verify: Haiku 4.5 (small), Sonnet (medium), Opus (large).",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/0/claude",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Model · Claude example"
+              }
+            },
+            {
+              "label": "Gemini example",
+              "text": "Source example — verify: Flash-Lite (small), Flash (medium), Pro (large).",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/0/gemini",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Model · Gemini example"
+              }
+            },
+            {
+              "label": "Claude Code example",
+              "text": "Source example — verify: /model. Set model: haiku for simple subagents.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/0/cc",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Model · Claude Code example"
+              }
+            }
+          ]
+        },
+        {
+          "id": "model-settings-02",
+          "title": "Thinking depth",
+          "text": "Thinking tokens are billed as output tokens, even when you do not see them.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/costLab/params/1/cost",
+            "href": "story.html#call-cost-anatomy",
+            "label": "Thinking depth · source"
+          },
+          "move": true,
+          "details": [
+            {
+              "label": "Purpose",
+              "text": "How much the model reasons before it answers.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/1/what",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Thinking depth · Purpose"
+              }
+            },
+            {
+              "label": "Claude example",
+              "text": "Source example — verify: effort: low, medium, high, xhigh, max. Default: medium on Opus 5.5, high on Sonnet 5.5. Thinking is always on for these models.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/1/claude",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Thinking depth · Claude example"
+              }
+            },
+            {
+              "label": "Gemini example",
+              "text": "Source example — verify: thinking_level: minimal, low, medium, high. Default: high on 3.1 Pro and Flash, minimal on 3.1 Flash-Lite.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/1/gemini",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Thinking depth · Gemini example"
+              }
+            },
+            {
+              "label": "Claude Code example",
+              "text": "Source example — verify: /effort or CLAUDE_CODE_EFFORT_LEVEL. MAX_THINKING_TOKENS on models with a fixed budget.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/1/cc",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Thinking depth · Claude Code example"
+              }
+            }
+          ]
+        },
+        {
+          "id": "model-settings-03",
+          "title": "Output limit",
+          "text": "Limits the worst case. It does not make answers shorter. Ask for the length in the prompt. If the limit is too low, the answer stops early and you pay for a retry.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/costLab/params/2/cost",
+            "href": "story.html#call-cost-anatomy",
+            "label": "Output limit · source"
+          },
+          "move": true,
+          "details": [
+            {
+              "label": "Purpose",
+              "text": "The maximum number of tokens that the model can write.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/2/what",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Output limit · Purpose"
+              }
+            },
+            {
+              "label": "Claude example",
+              "text": "Source example — verify: max_tokens (required). A hard limit on thinking plus answer. For xhigh or max effort, start at 64k.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/2/claude",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Output limit · Claude example"
+              }
+            },
+            {
+              "label": "Gemini example",
+              "text": "Source example — verify: maxOutputTokens.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/2/gemini",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Output limit · Gemini example"
+              }
+            },
+            {
+              "label": "Claude Code example",
+              "text": "Source example — verify: CLAUDE_CODE_MAX_OUTPUT_TOKENS.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/2/cc",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Output limit · Claude Code example"
+              }
+            }
+          ]
+        },
+        {
+          "id": "model-settings-04",
+          "title": "Temperature",
+          "text": "No direct effect on the price.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/costLab/params/3/cost",
+            "href": "story.html#call-cost-anatomy",
+            "label": "Temperature · source"
+          },
+          "move": true,
+          "details": [
+            {
+              "label": "Purpose",
+              "text": "How random the word choice is.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/3/what",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Temperature · Purpose"
+              }
+            },
+            {
+              "label": "Claude example",
+              "text": "Source example — verify: Range 0 to 1, default 1. Opus 4.7 and later and Sonnet 5.5 reject any other value (error 400). Sonnet 4.6 and Haiku 4.5 accept it.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/3/claude",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Temperature · Claude example"
+              }
+            },
+            {
+              "label": "Gemini example",
+              "text": "Source example — verify: Range 0 to 2. On Gemini 3, keep 1.0. A lower value can cause loops, and loops cost tokens.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/3/gemini",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Temperature · Gemini example"
+              }
+            },
+            {
+              "label": "Claude Code example",
+              "text": "Source example — verify: Not a setting.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/3/cc",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Temperature · Claude Code example"
+              }
+            }
+          ]
+        },
+        {
+          "id": "model-settings-05",
+          "title": "Top-P",
+          "text": "No direct effect on the price.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/costLab/params/4/cost",
+            "href": "story.html#call-cost-anatomy",
+            "label": "Top-P · source"
+          },
+          "move": true,
+          "details": [
+            {
+              "label": "Purpose",
+              "text": "Uses only the most likely words that together reach probability P.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/4/what",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Top-P · Purpose"
+              }
+            },
+            {
+              "label": "Claude example",
+              "text": "Source example — verify: Same model rules as temperature. Do not set temperature and top_p together.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/4/claude",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Top-P · Claude example"
+              }
+            },
+            {
+              "label": "Gemini example",
+              "text": "Source example — verify: topP.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/4/gemini",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Top-P · Gemini example"
+              }
+            },
+            {
+              "label": "Claude Code example",
+              "text": "Source example — verify: Not a setting.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/4/cc",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Top-P · Claude Code example"
+              }
+            }
+          ]
+        },
+        {
+          "id": "model-settings-06",
+          "title": "Top-K",
+          "text": "No direct effect on the price.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/costLab/params/5/cost",
+            "href": "story.html#call-cost-anatomy",
+            "label": "Top-K · source"
+          },
+          "move": true,
+          "details": [
+            {
+              "label": "Purpose",
+              "text": "Uses only the K most likely next tokens.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/5/what",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Top-K · Purpose"
+              }
+            },
+            {
+              "label": "Claude example",
+              "text": "Source example — verify: Same model rules as temperature.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/5/claude",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Top-K · Claude example"
+              }
+            },
+            {
+              "label": "Gemini example",
+              "text": "Source example — verify: topK.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/5/gemini",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Top-K · Gemini example"
+              }
+            },
+            {
+              "label": "Claude Code example",
+              "text": "Source example — verify: Not a setting.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/5/cc",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Top-K · Claude Code example"
+              }
+            }
+          ]
+        },
+        {
+          "id": "model-settings-07",
+          "title": "Stop sequences",
+          "text": "Fewer output tokens when the model would continue past the part that you need.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/costLab/params/6/cost",
+            "href": "story.html#call-cost-anatomy",
+            "label": "Stop sequences · source"
+          },
+          "move": true,
+          "details": [
+            {
+              "label": "Purpose",
+              "text": "Stops the answer at a text that you specify.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/6/what",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Stop sequences · Purpose"
+              }
+            },
+            {
+              "label": "Claude example",
+              "text": "Source example — verify: stop_sequences.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/6/claude",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Stop sequences · Claude example"
+              }
+            },
+            {
+              "label": "Gemini example",
+              "text": "Source example — verify: stopSequences.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/6/gemini",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Stop sequences · Gemini example"
+              }
+            },
+            {
+              "label": "Claude Code example",
+              "text": "Source example — verify: Not a setting.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/6/cc",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Stop sequences · Claude Code example"
+              }
+            }
+          ]
+        },
+        {
+          "id": "model-settings-08",
+          "title": "Number of answers",
+          "text": "Additional candidates can add output cost. Check billing and task quality before changing the count.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/costLab/params/7/cost",
+            "href": "story.html#call-cost-anatomy",
+            "label": "Number of answers · source"
+          },
+          "move": true,
+          "details": [
+            {
+              "label": "Purpose",
+              "text": "How many answers the model writes for one request.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/7/what",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Number of answers · Purpose"
+              }
+            },
+            {
+              "label": "Claude example",
+              "text": "Source example — verify: One answer for each request.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/7/claude",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Number of answers · Claude example"
+              }
+            },
+            {
+              "label": "Gemini example",
+              "text": "Source example — verify: candidateCount.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/7/gemini",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Number of answers · Gemini example"
+              }
+            },
+            {
+              "label": "Claude Code example",
+              "text": "Source example — verify: Not a setting.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/7/cc",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Number of answers · Claude Code example"
+              }
+            }
+          ]
+        },
+        {
+          "id": "model-settings-09",
+          "title": "Output format",
+          "text": "A schema can reduce format errors. Validate the result. Keep an explicit retry policy.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/costLab/params/8/cost",
+            "href": "story.html#call-cost-anatomy",
+            "label": "Output format · source"
+          },
+          "move": true,
+          "details": [
+            {
+              "label": "Purpose",
+              "text": "Makes the answer follow a JSON schema.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/8/what",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Output format · Purpose"
+              }
+            },
+            {
+              "label": "Claude example",
+              "text": "Source example — verify: output_config.format (structured outputs).",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/8/claude",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Output format · Claude example"
+              }
+            },
+            {
+              "label": "Gemini example",
+              "text": "Source example — verify: responseMimeType and responseJsonSchema.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/8/gemini",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Output format · Gemini example"
+              }
+            },
+            {
+              "label": "Claude Code example",
+              "text": "Source example — verify: Not a setting.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/8/cc",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Output format · Claude Code example"
+              }
+            }
+          ]
+        },
+        {
+          "id": "model-settings-10",
+          "title": "Image and PDF resolution",
+          "text": "Resolution can change input token use. Measure the cost and task accuracy. The supplied token counts and medium-resolution advice are unverified examples.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/costLab/params/9/cost",
+            "href": "story.html#call-cost-anatomy",
+            "label": "Image and PDF resolution · source"
+          },
+          "move": true,
+          "details": [
+            {
+              "label": "Purpose",
+              "text": "How many tokens each image or PDF page uses.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/9/what",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Image and PDF resolution · Purpose"
+              }
+            },
+            {
+              "label": "Claude example",
+              "text": "Source example — verify: Image tokens grow with the image size. Send smaller images.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/9/claude",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Image and PDF resolution · Claude example"
+              }
+            },
+            {
+              "label": "Gemini example",
+              "text": "Source example — verify: media_resolution: low, medium, high, ultra_high.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/9/gemini",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Image and PDF resolution · Gemini example"
+              }
+            },
+            {
+              "label": "Claude Code example",
+              "text": "Source example — verify: Not a setting.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/9/cc",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Image and PDF resolution · Claude Code example"
+              }
+            }
+          ]
+        },
+        {
+          "id": "model-settings-11",
+          "title": "Caching",
+          "text": "Read, write and storage charges differ by provider and lifetime. Enter the applicable rates. Verify eligibility, expiry and hit rate.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/costLab/params/10/cost",
+            "href": "story.html#call-cost-anatomy",
+            "label": "Caching · source"
+          },
+          "move": true,
+          "details": [
+            {
+              "label": "Purpose",
+              "text": "Keeps the start of the prompt so the next request reads it at a low price.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/10/what",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Caching · Purpose"
+              }
+            },
+            {
+              "label": "Claude example",
+              "text": "Source example — verify: cache_control. Lifetime 5 minutes by default, or 1 hour.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/10/claude",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Caching · Claude example"
+              }
+            },
+            {
+              "label": "Gemini example",
+              "text": "Source example — verify: Implicit caching is on by default. Context caching for a fixed context. Gemini 3.x Flash caches only prompts of 4,096 tokens or more.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/10/gemini",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Caching · Gemini example"
+              }
+            },
+            {
+              "label": "Claude Code example",
+              "text": "Source example — verify: Automatic. /usage shows the cache hit rate.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/10/cc",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Caching · Claude Code example"
+              }
+            }
+          ]
+        },
+        {
+          "id": "model-settings-12",
+          "title": "Batch",
+          "text": "The source assumes a 0.5 price multiplier. Verify applicable pricing, deadlines and support before using it.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/costLab/params/11/cost",
+            "href": "story.html#call-cost-anatomy",
+            "label": "Batch · source"
+          },
+          "move": true,
+          "details": [
+            {
+              "label": "Purpose",
+              "text": "Sends many requests to run within 24 hours.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/11/what",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Batch · Purpose"
+              }
+            },
+            {
+              "label": "Claude example",
+              "text": "Source example — verify: Message Batches API.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/11/claude",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Batch · Claude example"
+              }
+            },
+            {
+              "label": "Gemini example",
+              "text": "Source example — verify: Batch Mode.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/11/gemini",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Batch · Gemini example"
+              }
+            },
+            {
+              "label": "Claude Code example",
+              "text": "Source example — verify: Not a setting.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/11/cc",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Batch · Claude Code example"
+              }
+            }
+          ]
+        },
+        {
+          "id": "model-settings-13",
+          "title": "Speed and region",
+          "text": "The source assumes optional multipliers. Verify the applicable product, region, speed and contract charges.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/costLab/params/12/cost",
+            "href": "story.html#call-cost-anatomy",
+            "label": "Speed and region · source"
+          },
+          "move": true,
+          "details": [
+            {
+              "label": "Purpose",
+              "text": "Faster answers or a fixed data region.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/12/what",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Speed and region · Purpose"
+              }
+            },
+            {
+              "label": "Claude example",
+              "text": "Source example — verify: Fast mode on Opus 5.5: $8 input and $40 output (2 times). US data residency: 1.1 times.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/12/claude",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Speed and region · Claude example"
+              }
+            },
+            {
+              "label": "Gemini example",
+              "text": "Source example — verify: Not in this table.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/12/gemini",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Speed and region · Gemini example"
+              }
+            },
+            {
+              "label": "Claude Code example",
+              "text": "Source example — verify: Fast mode, when your plan has it.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/12/cc",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Speed and region · Claude Code example"
+              }
+            }
+          ]
+        },
+        {
+          "id": "model-settings-14",
+          "title": "Seed and penalties",
+          "text": "No direct effect on the price.",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/costLab/params/13/cost",
+            "href": "story.html#call-cost-anatomy",
+            "label": "Seed and penalties · source"
+          },
+          "move": true,
+          "details": [
+            {
+              "label": "Purpose",
+              "text": "Repeatable answers, or fewer repeated words.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/13/what",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Seed and penalties · Purpose"
+              }
+            },
+            {
+              "label": "Claude example",
+              "text": "Source example — verify: Not available.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/13/claude",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Seed and penalties · Claude example"
+              }
+            },
+            {
+              "label": "Gemini example",
+              "text": "Source example — verify: seed, presencePenalty, frequencyPenalty.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/13/gemini",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Seed and penalties · Gemini example"
+              }
+            },
+            {
+              "label": "Claude Code example",
+              "text": "Source example — verify: Not a setting.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/params/13/cc",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Seed and penalties · Claude Code example"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "task-recommendations",
+      "title": "Task recommendations",
+      "summary": "The source settings and task recommendations are reference examples, not approved policy. Provider settings differ. The full-cost worksheet follows this model-only estimate.",
+      "items": [
+        {
+          "id": "task-recommendations-01",
+          "title": "Extract or classify",
+          "text": "Small: Claude Haiku 4.5 or Gemini Flash-Lite",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/costLab/recs/0/1",
+            "href": "story.html#call-cost-anatomy",
+            "label": "Extract or classify · source"
+          },
+          "move": true,
+          "details": [
+            {
+              "label": "Thinking",
+              "text": "Off or minimal",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/recs/0/2",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Extract or classify · Thinking"
+              }
+            },
+            {
+              "label": "Output limit",
+              "text": "50 to 300 tokens",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/recs/0/3",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Extract or classify · Output limit"
+              }
+            },
+            {
+              "label": "Sampling",
+              "text": "Lower sampling may reduce variation where supported. It does not guarantee identical answers. Test the provider setting.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/recs/0/4",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Extract or classify · Sampling"
+              }
+            },
+            {
+              "label": "Format",
+              "text": "JSON schema",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/recs/0/5",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Extract or classify · Format"
+              }
+            }
+          ]
+        },
+        {
+          "id": "task-recommendations-02",
+          "title": "Summarize",
+          "text": "Medium: Claude Sonnet or Gemini Flash",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/costLab/recs/1/1",
+            "href": "story.html#call-cost-anatomy",
+            "label": "Summarize · source"
+          },
+          "move": true,
+          "details": [
+            {
+              "label": "Thinking",
+              "text": "Low",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/recs/1/2",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Summarize · Thinking"
+              }
+            },
+            {
+              "label": "Output limit",
+              "text": "About 2 times the length that you ask for",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/recs/1/3",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Summarize · Output limit"
+              }
+            },
+            {
+              "label": "Sampling",
+              "text": "Default",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/recs/1/4",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Summarize · Sampling"
+              }
+            },
+            {
+              "label": "Format",
+              "text": "Bullets with a length limit. Use STE-inspired writing unless full compliance is checked.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/recs/1/5",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Summarize · Format"
+              }
+            }
+          ]
+        },
+        {
+          "id": "task-recommendations-03",
+          "title": "Data question (SQL)",
+          "text": "Medium",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/costLab/recs/2/1",
+            "href": "story.html#call-cost-anatomy",
+            "label": "Data question (SQL) · source"
+          },
+          "move": true,
+          "details": [
+            {
+              "label": "Thinking",
+              "text": "Medium",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/recs/2/2",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Data question (SQL) · Thinking"
+              }
+            },
+            {
+              "label": "Output limit",
+              "text": "1,000 to 2,000 tokens",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/recs/2/3",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Data question (SQL) · Output limit"
+              }
+            },
+            {
+              "label": "Sampling",
+              "text": "Default, or 0 on models that accept it",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/recs/2/4",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Data question (SQL) · Sampling"
+              }
+            },
+            {
+              "label": "Format",
+              "text": "JSON that contains the SQL",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/recs/2/5",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Data question (SQL) · Format"
+              }
+            }
+          ]
+        },
+        {
+          "id": "task-recommendations-04",
+          "title": "Analysis agent",
+          "text": "Large model to plan, small model for simple steps",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/costLab/recs/3/1",
+            "href": "story.html#call-cost-anatomy",
+            "label": "Analysis agent · source"
+          },
+          "move": true,
+          "details": [
+            {
+              "label": "Thinking",
+              "text": "Medium. High only for difficult steps.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/recs/3/2",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Analysis agent · Thinking"
+              }
+            },
+            {
+              "label": "Output limit",
+              "text": "16k to 64k tokens (thinking needs room)",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/recs/3/3",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Analysis agent · Output limit"
+              }
+            },
+            {
+              "label": "Sampling",
+              "text": "Default",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/recs/3/4",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Analysis agent · Sampling"
+              }
+            },
+            {
+              "label": "Format",
+              "text": "Structured tool calls and a step limit",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/recs/3/5",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Analysis agent · Format"
+              }
+            }
+          ]
+        },
+        {
+          "id": "task-recommendations-05",
+          "title": "Draft text for people",
+          "text": "Medium",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/costLab/recs/4/1",
+            "href": "story.html#call-cost-anatomy",
+            "label": "Draft text for people · source"
+          },
+          "move": true,
+          "details": [
+            {
+              "label": "Thinking",
+              "text": "Low",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/recs/4/2",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Draft text for people · Thinking"
+              }
+            },
+            {
+              "label": "Output limit",
+              "text": "About 2 times the length that you ask for",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/recs/4/3",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Draft text for people · Output limit"
+              }
+            },
+            {
+              "label": "Sampling",
+              "text": "Default",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/recs/4/4",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Draft text for people · Sampling"
+              }
+            },
+            {
+              "label": "Format",
+              "text": "Text with a word limit",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/recs/4/5",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Draft text for people · Format"
+              }
+            }
+          ]
+        },
+        {
+          "id": "task-recommendations-06",
+          "title": "Coding with Claude Code",
+          "text": "Sonnet by default, Opus for architecture, Haiku for subagents",
+          "source": {
+            "file": "presentation-content.json",
+            "pointer": "/costLab/recs/5/1",
+            "href": "story.html#call-cost-anatomy",
+            "label": "Coding with Claude Code · source"
+          },
+          "move": true,
+          "details": [
+            {
+              "label": "Thinking",
+              "text": "/effort medium. High for difficult problems.",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/recs/5/2",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Coding with Claude Code · Thinking"
+              }
+            },
+            {
+              "label": "Output limit",
+              "text": "Default",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/recs/5/3",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Coding with Claude Code · Output limit"
+              }
+            },
+            {
+              "label": "Sampling",
+              "text": "Not a setting",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/recs/5/4",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Coding with Claude Code · Sampling"
+              }
+            },
+            {
+              "label": "Format",
+              "text": "Not applicable",
+              "source": {
+                "file": "presentation-content.json",
+                "pointer": "/costLab/recs/5/5",
+                "href": "story.html#call-cost-anatomy",
+                "label": "Coding with Claude Code · Format"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "presentation-motion",
+      "title": "Motion and reading",
+      "summary": "Use motion to show what changed, where context moves, and why it stops. Keep the text still while people read. Add depth to diagrams when it helps explain their layers.",
+      "items": [
+        {
+          "id": "presentation-motion-01",
+          "title": "Motion purpose",
+          "text": "Use motion to show what changed, where context moves, and why it stops. Keep the text still while people read. Add depth to diagrams when it helps explain their layers.",
+          "source": {
+            "file": "motion-preview-shell.html",
+            "pointer": "css:main > p.lead",
+            "href": "motion-preview.html",
+            "label": "Motion purpose · source"
+          },
+          "move": true
+        },
+        {
+          "id": "presentation-motion-02",
+          "title": "Stage handoff",
+          "text": "Use a brief exit and arrival when a slide changes. Keep navigation immediate. Preserve the 16-slide print deck.",
+          "source": {
+            "file": "motion-preview-shell.html",
+            "pointer": "css:.scope > article:nth-child(1) > p",
+            "href": "motion-preview.html",
+            "label": "Stage handoff · source"
+          },
+          "move": true
+        },
+        {
+          "id": "presentation-motion-03",
+          "title": "Reading focus",
+          "text": "Keep the diagram beside the current explanation. Use bounded depth. Preserve all 16 chapters and 31 topics.",
+          "source": {
+            "file": "motion-preview-shell.html",
+            "pointer": "css:.scope > article:nth-child(2) > p",
+            "href": "motion-preview.html",
+            "label": "Reading focus · source"
+          },
+          "move": true
+        },
+        {
+          "id": "presentation-motion-04",
+          "title": "Route continuity",
+          "text": "Highlight the selected node and its outcomes. Move only along its routes. Preserve all 57 nodes and 70 routes.",
+          "source": {
+            "file": "motion-preview-shell.html",
+            "pointer": "css:.scope > article:nth-child(3) > p",
+            "href": "motion-preview.html",
+            "label": "Route continuity · source"
+          },
+          "move": true
+        },
+        {
+          "id": "presentation-motion-05",
+          "title": "Connected explanation",
+          "text": "Link each brain function to the software analogy. Keep source references and scientific limits in place.",
+          "source": {
+            "file": "motion-preview-shell.html",
+            "pointer": "css:.scope > article:nth-child(4) > p",
+            "href": "motion-preview.html",
+            "label": "Connected explanation · source"
+          },
+          "move": true
+        },
+        {
+          "id": "presentation-motion-06",
+          "title": "Shared rules for every direction",
+          "text": "Pause stops all motion. Flat view removes depth only. Reduced motion shows a readable static state. Narrow screens use flat diagrams. Off-screen diagrams stop. The implementation will use the existing native CSS, SVG and shared animation clock.",
+          "source": {
+            "file": "motion-preview-shell.html",
+            "pointer": "xpath://div[@class=\"boundary\"]/text()",
+            "href": "motion-preview.html",
+            "label": "Shared rules for every direction · source"
+          },
+          "move": false
+        },
+        {
+          "id": "presentation-motion-07",
+          "title": "Submit source context.",
+          "text": "Collect a clear description and linked evidence. Keep the source text available. This sample preserves the intended process.",
+          "source": {
+            "file": "motion-preview-shell.html",
+            "pointer": "css:#scroll-cards > article:nth-child(1) > p",
+            "href": "motion-preview.html",
+            "label": "Submit source context. · source"
+          },
+          "move": false
+        },
+        {
+          "id": "presentation-motion-08",
+          "title": "Review before approval.",
+          "text": "A human reviews the submission. Missing evidence returns to the review process. A model recommendation cannot grant permission.",
+          "source": {
+            "file": "motion-preview-shell.html",
+            "pointer": "css:#scroll-cards > article:nth-child(2) > p",
+            "href": "motion-preview.html",
+            "label": "Review before approval. · source"
+          },
+          "move": false
+        },
+        {
+          "id": "presentation-motion-09",
+          "title": "Keep one source of truth.",
+          "text": "Store the approved canonical record. A canonical record is the authoritative version. A search index remains a rebuildable copy.",
+          "source": {
+            "file": "motion-preview-shell.html",
+            "pointer": "css:#scroll-cards > article:nth-child(3) > p",
+            "href": "motion-preview.html",
+            "label": "Keep one source of truth. · source"
+          },
+          "move": false
+        },
+        {
+          "id": "presentation-motion-10",
+          "title": "Check before delivery.",
+          "text": "Find relevant context. Recheck caller access and current validity. Deliver a bounded bundle through the proposed MCP service.",
+          "source": {
+            "file": "motion-preview-shell.html",
+            "pointer": "css:#scroll-cards > article:nth-child(4) > p",
+            "href": "motion-preview.html",
+            "label": "Check before delivery. · source"
+          },
+          "move": false
+        }
+      ]
+    }
+  ]
+}

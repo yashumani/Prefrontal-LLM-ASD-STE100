@@ -4,6 +4,17 @@ on:
   push:
     branches: [feature/context-presentation]
     paths:
+      - best-practices.html
+      - best-practices.json
+      - practices.css
+      - practice-links.js
+      - sidebar.css
+      - sidebar.js
+      - motion-preview-shell.html
+      - scripts/render-sidebar.cjs
+      - scripts/build-practices.cjs
+      - scripts/build-motion-preview.cjs
+      - scripts/verify-navigation.cjs
       - decisions.html
       - decisions.css
       - decisions.js
@@ -60,6 +71,12 @@ jobs:
         run: |
           node --check scripts/render-product-intro.cjs
           node --check scripts/verify-motion.cjs
+          node --check sidebar.js
+          node --check practice-links.js
+          node --check scripts/build-practices.cjs
+          node --check scripts/render-sidebar.cjs
+          node --check scripts/build-motion-preview.cjs
+          node --check scripts/verify-navigation.cjs
           node --check motion-runtime.js
           node --check mini-architectures.js
           node --check decisions.js
@@ -93,12 +110,13 @@ jobs:
           node scripts/verify-decisions.cjs
           node scripts/verify-cortex.cjs
           node scripts/verify-motion.cjs
+          node scripts/verify-navigation.cjs
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
       - name: Assemble public site
         run: |
           mkdir _site
-          cp motion-preview.html decisions.html story.html index.html styles.css app.js diagrams.js cost-lab.js cost-lab.css presentation-content.json _site/
+          cp best-practices.html motion-preview.html decisions.html story.html index.html styles.css app.js diagrams.js cost-lab.js cost-lab.css presentation-content.json _site/
           touch _site/.nojekyll
       - name: Upload public site
         uses: actions/upload-pages-artifact@v4

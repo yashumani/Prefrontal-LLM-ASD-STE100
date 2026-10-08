@@ -26,7 +26,7 @@ const base=process.env.PREFRONTAL_BASE_URL||'http://127.0.0.1:8893/';
  const beforeTilt=await depth.evaluate(e=>getComputedStyle(e).transform);
  assert.notEqual(beforeTilt,'none','Desktop has a perspective transform');
  assert.equal(await first.locator('.story-step-jump[aria-pressed=true]').innerText(),'03');
- await first.locator('.story-step-jump').nth(1).click();
+ await page.locator('#sidebar-step').selectOption('1');
  assert.equal(await first.locator('figure').getAttribute('data-scroll-stage'),'1','Step guide scrolls and selects the explanation');
  await page.waitForTimeout(300);
  assert.notEqual(await depth.evaluate(e=>getComputedStyle(e).transform),beforeTilt,'Depth responds to scroll position');
@@ -44,7 +44,7 @@ const base=process.env.PREFRONTAL_BASE_URL||'http://127.0.0.1:8893/';
   await page.screenshot({path:'.validation/story-'+(index+1)+'.png'});
  }
  await page.goto(base+'story.html#bounded-decision-router');await page.waitForSelector('body[data-story-ready=true]');
- const start=await page.evaluate(()=>scrollY);await page.keyboard.press('PageDown');await page.waitForTimeout(250);assert((await page.evaluate(()=>scrollY))>start,'PageDown retains native scrolling');
+ await page.locator('#deck').focus();const start=await page.evaluate(()=>scrollY);await page.keyboard.press('PageDown');await page.waitForFunction(start=>scrollY>start,start);assert((await page.evaluate(()=>scrollY))>start,'PageDown retains native scrolling in the reading region');
  await page.emulateMedia({reducedMotion:'reduce'});await page.waitForFunction(()=>ContextMotion.stats().scheduled===false);assert.equal(await page.evaluate(()=>ContextMotion.stats().scheduled),false);assert(await page.locator('#motion-toggle').isDisabled());assert(await page.locator('.story-depth-toggle').isDisabled());assert.equal(await page.locator('[data-depth-scene]').first().evaluate(e=>getComputedStyle(e).transform),'none');
  await page.emulateMedia({reducedMotion:'no-preference'});
  for(const width of [390,768]){await page.setViewportSize({width,height:844});for(const index of [0,4,8,11,12,15]){await page.goto(base+'story.html#'+data.slides[index].id);await page.waitForSelector('body[data-story-ready=true]');assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Mobile overflow '+index+' width'+width);}await page.goto(base+'story.html#bounded-decision-router');await page.waitForSelector('body[data-story-ready=true]');await page.screenshot({path:'.validation/story-mobile-'+width+'.png'});}

@@ -4,15 +4,15 @@
   if(section.closest('noscript'))return;
   const stage=section.querySelector('.cortex-stage'),wire=section.querySelector('.cortex-wire'),dot=section.querySelector('.cortex-packet');
   const pointAt=ContextMotion.samplePath(wire);
-  const motion=ContextMotion.register({element:stage,frame(t){const point=pointAt(t/1.6%1);dot.setAttribute('cx',point.x);dot.setAttribute('cy',point.y);}});motion.setAllowed(true);
+  const motion=ContextMotion.register({element:stage,frame(t){const point=pointAt(t/ContextMotion.profile.packetSeconds%1);dot.setAttribute('cx',point.x);dot.setAttribute('cy',point.y);}});motion.setAllowed(true);
   const depthTarget=section.querySelector('.cortex-diagram');
   const depth=ContextMotion.register({element:depthTarget,kind:'depth',continuous:false,
    measure(){const box=stage.getBoundingClientRect();return Math.max(-1,Math.min(1,(box.top+box.height/2-innerHeight/2)/innerHeight));},
-   frame(_t,_delta,p){stage.style.setProperty('--cortex-tilt',`${-p*2}deg`);},
+   frame(_t,_delta,p){stage.style.setProperty('--cortex-tilt',`${-p*ContextMotion.profile.tiltDegrees}deg`);},
    staticFrame(){stage.style.setProperty('--cortex-tilt','0deg');}});depth.setAllowed(true);
   ContextMotion.bindPauseControl(section.querySelector('.cortex-motion'));
   ContextMotion.subscribe(state=>{stage.dataset.localPaused=String(state.stopped);});
-  const cards=[...section.querySelectorAll('.cortex-mapping')],links=[...section.querySelectorAll('[data-cortex-region]')];
+  const cards=[...section.querySelectorAll('.cortex-mapping')],links=[...document.querySelectorAll('[data-cortex-region]')];
   let requestedCard=null;
   let selected=null;
   function select(id){if(id===selected)return;selected=id;cards.forEach(e=>{e.classList.toggle('is-selected',e.dataset.region===id);if(e.dataset.region===id)ContextMotion.arrive(e.querySelector('h3'));});links.forEach(e=>{if(e.dataset.cortexRegion===id)e.setAttribute('aria-current','location');else e.removeAttribute('aria-current');});}

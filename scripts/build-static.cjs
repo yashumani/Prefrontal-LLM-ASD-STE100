@@ -35,10 +35,12 @@ const figure = svg => {
 };
 const diagram = kind => figure(sandbox.window.ContextDiagrams.create(kind));
 const industryDiagram = (kind, data) => kind === 'metric' ? serialize(sandbox.window.ContextDiagrams.createIndustry(kind, data)) : figure(sandbox.window.ContextDiagrams.createIndustry(kind, data));
+sandbox.window.PracticeCatalog=JSON.parse(fs.readFileSync('best-practices.json','utf8'));
+vm.runInNewContext(fs.readFileSync('practice-links.js','utf8'),sandbox);
 const deck = JSON.parse(fs.readFileSync("presentation-content.json", "utf8"));
 const sourceLink = sector => `<a class="industry-citation" href="${escape(sector.metric.sourceUrl)}">${escape(sector.metric.sourceTitle)}</a>`;
 const metric = (sector, overview = false) => `<article class="industry-metric" data-sector="${escape(sector.id)}" style="--sector:${escape(sector.color)}">${overview ? `<h3 class="sector-name">${escape(sector.name)}</h3>` : ''}<strong class="metric-value">${escape(sector.metric.value)}</strong><p class="metric-label">${escape(sector.metric.label)}</p>${industryDiagram('metric',sector)}<p class="metric-period">${escape(sector.metric.period)}</p><p class="metric-scope">${escape(sector.metric.scope)}</p>${sourceLink(sector)}</article>`;
-const items = slide => `<div class="items">${slide.items.map(item => `<article class="item"><h3>${escape(item.title)}</h3><p>${escape(item.text)}</p></article>`).join("")}</div>`;
+const items = slide => sandbox.window.ContextPractices.items(slide.items);
 const conference = () => `<div class="conference-insights"><div class="conference-grid">${deck.pitch.conference.insights.map(insight=>`<article class="conference-insight"><span class="design-label">FIELD INSIGHT · EXHIBITS ${escape(insight.exhibits)}</span><h3>${escape(insight.title)}</h3><p>${escape(insight.observation)}</p><h4>Product implication</h4><p>${escape(insight.application)}</p></article>`).join('')}</div><p class="conference-scope">${escape(deck.pitch.conference.eventDate)} · ${deck.pitch.conference.exhibits} exhibits. ${escape(deck.pitch.conference.scope)}</p><a class="conference-citation" href="${escape(deck.pitch.conference.url)}">${escape(deck.pitch.conference.title)}</a></div>`;
 const value = () => `<div class="value-grid">${deck.pitch.lenses.map(lens=>`<article class="value-lens" data-lens="${escape(lens.id)}" style="--sector:${escape(lens.color)}"><span class="value-name">${escape(lens.name)}</span><h3>${escape(lens.goal)}</h3><p class="value-mechanism">${escape(lens.mechanism)}</p><h4>Measure</h4><p class="value-measure">${escape(lens.measure)}</p><p class="value-guardrail">${escape(lens.guardrail)}</p></article>`).join('')}</div>`;
 const proof = () => `<div class="proof-grid">${deck.pitch.scorecard.map(plan=>`<article class="proof-card" data-lens="${escape(plan.id)}"><h3>${escape(plan.name)}</h3><h4>Measure</h4><p>${escape(plan.metric)}</p><h4>Trial</h4><p>${escape(plan.trial)}</p><h4>Expansion gate</h4><p class="proof-decision">${escape(plan.decision)}</p></article>`).join('')}</div>`;
@@ -116,24 +118,25 @@ function renderStaticSlide(slide, index, nested=false) {
   if(nested&&slide.items.length&&['pitch-proof','pitch-calculator','upgrade','token-cost'].includes(slide.type))body+=items(slide);
   return `<${nested?'article':'section'} class="${nested?'developer-section':'slide'} type-${escape(slide.type)}${slide.infographic&&!slide.miniArchitecture?' has-infographic':''}${slide.miniArchitecture?' has-mini-architecture':''}${slide.pitchSignals?.length?' has-pitch-signals':''}${slide.cortexReference?' has-cortex-reference':''}" id="${nested?'detail-static-':'static-'}${escape(slide.id)}">${slide.type === "cover"&&!slide.miniArchitecture ? "" : header}${!nested&&index===0?'<div class="product-actions"><a class="primary-action" href="#static-full-architecture">Explore the architecture ↗</a><a class="secondary-action" href="#static-pilot-acceptance">Review the pilot →</a><p class="product-audience">For AI, data and governance teams</p></div>':''}${body}${slide.note ? `<p class="slide-note">${escape(slide.note)}</p>` : ""}</${nested?'article':'section'}>`;
 }
-const slides=deck.slides.map((slide,index)=>renderStaticSlide(slide,index)).join("\n");
+const slides=deck.slides.map((slide,index)=>renderStaticSlide(slide,index).replace(`id="static-${slide.id}">`,`id="static-${slide.id}"><span class="static-anchor" id="${slide.id}"></span>`)).join("\n");
 const start = "<!-- STATIC PRESENTATION START -->";
 const end = "<!-- STATIC PRESENTATION END -->";
 const html = fs.readFileSync("presentation-shell.html", "utf8").replace(/\r\n/g, "\n");
 assert(html.includes(start) && html.includes(end), "Static presentation markers are required.");
 const replacement = `${start}\n  <noscript><main class="static-presentation"><p class="static-intro">Static presentation · all ${deck.slides.length} slides. Writing inspired by ASD-STE100; full compliance has not been checked.</p>\n${slides}\n</main></noscript>\n  ${end}`;
 let output = html.slice(0, html.indexOf(start)) + replacement + html.slice(html.indexOf(end) + end.length);
-const css=['styles.css','cost-lab.css','story.css','cortex.css','hierarchy.css','motion.css'].map(file=>fs.readFileSync(file,'utf8')).join('\n');
-const scripts=['motion-runtime.js','diagrams.js','mini-architectures.js','cost-lab.js','story.js','app.js'].map(file=>fs.readFileSync(file,'utf8').replace(/<\/script/gi,'<\\/script')).join('\n');
-output=output.replace('<!-- BUNDLE STYLES -->',()=>`<style>${css}</style>`).replace('<!-- BUNDLE SCRIPTS -->',()=>`<script type="application/json" id="presentation-data">${JSON.stringify(deck).replace(/</g,'\\u003c')}</script>\n<script>${scripts}</script>`);
+const css=['styles.css','cost-lab.css','story.css','cortex.css','hierarchy.css','motion.css','sidebar.css'].map(file=>fs.readFileSync(file,'utf8')).join('\n');
+const scripts=['motion-runtime.js','practice-links.js','diagrams.js','mini-architectures.js','cost-lab.js','story.js','app.js','sidebar.js'].map(file=>fs.readFileSync(file,'utf8').replace(/<\/script/gi,'<\\/script')).join('\n');
+output=output.replace('<!-- BUNDLE STYLES -->',()=>`<style>${css}</style>`).replace('<!-- BUNDLE SCRIPTS -->',()=>`<script type="application/json" id="practice-data">${JSON.stringify(sandbox.window.PracticeCatalog).replace(/</g,'\\u003c')}</script><script type="application/json" id="presentation-data">${JSON.stringify(deck).replace(/</g,'\\u003c')}</script>\n<script>${scripts}</script>`);
 assert(!output.includes('<'+'?')&&!output.includes('?' + '>'),'The single-file page must contain no Apps Script scriptlet markers.');
 assert(!/<(?:script|link)\b[^>]*(?:src|href)=/.test(output),'The generated page must use inline CSS, JS and content.');
 output=output.replace(/\r\n/g,'\n');
-let storyOutput=output.replace('<body>','<body data-presentation="story">').replace('href="story.html" title="Read the complete scrolling presentation">Scroll story ↗','href="index.html" title="Open the original slide presentation">Slide deck ↗').replace(/<details\b/g,'<details open').replace('<details open class="presentation-options">','<details class="presentation-options">').replace('<title>Prefrontal · Governed context as a product</title>','<title>Prefrontal · The complete context story</title>');
+let storyOutput=output.replace('<!-- SITE SIDEBAR -->',require('./render-sidebar.cjs')('story',deck.slides)).replace('<body>','<body data-presentation="story">').replace('href="story.html" title="Read the complete scrolling presentation">Scroll story ↗','href="index.html" title="Open the original slide presentation">Slide deck ↗').replace(/<details(?![^>]*\bopen\b)/g,'<details open').replace('<details open class="presentation-options">','<details class="presentation-options">').replace('<title>Prefrontal · Governed context as a product</title>','<title>Prefrontal · The complete context story</title>');
 const cortexMarkup=require('./render-cortex.cjs')();
 const cortexStatic=cortexMarkup.replace(/id="(why-prefrontal|cortex-[^"]+)"/g,'id="static-$1"').replace(/href="#(why-prefrontal|cortex-[^"]+)"/g,'href="#static-$1"').replace(/aria-labelledby="cortex-title"/g,'aria-labelledby="static-cortex-title"').replace(/aria-labelledby="cortex-svg-title cortex-svg-desc"/g,'aria-labelledby="static-cortex-svg-title static-cortex-svg-desc"').replace(/url\(#cortex-front\)/g,'url(#static-cortex-front)');
-storyOutput=storyOutput.replace('<main id="deck"',require('./render-product-intro.cjs')('story')+'<main id="deck"').replace('</main>', '</main>'+cortexMarkup).replace('<noscript><main', '<noscript>'+cortexStatic+'<main').replace('</body>','<script>'+fs.readFileSync('cortex.js','utf8')+'</script></body>').replace('<div class="tools">','<div class="tools"><a class="cortex-nav-link" href="#why-prefrontal">Why Prefrontal?</a>');
+storyOutput=storyOutput.replace('<main id="deck"',require('./render-product-intro.cjs')('story')+'<main id="deck"').replace('</main>', '</main>'+cortexMarkup).replace('<noscript><main', '<noscript>'+cortexStatic+'<main').replace('</body>','<script>'+fs.readFileSync('cortex.js','utf8')+'</script></body>');
 storyOutput=storyOutput.replace(/\r\n/g,'\n');
+output=output.replace('<!-- SITE SIDEBAR -->',require('./render-sidebar.cjs')('deck',deck.slides));
 if (process.argv.includes("--check")) {
   assert.equal(fs.readFileSync('story.html','utf8').replace(/\r\n/g,'\n'),storyOutput,'Scrolling story is stale. Rebuild both formats.');
   assert.equal(fs.readFileSync("index.html","utf8").replace(/\r\n/g,"\n"), output, "Static deck is stale. Run node scripts/build-static.cjs.");
@@ -147,3 +150,6 @@ if (process.argv.includes("--check")) {
 }
 
 require("./build-decisions.cjs");
+
+require('./build-practices.cjs');
+require('./build-motion-preview.cjs');

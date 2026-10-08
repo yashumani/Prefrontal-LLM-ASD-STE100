@@ -1,11 +1,14 @@
-/* Balanced motion: one vocabulary for the deck, story and decision map. */
+/* Calm motion: every cue remains, with smaller travel and quieter transitions. */
 :root {
-  --motion-interaction: 180ms;
-  --motion-arrival: 420ms;
-  --motion-exit: 180ms;
-  --motion-selection: 320ms;
-  --motion-stagger: 60ms;
-  --motion-ease: cubic-bezier(.16, 1, .3, 1);
+  --motion-interaction: 160ms;
+  --motion-arrival: 280ms;
+  --motion-exit: 140ms;
+  --motion-selection: 240ms;
+  --motion-stagger: 40ms;
+  --motion-arrival-distance: 4px;
+  --motion-selection-distance: -2px;
+  --motion-ease: cubic-bezier(.2, 0, 0, 1);
+  --motion-selection-ease: cubic-bezier(.4, 0, .2, 1);
 }
 
 /* Native snapshots bridge slide changes; unsupported browsers navigate instantly. */
@@ -42,16 +45,19 @@ html:has(body.motion-paused)::view-transition-new(root) { animation:none; }
 }
 
 .story-step {
-  transition: border-color var(--motion-selection) var(--motion-ease),
-    transform var(--motion-selection) var(--motion-ease);
+  transition: border-color var(--motion-selection) var(--motion-selection-ease),
+    transform var(--motion-selection) var(--motion-selection-ease);
+}
+.story-step.is-reading {
+  transform: translateX(var(--motion-selection-distance));
 }
 .node-button, .cortex-analogy {
-  transition: border-color var(--motion-selection) var(--motion-ease),
-    background-color var(--motion-selection) var(--motion-ease);
+  transition: border-color var(--motion-selection) var(--motion-selection-ease),
+    background-color var(--motion-selection) var(--motion-selection-ease);
 }
 .route path {
-  transition: stroke var(--motion-selection) var(--motion-ease),
-    opacity var(--motion-selection) var(--motion-ease);
+  transition: stroke var(--motion-selection) var(--motion-selection-ease),
+    opacity var(--motion-selection) var(--motion-selection-ease);
 }
 
 /* Labels stay readable while the current node and path carry the emphasis. */
@@ -62,7 +68,7 @@ html:has(body.motion-paused)::view-transition-new(root) { animation:none; }
   transition: none;
 }
 .motion-diagram .m-node rect {
-  transition: stroke var(--motion-selection) var(--motion-ease);
+  transition: stroke var(--motion-selection) var(--motion-selection-ease);
 }
 
 .motion-arrival,
@@ -70,7 +76,7 @@ html:has(body.motion-paused)::view-transition-new(root) { animation:none; }
   animation: motion-arrive var(--motion-arrival) var(--motion-ease) 1 both;
 }
 @keyframes motion-arrive {
-  from { transform: translateY(8px); }
+  from { transform: translateY(var(--motion-arrival-distance)); }
   to { transform: translateY(0); }
 }
 
@@ -84,6 +90,12 @@ body[data-presentation="story"] .story-depth-stage > .diagram-viewport {
 }
 body[data-presentation="story"] .story-depth-stage > .diagram-viewport {
   transform: translateZ(var(--lift, 0px));
+}
+.story-depth-stage::before {
+  transform: translate3d(3px, 6px, -8px);
+}
+.story-depth-stage::after {
+  transform: translate3d(1.5px, 3px, -4px);
 }
 
 /* Flat view removes spatial depth, but keeps the selected route in motion. */

@@ -31,13 +31,13 @@
  document.querySelectorAll('.node').forEach(e=>{
   const depth=ContextMotion.register({element:e,kind:'depth',continuous:false,
    measure(){const box=e.getBoundingClientRect();return Math.max(-1,Math.min(1,(box.top+box.height/2-innerHeight/2)/innerHeight));},
-   frame(_t,_delta,p){e.style.setProperty('--tilt',`${p*-2}deg`);e.style.setProperty('--lift',`${10*(1-Math.abs(p))}px`);},
+   frame(_t,_delta,p){e.style.setProperty('--tilt',`${-p*ContextMotion.profile.tiltDegrees}deg`);e.style.setProperty('--lift',`${ContextMotion.profile.liftPx*(1-Math.abs(p))}px`);},
    staticFrame(){e.style.setProperty('--tilt','0deg');e.style.setProperty('--lift','0px');}});
   depth.setAllowed(true);
  });
  // Observe each source card so a long SVG route never keeps off-screen work alive.
  document.querySelectorAll('.node-button').forEach(button=>{
-  const flow=ContextMotion.register({element:button,frame(t){if(button.dataset.node===document.querySelector('.node.active')?.id)activePaths.forEach(({pointAt,dot})=>{const point=pointAt(t/1.6%1);dot.setAttribute('cx',point.x);dot.setAttribute('cy',point.y);});}});
+  const flow=ContextMotion.register({element:button,frame(t){if(button.dataset.node===document.querySelector('.node.active')?.id)activePaths.forEach(({pointAt,dot})=>{const point=pointAt(t/ContextMotion.profile.packetSeconds%1);dot.setAttribute('cx',point.x);dot.setAttribute('cy',point.y);});}});
   flows.set(button.dataset.node,flow);
  });
  const depthButton=document.getElementById('flat');
@@ -51,9 +51,7 @@
   depthButton.setAttribute('aria-pressed',String(!state.depth));
  });
  const map=document.querySelector('.map-scroll');map.scrollLeft=(1200-map.clientWidth)/2;
- const header=document.querySelector('header');
- const headerSize=new ResizeObserver(()=>document.documentElement.style.setProperty('--map-header-height',header.offsetHeight+'px'));
- headerSize.observe(header);
+
  if(byId.has(location.hash.slice(1)))select(location.hash.slice(1),true);
  window.addEventListener('hashchange',()=>{const id=location.hash.slice(1);if(byId.has(id))select(id,true);});
 })();

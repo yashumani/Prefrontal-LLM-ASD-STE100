@@ -1,0 +1,14 @@
+'use strict';
+const fs=require('node:fs'),assert=require('node:assert/strict');
+let html=fs.readFileSync('motion-preview-shell.html','utf8');
+let controls=html.match(/<div class="controls">[\s\S]*?<\/div>/)[0];
+html=html.replace(controls,'');
+const sidebar=require('./render-sidebar.cjs')('motion',[{id:'variants',title:'Compare directions'},{id:'scroll-story',title:'Scroll and depth'}]).replace('<div class="controls"><button id="practice-print" type="button">Print practices</button></div>',controls);
+html=html.replace('<header><strong>Prefrontal</strong><span class="tag">Motion study · Review only</span></header>','<body>'+sidebar);
+html=html.replace('</style>','\n'+fs.readFileSync('sidebar.css','utf8')+'\n.practice-print-original{display:none}@media print{.practice-print-original{display:block}.practice-relocation{display:none}}</style>');
+html=html.replace('<p class="lead">Use motion','<p class="lead practice-print-original">Use motion');
+html=html.replace('<div class="scope">','<p class="practice-relocation">Motion and reading guidance moved to <a href="best-practices.html#presentation-motion">Best Practices</a>.</p><div class="scope practice-print-original">');
+html+='\n<script>'+fs.readFileSync('sidebar.js','utf8')+'</script>\n</body>\n';
+html=html.replace(/\r\n/g,'\n');
+if(process.argv.includes('--check'))assert.equal(fs.readFileSync('motion-preview.html','utf8').replace(/\r\n/g,'\n'),html,'Motion reference is stale');else fs.writeFileSync('motion-preview.html',html);
+console.log('Motion reference: PASS (three interactive directions; shared sidebar; original guidance retained for print)');
