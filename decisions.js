@@ -27,4 +27,5 @@
  document.getElementById('pause').onclick=function(){paused=!paused;document.body.classList.toggle('paused',paused);ContextMotion.setPaused(paused);this.textContent=paused?'Resume motion':'Pause motion';this.setAttribute('aria-pressed',String(paused));};
  const map=document.querySelector('.map-scroll');map.scrollLeft=(1200-map.clientWidth)/2;
  if(byId.has(location.hash.slice(1)))select(location.hash.slice(1),true);
+ window.addEventListener('hashchange',()=>{const id=location.hash.slice(1);if(byId.has(id))select(id,true);});
 })();

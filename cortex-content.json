@@ -1,0 +1,137 @@
+{
+  "title": "A brain-inspired name. A governed design.",
+  "intro": "The prefrontal cortex sits at the front of the brain. It works with other regions to support executive functions: processes that guide behavior toward goals. We use selected functions as design analogies for governed context.",
+  "caveat": "SOFTWARE ANALOGY · These connections explain our proposed design. They do not reproduce brain biology or prove product performance. Brain regions have overlapping functions. The locations below are approximate. This writing is STE-inspired; full compliance has not been checked.",
+  "development": {
+    "text": "Brain development has no single finish date. NIMH describes broad maturation into the mid-to-late 20s. A 2023 study found adult-level performance on its executive-function tasks around 18–20. Task performance and brain structure measure different things. Neither result sets a universal age of maturity. Social context also affects risk-taking.",
+    "sourceIds": [
+      "N01",
+      "N09"
+    ]
+  },
+  "sources": [
+    {
+      "id": "N01",
+      "title": "NIMH · The Teen Brain: 7 Things to Know",
+      "url": "https://www.nimh.nih.gov/health/publications/the-teen-brain-7-things-to-know"
+    },
+    {
+      "id": "N02",
+      "title": "D'Esposito et al. (1999) · Maintenance versus manipulation of information held in working memory",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/10536086/"
+    },
+    {
+      "id": "N03",
+      "title": "Cole and Schneider (2007) · The cognitive control network: Integrated cortical regions with dissociable functions",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/17553704/"
+    },
+    {
+      "id": "N04",
+      "title": "Aron et al. (2007) · Triangulating a cognitive control network using diffusion-weighted MRI and functional MRI",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6672420/"
+    },
+    {
+      "id": "N05",
+      "title": "Fellows and Farah (2007) · The role of ventromedial prefrontal cortex in decision making",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/17259643/"
+    },
+    {
+      "id": "N06",
+      "title": "Anderson et al. (2006) · Impairments of emotion and real-world complex behavior following ventromedial prefrontal damage",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/16573856/"
+    },
+    {
+      "id": "N07",
+      "title": "Tsuchida, Doll and Fellows (2010) · Beyond reversal: Flexible learning from probabilistic feedback",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/21159958/"
+    },
+    {
+      "id": "N08",
+      "title": "Boorman et al. (2009) · Frontopolar cortex and evidence for alternative courses of action",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/19524531/"
+    },
+    {
+      "id": "N09",
+      "title": "Tervo-Clemmens et al. (2023) · A canonical trajectory of executive function maturation from adolescence to adulthood",
+      "url": "https://www.nature.com/articles/s41467-023-42540-8"
+    }
+  ],
+  "mappings": [
+    {
+      "id": "working-memory",
+      "region": "Dorsolateral prefrontal cortex",
+      "shortName": "dlPFC",
+      "location": "Upper outer prefrontal surface",
+      "fact": "Working memory holds information for a current task. Human imaging studies link the dlPFC to maintaining and reorganizing that information. It operates within a wider control network.",
+      "analogy": "Keep the current goal, permitted evidence and task state available. The proposed orchestration code limits the context and work budget.",
+      "boundary": "A context window is a software resource. It does not reproduce biological working memory or store the whole knowledge base.",
+      "targetNode": "harness",
+      "sourceIds": [
+        "N02",
+        "N03"
+      ],
+      "designTitle": "Hold the right task context"
+    },
+    {
+      "id": "inhibition",
+      "region": "Right inferior frontal cortex and connected regions",
+      "shortName": "Right IFC",
+      "location": "Lower outer right frontal surface",
+      "fact": "Inhibition means stopping a response. Human imaging studies identify a network that includes right inferior frontal cortex, a medial frontal area and a deeper brain region. This network helps slow or stop motor responses.",
+      "analogy": "Check permission before retrieval. Stop the request when its scope fails policy. Recheck current records before delivery. Code enforces these gates.",
+      "boundary": "Stopping a movement and denying data access are different mechanisms. The analogy explains restraint; it does not establish security.",
+      "targetNode": "authorized",
+      "sourceIds": [
+        "N04"
+      ],
+      "designTitle": "Stop at the permission gate"
+    },
+    {
+      "id": "valuation",
+      "region": "Ventromedial prefrontal cortex",
+      "shortName": "vmPFC",
+      "location": "Lower inner prefrontal surface",
+      "fact": "Valuation means comparing what options are worth. Human lesion studies link vmPFC to consistent preferences. Other studies connect damage here with emotional changes and difficulties in everyday social behavior.",
+      "analogy": "Owners define priorities and acceptable trade-offs. A human reviews the evidence and approves an exact version. Model scores cannot replace that decision authority.",
+      "boundary": "Owner-defined rules are explicit software inputs. The product does not gain empathy, emotions or moral judgment from this analogy.",
+      "targetNode": "review",
+      "sourceIds": [
+        "N05",
+        "N06"
+      ],
+      "designTitle": "Keep people in charge of priorities"
+    },
+    {
+      "id": "outcome-updating",
+      "region": "Orbitofrontal cortex",
+      "shortName": "OFC",
+      "location": "Frontal underside, above the eye sockets",
+      "fact": "Human lesion research links the OFC to flexible learning from outcomes. It helps interpret new feedback in the context of earlier outcomes when conditions change.",
+      "analogy": "Record outcomes and source changes. Invalidate withdrawn or expired views. Return changed meaning to human review before reuse.",
+      "boundary": "A feedback log is not biological learning. Changed meaning still needs approval; a successful output does not make it true.",
+      "targetNode": "change",
+      "sourceIds": [
+        "N07"
+      ],
+      "designTitle": "Review what changes"
+    },
+    {
+      "id": "alternatives",
+      "region": "Frontopolar cortex",
+      "shortName": "Anterior PFC",
+      "location": "Front tip of the prefrontal cortex",
+      "fact": "A human imaging study linked frontopolar activity to evidence favoring an alternative course of action. The signal tracked the possible benefit of switching from the current choice.",
+      "analogy": "Choose an allowed retrieval path: exact ID, hybrid search or approved relationships. Request clarification when evidence is insufficient. Keep every route within the permitted scope.",
+      "boundary": "The router follows engineered rules and evaluated signals. This mapping does not claim human planning or an optimal choice.",
+      "targetNode": "route",
+      "sourceIds": [
+        "N08"
+      ],
+      "designTitle": "Choose an allowed path"
+    }
+  ],
+  "introSourceIds": [
+    "N01",
+    "N03"
+  ]
+}

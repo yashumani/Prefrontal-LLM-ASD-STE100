@@ -683,6 +683,7 @@ async function initialize() {
     deck.setAttribute("aria-busy", "false");
     if(storyMode) window.ContextStory.initialize({panels,data:deckData,onChapter:index=>{current=index;syncMotion();}});
     showSlide(Math.max(0, indexFromHash()), false);
+    if(storyMode && (!location.hash || location.hash==='#why-prefrontal')) document.getElementById('why-prefrontal')?.scrollIntoView({behavior:'instant',block:'start'});
     byId("previous").addEventListener("click", () => showSlide(current - 1));
     byId("next").addEventListener("click", () => showSlide(current + 1));
     byId("overview-toggle").addEventListener("click", () => setOverview(!showingOverview));

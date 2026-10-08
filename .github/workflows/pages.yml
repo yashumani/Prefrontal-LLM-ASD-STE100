@@ -4,6 +4,17 @@ on:
   push:
     branches: [feature/context-presentation]
     paths:
+      - decisions.html
+      - decisions.css
+      - decisions.js
+      - decision-tree.json
+      - cortex-content.json
+      - cortex.css
+      - cortex.js
+      - scripts/build-decisions.cjs
+      - scripts/render-cortex.cjs
+      - scripts/verify-cortex.cjs
+      - scripts/verify-decisions.cjs
       - story.html
       - story.js
       - story.css
@@ -44,6 +55,12 @@ jobs:
         run: |
           node --check motion-runtime.js
           node --check mini-architectures.js
+          node --check decisions.js
+          node --check cortex.js
+          node --check scripts/build-decisions.cjs
+          node --check scripts/render-cortex.cjs
+          node --check scripts/verify-cortex.cjs
+          node --check scripts/verify-decisions.cjs
           node --check story.js
           node --check scripts/verify-story.cjs
           node --check app.js
@@ -66,12 +83,14 @@ jobs:
           trap 'kill "$server_pid"' EXIT
           node scripts/verify-browser.cjs
           node scripts/verify-story.cjs
+          node scripts/verify-decisions.cjs
+          node scripts/verify-cortex.cjs
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
       - name: Assemble public site
         run: |
           mkdir _site
-          cp story.html index.html styles.css app.js diagrams.js cost-lab.js cost-lab.css presentation-content.json _site/
+          cp decisions.html story.html index.html styles.css app.js diagrams.js cost-lab.js cost-lab.css presentation-content.json _site/
           touch _site/.nojekyll
       - name: Upload public site
         uses: actions/upload-pages-artifact@v4

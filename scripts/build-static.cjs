@@ -128,7 +128,11 @@ output=output.replace('<!-- BUNDLE STYLES -->',()=>`<style>${css}</style>`).repl
 assert(!output.includes('<'+'?')&&!output.includes('?' + '>'),'The single-file page must contain no Apps Script scriptlet markers.');
 assert(!/<(?:script|link)\b[^>]*(?:src|href)=/.test(output),'The generated page must use inline CSS, JS and content.');
 output=output.replace(/\r\n/g,'\n');
-const storyOutput=output.replace('<body>','<body data-presentation="story">').replace('href="story.html" title="Read the complete scrolling presentation">Scroll story ↗','href="index.html" title="Open the original slide presentation">Slide deck ↗').replace(/<details\b/g,'<details open').replace('<title>Prefrontal · Governed context as a product</title>','<title>Prefrontal · The complete context story</title>');
+let storyOutput=output.replace('<body>','<body data-presentation="story">').replace('href="story.html" title="Read the complete scrolling presentation">Scroll story ↗','href="index.html" title="Open the original slide presentation">Slide deck ↗').replace(/<details\b/g,'<details open').replace('<title>Prefrontal · Governed context as a product</title>','<title>Prefrontal · The complete context story</title>');
+const cortexMarkup=require('./render-cortex.cjs')();
+const cortexStatic=cortexMarkup.replace(/id="(why-prefrontal|cortex-[^"]+)"/g,'id="static-$1"').replace(/href="#(why-prefrontal|cortex-[^"]+)"/g,'href="#static-$1"').replace(/aria-labelledby="cortex-title"/g,'aria-labelledby="static-cortex-title"').replace(/aria-labelledby="cortex-svg-title cortex-svg-desc"/g,'aria-labelledby="static-cortex-svg-title static-cortex-svg-desc"').replace(/url\(#cortex-front\)/g,'url(#static-cortex-front)');
+storyOutput=storyOutput.replace('<main id="deck"',cortexMarkup+'<main id="deck"').replace('<noscript><main', '<noscript>'+cortexStatic+'<main').replace('</style>',fs.readFileSync('cortex.css','utf8')+'</style>').replace('</body>','<script>'+fs.readFileSync('cortex.js','utf8')+'</script></body>').replace('<div class="tools">','<div class="tools"><a class="cortex-nav-link" href="#why-prefrontal">Why Prefrontal?</a>');
+storyOutput=storyOutput.replace(/\r\n/g,'\n');
 if (process.argv.includes("--check")) {
   assert.equal(fs.readFileSync('story.html','utf8').replace(/\r\n/g,'\n'),storyOutput,'Scrolling story is stale. Rebuild both formats.');
   assert.equal(fs.readFileSync("index.html","utf8").replace(/\r\n/g,"\n"), output, "Static deck is stale. Run node scripts/build-static.cjs.");

@@ -3,7 +3,7 @@ const {chromium}=require(process.env.PREFRONTAL_PLAYWRIGHT_MODULE||'playwright')
 const data=JSON.parse(fs.readFileSync('decision-tree.json','utf8'));
 (async()=>{const browser=await chromium.launch();try{
  const page=await browser.newPage({viewport:{width:1600,height:1000}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
- await page.goto('http://127.0.0.1:8893/decisions.html');
+ await page.goto((process.env.PREFRONTAL_BASE_URL||'http://127.0.0.1:8893/')+'decisions.html#submit');
  assert.equal(await page.locator('.node').count(),data.nodes.length);
  assert.equal(await page.locator('.route').count(),data.edges.length);
  for(const n of data.nodes){assert(await page.locator('#reference-'+n.id).textContent().then(t=>t.includes(n.detail)));if(n.decision)assert(data.edges.filter(e=>e.source===n.id).length>=2,n.id);}
