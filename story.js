@@ -16,6 +16,7 @@
     markChapter(index);
     if(updateHash)history.replaceState(null,'','#'+panel.dataset.slide);
     panel.scrollIntoView({behavior:'instant',block:'start'});
+    global.ContextMotion.arrive(panel.querySelector('h1,h2'));
   }
   function initialize({panels,data,onChapter}){
     chapters=panels;chapterChanged=onChapter;
@@ -29,10 +30,13 @@
     const reduce=matchMedia('(prefers-reduced-motion: reduce)');
     const depthToggle=make('button','story-depth-toggle','3D view');depthToggle.type='button';
     depthToggle.setAttribute('aria-pressed','true');depthToggle.setAttribute('aria-label','Toggle three-dimensional diagram depth');
-    document.body.dataset.depth='on';document.querySelector('.tools').prepend(depthToggle);
-    depthToggle.addEventListener('click',()=>{const on=document.body.dataset.depth!=='on';document.body.dataset.depth=on?'on':'off';depthToggle.setAttribute('aria-pressed',String(on));});
-    const syncDepthPreference=()=>{depthToggle.disabled=reduce.matches;depthToggle.textContent=reduce.matches?'Flat view':'3D view';};
-    reduce.addEventListener('change',syncDepthPreference);syncDepthPreference();
+    document.querySelector('.tools').prepend(depthToggle);
+    depthToggle.addEventListener('click',()=>global.ContextMotion.setDepth(!global.ContextMotion.state().depthRequested));
+    global.ContextMotion.subscribe(state=>{
+      depthToggle.disabled=state.reduced||!state.depthAvailable;
+      depthToggle.textContent=state.depth?'3D view':'Flat view';
+      depthToggle.setAttribute('aria-pressed',String(state.depth));
+    });
     const selectInsight=(scene,card)=>{
       scene.querySelectorAll('.story-step').forEach(item=>item.classList.toggle('is-reading',item===card));
       const index=Number(card.dataset.stageIndex);
@@ -73,12 +77,13 @@
           guide.append(make('p','story-scroll-cue','Scroll to follow the flow · or choose a step'),focus,jumps);figure.prepend(guide);
           const viewport=figure.querySelector('.diagram-viewport'),depth=make('div','story-depth-stage');
           viewport.before(depth);depth.append(viewport);depth.setAttribute('data-depth-scene','');
-          const depthMotion=global.ContextMotion.register({element:depth,staticFrame:()=>{depth.style.setProperty('--tilt-x','0deg');depth.style.setProperty('--tilt-y','0deg');depth.style.setProperty('--lift','0px');},frame:()=>{
+          const depthMotion=global.ContextMotion.register({element:depth,kind:'depth',continuous:false,staticFrame:()=>{depth.style.setProperty('--tilt-x','0deg');depth.style.setProperty('--tilt-y','0deg');depth.style.setProperty('--lift','0px');},measure:()=>{
             const box=scene.getBoundingClientRect(),span=Math.max(1,box.height-innerHeight*.5);
-            const progress=Math.max(0,Math.min(1,(innerHeight*.3-box.top)/span));
-            depth.style.setProperty('--tilt-x',(3-progress*6).toFixed(2)+'deg');
-            depth.style.setProperty('--tilt-y',(-3+progress*6).toFixed(2)+'deg');
-            depth.style.setProperty('--lift',(12+Math.sin(progress*Math.PI)*8).toFixed(2)+'px');
+            return Math.max(0,Math.min(1,(innerHeight*.3-box.top)/span));
+          },frame:(_t,_delta,progress)=>{
+            depth.style.setProperty('--tilt-x',(2-progress*4).toFixed(2)+'deg');
+            depth.style.setProperty('--tilt-y',(-2+progress*4).toFixed(2)+'deg');
+            depth.style.setProperty('--lift',(Math.sin(progress*Math.PI)*10).toFixed(2)+'px');
           }});depthMotion.setAllowed(true);
           stages.forEach((stage,i)=>{
             const card=make('article','story-step');card.dataset.stageIndex=String(i);card.tabIndex=0;

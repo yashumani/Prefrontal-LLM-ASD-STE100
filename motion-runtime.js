@@ -17,10 +17,35 @@
   let raf = null;
   let frames = 0;
   let canvasContext;
+  let suspended = false;
+  let depthRequested = true;
+  let viewTransition = null;
+  const listeners = new Set();
+  const depthMedia = global.matchMedia?.('(min-width: 1101px)');
+  const depthAvailable = () => !depthMedia || depthMedia.matches;
+  const state = () => ({ paused, reduced, suspended, depthRequested,
+    depthAvailable: depthAvailable(), stopped: paused || reduced || suspended || Boolean(doc?.hidden),
+    depth: depthRequested && depthAvailable() && !paused && !reduced && !suspended });
+
+  function notifyState() {
+    const value = state();
+    doc?.body?.classList.toggle('motion-paused', value.stopped);
+    doc?.body?.classList.toggle('motion-reduced', reduced);
+    if (doc?.body) doc.body.dataset.depth = value.depth ? 'on' : 'off';
+    if (value.stopped) viewTransition?.skipTransition();
+    listeners.forEach(listener => listener(value));
+  }
+
+  function subscribe(listener) {
+    listeners.add(listener);
+    listener(state());
+    return () => listeners.delete(listener);
+  }
 
   const connected = item => item.element.isConnected !== false;
   const eligible = item => !item.disposed && !item.done && item.allowed
-    && item.visible && connected(item) && !paused && !reduced && !doc?.hidden;
+    && item.visible && connected(item) && !paused && !reduced && !suspended && !doc?.hidden
+    && (item.kind !== 'depth' || state().depth);
 
   function stop() {
     if (raf !== null && typeof global.cancelAnimationFrame === "function") {
@@ -33,8 +58,9 @@
   function reconcile() {
     let active = false;
     items.forEach(item => {
-      if(item.element.dataset) item.element.dataset.playing=String(eligible(item));
-      if (eligible(item)) active = true;
+      const playing = eligible(item);
+      if(item.element.dataset && item.element.dataset.playing !== String(playing)) item.element.dataset.playing=String(playing);
+      if (playing && (item.continuous || item.dirty)) active = true;
       else item.last = null;
     });
     if (!active) stop();
@@ -46,8 +72,12 @@
   function tick(now) {
     raf = null;
     frames += 1;
+    // Read layout for all dirty scenes before any frame writes visual state.
     items.forEach(item => {
-      if (!eligible(item)) {
+      if (eligible(item) && item.dirty && item.measure) item.measurement = item.measure();
+    });
+    items.forEach(item => {
+      if (!eligible(item) || (!item.continuous && !item.dirty)) {
         item.last = null;
         return;
       }
@@ -55,7 +85,8 @@
       item.last = now;
       item.elapsed += delta;
       try {
-        if (item.frame(item.elapsed, delta) === "done") item.done = true;
+        if (item.frame(item.elapsed, delta, item.measurement) === "done") item.done = true;
+        item.dirty = false;
       } catch (error) {
         item.done = true;
         global.console?.error("Context diagram motion stopped after a frame error.", error);
@@ -68,7 +99,7 @@
     ? new global.IntersectionObserver(entries => {
       entries.forEach(entry => {
         const item = byElement.get(entry.target);
-        if (item) item.visible = entry.isIntersecting && entry.intersectionRatio >= 0.25;
+        if (item) { item.visible = entry.isIntersecting && entry.intersectionRatio >= 0.25; item.dirty = true; }
       });
       reconcile();
     }, { threshold: [0, 0.25] })
@@ -84,14 +115,14 @@
     });
   }
 
-  function register({ element, frame, staticFrame }) {
+  function register({ element, frame, staticFrame, measure, kind = 'flow', continuous = true }) {
     if (!element || typeof frame !== "function") {
       throw new TypeError("A motion registration needs an element and a frame function.");
     }
     const previous = byElement.get(element);
     if (previous) previous.controller.dispose();
     const item = {
-      element, frame, staticFrame, allowed: false, visible: !observer,
+      element, frame, staticFrame, measure, kind, continuous, dirty: true, allowed: false, visible: !observer,
       elapsed: 0, last: null, done: false, disposed: false, controller: null
     };
     const controller = {
@@ -100,8 +131,10 @@
         const allowed = Boolean(value);
         if (allowed !== item.allowed) item.last = null;
         item.allowed = allowed;
+        item.dirty = true;
         reconcile();
       },
+      invalidate() { item.dirty = true; reconcile(); },
       dispose() {
         if (item.disposed) return;
         item.disposed = true;
@@ -119,6 +152,68 @@
     return controller;
   }
 
+  function invalidateMeasurements() {
+    items.forEach(item => { if (item.measure) item.dirty = true; });
+    reconcile();
+  }
+
+  function setDepth(value) {
+    depthRequested = Boolean(value);
+    items.forEach(item => { if (item.kind === 'depth') { item.dirty = true; if (!state().depth) item.staticFrame?.(); } });
+    notifyState();
+    reconcile();
+  }
+
+  function setSuspended(value) {
+    if (suspended === Boolean(value)) return;
+    suspended = Boolean(value);
+    if (suspended) { stop(); drawStatic(); }
+    else invalidateMeasurements();
+    notifyState();
+    reconcile();
+  }
+
+  // Geometry is immutable between selections. Never query SVG paths each frame.
+  function samplePath(path) {
+    const length = path.getTotalLength();
+    const count = Math.max(80, Math.min(400, Math.ceil(length / 10)));
+    const points = Array.from({ length: count + 1 }, (_, i) => {
+      const point = path.getPointAtLength(length * i / count);
+      return [point.x, point.y];
+    });
+    return progress => {
+      const f = Math.max(0, Math.min(1, progress)) * count;
+      const i = Math.min(count - 1, Math.floor(f)), ratio = f - i;
+      return { x: points[i][0] + (points[i + 1][0] - points[i][0]) * ratio,
+        y: points[i][1] + (points[i + 1][1] - points[i][1]) * ratio };
+    };
+  }
+
+  function arrive(element) {
+    if (!element || state().stopped) return;
+    element.classList.add('motion-arrival');
+    element.addEventListener('animationend', () => element.classList.remove('motion-arrival'), { once: true });
+  }
+
+  function transition(update) {
+    if (state().stopped || typeof doc?.startViewTransition !== 'function') { update(); return; }
+    viewTransition?.skipTransition();
+    const pending = doc.startViewTransition(update);
+    viewTransition = pending;
+    // Skipping an overtaken animation rejects ready; the state update still runs.
+    pending.ready.catch(() => {});
+    pending.finished.catch(() => {}).finally(() => { if (viewTransition === pending) viewTransition = null; });
+  }
+
+  function bindPauseControl(button) {
+    button.addEventListener('click', () => setPaused(!paused));
+    return subscribe(value => {
+      button.disabled = value.reduced;
+      button.setAttribute('aria-pressed', String(value.stopped));
+      button.textContent = value.reduced ? 'Motion off' : value.paused ? 'Resume motion' : 'Pause motion';
+    });
+  }
+
   function setPaused(value) {
     const next = Boolean(value);
     const changed = next !== paused;
@@ -130,6 +225,7 @@
       if (changed) items.forEach(item => { item.done = false; });
       reconcile();
     }
+    if (changed) { invalidateMeasurements(); notifyState(); }
   }
 
   function setReduced(value) {
@@ -143,11 +239,15 @@
       if (changed) items.forEach(item => { item.done = false; });
       reconcile();
     }
+    if (changed) { invalidateMeasurements(); notifyState(); }
   }
 
   if (media?.addEventListener) media.addEventListener("change", event => setReduced(event.matches));
   else if (media?.addListener) media.addListener(event => setReduced(event.matches));
-  doc?.addEventListener?.("visibilitychange", reconcile);
+  doc?.addEventListener?.("visibilitychange", () => { notifyState(); reconcile(); });
+  global.addEventListener?.('scroll', invalidateMeasurements, { passive: true });
+  global.addEventListener?.('resize', invalidateMeasurements, { passive: true });
+  depthMedia?.addEventListener?.('change', () => setDepth(depthRequested));
 
   function fontOptions(options = {}) {
     const size = Number.parseFloat(options.fontSize);
@@ -227,10 +327,13 @@
   }
 
   global.ContextMotion = {
-    register, setPaused, setReduced, measure, wrap, fitText,
+    register, setPaused, setReduced, setSuspended, setDepth, state, subscribe,
+    samplePath, arrive, transition, bindPauseControl, measure, wrap, fitText,
     stats() {
       return { scheduled: raf !== null, active: [...items].filter(eligible).length,
-        frames, registrations: items.size };
+        frames, registrations: items.size,
+        activeDepth: [...items].filter(item => item.kind === 'depth' && eligible(item)).length };
     }
   };
+  notifyState();
 })(typeof window === "undefined" ? globalThis : window);

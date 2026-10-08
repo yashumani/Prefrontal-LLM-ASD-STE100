@@ -256,12 +256,374 @@ body[data-depth="off"] .story-depth-stage .m-node>rect,body.motion-paused .story
 @media(prefers-reduced-motion:reduce){.story-depth-stage,.story-depth-stage>.diagram-viewport{transform:none!important;transition:none!important}.story-depth-stage:before,.story-depth-stage:after{display:none}.story-depth-stage .m-node>rect{filter:none!important}}
 @media print{.story-depth-stage,.story-depth-stage>.diagram-viewport{transform:none!important;box-shadow:none!important}.story-depth-stage:before,.story-depth-stage:after,.story-step-jumps,.story-scroll-cue{display:none!important}.story-focus-guide{margin-bottom:8px}.story-depth-stage{margin:0}}
 body[data-presentation="story"] .story-sticky .stage-caption{display:none}
+
 /* Scoped: the brain analogy belongs to the two scrolling views. */
 .cortex-section{font:16px/1.6 Arial,sans-serif;color:#171717;background:#fafaf8;padding:60px clamp(20px,5vw,84px);border-bottom:1px solid #d6d6d2;scroll-margin-top:90px}.cortex-section *{box-sizing:border-box}.cortex-heading{max-width:1020px;margin:0 auto 35px}.cortex-section .cortex-kicker{font:700 11px/1.5 Arial,sans-serif;letter-spacing:.12em;color:#b80017;margin:0 0 12px}.cortex-section h2{font:700 clamp(34px,4.4vw,66px)/1.06 Arial,sans-serif;letter-spacing:-.04em;color:#161616;margin:0 0 24px}.cortex-section h3{font:700 23px/1.2 Arial,sans-serif;letter-spacing:-.025em;margin:0 0 12px}.cortex-section p{margin:0 0 14px;line-height:1.65}.cortex-section a{color:#9b0016;text-underline-offset:4px}.cortex-boundary{font-size:13px;color:#555;border-left:3px solid #ee001e;padding-left:16px}.cortex-continue{display:inline-block;font-weight:700;font-size:13px;margin-top:8px}.cortex-stage{max-width:1120px;margin:0 auto;padding:22px;background:white;border:1px solid #ccc;border-radius:16px;box-shadow:8px 10px 0 #e8e8e5;perspective:1200px}.cortex-stage-labels{display:flex;justify-content:space-between;gap:12px;font:700 11px Arial,sans-serif;letter-spacing:.06em;color:#555}.cortex-section .cortex-diagram{display:block;width:100%;height:auto;fill:none;stroke:none;transform:rotateX(var(--cortex-tilt,0deg));transform-origin:center;max-height:none}.cortex-diagram text{font:13px Arial,sans-serif;fill:#555;stroke:none}.cortex-diagram .cortex-stack text{font-weight:700;font-size:17px;fill:#222}.cortex-diagram .cortex-stack text[fill=white]{fill:white}.cortex-diagram .cortex-stack{filter:drop-shadow(3px 6px 2px #0001)}.cortex-stage-footer{display:flex;align-items:center;justify-content:space-between;gap:20px}.cortex-stage-footer p{font-size:12px;color:#666;margin:0}.cortex-motion{font:12px Arial,sans-serif;white-space:nowrap;padding:9px 12px;border:1px solid #aaa;background:white;border-radius:6px;cursor:pointer}.cortex-tabs{max-width:1120px;margin:30px auto 0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}.cortex-tabs a{display:block;text-decoration:none;padding:15px;background:white;border:1px solid #ccc;border-radius:8px;color:#222;font-size:13px;font-weight:700}.cortex-tabs span{display:block;color:#b80017;font:12px monospace;margin-bottom:6px}.cortex-tabs a[aria-current]{border-color:#ee001e;background:#fff4f5}.cortex-mappings{max-width:1120px;margin:30px auto}.cortex-mapping{display:grid;grid-template-columns:minmax(0,1fr) 60px minmax(0,1fr);align-items:stretch;scroll-margin-top:110px;margin:0 0 22px}.cortex-fact,.cortex-analogy{background:white;border:1px solid #ccc;border-radius:12px;padding:26px;min-width:0}.cortex-mapping.is-selected .cortex-analogy{border-color:#ee001e;box-shadow:5px 6px 0 #ee001e15}.cortex-location{font-size:13px;color:#666}.cortex-connect{align-self:center;text-align:center;font-size:32px;color:#ee001e}.cortex-section .cortex-citations{font-size:11px;color:#555;line-height:1.6;margin:16px 0 0;overflow-wrap:anywhere}.cortex-limit{font-size:13px;color:#555}.cortex-node-link{font-size:13px;font-weight:700}.cortex-development{display:grid;grid-template-columns:1fr 1.5fr;gap:36px;max-width:1120px;margin:32px auto;padding:30px;background:#efefec;border-radius:12px}.cortex-endnote{max-width:1120px;margin:0 auto!important;font-size:13px;color:#555}.cortex-section button:focus-visible,.cortex-section a:focus-visible{outline:3px solid #ee001e;outline-offset:4px}.cortex-stage[data-local-paused=true] .cortex-packet{display:none}.cortex-stage[data-playing=false] .cortex-diagram,body.flat .cortex-diagram,body[data-depth=off] .cortex-diagram{transform:none!important}.cortex-stage[data-playing=false] .cortex-packet{display:none}.cortex-static-copy{display:none}.no-js .cortex-live-copy{display:none}.no-js .cortex-static-copy{display:block}.no-js .cortex-motion{display:none}.cortex-section .cortex-packet{pointer-events:none}@media(max-width:700px){.cortex-section{padding:32px 18px}.cortex-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}.cortex-tabs a:last-child{grid-column:1/-1}.cortex-mapping{grid-template-columns:minmax(0,1fr)}.cortex-connect{transform:rotate(90deg);padding:3px}.cortex-development{grid-template-columns:1fr;gap:15px;padding:24px}.cortex-stage{padding:12px}.cortex-stage-labels{font-size:8px}.cortex-stage-footer{display:block}.cortex-motion{margin-top:10px}.cortex-section .cortex-diagram{transform:none!important}.cortex-fact,.cortex-analogy{padding:22px}.cortex-stage svg text{font-size:14px}.cortex-stage svg .cortex-stack text{font-size:18px}}@media(prefers-reduced-motion:reduce){.cortex-section .cortex-diagram{transform:none!important}.cortex-packet{display:none}.cortex-motion{display:none}}@media print{.cortex-section{padding:20px;background:white}.cortex-motion{display:none}.cortex-mapping{break-inside:avoid}.cortex-section .cortex-diagram{transform:none}.cortex-packet{display:none}}
 
 .cortex-nav-link{font:700 11px Arial,sans-serif;color:#171717;text-decoration:none;border-bottom:2px solid #ee001e;padding:7px 2px;white-space:nowrap}
 
 .no-js body[data-presentation="story"] .main-shell > .cortex-section{display:none!important}
+
+/* An editorial hierarchy: product first, mechanisms second, evidence always reachable. */
+@media screen {
+  :root { --page-space:clamp(22px,3.4vw,56px); --reading-width:66ch; }
+  body { background:#fff; }
+  .topbar { background:#fff; backdrop-filter:none; }
+  .tools { gap:10px; }
+  .tools button,.view-switch,.suite-tabs button,.topic-strip button,.topic-strip span { border-radius:3px; }
+  .view-switch { padding:2px; background:#eee; }
+  .tools .view-switch button { border:0; }
+  .presentation-format,.decision-format,.cortex-nav-link { font:700 12px Arial,sans-serif; color:#141414; text-decoration:none; padding:10px 0; }
+  .presentation-options { position:relative; font-size:12px; }
+  .presentation-options>summary { cursor:pointer; padding:10px; min-height:44px; display:flex;align-items:center; }
+  .presentation-options[open]>.option-panel { position:absolute;right:0;top:44px;z-index:100;background:white;border:1px solid #ccc;padding:12px;display:grid;gap:8px;min-width:150px;box-shadow:0 12px 24px #0001; }
+  .rail { background:#141414; }
+  .rail-caption { color:#c5c5c5; }
+  .nav-item { border-radius:0; border-left:2px solid transparent; line-height:1.35; }
+  .nav-item[aria-current] { border-left-color:#ee001e; background:#ffffff12; }
+  .nav-index { color:#aaa; }
+  .slide { padding-left:var(--page-space);padding-right:var(--page-space); }
+  .slide>.lead { max-width:var(--reading-width);line-height:1.5;color:#454545; }
+  .slide>.eyebrow { letter-spacing:.12em;font:700 11px/1.5 monospace;color:#a90016; }
+  .slide>h1,.slide>h2 { letter-spacing:-.035em;line-height:1.08; }
+  .type-cover>h1 { font-size:clamp(38px,4.1vw,62px);max-width:18ch; }
+  .product-audience { font:700 11px/1.5 monospace;letter-spacing:.045em;color:#545454;margin:8px 0; }
+  .product-actions { display:flex;align-items:center;flex-wrap:wrap;gap:14px 24px;margin:22px 0 25px; }
+  .product-actions a { min-height:46px;display:inline-flex;gap:22px;align-items:center;font:700 14px/1.3 Arial,sans-serif;text-decoration:none; }
+  .primary-action { background:#ee001e;color:#fff;padding:14px 20px;border:1px solid #ee001e; }
+  .primary-action:hover { background:#b70017;border-color:#b70017; }
+  .secondary-action { color:#141414;border-bottom:1px solid #141414;padding:10px 0; }
+  .primary-action:focus-visible { outline:3px solid #141414;outline-offset:4px; }
+  .pitch-signals { gap:0;border-top:1px solid #aaa;border-bottom:1px solid #ddd; }
+  .pitch-signals .pitch-signal { border:0;border-right:1px solid #ddd;border-radius:0;background:none;box-shadow:none;padding:16px 20px; }
+  .pitch-signals .pitch-signal:first-child { padding-left:0; }
+  .pitch-signals .pitch-signal:last-child { border-right:0; }
+  .pitch-signal h3 { color:#141414;font-size:14px;margin-bottom:7px; }
+  .pitch-signal p { font-size:13px;line-height:1.5;color:#454545; }
+  .item,.source-card,.developer-topic,.presenter-detail,.agent-role-strip { border-radius:0;box-shadow:none;background:#fff; }
+  .source-grid { gap:0 28px; }
+  .source-card { border:0;border-top:1px solid #bbb;padding:20px 0; }
+  .source-card a { line-height:1.4; }
+  .developer-topic { border-width:1px 0 0; }
+  .developer-topic>summary { padding:18px 0;line-height:1.45; }
+  .developer-section { padding-left:0;padding-right:0; }
+  .developer-section .item { border:0;border-top:1px solid #ddd;padding:16px 0; }
+  .topic-strip { align-items:center;gap:8px 16px; }
+  .topic-strip button,.topic-strip span { background:none;border-width:0 0 1px;border-color:#bbb;border-radius:0;padding:10px 0;text-align:left;line-height:1.4; }
+  .agent-role-strip { border-width:0 0 0 3px;background:#f7f7f7;border-color:#ee001e; }
+  .provenance,.slide-note { line-height:1.5;color:#545454; }
+  .mechanism-figure { border-radius:0;box-shadow:none; }
+  .stage-caption { border-top:1px solid #bbb; }
+  .diagram-pan-hint { display:none; }
+  .product-intro { max-width:1480px;margin:auto;padding:64px var(--page-space) 70px;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(320px,.8fr);gap:60px;border-bottom:1px solid #ccc; }
+  .product-kicker,.route-kicker { font:700 11px/1.5 monospace;letter-spacing:.09em;margin:0 0 20px;color:#a90016; }
+  .product-intro h1 { font-size:clamp(44px,5vw,74px);line-height:1.02;letter-spacing:-.045em;margin:0 0 25px; }
+  .product-definition { font-size:clamp(17px,1.5vw,21px);line-height:1.5;max-width:49ch;margin:0 0 14px; }
+  .product-reason { font-size:16px;line-height:1.5;color:#454545;max-width:53ch;margin:0; }
+  .product-status-line { color:#545454;font-size:12px;margin:16px 0 0; }
+  .product-route { align-self:center;border-left:1px solid #ccc;padding:10px 0 10px 35px; }
+  .product-route ol { list-style:none;padding:0;margin:0; }
+  .product-route li { display:flex;gap:20px;position:relative;padding:0 0 30px; }
+  .product-route li>span { color:#ae0016;font:12px monospace;line-height:26px;min-width:24px; }
+  .product-route li strong { font-size:20px;line-height:1.3; }
+  .product-route li p { font-size:14px;line-height:1.5;color:#545454;margin:7px 0 0; }
+  .route-reference { font-size:13px;color:#141414;text-underline-offset:4px; }
+  body[data-presentation="story"] .topbar { backdrop-filter:none;background:#fff; }
+  body[data-presentation="story"] .story-chapter { padding-top:64px;padding-bottom:70px; }
+  body[data-presentation="story"] .story-chapter:before { background:#ccc;top:72px;bottom:0; }
+  body[data-presentation="story"] .story-chapter>h1,body[data-presentation="story"] .story-chapter>h2 { font-size:clamp(34px,3.4vw,54px);max-width:27ch; }
+  body[data-presentation="story"] .story-chapter>.lead { font-size:19px;max-width:68ch;margin-bottom:30px; }
+  body[data-presentation="story"] .story-sticky { border:0;border-top:2px solid #141414;border-radius:0;padding:14px 0;box-shadow:none; }
+  .story-focus-guide { border-radius:0;background:none;border-bottom:1px solid #ccc;padding-left:0;padding-right:0; }
+  .story-depth-stage,.story-depth-stage:before,.story-depth-stage:after { border-radius:3px; }
+  .story-depth-stage:before,.story-depth-stage:after { background:#f4f4f4;box-shadow:none; }
+  .story-step { padding-top:35px;min-height:39vh; }
+  .story-step h3 { font-size:22px;line-height:1.25; }
+  .story-step p { line-height:1.6;color:#454545; }
+  .cortex-stage,.cortex-analogy,.cortex-development { border-radius:0;box-shadow:none;background:#fff; }
+  .cortex-heading { max-width:1000px; }
+  .cortex-section { max-width:1480px;margin:auto;padding:64px var(--page-space); }
+  .cortex-section .cortex-heading { margin:0;max-width:1000px; }
+  .cortex-section .cortex-stage { margin:30px 0; }
+  .cortex-section :is(.cortex-tabs,.cortex-mappings,.cortex-development,.cortex-endnote) { margin-left:0!important;margin-right:0!important; }
+  .cortex-section .cortex-fact { border:0;border-radius:0;padding-left:0; }
+  .cortex-mapping.is-selected .cortex-analogy { box-shadow:none; }
+  .cortex-diagram [fill^="url"] { fill:#ee001e; }
+  .cortex-heading h2 { font-size:clamp(34px,3.5vw,52px);letter-spacing:-.035em; }
+  .cortex-mapping { border-radius:0;border-top:1px solid #bbb; }
+  .cortex-tabs a { border-radius:0;background:none; }
+  .cortex-analogy { border-width:0 0 0 2px; }
+  .cortex-fact,.cortex-analogy { padding:20px; }
+  body:has(.map-scroll)>header { position:sticky;top:0;z-index:30;background:#fff;gap:22px; }
+  body:has(.map-scroll) .phases { top:var(--map-header-height,78px); }
+  body:has(.map-scroll)>header nav { flex:1; }
+  body:has(.map-scroll)>header nav a { border-radius:0;padding:10px 2px;border-bottom:2px solid transparent; }
+  body:has(.map-scroll)>header nav a[aria-current] { color:#141414;background:none;border-bottom-color:#ee001e; }
+  .intro { border-bottom:1px solid #ccc;padding-top:40px; }
+  .intro h1 { font-size:clamp(30px,3vw,46px);letter-spacing:-.03em; }
+  .legend { border-top:1px solid #ccc;padding-top:15px; }
+  .legend span,.status { border-radius:0;background:none; }
+  .node-button { border-radius:4px;box-shadow:none;background:#fff; }
+  .node.active .node-button { box-shadow:0 0 0 1px #ee001e; }
+  #inspector { border-radius:0;border-top:3px solid #ee001e;box-shadow:none; }
+  #inspector h2 { font-size:25px;line-height:1.15;letter-spacing:-.025em; }
+  #inspector>p { line-height:1.6; }
+  #inspector button { border-radius:0; }
+  #inspector .inspector-close { border:0;border-top:1px solid #aaa;margin-top:12px;min-height:44px;font-weight:700; }
+  .node-role { font-size:11px;letter-spacing:.06em;color:#545454; }
+  .node small { font-size:12px;color:#545454; }
+  .route text { fill:#454545;font-size:13px; }
+  .route path { stroke:#747474; }
+  .route.selected path { stroke:#ee001e; }
+  .reference details { border-radius:0;border-width:1px 0 0; }
+  .reference summary { line-height:1.5; }
+}
+@media screen and (min-width:1101px) {
+  /* The projected deck has a fixed reading frame; scrolling views keep their measure. */
+  body:not([data-presentation="story"]) .slide>.product-actions { margin:10px 0 14px; }
+  body:not([data-presentation="story"]) :is(.type-architecture,.type-cost-suite)>.lead { max-width:none; }
+}
+@media screen and (max-width:1100px) {
+  .diagram-pan-hint { display:block;font:12px/1.5 Arial,sans-serif;color:#454545;border-top:1px solid #ccc;padding-top:8px;margin:6px 0; }
+  .product-intro { gap:32px;grid-template-columns:minmax(0,1.2fr) minmax(270px,.8fr);padding-top:44px; }
+  .product-intro h1 { font-size:48px; }
+  .product-route { padding-left:24px; }
+}
+@media screen and (max-width:1000px) {
+  #inspector.has-selection { max-height:36vh;display:flex;flex-direction:column;overflow:hidden;padding:14px 18px 8px;border:1px solid #aaa;border-top:3px solid #ee001e; }
+  #inspector .inspector-body { overflow:auto;min-height:0;overscroll-behavior:contain; }
+  #inspector .inspector-close { flex-shrink:0; }
+  #inspector h2 { font-size:21px; }
+}
+@media screen and (max-width:760px) {
+  .topbar .tools { justify-content:flex-start;gap:6px 12px; }
+  .tools .view-switch { order:5; }.tools #motion-toggle { order:6; }.tools #overview-toggle { order:7; }
+  .presentation-options { margin-left:auto; }
+  .slide { padding-top:26px; }
+  .slide>h1,.type-cover>h1 { font-size:38px; }
+  .slide>.lead { font-size:17px; }
+  .product-actions { margin:18px 0;gap:12px 20px; }
+  .product-actions a { font-size:13px; }
+  .pitch-signals { grid-template-columns:1fr!important; }
+  .pitch-signals .pitch-signal { border:0;border-bottom:1px solid #ddd;padding:14px 0; }
+  .pitch-signals .pitch-signal:last-child { border-bottom:0; }
+  .product-intro { display:block;padding:30px 22px 40px; }
+  .product-intro h1 { font-size:40px;margin-bottom:20px; }
+  .product-kicker { font-size:10px;max-width:31ch;margin-bottom:16px; }
+  .product-definition { font-size:17px; }
+  .product-reason { font-size:15px; }
+  .product-intro .product-actions { margin:20px 0 12px; }
+  .product-route { margin-top:35px;border-left:0;border-top:1px solid #ccc;padding:28px 0 0; }
+  .product-route li { padding-bottom:23px; }.product-route li strong { font-size:18px; }
+  body[data-presentation="story"] .story-chapter { padding-top:42px;padding-bottom:45px; }
+  body[data-presentation="story"] .story-chapter>.lead { font-size:17px; }
+  body:has(.map-scroll)>header { padding:12px 18px;gap:8px 18px; }
+  body:has(.map-scroll)>header .brand { flex:1; }
+  body:has(.map-scroll)>header .brand span { display:none; }
+  body:has(.map-scroll)>header nav { order:3;width:100%;flex-basis:100%;display:flex;gap:18px;overflow-x:auto;flex-wrap:nowrap; }
+  body:has(.map-scroll)>header nav a { white-space:nowrap;font-size:12px;min-height:44px;display:flex;align-items:center; }
+  body:has(.map-scroll)>header .controls { gap:6px; }
+  body:has(.map-scroll)>header .controls button { font-size:11px;padding:8px; }
+}
+@media print { .product-intro,.product-actions,.product-audience,.presentation-options,.diagram-pan-hint { display:none!important; } }
+
+/* Balanced motion: one vocabulary for the deck, story and decision map. */
+:root {
+  --motion-interaction: 180ms;
+  --motion-arrival: 420ms;
+  --motion-exit: 180ms;
+  --motion-selection: 320ms;
+  --motion-stagger: 60ms;
+  --motion-ease: cubic-bezier(.16, 1, .3, 1);
+}
+
+/* Native snapshots bridge slide changes; unsupported browsers navigate instantly. */
+::view-transition-old(root) { animation: motion-depart var(--motion-exit) ease-in both; }
+::view-transition-new(root) { animation: motion-arrive var(--motion-arrival) var(--motion-ease) both; }
+@keyframes motion-depart { to { opacity:0; } }
+html:has(body.motion-paused)::view-transition-old(root),
+html:has(body.motion-paused)::view-transition-new(root) { animation:none; }
+
+/* Controls respond immediately. Scroll-driven transforms have no timing lag. */
+:is(.tools, .stage-controls, .deck-footer, .view-switch, .suite-tabs, .controls) button,
+.topic-strip button, .story-step-jump, .cortex-motion,
+.presentation-format, .cortex-nav-link, .story-chapters a,
+.cortex-tabs a, .phases a, aside button, .nav-item {
+  transition: background-color var(--motion-interaction) var(--motion-ease),
+    border-color var(--motion-interaction) var(--motion-ease),
+    color var(--motion-interaction) var(--motion-ease);
+}
+
+:is(button, a, input, select, summary):focus-visible {
+  outline: 3px solid #171717;
+  outline-offset: 4px;
+}
+.rail :is(button, a):focus-visible,
+.phases a:focus-visible {
+  outline-color: #fff;
+}
+.node-button:focus-visible,
+.cortex-section :is(button, a):focus-visible,
+.story-step-jump:focus-visible,
+.story-depth-toggle:focus-visible {
+  outline: 3px solid #171717;
+  outline-offset: 4px;
+}
+
+.story-step {
+  transition: border-color var(--motion-selection) var(--motion-ease),
+    transform var(--motion-selection) var(--motion-ease);
+}
+.node-button, .cortex-analogy {
+  transition: border-color var(--motion-selection) var(--motion-ease),
+    background-color var(--motion-selection) var(--motion-ease);
+}
+.route path {
+  transition: stroke var(--motion-selection) var(--motion-ease),
+    opacity var(--motion-selection) var(--motion-ease);
+}
+
+/* Labels stay readable while the current node and path carry the emphasis. */
+.motion-diagram .m-stage,
+.motion-diagram[data-playing="true"] .m-stage,
+.mini-focus-visual .m-stage {
+  opacity: 1;
+  transition: none;
+}
+.motion-diagram .m-node rect {
+  transition: stroke var(--motion-selection) var(--motion-ease);
+}
+
+.motion-arrival,
+.story-arrived > .chapter-number {
+  animation: motion-arrive var(--motion-arrival) var(--motion-ease) 1 both;
+}
+@keyframes motion-arrive {
+  from { transform: translateY(8px); }
+  to { transform: translateY(0); }
+}
+
+/* Geometry follows scroll position directly; JavaScript bounds tilt and lift. */
+.story-depth-stage,
+body[data-presentation="story"] .story-depth-stage > .diagram-viewport {
+  transition: none;
+}
+.story-depth-stage {
+  transform: rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+}
+body[data-presentation="story"] .story-depth-stage > .diagram-viewport {
+  transform: translateZ(var(--lift, 0px));
+}
+
+/* Flat view removes spatial depth, but keeps the selected route in motion. */
+@media screen and (prefers-reduced-motion: no-preference) {
+  body.flat:not(.paused):not(.motion-paused):not(.motion-reduced) .route.selected .flow-dot {
+    display: block !important;
+  }
+}
+body:is([data-depth="off"], .flat, .motion-paused, .motion-reduced, .paused)
+  :is(.story-depth-stage, .story-depth-stage > .diagram-viewport, .node-button, .cortex-diagram) {
+  transform: none !important;
+}
+body:is([data-depth="off"], .flat, .motion-paused, .motion-reduced, .paused)
+  .story-depth-stage::before,
+body:is([data-depth="off"], .flat, .motion-paused, .motion-reduced, .paused)
+  .story-depth-stage::after {
+  display: none !important;
+}
+
+body:is(.motion-paused, .motion-reduced, .paused) *,
+body:is(.motion-paused, .motion-reduced, .paused) *::before,
+body:is(.motion-paused, .motion-reduced, .paused) *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+html:has(body:is(.motion-paused, .motion-reduced, .paused)) {
+  scroll-behavior: auto !important;
+}
+body:is(.motion-paused, .motion-reduced, .paused) :is(.flow-dot, .cortex-packet, .m-dot) {
+  display: none !important;
+}
+body:is(.motion-paused, .motion-reduced, .paused) .story-step {
+  transform: none !important;
+}
+
+@media screen and (max-width: 1100px) {
+  :is(.story-depth-stage, .story-depth-stage > .diagram-viewport, .node-button),
+  .cortex-section .cortex-diagram {
+    transform: none !important;
+  }
+  .story-depth-stage::before,
+  .story-depth-stage::after { display: none !important; }
+}
+
+@media screen and (max-width: 760px), screen and (pointer: coarse) {
+  :is(.tools, .stage-controls, .deck-footer, .view-switch, .suite-tabs, .controls) button,
+  .topic-strip button, .story-step-jump, .cortex-motion, aside button,
+  .story-menu > summary, .story-chapters a, .cortex-tabs a,
+  .presentation-format, .cortex-nav-link {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  .presentation-format, .cortex-nav-link {
+    display: inline-flex;
+    align-items: center;
+  }
+  .topbar { height: auto; min-height: 60px; }
+  .phases {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+  .phases a {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Static output always starts in a complete, readable state. */
+.no-js *, .no-js *::before, .no-js *::after {
+  animation: none !important;
+  transition: none !important;
+}
+.no-js :is(.story-depth-stage, .story-depth-stage > .diagram-viewport, .node-button, .cortex-diagram) {
+  transform: none !important;
+}
+.no-js .story-depth-stage::before,
+.no-js .story-depth-stage::after { display: none !important; }
+.no-js :is(.flow-dot, .cortex-packet, .m-dot) { display: none !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  html, *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+  :is(.story-depth-stage, .story-depth-stage > .diagram-viewport, .node-button, .cortex-diagram, .story-step) {
+    transform: none !important;
+  }
+  .story-depth-stage::before, .story-depth-stage::after,
+  body .route.selected .flow-dot, .cortex-packet, .m-dot {
+    display: none !important;
+  }
+}
+
+@media print {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  :is(.story-depth-stage, .story-depth-stage > .diagram-viewport, .node-button, .cortex-diagram, .story-step, .motion-arrival) {
+    transform: none !important;
+  }
+  .story-depth-stage::before, .story-depth-stage::after,
+  body .route.selected .flow-dot, .cortex-packet, .m-dot {
+    display: none !important;
+  }
+}
 </style>
 </head>
 <body data-presentation="story">
@@ -285,11 +647,23 @@ body[data-presentation="story"] .story-sticky .stage-caption{display:none}
           <div class="view-switch" role="group" aria-label="Audience view"><button type="button" data-view="leader" aria-pressed="true">Leader</button><button type="button" id="audience-dev" data-view="dev" aria-pressed="false">Developer</button></div>
           <button data-motion id="motion-toggle" type="button" aria-pressed="false">Pause motion</button>
           <button id="overview-toggle" type="button" aria-expanded="false" aria-controls="overview">Slides <span aria-hidden="true">▦</span></button>
-          <button id="print" type="button">Print / PDF</button>
-          <button id="fullscreen" type="button">Full screen</button>
+          <details class="presentation-options"><summary>Options</summary><div class="option-panel"><button id="print" type="button">Print / PDF</button>
+          <button id="fullscreen" type="button">Full screen</button></div></details>
         </div>
       </header>
-      <section class="cortex-section" id="why-prefrontal" aria-labelledby="cortex-title">
+      <section class="product-intro" id="product-start" aria-labelledby="product-title">
+    <div class="product-intro-copy"><p class="product-kicker">PREFRONTAL / FOR AI, DATA AND GOVERNANCE TEAMS</p>
+    <h1 id="product-title">Approved context.<br>Ready to reuse.</h1>
+    <p class="product-definition">A proposed context service that turns business knowledge into approved, versioned records for AI applications.</p>
+    <p class="product-reason">Reuse knowledge as models and tools change. Test cost, quality and control before expanding.</p>
+    <div class="product-actions"><a class="primary-action" href="#full-architecture">Explore the architecture <span aria-hidden="true">↗</span></a><a class="secondary-action" href="#pilot-acceptance">Review the pilot <span aria-hidden="true">→</span></a></div>
+    <p class="product-status-line">Product concept · pilot proposal · outcomes remain to be tested.</p></div>
+    <div class="product-route" aria-label="The proposed product in three stages"><p class="route-kicker">ONE GOVERNED JOURNEY</p>
+    <ol><li><span>01</span><div><strong>Submit the evidence</strong><p>Preserve the source and its meaning.</p></div></li><li><span>02</span><div><strong>Approve the record</strong><p>People review. Code enforces policy.</p></div></li><li><span>03</span><div><strong>Deliver permitted context</strong><p>Recheck access and current validity.</p></div></li></ol>
+    <a class="route-reference" href="#why-prefrontal">Why the name Prefrontal? ↓</a></div>
+  </section><main id="deck" tabindex="-1" aria-busy="true">
+        <div class="loading">Loading the presentation…</div>
+      </main><section class="cortex-section" id="why-prefrontal" aria-labelledby="cortex-title">
  <div class="cortex-heading"><p class="cortex-kicker">WHY PREFRONTAL? · SCIENCE → DESIGN</p><h2 id="cortex-title">A brain-inspired name. A governed design.</h2><p>The prefrontal cortex sits at the front of the brain. It works with other regions to support executive functions: processes that guide behavior toward goals. We use selected functions as design analogies for governed context.</p><p class="cortex-citations"><a href="https://www.nimh.nih.gov/health/publications/the-teen-brain-7-things-to-know" target="_blank" rel="noopener">NIMH · The Teen Brain: 7 Things to Know</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/17553704/" target="_blank" rel="noopener">Cole and Schneider (2007) · The cognitive control network: Integrated cortical regions with dissociable functions</a></p><p class="cortex-boundary">SOFTWARE ANALOGY · These connections explain our proposed design. They do not reproduce brain biology or prove product performance. Brain regions have overlapping functions. The locations below are approximate. This writing is STE-inspired; full compliance has not been checked.</p><a class="cortex-continue" href="#submit" data-cortex-continue>Follow the decision journey ↓</a></div>
  <div class="cortex-stage"><div class="cortex-stage-labels"><span>BRAIN · biological evidence</span><span>PRODUCT · proposed analogy</span></div>
  <svg class="cortex-diagram" viewBox="0 0 1000 340" role="img" aria-labelledby="cortex-svg-title cortex-svg-desc"><title id="cortex-svg-title">From executive functions to governed context</title><desc id="cortex-svg-desc">A schematic highlights the front of the brain. A connector links this inspiration to software that coordinates goals, active context and approval rules. This is a design analogy, not a model of the brain.</desc>
@@ -302,9 +676,7 @@ body[data-presentation="story"] .story-sticky .stage-caption{display:none}
  <div class="cortex-mappings"><article class="cortex-mapping" id="cortex-working-memory" data-region="working-memory"><div class="cortex-fact"><p class="cortex-kicker">01 · BRAIN FACT</p><h3>Dorsolateral prefrontal cortex</h3><p class="cortex-location">Upper outer prefrontal surface</p><p>Working memory holds information for a current task. Human imaging studies link the dlPFC to maintaining and reorganizing that information. It operates within a wider control network.</p><p class="cortex-citations"><a href="https://pubmed.ncbi.nlm.nih.gov/10536086/" target="_blank" rel="noopener">D&#39;Esposito et al. (1999) · Maintenance versus manipulation of information held in working memory</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/17553704/" target="_blank" rel="noopener">Cole and Schneider (2007) · The cognitive control network: Integrated cortical regions with dissociable functions</a></p></div><div class="cortex-connect" aria-hidden="true">→</div><div class="cortex-analogy"><p class="cortex-kicker">SOFTWARE ANALOGY · PROPOSED</p><h3>Hold the right task context</h3><p>Keep the current goal, permitted evidence and task state available. The proposed orchestration code limits the context and work budget.</p><p class="cortex-limit"><b>Limit:</b> A context window is a software resource. It does not reproduce biological working memory or store the whole knowledge base.</p><a class="cortex-node-link" href="decisions.html#harness">See this decision in our flow ↗</a></div></article><article class="cortex-mapping" id="cortex-inhibition" data-region="inhibition"><div class="cortex-fact"><p class="cortex-kicker">02 · BRAIN FACT</p><h3>Right inferior frontal cortex and connected regions</h3><p class="cortex-location">Lower outer right frontal surface</p><p>Inhibition means stopping a response. Human imaging studies identify a network that includes right inferior frontal cortex, a medial frontal area and a deeper brain region. This network helps slow or stop motor responses.</p><p class="cortex-citations"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6672420/" target="_blank" rel="noopener">Aron et al. (2007) · Triangulating a cognitive control network using diffusion-weighted MRI and functional MRI</a></p></div><div class="cortex-connect" aria-hidden="true">→</div><div class="cortex-analogy"><p class="cortex-kicker">SOFTWARE ANALOGY · PROPOSED</p><h3>Stop at the permission gate</h3><p>Check permission before retrieval. Stop the request when its scope fails policy. Recheck current records before delivery. Code enforces these gates.</p><p class="cortex-limit"><b>Limit:</b> Stopping a movement and denying data access are different mechanisms. The analogy explains restraint; it does not establish security.</p><a class="cortex-node-link" href="decisions.html#authorized">See this decision in our flow ↗</a></div></article><article class="cortex-mapping" id="cortex-valuation" data-region="valuation"><div class="cortex-fact"><p class="cortex-kicker">03 · BRAIN FACT</p><h3>Ventromedial prefrontal cortex</h3><p class="cortex-location">Lower inner prefrontal surface</p><p>Valuation means comparing what options are worth. Human lesion studies link vmPFC to consistent preferences. Other studies connect damage here with emotional changes and difficulties in everyday social behavior.</p><p class="cortex-citations"><a href="https://pubmed.ncbi.nlm.nih.gov/17259643/" target="_blank" rel="noopener">Fellows and Farah (2007) · The role of ventromedial prefrontal cortex in decision making</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/16573856/" target="_blank" rel="noopener">Anderson et al. (2006) · Impairments of emotion and real-world complex behavior following ventromedial prefrontal damage</a></p></div><div class="cortex-connect" aria-hidden="true">→</div><div class="cortex-analogy"><p class="cortex-kicker">SOFTWARE ANALOGY · PROPOSED</p><h3>Keep people in charge of priorities</h3><p>Owners define priorities and acceptable trade-offs. A human reviews the evidence and approves an exact version. Model scores cannot replace that decision authority.</p><p class="cortex-limit"><b>Limit:</b> Owner-defined rules are explicit software inputs. The product does not gain empathy, emotions or moral judgment from this analogy.</p><a class="cortex-node-link" href="decisions.html#review">See this decision in our flow ↗</a></div></article><article class="cortex-mapping" id="cortex-outcome-updating" data-region="outcome-updating"><div class="cortex-fact"><p class="cortex-kicker">04 · BRAIN FACT</p><h3>Orbitofrontal cortex</h3><p class="cortex-location">Frontal underside, above the eye sockets</p><p>Human lesion research links the OFC to flexible learning from outcomes. It helps interpret new feedback in the context of earlier outcomes when conditions change.</p><p class="cortex-citations"><a href="https://pubmed.ncbi.nlm.nih.gov/21159958/" target="_blank" rel="noopener">Tsuchida, Doll and Fellows (2010) · Beyond reversal: Flexible learning from probabilistic feedback</a></p></div><div class="cortex-connect" aria-hidden="true">→</div><div class="cortex-analogy"><p class="cortex-kicker">SOFTWARE ANALOGY · PROPOSED</p><h3>Review what changes</h3><p>Record outcomes and source changes. Invalidate withdrawn or expired views. Return changed meaning to human review before reuse.</p><p class="cortex-limit"><b>Limit:</b> A feedback log is not biological learning. Changed meaning still needs approval; a successful output does not make it true.</p><a class="cortex-node-link" href="decisions.html#change">See this decision in our flow ↗</a></div></article><article class="cortex-mapping" id="cortex-alternatives" data-region="alternatives"><div class="cortex-fact"><p class="cortex-kicker">05 · BRAIN FACT</p><h3>Frontopolar cortex</h3><p class="cortex-location">Front tip of the prefrontal cortex</p><p>A human imaging study linked frontopolar activity to evidence favoring an alternative course of action. The signal tracked the possible benefit of switching from the current choice.</p><p class="cortex-citations"><a href="https://pubmed.ncbi.nlm.nih.gov/19524531/" target="_blank" rel="noopener">Boorman et al. (2009) · Frontopolar cortex and evidence for alternative courses of action</a></p></div><div class="cortex-connect" aria-hidden="true">→</div><div class="cortex-analogy"><p class="cortex-kicker">SOFTWARE ANALOGY · PROPOSED</p><h3>Choose an allowed path</h3><p>Choose an allowed retrieval path: exact ID, hybrid search or approved relationships. Request clarification when evidence is insufficient. Keep every route within the permitted scope.</p><p class="cortex-limit"><b>Limit:</b> The router follows engineered rules and evaluated signals. This mapping does not claim human planning or an optimal choice.</p><a class="cortex-node-link" href="decisions.html#route">See this decision in our flow ↗</a></div></article></div>
  <div class="cortex-development"><div><p class="cortex-kicker">ONE IMPORTANT CORRECTION</p><h3>Development is a process.<br>Not a birthday deadline.</h3></div><div><p>Brain development has no single finish date. NIMH describes broad maturation into the mid-to-late 20s. A 2023 study found adult-level performance on its executive-function tasks around 18–20. Task performance and brain structure measure different things. Neither result sets a universal age of maturity. Social context also affects risk-taking.</p><p class="cortex-citations"><a href="https://www.nimh.nih.gov/health/publications/the-teen-brain-7-things-to-know" target="_blank" rel="noopener">NIMH · The Teen Brain: 7 Things to Know</a> · <a href="https://www.nature.com/articles/s41467-023-42540-8" target="_blank" rel="noopener">Tervo-Clemmens et al. (2023) · A canonical trajectory of executive function maturation from adolescence to adulthood</a></p></div></div>
  <p class="cortex-endnote">The neuroscience explains the naming idea. It does not establish product accuracy, security or cost savings. The pilot must test those outcomes. Working memory means holding information for a current task. Our context vault stores durable records; it is a separate software component.</p>
- </section><main id="deck" tabindex="-1" aria-busy="true">
-        <div class="loading">Loading the presentation…</div>
-      </main>
+ </section>
       <div id="overview" class="overview" hidden aria-label="Slide overview"></div>
       <footer class="deck-footer">
         <div><span id="slide-count" aria-live="polite">—</span><span class="footer-hint">Use ← → to move</span></div>
@@ -329,7 +701,7 @@ body[data-presentation="story"] .story-sticky .stage-caption{display:none}
  <div class="cortex-development"><div><p class="cortex-kicker">ONE IMPORTANT CORRECTION</p><h3>Development is a process.<br>Not a birthday deadline.</h3></div><div><p>Brain development has no single finish date. NIMH describes broad maturation into the mid-to-late 20s. A 2023 study found adult-level performance on its executive-function tasks around 18–20. Task performance and brain structure measure different things. Neither result sets a universal age of maturity. Social context also affects risk-taking.</p><p class="cortex-citations"><a href="https://www.nimh.nih.gov/health/publications/the-teen-brain-7-things-to-know" target="_blank" rel="noopener">NIMH · The Teen Brain: 7 Things to Know</a> · <a href="https://www.nature.com/articles/s41467-023-42540-8" target="_blank" rel="noopener">Tervo-Clemmens et al. (2023) · A canonical trajectory of executive function maturation from adolescence to adulthood</a></p></div></div>
  <p class="cortex-endnote">The neuroscience explains the naming idea. It does not establish product accuracy, security or cost savings. The pilot must test those outcomes. Working memory means holding information for a current task. Our context vault stores durable records; it is a separate software component.</p>
  </section><main class="static-presentation"><p class="static-intro">Static presentation · all 16 slides. Writing inspired by ASD-STE100; full compliance has not been checked.</p>
-<section class="slide type-cover has-mini-architecture has-pitch-signals" id="static-opening-thesis"><p class="eyebrow">Prefrontal · the context product</p><h1>Give AI approved context it can reuse.</h1><p class="lead">Prefrontal turns business knowledge into versioned context. Your applications receive only the context they may use.</p><div class="mini-focus-visual pitch-mechanism"><figure class="mechanism-figure"><div class="diagram-viewport architecture-viewport" tabindex="0" role="region" aria-label="Full architecture workflow diagram. Scroll horizontally on a small screen."><svg viewBox="0 0 1180 390" role="img" width="100%" aria-labelledby="mini-product-thesis-mini-1-title mini-product-thesis-mini-1-desc" preserveAspectRatio="xMidYMid meet" class="motion-diagram mini-architecture-svg" data-mini-architecture="product-thesis-mini" data-architecture-anchors="submissions,human-review,context-agent,canonical-registry,mcp-delivery,consumers"><title id="mini-product-thesis-mini-1-title">Approved knowledge becomes a reusable context product</title><desc id="mini-product-thesis-mini-1-desc">People approve meaning. The service preserves identity and evidence. Every delivery checks current access and validity. THE PRODUCT · CONTROLLED CONTEXT REUSE: Approval applies to one version. Each delivery still checks current access and validity. Stage 1, Capture the business meaning: A submission carries the source, owner, definition and conditions. Preserve the original evidence. Stage 2, Approve the exact record: A responsible reviewer approves the record version. Revised meaning needs a new review. Stage 3, Build a reusable asset: The context service links approved records with stable IDs, versions and source evidence. Stage 4, Deliver permitted context: The delivery gate checks identity, permissions and validity. Applications control their own actions. Stage 5, Review changes before reuse: Feedback becomes a change request. It cannot silently overwrite an approved fact. Business knowledge, input: Source + definition. Owner + conditions. Human approval, gate: Exact record version. Evidence + meaning. Context service, agent: Stable IDs + versions. Linked approved layers. Delivery gate, policy: Current permissions. Validity + evidence. Your applications, consumer: Analytics + assistants. Apps control actions. Change request, input: Feedback + new sources. Return for review. Solid arrows show flow. Dashed red arrows show revision or return. Dashed gray lines show references, not workflow. Red arrows show a blocked path. This is an architecture proposal.</desc><defs ><marker id="mini-product-thesis-mini-1-ink-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto" markerUnits="strokeWidth"><path d="M1 1 L9 5 L1 9 Z" fill="var(--ink, #000000)"></path></marker><marker id="mini-product-thesis-mini-1-red-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto" markerUnits="strokeWidth"><path d="M1 1 L9 5 L1 9 Z" fill="var(--red, #EE001E)"></path></marker></defs><g class="mini-policy-boundary" data-boundary="external-policy"><rect x="8" y="1" width="1164" height="44" rx="8" fill="var(--mist, #F6F6F6)" stroke="var(--ink, #000000)" stroke-width="1"></rect><g transform="translate(19 11)" fill="none" stroke="var(--ink, #000000)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 1 L18 4 V10 Q18 16 10 20 Q2 16 2 10 V4 Z M7 9 V7 A3 3 0 0 1 13 7 V9 M6 9 H14 V15 H6 Z"></path></g><text x="50" y="18" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="var(--ink, #000000)" text-anchor="start">THE PRODUCT · CONTROLLED CONTEXT REUSE</text><text x="50" y="36" font-family="Arial, sans-serif" font-size="13.5" font-weight="400" fill="var(--ink, #000000)" text-anchor="start">Approval applies to one version. Each delivery still checks current access and validity.</text></g><g class="stage-meta" data-step="0" data-stage="Capture the business meaning" data-stage-detail="A submission carries the source, owner, definition and conditions. Preserve the original evidence." aria-hidden="true"></g><g class="stage-meta" data-step="1" data-stage="Approve the exact record" data-stage-detail="A responsible reviewer approves the record version. Revised meaning needs a new review." aria-hidden="true"></g><g class="stage-meta" data-step="2" data-stage="Build a reusable asset" data-stage-detail="The context service links approved records with stable IDs, versions and source evidence." aria-hidden="true"></g><g class="stage-meta" data-step="3" data-stage="Deliver permitted context" data-stage-detail="The delivery gate checks identity, permissions and validity. Applications control their own actions." aria-hidden="true"></g><g class="stage-meta" data-step="4" data-stage="Review changes before reuse" data-stage-detail="Feedback becomes a change request. It cannot silently overwrite an approved fact." aria-hidden="true"></g><g class="m-edge m-stage" data-edge="knowledge-review" data-from="knowledge" data-to="review" data-kind="flow" data-step="1" data-steps="1"><path id="mini-product-thesis-mini-1-path-knowledge-review" d="M220 134 H250" fill="none" stroke="var(--ink, #000000)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#mini-product-thesis-mini-1-ink-arrow)"></path></g><g class="m-edge m-stage" data-edge="review-service" data-from="review" data-to="service" data-kind="flow" data-step="2" data-steps="2"><path id="mini-product-thesis-mini-1-path-review-service" d="M450 134 H480" fill="none" stroke="var(--ink, #000000)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#mini-product-thesis-mini-1-ink-arrow)"></path></g><g class="m-edge m-stage" data-edge="service-access" data-from="service" data-to="access" data-kind="flow" data-step="3" data-steps="3"><path id="mini-product-thesis-mini-1-path-service-access" d="M680 134 H710" fill="none" stroke="var(--ink, #000000)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#mini-product-thesis-mini-1-ink-arrow)"></path></g><g class="m-edge m-stage" data-edge="access-apps" data-from="access" data-to="apps" data-kind="flow" data-step="3" data-steps="3"><path id="mini-product-thesis-mini-1-path-access-apps" d="M910 134 H940" fill="none" stroke="var(--ink, #000000)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#mini-product-thesis-mini-1-ink-arrow)"></path></g><g class="m-edge m-stage" data-edge="apps-change" data-from="apps" data-to="change" data-kind="flow" data-step="4" data-steps="4"><path id="mini-product-thesis-mini-1-path-apps-change" d="M1040 184 V215 H580 V245" fill="none" stroke="var(--ink, #000000)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#mini-product-thesis-mini-1-ink-arrow)"></path></g><g class="m-edge m-stage" data-edge="change-review" data-from="change" data-to="review" data-kind="return" data-step="4" data-steps="4"><path id="mini-product-thesis-mini-1-path-change-review" d="M480 290 H350 V184" fill="none" stroke="var(--red, #EE001E)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="7 4" marker-end="url(#mini-product-thesis-mini-1-red-arrow)"></path></g><g class="m-node m-stage mini-role-input" data-node="knowledge" data-role="input" data-step="0" data-steps="0"><rect x="20" y="84" width="200" height="100" rx="11" fill="var(--paper, #FFFFFF)" stroke="var(--ink, #000000)" stroke-width="1.5"></rect><g transform="translate(32 95)" fill="none" stroke="var(--ink, #000000)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 1 H12 L17 6 V19 H3 Z M12 1 V6 H17 M6 10 H14 M6 14 H14"></path></g><text x="62" y="108" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="var(--ink, #000000)" text-anchor="start" data-line-kind="title" data-text-width="142">Business</text><text x="62" y="127" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="var(--ink, #000000)" text-anchor="start" data-line-kind="title" data-text-width="142">knowledge</text><text x="36" y="148" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="168">Source + definition</text><text x="36" y="166" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="168">Owner + conditions</text></g><g class="m-node m-stage mini-role-gate" data-node="review" data-role="gate" data-step="1" data-steps="1"><rect x="250" y="84" width="200" height="100" rx="11" fill="var(--paper, #FFFFFF)" stroke="var(--ink, #000000)" stroke-width="2"></rect><g transform="translate(262 95)" fill="none" stroke="var(--ink, #000000)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 1 L19 10 L10 19 L1 10 Z M6 10 L9 13 L14 7"></path></g><text x="292" y="108" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="var(--ink, #000000)" text-anchor="start" data-line-kind="title" data-text-width="142">Human approval</text><text x="266" y="129" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="168">Exact record version</text><text x="266" y="147" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="168">Evidence + meaning</text></g><g class="m-node m-stage mini-role-agent" data-node="service" data-role="agent" data-step="2" data-steps="2"><rect x="480" y="84" width="200" height="100" rx="11" fill="var(--ink, #000000)" stroke="var(--ink, #000000)" stroke-width="1.5"></rect><g transform="translate(492 95)" fill="none" stroke="var(--paper, #FFFFFF)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 10 H6 M6 10 V4 H16 M6 10 H16 M6 10 V16 H16 M13 1 L16 4 L13 7 M13 7 L16 10 L13 13 M13 13 L16 16 L13 19"></path></g><text x="522" y="108" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="var(--paper, #FFFFFF)" text-anchor="start" data-line-kind="title" data-text-width="142">Context service</text><text x="496" y="129" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#E7E7E7" text-anchor="start" data-line-kind="body" data-text-width="168">Stable IDs + versions</text><text x="496" y="147" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#E7E7E7" text-anchor="start" data-line-kind="body" data-text-width="168">Linked approved layers</text></g><g class="m-node m-stage mini-role-policy" data-node="access" data-role="policy" data-step="3" data-steps="3"><rect x="710" y="84" width="200" height="100" rx="11" fill="var(--mist, #F6F6F6)" stroke="var(--ink, #000000)" stroke-width="1.5"></rect><g transform="translate(722 95)" fill="none" stroke="var(--ink, #000000)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 1 L18 4 V10 Q18 16 10 20 Q2 16 2 10 V4 Z M7 9 V7 A3 3 0 0 1 13 7 V9 M6 9 H14 V15 H6 Z"></path></g><text x="752" y="108" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="var(--ink, #000000)" text-anchor="start" data-line-kind="title" data-text-width="142">Delivery gate</text><text x="726" y="129" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="168">Current permissions</text><text x="726" y="147" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="168">Validity + evidence</text></g><g class="m-node m-stage mini-role-consumer" data-node="apps" data-role="consumer" data-step="3" data-steps="3"><rect x="940" y="84" width="200" height="100" rx="11" fill="var(--paper, #FFFFFF)" stroke="var(--ink, #000000)" stroke-width="1.5"></rect><g transform="translate(952 95)" fill="none" stroke="var(--ink, #000000)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 2 H19 V15 H1 Z M6 19 H14 M10 15 V19 M5 6 H15 M5 10 H12"></path></g><text x="982" y="108" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="var(--ink, #000000)" text-anchor="start" data-line-kind="title" data-text-width="142">Your</text><text x="982" y="127" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="var(--ink, #000000)" text-anchor="start" data-line-kind="title" data-text-width="142">applications</text><text x="956" y="148" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="168">Analytics + assistants</text><text x="956" y="166" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="168">Apps control actions</text></g><g class="m-node m-stage mini-role-input" data-node="change" data-role="input" data-step="4" data-steps="4"><rect x="480" y="245" width="200" height="90" rx="11" fill="var(--paper, #FFFFFF)" stroke="var(--ink, #000000)" stroke-width="1.5"></rect><g transform="translate(492 256)" fill="none" stroke="var(--ink, #000000)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 1 H12 L17 6 V19 H3 Z M12 1 V6 H17 M6 10 H14 M6 14 H14"></path></g><text x="522" y="269" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="var(--ink, #000000)" text-anchor="start" data-line-kind="title" data-text-width="142">Change request</text><text x="496" y="290" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="168">Feedback + new sources</text><text x="496" y="308" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="168">Return for review</text></g><g class="mini-architecture-legend" aria-hidden="true"><path d="M18 373 H45" fill="none" stroke="var(--ink, #000000)" stroke-width="1.6" marker-end="url(#mini-product-thesis-mini-1-ink-arrow)"></path><text x="56" y="377" font-family="Arial, sans-serif" font-size="13" font-weight="400" fill="var(--ink, #000000)" text-anchor="start">Flow</text><path d="M259.6 373 H286.6" fill="none" stroke="var(--red, #EE001E)" stroke-width="1.6" stroke-dasharray="6 3" marker-end="url(#mini-product-thesis-mini-1-red-arrow)"></path><text x="297.6" y="377" font-family="Arial, sans-serif" font-size="13" font-weight="400" fill="var(--ink, #000000)" text-anchor="start">Revision / return</text><path d="M554.6 373 H581.6" fill="none" stroke="#737373" stroke-width="1.6" stroke-dasharray="4 4"></path><text x="592.6" y="377" font-family="Arial, sans-serif" font-size="13" font-weight="400" fill="var(--ink, #000000)" text-anchor="start">Reference only</text><path d="M873.2 373 H900.2" fill="none" stroke="var(--red, #EE001E)" stroke-width="1.6" marker-end="url(#mini-product-thesis-mini-1-red-arrow)"></path><text x="911.2" y="377" font-family="Arial, sans-serif" font-size="13" font-weight="400" fill="var(--ink, #000000)" text-anchor="start">Blocked</text></g></svg></div><p class="diagram-scroll-hint">Swipe the diagram to follow the workflow. Focus it and use arrow keys to scroll.</p><figcaption class="static-diagram-caption">Static diagram. Follow the arrows and read all stages.</figcaption></figure><p class="provenance">Proposal · not from the reference slides</p><div class="pitch-signals" aria-label="Leadership takeaways"><article class="pitch-signal"><h3>What you buy</h3><p>A service to prepare, govern, organize and deliver context.</p></article><article class="pitch-signal"><h3>What you keep</h3><p>Looker, LookML, Zenlytics and your custom apps.</p></article><article class="pitch-signal"><h3>What we prove</h3><p>Useful reuse at an acceptable cost, speed and quality.</p></article></div><details open class="dev presenter-detail"><summary>Presenter detail</summary><div class="items"><article class="item"><h3>One reusable context layer</h3><p>Build on Looker, LookML, Zenlytics and custom apps.</p></article><article class="item"><h3>A funded proof of value</h3><p>Start with one workflow. Measure the return before expansion.</p></article></div></details></div><p class="slide-note">Product concept and pilot proposal. Writing inspired by ASD-STE100; full compliance has not been checked.</p></section>
+<section class="slide type-cover has-mini-architecture has-pitch-signals" id="static-opening-thesis"><p class="eyebrow">Prefrontal · the context product</p><h1>Give AI approved context it can reuse.</h1><p class="lead">Prefrontal turns business knowledge into versioned context. Your applications receive only the context they may use.</p><p class="product-audience">For AI, data and governance teams</p><div class="product-actions"><a class="primary-action" href="#static-full-architecture">Explore the architecture ↗</a><a class="secondary-action" href="#static-pilot-acceptance">Review the pilot →</a></div><div class="mini-focus-visual pitch-mechanism"><figure class="mechanism-figure"><div class="diagram-viewport architecture-viewport" tabindex="0" role="region" aria-label="Full architecture workflow diagram. Scroll horizontally on a small screen."><svg viewBox="0 0 1180 390" role="img" width="100%" aria-labelledby="mini-product-thesis-mini-1-title mini-product-thesis-mini-1-desc" preserveAspectRatio="xMidYMid meet" class="motion-diagram mini-architecture-svg" data-mini-architecture="product-thesis-mini" data-architecture-anchors="submissions,human-review,context-agent,canonical-registry,mcp-delivery,consumers"><title id="mini-product-thesis-mini-1-title">Approved knowledge becomes a reusable context product</title><desc id="mini-product-thesis-mini-1-desc">People approve meaning. The service preserves identity and evidence. Every delivery checks current access and validity. THE PRODUCT · CONTROLLED CONTEXT REUSE: Approval applies to one version. Each delivery still checks current access and validity. Stage 1, Capture the business meaning: A submission carries the source, owner, definition and conditions. Preserve the original evidence. Stage 2, Approve the exact record: A responsible reviewer approves the record version. Revised meaning needs a new review. Stage 3, Build a reusable asset: The context service links approved records with stable IDs, versions and source evidence. Stage 4, Deliver permitted context: The delivery gate checks identity, permissions and validity. Applications control their own actions. Stage 5, Review changes before reuse: Feedback becomes a change request. It cannot silently overwrite an approved fact. Business knowledge, input: Source + definition. Owner + conditions. Human approval, gate: Exact record version. Evidence + meaning. Context service, agent: Stable IDs + versions. Linked approved layers. Delivery gate, policy: Current permissions. Validity + evidence. Your applications, consumer: Analytics + assistants. Apps control actions. Change request, input: Feedback + new sources. Return for review. Solid arrows show flow. Dashed red arrows show revision or return. Dashed gray lines show references, not workflow. Red arrows show a blocked path. This is an architecture proposal.</desc><defs ><marker id="mini-product-thesis-mini-1-ink-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto" markerUnits="strokeWidth"><path d="M1 1 L9 5 L1 9 Z" fill="var(--ink, #000000)"></path></marker><marker id="mini-product-thesis-mini-1-red-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto" markerUnits="strokeWidth"><path d="M1 1 L9 5 L1 9 Z" fill="var(--red, #EE001E)"></path></marker></defs><g class="mini-policy-boundary" data-boundary="external-policy"><rect x="8" y="1" width="1164" height="44" rx="8" fill="var(--mist, #F6F6F6)" stroke="var(--ink, #000000)" stroke-width="1"></rect><g transform="translate(19 11)" fill="none" stroke="var(--ink, #000000)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 1 L18 4 V10 Q18 16 10 20 Q2 16 2 10 V4 Z M7 9 V7 A3 3 0 0 1 13 7 V9 M6 9 H14 V15 H6 Z"></path></g><text x="50" y="18" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="var(--ink, #000000)" text-anchor="start">THE PRODUCT · CONTROLLED CONTEXT REUSE</text><text x="50" y="36" font-family="Arial, sans-serif" font-size="13.5" font-weight="400" fill="var(--ink, #000000)" text-anchor="start">Approval applies to one version. Each delivery still checks current access and validity.</text></g><g class="stage-meta" data-step="0" data-stage="Capture the business meaning" data-stage-detail="A submission carries the source, owner, definition and conditions. Preserve the original evidence." aria-hidden="true"></g><g class="stage-meta" data-step="1" data-stage="Approve the exact record" data-stage-detail="A responsible reviewer approves the record version. Revised meaning needs a new review." aria-hidden="true"></g><g class="stage-meta" data-step="2" data-stage="Build a reusable asset" data-stage-detail="The context service links approved records with stable IDs, versions and source evidence." aria-hidden="true"></g><g class="stage-meta" data-step="3" data-stage="Deliver permitted context" data-stage-detail="The delivery gate checks identity, permissions and validity. Applications control their own actions." aria-hidden="true"></g><g class="stage-meta" data-step="4" data-stage="Review changes before reuse" data-stage-detail="Feedback becomes a change request. It cannot silently overwrite an approved fact." aria-hidden="true"></g><g class="m-edge m-stage" data-edge="knowledge-review" data-from="knowledge" data-to="review" data-kind="flow" data-step="1" data-steps="1"><path id="mini-product-thesis-mini-1-path-knowledge-review" d="M220 134 H250" fill="none" stroke="var(--ink, #000000)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#mini-product-thesis-mini-1-ink-arrow)"></path></g><g class="m-edge m-stage" data-edge="review-service" data-from="review" data-to="service" data-kind="flow" data-step="2" data-steps="2"><path id="mini-product-thesis-mini-1-path-review-service" d="M450 134 H480" fill="none" stroke="var(--ink, #000000)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#mini-product-thesis-mini-1-ink-arrow)"></path></g><g class="m-edge m-stage" data-edge="service-access" data-from="service" data-to="access" data-kind="flow" data-step="3" data-steps="3"><path id="mini-product-thesis-mini-1-path-service-access" d="M680 134 H710" fill="none" stroke="var(--ink, #000000)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#mini-product-thesis-mini-1-ink-arrow)"></path></g><g class="m-edge m-stage" data-edge="access-apps" data-from="access" data-to="apps" data-kind="flow" data-step="3" data-steps="3"><path id="mini-product-thesis-mini-1-path-access-apps" d="M910 134 H940" fill="none" stroke="var(--ink, #000000)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#mini-product-thesis-mini-1-ink-arrow)"></path></g><g class="m-edge m-stage" data-edge="apps-change" data-from="apps" data-to="change" data-kind="flow" data-step="4" data-steps="4"><path id="mini-product-thesis-mini-1-path-apps-change" d="M1040 184 V215 H580 V245" fill="none" stroke="var(--ink, #000000)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#mini-product-thesis-mini-1-ink-arrow)"></path></g><g class="m-edge m-stage" data-edge="change-review" data-from="change" data-to="review" data-kind="return" data-step="4" data-steps="4"><path id="mini-product-thesis-mini-1-path-change-review" d="M480 290 H350 V184" fill="none" stroke="var(--red, #EE001E)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="7 4" marker-end="url(#mini-product-thesis-mini-1-red-arrow)"></path></g><g class="m-node m-stage mini-role-input" data-node="knowledge" data-role="input" data-step="0" data-steps="0"><rect x="20" y="84" width="200" height="100" rx="11" fill="var(--paper, #FFFFFF)" stroke="var(--ink, #000000)" stroke-width="1.5"></rect><g transform="translate(32 95)" fill="none" stroke="var(--ink, #000000)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 1 H12 L17 6 V19 H3 Z M12 1 V6 H17 M6 10 H14 M6 14 H14"></path></g><text x="62" y="108" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="var(--ink, #000000)" text-anchor="start" data-line-kind="title" data-text-width="142">Business</text><text x="62" y="127" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="var(--ink, #000000)" text-anchor="start" data-line-kind="title" data-text-width="142">knowledge</text><text x="36" y="148" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="168">Source + definition</text><text x="36" y="166" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="168">Owner + conditions</text></g><g class="m-node m-stage mini-role-gate" data-node="review" data-role="gate" data-step="1" data-steps="1"><rect x="250" y="84" width="200" height="100" rx="11" fill="var(--paper, #FFFFFF)" stroke="var(--ink, #000000)" stroke-width="2"></rect><g transform="translate(262 95)" fill="none" stroke="var(--ink, #000000)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 1 L19 10 L10 19 L1 10 Z M6 10 L9 13 L14 7"></path></g><text x="292" y="108" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="var(--ink, #000000)" text-anchor="start" data-line-kind="title" data-text-width="142">Human approval</text><text x="266" y="129" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="168">Exact record version</text><text x="266" y="147" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="168">Evidence + meaning</text></g><g class="m-node m-stage mini-role-agent" data-node="service" data-role="agent" data-step="2" data-steps="2"><rect x="480" y="84" width="200" height="100" rx="11" fill="var(--ink, #000000)" stroke="var(--ink, #000000)" stroke-width="1.5"></rect><g transform="translate(492 95)" fill="none" stroke="var(--paper, #FFFFFF)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 10 H6 M6 10 V4 H16 M6 10 H16 M6 10 V16 H16 M13 1 L16 4 L13 7 M13 7 L16 10 L13 13 M13 13 L16 16 L13 19"></path></g><text x="522" y="108" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="var(--paper, #FFFFFF)" text-anchor="start" data-line-kind="title" data-text-width="142">Context service</text><text x="496" y="129" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#E7E7E7" text-anchor="start" data-line-kind="body" data-text-width="168">Stable IDs + versions</text><text x="496" y="147" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#E7E7E7" text-anchor="start" data-line-kind="body" data-text-width="168">Linked approved layers</text></g><g class="m-node m-stage mini-role-policy" data-node="access" data-role="policy" data-step="3" data-steps="3"><rect x="710" y="84" width="200" height="100" rx="11" fill="var(--mist, #F6F6F6)" stroke="var(--ink, #000000)" stroke-width="1.5"></rect><g transform="translate(722 95)" fill="none" stroke="var(--ink, #000000)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 1 L18 4 V10 Q18 16 10 20 Q2 16 2 10 V4 Z M7 9 V7 A3 3 0 0 1 13 7 V9 M6 9 H14 V15 H6 Z"></path></g><text x="752" y="108" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="var(--ink, #000000)" text-anchor="start" data-line-kind="title" data-text-width="142">Delivery gate</text><text x="726" y="129" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="168">Current permissions</text><text x="726" y="147" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="168">Validity + evidence</text></g><g class="m-node m-stage mini-role-consumer" data-node="apps" data-role="consumer" data-step="3" data-steps="3"><rect x="940" y="84" width="200" height="100" rx="11" fill="var(--paper, #FFFFFF)" stroke="var(--ink, #000000)" stroke-width="1.5"></rect><g transform="translate(952 95)" fill="none" stroke="var(--ink, #000000)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 2 H19 V15 H1 Z M6 19 H14 M10 15 V19 M5 6 H15 M5 10 H12"></path></g><text x="982" y="108" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="var(--ink, #000000)" text-anchor="start" data-line-kind="title" data-text-width="142">Your</text><text x="982" y="127" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="var(--ink, #000000)" text-anchor="start" data-line-kind="title" data-text-width="142">applications</text><text x="956" y="148" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="168">Analytics + assistants</text><text x="956" y="166" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="168">Apps control actions</text></g><g class="m-node m-stage mini-role-input" data-node="change" data-role="input" data-step="4" data-steps="4"><rect x="480" y="245" width="200" height="90" rx="11" fill="var(--paper, #FFFFFF)" stroke="var(--ink, #000000)" stroke-width="1.5"></rect><g transform="translate(492 256)" fill="none" stroke="var(--ink, #000000)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 1 H12 L17 6 V19 H3 Z M12 1 V6 H17 M6 10 H14 M6 14 H14"></path></g><text x="522" y="269" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="var(--ink, #000000)" text-anchor="start" data-line-kind="title" data-text-width="142">Change request</text><text x="496" y="290" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="168">Feedback + new sources</text><text x="496" y="308" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="168">Return for review</text></g><g class="mini-architecture-legend" aria-hidden="true"><path d="M18 373 H45" fill="none" stroke="var(--ink, #000000)" stroke-width="1.6" marker-end="url(#mini-product-thesis-mini-1-ink-arrow)"></path><text x="56" y="377" font-family="Arial, sans-serif" font-size="13" font-weight="400" fill="var(--ink, #000000)" text-anchor="start">Flow</text><path d="M259.6 373 H286.6" fill="none" stroke="var(--red, #EE001E)" stroke-width="1.6" stroke-dasharray="6 3" marker-end="url(#mini-product-thesis-mini-1-red-arrow)"></path><text x="297.6" y="377" font-family="Arial, sans-serif" font-size="13" font-weight="400" fill="var(--ink, #000000)" text-anchor="start">Revision / return</text><path d="M554.6 373 H581.6" fill="none" stroke="#737373" stroke-width="1.6" stroke-dasharray="4 4"></path><text x="592.6" y="377" font-family="Arial, sans-serif" font-size="13" font-weight="400" fill="var(--ink, #000000)" text-anchor="start">Reference only</text><path d="M873.2 373 H900.2" fill="none" stroke="var(--red, #EE001E)" stroke-width="1.6" marker-end="url(#mini-product-thesis-mini-1-red-arrow)"></path><text x="911.2" y="377" font-family="Arial, sans-serif" font-size="13" font-weight="400" fill="var(--ink, #000000)" text-anchor="start">Blocked</text></g></svg></div><p class="diagram-scroll-hint">Swipe the diagram to follow the workflow. Focus it and use arrow keys to scroll.</p><figcaption class="static-diagram-caption">Static diagram. Follow the arrows and read all stages.</figcaption></figure><p class="provenance">Proposal · not from the reference slides</p><div class="pitch-signals" aria-label="Leadership takeaways"><article class="pitch-signal"><h3>What you buy</h3><p>A service to prepare, govern, organize and deliver context.</p></article><article class="pitch-signal"><h3>What you keep</h3><p>Looker, LookML, Zenlytics and your custom apps.</p></article><article class="pitch-signal"><h3>What we prove</h3><p>Useful reuse at an acceptable cost, speed and quality.</p></article></div><details open class="dev presenter-detail"><summary>Presenter detail</summary><div class="items"><article class="item"><h3>One reusable context layer</h3><p>Build on Looker, LookML, Zenlytics and custom apps.</p></article><article class="item"><h3>A funded proof of value</h3><p>Start with one workflow. Measure the return before expansion.</p></article></div></details></div><p class="slide-note">Product concept and pilot proposal. Writing inspired by ASD-STE100; full compliance has not been checked.</p></section>
 <section class="slide type-problem has-mini-architecture has-pitch-signals" id="static-fragmented-context"><p class="eyebrow">Leadership · the recurring cost</p><h2>New tasks can restart the same work.</h2><p class="lead">Existing tools may hold the data and formulas. Teams still reconnect meaning, evidence and permissions for each use.</p><div class="mini-focus-visual pitch-mechanism"><figure class="mechanism-figure"><div class="diagram-viewport architecture-viewport" tabindex="0" role="region" aria-label="Full architecture workflow diagram. Scroll horizontally on a small screen."><svg viewBox="0 0 1180 400" role="img" width="100%" aria-labelledby="mini-repeated-work-mini-2-title mini-repeated-work-mini-2-desc" preserveAspectRatio="xMidYMid meet" class="motion-diagram mini-architecture-svg" data-mini-architecture="repeated-work-mini" data-architecture-anchors="submissions,preparation,human-review,consumers"><title id="mini-repeated-work-mini-2-title">Separate consumers can repeat the same business checks</title><desc id="mini-repeated-work-mini-2-desc">This is a problem hypothesis. Measure repeated preparation, reconciliation and review in the chosen workflow. THE BUYER PROBLEM · REPEATED WORK BETWEEN TOOLS: Hypothesis to test: the source exists, but each consumer rebuilds the context around it. Stage 1, Start from existing sources: LookML, documents and existing apps already hold useful definitions and source evidence. Stage 2, Prepare context for each use: Separate teams or applications may assemble their own explanation, conditions and source references. Stage 3, Resolve different versions: People check whether definitions, time windows, access and exceptions still agree. Stage 4, Review and repair the result: Reviewers spend time correcting unsupported or unsuitable output. Keep this effort in the baseline. Stage 5, Repeat when the task changes: A new assistant, source version or task may trigger the work again. The pilot must establish how often this happens. Existing sources, store: Definitions + formulas. Documents + evidence. Analytics task, consumer: Prepare local context. Check source meaning. Assistant task, consumer: Prepare local context. Check source meaning. Reconcile copies, gate: Version + conditions. Access + exceptions. Review again, gate: Check the answer. Record time + rework. Solid arrows show flow. Dashed red arrows show revision or return. Dashed gray lines show references, not workflow. Red arrows show a blocked path. This is an architecture proposal.</desc><defs ><marker id="mini-repeated-work-mini-2-ink-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto" markerUnits="strokeWidth"><path d="M1 1 L9 5 L1 9 Z" fill="var(--ink, #000000)"></path></marker><marker id="mini-repeated-work-mini-2-red-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto" markerUnits="strokeWidth"><path d="M1 1 L9 5 L1 9 Z" fill="var(--red, #EE001E)"></path></marker></defs><g class="mini-policy-boundary" data-boundary="external-policy"><rect x="8" y="1" width="1164" height="44" rx="8" fill="var(--mist, #F6F6F6)" stroke="var(--ink, #000000)" stroke-width="1"></rect><g transform="translate(19 11)" fill="none" stroke="var(--ink, #000000)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 1 L18 4 V10 Q18 16 10 20 Q2 16 2 10 V4 Z M7 9 V7 A3 3 0 0 1 13 7 V9 M6 9 H14 V15 H6 Z"></path></g><text x="50" y="18" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="var(--ink, #000000)" text-anchor="start">THE BUYER PROBLEM · REPEATED WORK BETWEEN TOOLS</text><text x="50" y="36" font-family="Arial, sans-serif" font-size="13.5" font-weight="400" fill="var(--ink, #000000)" text-anchor="start">Hypothesis to test: the source exists, but each consumer rebuilds the context around it.</text></g><g class="stage-meta" data-step="0" data-stage="Start from existing sources" data-stage-detail="LookML, documents and existing apps already hold useful definitions and source evidence." aria-hidden="true"></g><g class="stage-meta" data-step="1" data-stage="Prepare context for each use" data-stage-detail="Separate teams or applications may assemble their own explanation, conditions and source references." aria-hidden="true"></g><g class="stage-meta" data-step="2" data-stage="Resolve different versions" data-stage-detail="People check whether definitions, time windows, access and exceptions still agree." aria-hidden="true"></g><g class="stage-meta" data-step="3" data-stage="Review and repair the result" data-stage-detail="Reviewers spend time correcting unsupported or unsuitable output. Keep this effort in the baseline." aria-hidden="true"></g><g class="stage-meta" data-step="4" data-stage="Repeat when the task changes" data-stage-detail="A new assistant, source version or task may trigger the work again. The pilot must establish how often this happens." aria-hidden="true"></g><g class="m-edge m-stage" data-edge="source-a" data-from="sources" data-to="app-a" data-kind="flow" data-step="1" data-steps="1"><path id="mini-repeated-work-mini-2-path-source-a" d="M220 200 H260 V117 H300" fill="none" stroke="var(--ink, #000000)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#mini-repeated-work-mini-2-ink-arrow)"></path></g><g class="m-edge m-stage" data-edge="source-b" data-from="sources" data-to="app-b" data-kind="flow" data-step="1" data-steps="1"><path id="mini-repeated-work-mini-2-path-source-b" d="M220 230 H260 V297 H300" fill="none" stroke="var(--ink, #000000)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#mini-repeated-work-mini-2-ink-arrow)"></path></g><g class="m-edge m-stage" data-edge="a-check" data-from="app-a" data-to="reconcile" data-kind="flow" data-step="2" data-steps="2"><path id="mini-repeated-work-mini-2-path-a-check" d="M500 117 H575 V195 H650" fill="none" stroke="var(--ink, #000000)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#mini-repeated-work-mini-2-ink-arrow)"></path></g><g class="m-edge m-stage" data-edge="b-check" data-from="app-b" data-to="reconcile" data-kind="flow" data-step="2" data-steps="2"><path id="mini-repeated-work-mini-2-path-b-check" d="M500 297 H605 V235 H650" fill="none" stroke="var(--ink, #000000)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#mini-repeated-work-mini-2-ink-arrow)"></path></g><g class="m-edge m-stage" data-edge="check-review" data-from="reconcile" data-to="rework" data-kind="flow" data-step="3" data-steps="3"><path id="mini-repeated-work-mini-2-path-check-review" d="M860 215 H940" fill="none" stroke="var(--ink, #000000)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#mini-repeated-work-mini-2-ink-arrow)"></path></g><g class="m-edge m-stage" data-edge="next-task" data-from="rework" data-to="sources" data-kind="return" data-step="4" data-steps="4"><path id="mini-repeated-work-mini-2-path-next-task" d="M1045 260 V365 H120 V260" fill="none" stroke="var(--red, #EE001E)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="7 4" marker-end="url(#mini-repeated-work-mini-2-red-arrow)"></path><rect x="637.4449999999999" y="345" width="145.11000000000004" height="20" rx="3" fill="var(--paper, #FFFFFF)"></rect><text x="710" y="359" font-family="Arial, sans-serif" font-size="13.5" font-weight="700" fill="var(--red, #EE001E)" text-anchor="middle" data-line-kind="edge-label">Next task or change</text></g><g class="m-node m-stage mini-role-store" data-node="sources" data-role="store" data-step="0" data-steps="0"><rect x="20" y="170" width="200" height="90" rx="11" fill="var(--paper, #FFFFFF)" stroke="var(--ink, #000000)" stroke-width="1.5"></rect><g transform="translate(32 181)" fill="none" stroke="var(--ink, #000000)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="10" cy="4" rx="8" ry="3"></ellipse><path d="M2 4 V16 A8 3 0 0 0 18 16 V4 M2 10 A8 3 0 0 0 18 10"></path></g><text x="62" y="194" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="var(--ink, #000000)" text-anchor="start" data-line-kind="title" data-text-width="142">Existing sources</text><text x="36" y="215" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="168">Definitions + formulas</text><text x="36" y="233" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="168">Documents + evidence</text></g><g class="m-node m-stage mini-role-consumer" data-node="app-a" data-role="consumer" data-step="1" data-steps="1"><rect x="300" y="72" width="200" height="90" rx="11" fill="var(--paper, #FFFFFF)" stroke="var(--ink, #000000)" stroke-width="1.5"></rect><g transform="translate(312 83)" fill="none" stroke="var(--ink, #000000)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 2 H19 V15 H1 Z M6 19 H14 M10 15 V19 M5 6 H15 M5 10 H12"></path></g><text x="342" y="96" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="var(--ink, #000000)" text-anchor="start" data-line-kind="title" data-text-width="142">Analytics task</text><text x="316" y="117" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="168">Prepare local context</text><text x="316" y="135" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="168">Check source meaning</text></g><g class="m-node m-stage mini-role-consumer" data-node="app-b" data-role="consumer" data-step="1" data-steps="1"><rect x="300" y="252" width="200" height="90" rx="11" fill="var(--paper, #FFFFFF)" stroke="var(--ink, #000000)" stroke-width="1.5"></rect><g transform="translate(312 263)" fill="none" stroke="var(--ink, #000000)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 2 H19 V15 H1 Z M6 19 H14 M10 15 V19 M5 6 H15 M5 10 H12"></path></g><text x="342" y="276" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="var(--ink, #000000)" text-anchor="start" data-line-kind="title" data-text-width="142">Assistant task</text><text x="316" y="297" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="168">Prepare local context</text><text x="316" y="315" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="168">Check source meaning</text></g><g class="m-node m-stage mini-role-gate" data-node="reconcile" data-role="gate" data-step="2" data-steps="2"><rect x="650" y="170" width="210" height="90" rx="11" fill="var(--paper, #FFFFFF)" stroke="var(--ink, #000000)" stroke-width="2"></rect><g transform="translate(662 181)" fill="none" stroke="var(--ink, #000000)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 1 L19 10 L10 19 L1 10 Z M6 10 L9 13 L14 7"></path></g><text x="692" y="194" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="var(--ink, #000000)" text-anchor="start" data-line-kind="title" data-text-width="152">Reconcile copies</text><text x="666" y="215" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="178">Version + conditions</text><text x="666" y="233" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="178">Access + exceptions</text></g><g class="m-node m-stage mini-role-gate" data-node="rework" data-role="gate" data-step="3" data-steps="3"><rect x="940" y="170" width="210" height="90" rx="11" fill="var(--paper, #FFFFFF)" stroke="var(--ink, #000000)" stroke-width="2"></rect><g transform="translate(952 181)" fill="none" stroke="var(--ink, #000000)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 1 L19 10 L10 19 L1 10 Z M6 10 L9 13 L14 7"></path></g><text x="982" y="194" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="var(--ink, #000000)" text-anchor="start" data-line-kind="title" data-text-width="152">Review again</text><text x="956" y="215" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="178">Check the answer</text><text x="956" y="233" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="178">Record time + rework</text></g><g class="mini-architecture-legend" aria-hidden="true"><path d="M18 383 H45" fill="none" stroke="var(--ink, #000000)" stroke-width="1.6" marker-end="url(#mini-repeated-work-mini-2-ink-arrow)"></path><text x="56" y="387" font-family="Arial, sans-serif" font-size="13" font-weight="400" fill="var(--ink, #000000)" text-anchor="start">Flow</text><path d="M259.6 383 H286.6" fill="none" stroke="var(--red, #EE001E)" stroke-width="1.6" stroke-dasharray="6 3" marker-end="url(#mini-repeated-work-mini-2-red-arrow)"></path><text x="297.6" y="387" font-family="Arial, sans-serif" font-size="13" font-weight="400" fill="var(--ink, #000000)" text-anchor="start">Revision / return</text><path d="M554.6 383 H581.6" fill="none" stroke="#737373" stroke-width="1.6" stroke-dasharray="4 4"></path><text x="592.6" y="387" font-family="Arial, sans-serif" font-size="13" font-weight="400" fill="var(--ink, #000000)" text-anchor="start">Reference only</text><path d="M873.2 383 H900.2" fill="none" stroke="var(--red, #EE001E)" stroke-width="1.6" marker-end="url(#mini-repeated-work-mini-2-red-arrow)"></path><text x="911.2" y="387" font-family="Arial, sans-serif" font-size="13" font-weight="400" fill="var(--ink, #000000)" text-anchor="start">Blocked</text></g></svg></div><p class="diagram-scroll-hint">Swipe the diagram to follow the workflow. Focus it and use arrow keys to scroll.</p><figcaption class="static-diagram-caption">Static diagram. Follow the arrows and read all stages.</figcaption></figure><p class="provenance">Proposal · not from the reference slides</p><div class="pitch-signals" aria-label="Leadership takeaways"><article class="pitch-signal"><h3>Cost to measure</h3><p>Time spent finding, explaining and reviewing the same context.</p></article><article class="pitch-signal"><h3>Risk to test</h3><p>Different versions or missing conditions can change an answer.</p></article><article class="pitch-signal"><h3>Opportunity</h3><p>Reuse approved meaning while checking each new use.</p></article></div><details open class="dev presenter-detail"><summary>Presenter detail</summary><div class="items"><article class="item"><h3>Preparation</h3><p>People connect existing metric definitions to evidence, exceptions and ownership.</p></article><article class="item"><h3>Reconciliation</h3><p>People resolve conflicting versions and missing conditions.</p></article><article class="item"><h3>Review and rework</h3><p>People check unsupported or unsuitable outputs.</p></article><article class="item"><h3>Change management</h3><p>Teams reconnect context when models or tools change.</p></article></div></details></div><p class="slide-note">These are problem hypotheses. Establish their frequency and cost in the selected workflow.</p></section>
 <section class="slide type-product-flow has-mini-architecture has-pitch-signals" id="static-product-overview"><p class="eyebrow">Leadership · what you would buy</p><h2>One governed path. Many ways to use the output.</h2><p class="lead">People approve the meaning. The agent organizes approved records. The delivery service checks each request.</p><div class="mini-focus-visual pitch-mechanism"><figure class="mechanism-figure"><div class="diagram-viewport architecture-viewport" tabindex="0" role="region" aria-label="Full architecture workflow diagram. Scroll horizontally on a small screen."><svg viewBox="0 0 1180 390" role="img" width="100%" aria-labelledby="mini-service-workflow-mini-3-title mini-service-workflow-mini-3-desc" preserveAspectRatio="xMidYMid meet" class="motion-diagram mini-architecture-svg" data-mini-architecture="service-workflow-mini" data-architecture-anchors="submissions,preparation,human-review,context-agent,canonical-registry,data-layer,metric-layer,ontology-layer,interpretation-layer,mcp-delivery,consumers"><title id="mini-service-workflow-mini-3-title">The context product has a complete admission and delivery path</title><desc id="mini-service-workflow-mini-3-desc">Submissions enter review before the agent publishes linked context. Rejected records return for revision. Consumers remain independent. PRODUCT BOUNDARY · FROM A SUBMISSION TO A PERMITTED OUTPUT: A canonical ID identifies context. It grants no access. Changed meaning always returns to review. Stage 1, Prepare a structured submission: A person or agent loop submits a template with evidence. STE-inspired writing clarifies the record while preserving meaning. Stage 2, Review the exact version: The reviewer checks evidence, scope and conditions. A rejected record returns with a reason. Stage 3, Organize approved context: The context agent places approved records into Data, Metric, Ontology and Interpretation layers. Stable IDs link them. Stage 4, Check the delivery request: The MCP service checks caller identity, permissions, version and validity before returning a bounded context package. Stage 5, Let the application consume it: The application uses permitted parameters and references. Native services execute queries under their own permissions. Stage 6, Return new meaning to review: Feedback and derived interpretations enter a new submission. They do not become approved memory automatically. Submit + prepare, input: One review template. Evidence attached. Human review, gate: Meaning + conditions. Exact version approval. Agent + layers, agent: Data, Metric, Ontology. Interpretation. MCP delivery, policy: Identity + permissions. Version + validity. Consumer apps, consumer: Values + references. Native query execution. Revise record, stop: Reviewer reason. Resubmit for approval. New submission, input: Feedback + new meaning. A new draft version. Solid arrows show flow. Dashed red arrows show revision or return. Dashed gray lines show references, not workflow. Red arrows show a blocked path. This is an architecture proposal.</desc><defs ><marker id="mini-service-workflow-mini-3-ink-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto" markerUnits="strokeWidth"><path d="M1 1 L9 5 L1 9 Z" fill="var(--ink, #000000)"></path></marker><marker id="mini-service-workflow-mini-3-red-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto" markerUnits="strokeWidth"><path d="M1 1 L9 5 L1 9 Z" fill="var(--red, #EE001E)"></path></marker></defs><g class="mini-policy-boundary" data-boundary="external-policy"><rect x="8" y="1" width="1164" height="44" rx="8" fill="var(--mist, #F6F6F6)" stroke="var(--ink, #000000)" stroke-width="1"></rect><g transform="translate(19 11)" fill="none" stroke="var(--ink, #000000)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 1 L18 4 V10 Q18 16 10 20 Q2 16 2 10 V4 Z M7 9 V7 A3 3 0 0 1 13 7 V9 M6 9 H14 V15 H6 Z"></path></g><text x="50" y="18" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="var(--ink, #000000)" text-anchor="start">PRODUCT BOUNDARY · FROM A SUBMISSION TO A PERMITTED OUTPUT</text><text x="50" y="36" font-family="Arial, sans-serif" font-size="13.5" font-weight="400" fill="var(--ink, #000000)" text-anchor="start">A canonical ID identifies context. It grants no access. Changed meaning always returns to review.</text></g><g class="stage-meta" data-step="0" data-stage="Prepare a structured submission" data-stage-detail="A person or agent loop submits a template with evidence. STE-inspired writing clarifies the record while preserving meaning." aria-hidden="true"></g><g class="stage-meta" data-step="1" data-stage="Review the exact version" data-stage-detail="The reviewer checks evidence, scope and conditions. A rejected record returns with a reason." aria-hidden="true"></g><g class="stage-meta" data-step="2" data-stage="Organize approved context" data-stage-detail="The context agent places approved records into Data, Metric, Ontology and Interpretation layers. Stable IDs link them." aria-hidden="true"></g><g class="stage-meta" data-step="3" data-stage="Check the delivery request" data-stage-detail="The MCP service checks caller identity, permissions, version and validity before returning a bounded context package." aria-hidden="true"></g><g class="stage-meta" data-step="4" data-stage="Let the application consume it" data-stage-detail="The application uses permitted parameters and references. Native services execute queries under their own permissions." aria-hidden="true"></g><g class="stage-meta" data-step="5" data-stage="Return new meaning to review" data-stage-detail="Feedback and derived interpretations enter a new submission. They do not become approved memory automatically." aria-hidden="true"></g><g class="m-edge m-stage" data-edge="intake-review" data-from="intake" data-to="review" data-kind="flow" data-step="1" data-steps="1"><path id="mini-service-workflow-mini-3-path-intake-review" d="M220 130 H250" fill="none" stroke="var(--ink, #000000)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#mini-service-workflow-mini-3-ink-arrow)"></path></g><g class="m-edge m-stage" data-edge="review-layers" data-from="review" data-to="layers" data-kind="flow" data-step="2" data-steps="2"><path id="mini-service-workflow-mini-3-path-review-layers" d="M450 130 H480" fill="none" stroke="var(--ink, #000000)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#mini-service-workflow-mini-3-ink-arrow)"></path></g><g class="m-edge m-stage" data-edge="layers-delivery" data-from="layers" data-to="delivery" data-kind="flow" data-step="3" data-steps="3"><path id="mini-service-workflow-mini-3-path-layers-delivery" d="M680 130 H710" fill="none" stroke="var(--ink, #000000)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#mini-service-workflow-mini-3-ink-arrow)"></path></g><g class="m-edge m-stage" data-edge="delivery-consume" data-from="delivery" data-to="consume" data-kind="flow" data-step="4" data-steps="4"><path id="mini-service-workflow-mini-3-path-delivery-consume" d="M910 130 H940" fill="none" stroke="var(--ink, #000000)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#mini-service-workflow-mini-3-ink-arrow)"></path></g><g class="m-edge m-stage" data-edge="review-revise" data-from="review" data-to="revise" data-kind="deny" data-step="1" data-steps="1"><path id="mini-service-workflow-mini-3-path-review-revise" d="M350 180 V245" fill="none" stroke="var(--red, #EE001E)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#mini-service-workflow-mini-3-red-arrow)"></path></g><g class="m-edge m-stage" data-edge="revise-intake" data-from="revise" data-to="intake" data-kind="return" data-step="1" data-steps="1,5"><path id="mini-service-workflow-mini-3-path-revise-intake" d="M250 290 H120 V180" fill="none" stroke="var(--red, #EE001E)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="7 4" marker-end="url(#mini-service-workflow-mini-3-red-arrow)"></path></g><g class="m-edge m-stage" data-edge="consume-feedback" data-from="consume" data-to="feedback" data-kind="flow" data-step="5" data-steps="5"><path id="mini-service-workflow-mini-3-path-consume-feedback" d="M1040 180 V290 H910" fill="none" stroke="var(--ink, #000000)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#mini-service-workflow-mini-3-ink-arrow)"></path></g><g class="m-edge m-stage" data-edge="feedback-review" data-from="feedback" data-to="review" data-kind="return" data-step="5" data-steps="5"><path id="mini-service-workflow-mini-3-path-feedback-review" d="M710 290 H580 V212 H395 V180" fill="none" stroke="var(--red, #EE001E)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="7 4" marker-end="url(#mini-service-workflow-mini-3-red-arrow)"></path></g><g class="m-node m-stage mini-role-input" data-node="intake" data-role="input" data-step="0" data-steps="0"><rect x="20" y="80" width="200" height="100" rx="11" fill="var(--paper, #FFFFFF)" stroke="var(--ink, #000000)" stroke-width="1.5"></rect><g transform="translate(32 91)" fill="none" stroke="var(--ink, #000000)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 1 H12 L17 6 V19 H3 Z M12 1 V6 H17 M6 10 H14 M6 14 H14"></path></g><text x="62" y="104" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="var(--ink, #000000)" text-anchor="start" data-line-kind="title" data-text-width="142">Submit + prepare</text><text x="36" y="125" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="168">One review template</text><text x="36" y="143" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="168">Evidence attached</text></g><g class="m-node m-stage mini-role-gate" data-node="review" data-role="gate" data-step="1" data-steps="1"><rect x="250" y="80" width="200" height="100" rx="11" fill="var(--paper, #FFFFFF)" stroke="var(--ink, #000000)" stroke-width="2"></rect><g transform="translate(262 91)" fill="none" stroke="var(--ink, #000000)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 1 L19 10 L10 19 L1 10 Z M6 10 L9 13 L14 7"></path></g><text x="292" y="104" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="var(--ink, #000000)" text-anchor="start" data-line-kind="title" data-text-width="142">Human review</text><text x="266" y="125" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="168">Meaning + conditions</text><text x="266" y="143" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="168">Exact version approval</text></g><g class="m-node m-stage mini-role-agent" data-node="layers" data-role="agent" data-step="2" data-steps="2"><rect x="480" y="80" width="200" height="100" rx="11" fill="var(--ink, #000000)" stroke="var(--ink, #000000)" stroke-width="1.5"></rect><g transform="translate(492 91)" fill="none" stroke="var(--paper, #FFFFFF)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 10 H6 M6 10 V4 H16 M6 10 H16 M6 10 V16 H16 M13 1 L16 4 L13 7 M13 7 L16 10 L13 13 M13 13 L16 16 L13 19"></path></g><text x="522" y="104" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="var(--paper, #FFFFFF)" text-anchor="start" data-line-kind="title" data-text-width="142">Agent + layers</text><text x="496" y="125" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#E7E7E7" text-anchor="start" data-line-kind="body" data-text-width="168">Data, Metric, Ontology</text><text x="496" y="143" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#E7E7E7" text-anchor="start" data-line-kind="body" data-text-width="168">Interpretation</text></g><g class="m-node m-stage mini-role-policy" data-node="delivery" data-role="policy" data-step="3" data-steps="3"><rect x="710" y="80" width="200" height="100" rx="11" fill="var(--mist, #F6F6F6)" stroke="var(--ink, #000000)" stroke-width="1.5"></rect><g transform="translate(722 91)" fill="none" stroke="var(--ink, #000000)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 1 L18 4 V10 Q18 16 10 20 Q2 16 2 10 V4 Z M7 9 V7 A3 3 0 0 1 13 7 V9 M6 9 H14 V15 H6 Z"></path></g><text x="752" y="104" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="var(--ink, #000000)" text-anchor="start" data-line-kind="title" data-text-width="142">MCP delivery</text><text x="726" y="125" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="168">Identity + permissions</text><text x="726" y="143" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="168">Version + validity</text></g><g class="m-node m-stage mini-role-consumer" data-node="consume" data-role="consumer" data-step="4" data-steps="4"><rect x="940" y="80" width="200" height="100" rx="11" fill="var(--paper, #FFFFFF)" stroke="var(--ink, #000000)" stroke-width="1.5"></rect><g transform="translate(952 91)" fill="none" stroke="var(--ink, #000000)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 2 H19 V15 H1 Z M6 19 H14 M10 15 V19 M5 6 H15 M5 10 H12"></path></g><text x="982" y="104" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="var(--ink, #000000)" text-anchor="start" data-line-kind="title" data-text-width="142">Consumer apps</text><text x="956" y="125" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="168">Values + references</text><text x="956" y="143" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="168">Native query execution</text></g><g class="m-node m-stage mini-role-stop" data-node="revise" data-role="stop" data-step="1" data-steps="1,5"><rect x="250" y="245" width="200" height="90" rx="11" fill="#FFF0F2" stroke="var(--red, #EE001E)" stroke-width="1.5"></rect><g transform="translate(262 256)" fill="none" stroke="var(--red, #EE001E)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="9"></circle><path d="M6 6 L14 14 M14 6 L6 14"></path></g><text x="292" y="269" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="var(--red, #EE001E)" text-anchor="start" data-line-kind="title" data-text-width="142">Revise record</text><text x="266" y="290" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="168">Reviewer reason</text><text x="266" y="308" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="168">Resubmit for approval</text></g><g class="m-node m-stage mini-role-input" data-node="feedback" data-role="input" data-step="5" data-steps="5"><rect x="710" y="245" width="200" height="90" rx="11" fill="var(--paper, #FFFFFF)" stroke="var(--ink, #000000)" stroke-width="1.5"></rect><g transform="translate(722 256)" fill="none" stroke="var(--ink, #000000)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 1 H12 L17 6 V19 H3 Z M12 1 V6 H17 M6 10 H14 M6 14 H14"></path></g><text x="752" y="269" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="var(--ink, #000000)" text-anchor="start" data-line-kind="title" data-text-width="142">New submission</text><text x="726" y="290" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="168">Feedback + new meaning</text><text x="726" y="308" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="168">A new draft version</text></g><g class="mini-architecture-legend" aria-hidden="true"><path d="M18 373 H45" fill="none" stroke="var(--ink, #000000)" stroke-width="1.6" marker-end="url(#mini-service-workflow-mini-3-ink-arrow)"></path><text x="56" y="377" font-family="Arial, sans-serif" font-size="13" font-weight="400" fill="var(--ink, #000000)" text-anchor="start">Flow</text><path d="M259.6 373 H286.6" fill="none" stroke="var(--red, #EE001E)" stroke-width="1.6" stroke-dasharray="6 3" marker-end="url(#mini-service-workflow-mini-3-red-arrow)"></path><text x="297.6" y="377" font-family="Arial, sans-serif" font-size="13" font-weight="400" fill="var(--ink, #000000)" text-anchor="start">Revision / return</text><path d="M554.6 373 H581.6" fill="none" stroke="#737373" stroke-width="1.6" stroke-dasharray="4 4"></path><text x="592.6" y="377" font-family="Arial, sans-serif" font-size="13" font-weight="400" fill="var(--ink, #000000)" text-anchor="start">Reference only</text><path d="M873.2 373 H900.2" fill="none" stroke="var(--red, #EE001E)" stroke-width="1.6" marker-end="url(#mini-service-workflow-mini-3-red-arrow)"></path><text x="911.2" y="377" font-family="Arial, sans-serif" font-size="13" font-weight="400" fill="var(--ink, #000000)" text-anchor="start">Blocked</text></g></svg></div><p class="diagram-scroll-hint">Swipe the diagram to follow the workflow. Focus it and use arrow keys to scroll.</p><figcaption class="static-diagram-caption">Static diagram. Follow the arrows and read all stages.</figcaption></figure><p class="provenance">Proposal · not from the reference slides</p><div class="pitch-signals" aria-label="Leadership takeaways"><article class="pitch-signal"><h3>A reusable record</h3><p>A canonical ID, approved version, source evidence and owner.</p></article><article class="pitch-signal"><h3>A clear boundary</h3><p>The agent proposes changes. A reviewer approves new meaning.</p></article><article class="pitch-signal"><h3>A usable output</h3><p>Apps receive permitted parameters and source references.</p></article></div><details open class="dev presenter-detail"><summary>Presenter detail</summary><div class="items"><article class="item"><h3>Reusable asset</h3><p>Link approved source definitions to reusable records. Preserve native query execution.</p></article><article class="item"><h3>Clear product boundary</h3><p>Your applications consume context and control their own actions.</p></article></div></details></div><p class="slide-note">Proposed workflow. Human approval and access controls must work before context reaches a consumer.</p></section>
 <section class="slide type-leadership-case has-mini-architecture has-pitch-signals" id="static-investment-case"><p class="eyebrow">Leadership · why fund this</p><h2>Fund the pilot against a clear break-even test.</h2><p class="lead">Compare the same accepted workload. Include setup, operations and human review. Release only when value and control pass.</p><div class="mini-focus-visual pitch-mechanism"><figure class="mechanism-figure"><div class="diagram-viewport architecture-viewport" tabindex="0" role="region" aria-label="Full architecture workflow diagram. Scroll horizontally on a small screen."><svg viewBox="0 0 1180 350" role="img" width="100%" aria-labelledby="mini-investment-decision-mini-4-title mini-investment-decision-mini-4-desc" preserveAspectRatio="xMidYMid meet" class="motion-diagram mini-architecture-svg" data-mini-architecture="investment-decision-mini" data-architecture-anchors="human-review,context-agent,mcp-delivery,consumers"><title id="mini-investment-decision-mini-4-title">Compare total costs before asking the owner to expand</title><desc id="mini-investment-decision-mini-4-desc">Compare the current process and proposed service on the same accepted workload. Benefits and quality must both pass. INVESTMENT DECISION · THE SAME ACCEPTED WORKLOAD: The figures below are invented assumptions. They define a hurdle, not achieved savings. Stage 1, Measure the current process: Record digital spend, human handling and fixed costs for tasks that meet the owner acceptance criteria. Stage 2, Price the proposed service: Include source adapters, setup, review, inference, queries, licenses and operating support. Count each cost once. Stage 3, Compare complete economics: Use the same accepted-task target. Include failed attempts. Compare recurring cost and the year-one setup burden. Stage 4, Require quality and access proof: Cost improvement alone is insufficient. Measure performance, source-supported accuracy and permission enforcement. Stage 5, Make the investment decision: The owner accepts the evidence and budget or holds expansion. No product saving has been measured. Current process, input: Digital + human cost. Accepted task baseline. Proposed service, input: Setup + recurring cost. Include review + rework. Compare full cost, agent: Same accepted workload. Year-one net difference. Quality + access, gate: Performance + accuracy. Permissions + evidence. Owner decision, gate: Return + quality pass. Approve bounded scope. Hold expansion, stop: Return below target. Or a material failure. Solid arrows show flow. Dashed red arrows show revision or return. Dashed gray lines show references, not workflow. Red arrows show a blocked path. This is an architecture proposal.</desc><defs ><marker id="mini-investment-decision-mini-4-ink-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto" markerUnits="strokeWidth"><path d="M1 1 L9 5 L1 9 Z" fill="var(--ink, #000000)"></path></marker><marker id="mini-investment-decision-mini-4-red-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto" markerUnits="strokeWidth"><path d="M1 1 L9 5 L1 9 Z" fill="var(--red, #EE001E)"></path></marker></defs><g class="mini-policy-boundary" data-boundary="external-policy"><rect x="8" y="1" width="1164" height="44" rx="8" fill="var(--mist, #F6F6F6)" stroke="var(--ink, #000000)" stroke-width="1"></rect><g transform="translate(19 11)" fill="none" stroke="var(--ink, #000000)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 1 L18 4 V10 Q18 16 10 20 Q2 16 2 10 V4 Z M7 9 V7 A3 3 0 0 1 13 7 V9 M6 9 H14 V15 H6 Z"></path></g><text x="50" y="18" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="var(--ink, #000000)" text-anchor="start">INVESTMENT DECISION · THE SAME ACCEPTED WORKLOAD</text><text x="50" y="36" font-family="Arial, sans-serif" font-size="13.5" font-weight="400" fill="var(--ink, #000000)" text-anchor="start">The figures below are invented assumptions. They define a hurdle, not achieved savings.</text></g><g class="stage-meta" data-step="0" data-stage="Measure the current process" data-stage-detail="Record digital spend, human handling and fixed costs for tasks that meet the owner acceptance criteria." aria-hidden="true"></g><g class="stage-meta" data-step="1" data-stage="Price the proposed service" data-stage-detail="Include source adapters, setup, review, inference, queries, licenses and operating support. Count each cost once." aria-hidden="true"></g><g class="stage-meta" data-step="2" data-stage="Compare complete economics" data-stage-detail="Use the same accepted-task target. Include failed attempts. Compare recurring cost and the year-one setup burden." aria-hidden="true"></g><g class="stage-meta" data-step="3" data-stage="Require quality and access proof" data-stage-detail="Cost improvement alone is insufficient. Measure performance, source-supported accuracy and permission enforcement." aria-hidden="true"></g><g class="stage-meta" data-step="4" data-stage="Make the investment decision" data-stage-detail="The owner accepts the evidence and budget or holds expansion. No product saving has been measured." aria-hidden="true"></g><g class="m-edge m-stage" data-edge="baseline-compare" data-from="baseline" data-to="compare" data-kind="flow" data-step="2" data-steps="2"><path id="mini-investment-decision-mini-4-path-baseline-compare" d="M240 117 H280 V172 H330" fill="none" stroke="var(--ink, #000000)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#mini-investment-decision-mini-4-ink-arrow)"></path></g><g class="m-edge m-stage" data-edge="candidate-compare" data-from="candidate" data-to="compare" data-kind="flow" data-step="2" data-steps="2"><path id="mini-investment-decision-mini-4-path-candidate-compare" d="M240 260 H300 V222 H330" fill="none" stroke="var(--ink, #000000)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#mini-investment-decision-mini-4-ink-arrow)"></path></g><g class="m-edge m-stage" data-edge="compare-quality" data-from="compare" data-to="quality" data-kind="flow" data-step="3" data-steps="3"><path id="mini-investment-decision-mini-4-path-compare-quality" d="M560 170 H600 V117 H650" fill="none" stroke="var(--ink, #000000)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#mini-investment-decision-mini-4-ink-arrow)"></path></g><g class="m-edge m-stage" data-edge="quality-decision" data-from="quality" data-to="decision" data-kind="flow" data-step="4" data-steps="4"><path id="mini-investment-decision-mini-4-path-quality-decision" d="M880 117 H910 V170 H940" fill="none" stroke="var(--ink, #000000)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#mini-investment-decision-mini-4-ink-arrow)"></path></g><g class="m-edge m-stage" data-edge="compare-hold" data-from="compare" data-to="hold" data-kind="deny" data-step="2" data-steps="2"><path id="mini-investment-decision-mini-4-path-compare-hold" d="M560 222 H600 V260 H650" fill="none" stroke="var(--red, #EE001E)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#mini-investment-decision-mini-4-red-arrow)"></path></g><g class="m-edge m-stage" data-edge="quality-hold" data-from="quality" data-to="hold" data-kind="deny" data-step="3" data-steps="3"><path id="mini-investment-decision-mini-4-path-quality-hold" d="M765 162 V215" fill="none" stroke="var(--red, #EE001E)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#mini-investment-decision-mini-4-red-arrow)"></path></g><g class="m-edge m-stage" data-edge="decision-hold" data-from="decision" data-to="hold" data-kind="deny" data-step="4" data-steps="4"><path id="mini-investment-decision-mini-4-path-decision-hold" d="M1050 245 V320 H765 V305" fill="none" stroke="var(--red, #EE001E)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#mini-investment-decision-mini-4-red-arrow)"></path></g><g class="m-node m-stage mini-role-input" data-node="baseline" data-role="input" data-step="0" data-steps="0"><rect x="20" y="72" width="220" height="90" rx="11" fill="var(--paper, #FFFFFF)" stroke="var(--ink, #000000)" stroke-width="1.5"></rect><g transform="translate(32 83)" fill="none" stroke="var(--ink, #000000)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 1 H12 L17 6 V19 H3 Z M12 1 V6 H17 M6 10 H14 M6 14 H14"></path></g><text x="62" y="96" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="var(--ink, #000000)" text-anchor="start" data-line-kind="title" data-text-width="162">Current process</text><text x="36" y="117" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="188">Digital + human cost</text><text x="36" y="135" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="188">Accepted task baseline</text></g><g class="m-node m-stage mini-role-input" data-node="candidate" data-role="input" data-step="1" data-steps="1"><rect x="20" y="215" width="220" height="90" rx="11" fill="var(--paper, #FFFFFF)" stroke="var(--ink, #000000)" stroke-width="1.5"></rect><g transform="translate(32 226)" fill="none" stroke="var(--ink, #000000)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 1 H12 L17 6 V19 H3 Z M12 1 V6 H17 M6 10 H14 M6 14 H14"></path></g><text x="62" y="239" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="var(--ink, #000000)" text-anchor="start" data-line-kind="title" data-text-width="162">Proposed service</text><text x="36" y="260" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="188">Setup + recurring cost</text><text x="36" y="278" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="188">Include review + rework</text></g><g class="m-node m-stage mini-role-agent" data-node="compare" data-role="agent" data-step="2" data-steps="2"><rect x="330" y="145" width="230" height="100" rx="11" fill="var(--ink, #000000)" stroke="var(--ink, #000000)" stroke-width="1.5"></rect><g transform="translate(342 156)" fill="none" stroke="var(--paper, #FFFFFF)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 10 H6 M6 10 V4 H16 M6 10 H16 M6 10 V16 H16 M13 1 L16 4 L13 7 M13 7 L16 10 L13 13 M13 13 L16 16 L13 19"></path></g><text x="372" y="169" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="var(--paper, #FFFFFF)" text-anchor="start" data-line-kind="title" data-text-width="172">Compare full cost</text><text x="346" y="190" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#E7E7E7" text-anchor="start" data-line-kind="body" data-text-width="198">Same accepted workload</text><text x="346" y="208" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#E7E7E7" text-anchor="start" data-line-kind="body" data-text-width="198">Year-one net difference</text></g><g class="m-node m-stage mini-role-gate" data-node="quality" data-role="gate" data-step="3" data-steps="3"><rect x="650" y="72" width="230" height="90" rx="11" fill="var(--paper, #FFFFFF)" stroke="var(--ink, #000000)" stroke-width="2"></rect><g transform="translate(662 83)" fill="none" stroke="var(--ink, #000000)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 1 L19 10 L10 19 L1 10 Z M6 10 L9 13 L14 7"></path></g><text x="692" y="96" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="var(--ink, #000000)" text-anchor="start" data-line-kind="title" data-text-width="172">Quality + access</text><text x="666" y="117" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="198">Performance + accuracy</text><text x="666" y="135" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="198">Permissions + evidence</text></g><g class="m-node m-stage mini-role-gate" data-node="decision" data-role="gate" data-step="4" data-steps="4"><rect x="940" y="145" width="220" height="100" rx="11" fill="var(--paper, #FFFFFF)" stroke="var(--ink, #000000)" stroke-width="2"></rect><g transform="translate(952 156)" fill="none" stroke="var(--ink, #000000)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 1 L19 10 L10 19 L1 10 Z M6 10 L9 13 L14 7"></path></g><text x="982" y="169" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="var(--ink, #000000)" text-anchor="start" data-line-kind="title" data-text-width="162">Owner decision</text><text x="956" y="190" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="188">Return + quality pass</text><text x="956" y="208" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="188">Approve bounded scope</text></g><g class="m-node m-stage mini-role-stop" data-node="hold" data-role="stop" data-step="2" data-steps="2,3,4"><rect x="650" y="215" width="230" height="90" rx="11" fill="#FFF0F2" stroke="var(--red, #EE001E)" stroke-width="1.5"></rect><g transform="translate(662 226)" fill="none" stroke="var(--red, #EE001E)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="9"></circle><path d="M6 6 L14 14 M14 6 L6 14"></path></g><text x="692" y="239" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="var(--red, #EE001E)" text-anchor="start" data-line-kind="title" data-text-width="172">Hold expansion</text><text x="666" y="260" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="198">Return below target</text><text x="666" y="278" font-family="Arial, sans-serif" font-size="14.5" font-weight="400" fill="#444444" text-anchor="start" data-line-kind="body" data-text-width="198">Or a material failure</text></g><g class="mini-architecture-legend" aria-hidden="true"><path d="M18 333 H45" fill="none" stroke="var(--ink, #000000)" stroke-width="1.6" marker-end="url(#mini-investment-decision-mini-4-ink-arrow)"></path><text x="56" y="337" font-family="Arial, sans-serif" font-size="13" font-weight="400" fill="var(--ink, #000000)" text-anchor="start">Flow</text><path d="M259.6 333 H286.6" fill="none" stroke="var(--red, #EE001E)" stroke-width="1.6" stroke-dasharray="6 3" marker-end="url(#mini-investment-decision-mini-4-red-arrow)"></path><text x="297.6" y="337" font-family="Arial, sans-serif" font-size="13" font-weight="400" fill="var(--ink, #000000)" text-anchor="start">Revision / return</text><path d="M554.6 333 H581.6" fill="none" stroke="#737373" stroke-width="1.6" stroke-dasharray="4 4"></path><text x="592.6" y="337" font-family="Arial, sans-serif" font-size="13" font-weight="400" fill="var(--ink, #000000)" text-anchor="start">Reference only</text><path d="M873.2 333 H900.2" fill="none" stroke="var(--red, #EE001E)" stroke-width="1.6" marker-end="url(#mini-investment-decision-mini-4-red-arrow)"></path><text x="911.2" y="337" font-family="Arial, sans-serif" font-size="13" font-weight="400" fill="var(--ink, #000000)" text-anchor="start">Blocked</text></g></svg></div><p class="diagram-scroll-hint">Swipe the diagram to follow the workflow. Focus it and use arrow keys to scroll.</p><figcaption class="static-diagram-caption">Static diagram. Follow the arrows and read all stages.</figcaption></figure><p class="provenance">Proposal · not from the reference slides</p><div class="leadership-case leadership-case-compact"><div class="investment-hurdle"><span class="design-label">ILLUSTRATIVE BREAK-EVEN REQUIREMENT · USD</span><strong class="hurdle-amount" data-hurdle="perAttempt" data-value="1.1333333333333333">$1.13</strong><p class="hurdle-unit">required benefit per attempt in year one</p><p class="hurdle-assumptions">1,000 accepted tasks/month · 80% accepted attempts · $1,000 monthly overhead · $5,000 setup over 12 months</p><div class="hurdle-support"><span data-hurdle="attempts" data-value="1250">1,250 attempts per month</span><span data-hurdle="monthlyRequired" data-value="1416.6666666666667">$1,416.67 required benefit per month</span><span data-hurdle="handlingMinutes" data-value="1.1333333333333333">1.13 handling minutes per attempt at $60/hour</span></div><p class="hurdle-definition">Benefit may come from lower operating cost or separately evidenced business value. Avoid counting the same benefit twice.</p></div></div><div class="pitch-signals" aria-label="Leadership takeaways"><article class="pitch-signal"><h3>Cost + performance</h3><p>Full cost per accepted task. Complete delivery time at agreed load.</p></article><article class="pitch-signal"><h3>Accuracy + trust</h3><p>Source-supported answers. Enforced access with audit evidence.</p></article><article class="pitch-signal"><h3>The funding rule</h3><p>Meet the agreed return and quality gates before expansion.</p></article></div><details open class="dev presenter-detail"><summary>Presenter detail</summary><div class="items"><article class="item"><h3>Cost</h3><p>Compare full cost per accepted task.</p></article><article class="item"><h3>Performance</h3><p>Measure complete delivery time and tail latency.</p></article><article class="item"><h3>Accuracy</h3><p>Review source support and preserved meaning.</p></article><article class="item"><h3>Trust</h3><p>Prove access boundaries and audit readback.</p></article></div></details></div><p class="slide-note">Illustrative hurdle, not a price quote or forecast. The pilot must establish whether the required benefit is achievable.</p></section>
@@ -380,10 +752,35 @@ IDs identify records. IDs grant no access.</pre><div><div class="item"><h3>Illus
   let raf = null;
   let frames = 0;
   let canvasContext;
+  let suspended = false;
+  let depthRequested = true;
+  let viewTransition = null;
+  const listeners = new Set();
+  const depthMedia = global.matchMedia?.('(min-width: 1101px)');
+  const depthAvailable = () => !depthMedia || depthMedia.matches;
+  const state = () => ({ paused, reduced, suspended, depthRequested,
+    depthAvailable: depthAvailable(), stopped: paused || reduced || suspended || Boolean(doc?.hidden),
+    depth: depthRequested && depthAvailable() && !paused && !reduced && !suspended });
+
+  function notifyState() {
+    const value = state();
+    doc?.body?.classList.toggle('motion-paused', value.stopped);
+    doc?.body?.classList.toggle('motion-reduced', reduced);
+    if (doc?.body) doc.body.dataset.depth = value.depth ? 'on' : 'off';
+    if (value.stopped) viewTransition?.skipTransition();
+    listeners.forEach(listener => listener(value));
+  }
+
+  function subscribe(listener) {
+    listeners.add(listener);
+    listener(state());
+    return () => listeners.delete(listener);
+  }
 
   const connected = item => item.element.isConnected !== false;
   const eligible = item => !item.disposed && !item.done && item.allowed
-    && item.visible && connected(item) && !paused && !reduced && !doc?.hidden;
+    && item.visible && connected(item) && !paused && !reduced && !suspended && !doc?.hidden
+    && (item.kind !== 'depth' || state().depth);
 
   function stop() {
     if (raf !== null && typeof global.cancelAnimationFrame === "function") {
@@ -396,8 +793,9 @@ IDs identify records. IDs grant no access.</pre><div><div class="item"><h3>Illus
   function reconcile() {
     let active = false;
     items.forEach(item => {
-      if(item.element.dataset) item.element.dataset.playing=String(eligible(item));
-      if (eligible(item)) active = true;
+      const playing = eligible(item);
+      if(item.element.dataset && item.element.dataset.playing !== String(playing)) item.element.dataset.playing=String(playing);
+      if (playing && (item.continuous || item.dirty)) active = true;
       else item.last = null;
     });
     if (!active) stop();
@@ -409,8 +807,12 @@ IDs identify records. IDs grant no access.</pre><div><div class="item"><h3>Illus
   function tick(now) {
     raf = null;
     frames += 1;
+    // Read layout for all dirty scenes before any frame writes visual state.
     items.forEach(item => {
-      if (!eligible(item)) {
+      if (eligible(item) && item.dirty && item.measure) item.measurement = item.measure();
+    });
+    items.forEach(item => {
+      if (!eligible(item) || (!item.continuous && !item.dirty)) {
         item.last = null;
         return;
       }
@@ -418,7 +820,8 @@ IDs identify records. IDs grant no access.</pre><div><div class="item"><h3>Illus
       item.last = now;
       item.elapsed += delta;
       try {
-        if (item.frame(item.elapsed, delta) === "done") item.done = true;
+        if (item.frame(item.elapsed, delta, item.measurement) === "done") item.done = true;
+        item.dirty = false;
       } catch (error) {
         item.done = true;
         global.console?.error("Context diagram motion stopped after a frame error.", error);
@@ -431,7 +834,7 @@ IDs identify records. IDs grant no access.</pre><div><div class="item"><h3>Illus
     ? new global.IntersectionObserver(entries => {
       entries.forEach(entry => {
         const item = byElement.get(entry.target);
-        if (item) item.visible = entry.isIntersecting && entry.intersectionRatio >= 0.25;
+        if (item) { item.visible = entry.isIntersecting && entry.intersectionRatio >= 0.25; item.dirty = true; }
       });
       reconcile();
     }, { threshold: [0, 0.25] })
@@ -447,14 +850,14 @@ IDs identify records. IDs grant no access.</pre><div><div class="item"><h3>Illus
     });
   }
 
-  function register({ element, frame, staticFrame }) {
+  function register({ element, frame, staticFrame, measure, kind = 'flow', continuous = true }) {
     if (!element || typeof frame !== "function") {
       throw new TypeError("A motion registration needs an element and a frame function.");
     }
     const previous = byElement.get(element);
     if (previous) previous.controller.dispose();
     const item = {
-      element, frame, staticFrame, allowed: false, visible: !observer,
+      element, frame, staticFrame, measure, kind, continuous, dirty: true, allowed: false, visible: !observer,
       elapsed: 0, last: null, done: false, disposed: false, controller: null
     };
     const controller = {
@@ -463,8 +866,10 @@ IDs identify records. IDs grant no access.</pre><div><div class="item"><h3>Illus
         const allowed = Boolean(value);
         if (allowed !== item.allowed) item.last = null;
         item.allowed = allowed;
+        item.dirty = true;
         reconcile();
       },
+      invalidate() { item.dirty = true; reconcile(); },
       dispose() {
         if (item.disposed) return;
         item.disposed = true;
@@ -482,6 +887,68 @@ IDs identify records. IDs grant no access.</pre><div><div class="item"><h3>Illus
     return controller;
   }
 
+  function invalidateMeasurements() {
+    items.forEach(item => { if (item.measure) item.dirty = true; });
+    reconcile();
+  }
+
+  function setDepth(value) {
+    depthRequested = Boolean(value);
+    items.forEach(item => { if (item.kind === 'depth') { item.dirty = true; if (!state().depth) item.staticFrame?.(); } });
+    notifyState();
+    reconcile();
+  }
+
+  function setSuspended(value) {
+    if (suspended === Boolean(value)) return;
+    suspended = Boolean(value);
+    if (suspended) { stop(); drawStatic(); }
+    else invalidateMeasurements();
+    notifyState();
+    reconcile();
+  }
+
+  // Geometry is immutable between selections. Never query SVG paths each frame.
+  function samplePath(path) {
+    const length = path.getTotalLength();
+    const count = Math.max(80, Math.min(400, Math.ceil(length / 10)));
+    const points = Array.from({ length: count + 1 }, (_, i) => {
+      const point = path.getPointAtLength(length * i / count);
+      return [point.x, point.y];
+    });
+    return progress => {
+      const f = Math.max(0, Math.min(1, progress)) * count;
+      const i = Math.min(count - 1, Math.floor(f)), ratio = f - i;
+      return { x: points[i][0] + (points[i + 1][0] - points[i][0]) * ratio,
+        y: points[i][1] + (points[i + 1][1] - points[i][1]) * ratio };
+    };
+  }
+
+  function arrive(element) {
+    if (!element || state().stopped) return;
+    element.classList.add('motion-arrival');
+    element.addEventListener('animationend', () => element.classList.remove('motion-arrival'), { once: true });
+  }
+
+  function transition(update) {
+    if (state().stopped || typeof doc?.startViewTransition !== 'function') { update(); return; }
+    viewTransition?.skipTransition();
+    const pending = doc.startViewTransition(update);
+    viewTransition = pending;
+    // Skipping an overtaken animation rejects ready; the state update still runs.
+    pending.ready.catch(() => {});
+    pending.finished.catch(() => {}).finally(() => { if (viewTransition === pending) viewTransition = null; });
+  }
+
+  function bindPauseControl(button) {
+    button.addEventListener('click', () => setPaused(!paused));
+    return subscribe(value => {
+      button.disabled = value.reduced;
+      button.setAttribute('aria-pressed', String(value.stopped));
+      button.textContent = value.reduced ? 'Motion off' : value.paused ? 'Resume motion' : 'Pause motion';
+    });
+  }
+
   function setPaused(value) {
     const next = Boolean(value);
     const changed = next !== paused;
@@ -493,6 +960,7 @@ IDs identify records. IDs grant no access.</pre><div><div class="item"><h3>Illus
       if (changed) items.forEach(item => { item.done = false; });
       reconcile();
     }
+    if (changed) { invalidateMeasurements(); notifyState(); }
   }
 
   function setReduced(value) {
@@ -506,11 +974,15 @@ IDs identify records. IDs grant no access.</pre><div><div class="item"><h3>Illus
       if (changed) items.forEach(item => { item.done = false; });
       reconcile();
     }
+    if (changed) { invalidateMeasurements(); notifyState(); }
   }
 
   if (media?.addEventListener) media.addEventListener("change", event => setReduced(event.matches));
   else if (media?.addListener) media.addListener(event => setReduced(event.matches));
-  doc?.addEventListener?.("visibilitychange", reconcile);
+  doc?.addEventListener?.("visibilitychange", () => { notifyState(); reconcile(); });
+  global.addEventListener?.('scroll', invalidateMeasurements, { passive: true });
+  global.addEventListener?.('resize', invalidateMeasurements, { passive: true });
+  depthMedia?.addEventListener?.('change', () => setDepth(depthRequested));
 
   function fontOptions(options = {}) {
     const size = Number.parseFloat(options.fontSize);
@@ -590,12 +1062,15 @@ IDs identify records. IDs grant no access.</pre><div><div class="item"><h3>Illus
   }
 
   global.ContextMotion = {
-    register, setPaused, setReduced, measure, wrap, fitText,
+    register, setPaused, setReduced, setSuspended, setDepth, state, subscribe,
+    samplePath, arrive, transition, bindPauseControl, measure, wrap, fitText,
     stats() {
       return { scheduled: raf !== null, active: [...items].filter(eligible).length,
-        frames, registrations: items.size };
+        frames, registrations: items.size,
+        activeDepth: [...items].filter(item => item.kind === 'depth' && eligible(item)).length };
     }
   };
+  notifyState();
 })(typeof window === "undefined" ? globalThis : window);
 
 "use strict";
@@ -1617,6 +2092,7 @@ window.ContextDiagrams = (() => {
     markChapter(index);
     if(updateHash)history.replaceState(null,'','#'+panel.dataset.slide);
     panel.scrollIntoView({behavior:'instant',block:'start'});
+    global.ContextMotion.arrive(panel.querySelector('h1,h2'));
   }
   function initialize({panels,data,onChapter}){
     chapters=panels;chapterChanged=onChapter;
@@ -1630,10 +2106,13 @@ window.ContextDiagrams = (() => {
     const reduce=matchMedia('(prefers-reduced-motion: reduce)');
     const depthToggle=make('button','story-depth-toggle','3D view');depthToggle.type='button';
     depthToggle.setAttribute('aria-pressed','true');depthToggle.setAttribute('aria-label','Toggle three-dimensional diagram depth');
-    document.body.dataset.depth='on';document.querySelector('.tools').prepend(depthToggle);
-    depthToggle.addEventListener('click',()=>{const on=document.body.dataset.depth!=='on';document.body.dataset.depth=on?'on':'off';depthToggle.setAttribute('aria-pressed',String(on));});
-    const syncDepthPreference=()=>{depthToggle.disabled=reduce.matches;depthToggle.textContent=reduce.matches?'Flat view':'3D view';};
-    reduce.addEventListener('change',syncDepthPreference);syncDepthPreference();
+    document.querySelector('.tools').prepend(depthToggle);
+    depthToggle.addEventListener('click',()=>global.ContextMotion.setDepth(!global.ContextMotion.state().depthRequested));
+    global.ContextMotion.subscribe(state=>{
+      depthToggle.disabled=state.reduced||!state.depthAvailable;
+      depthToggle.textContent=state.depth?'3D view':'Flat view';
+      depthToggle.setAttribute('aria-pressed',String(state.depth));
+    });
     const selectInsight=(scene,card)=>{
       scene.querySelectorAll('.story-step').forEach(item=>item.classList.toggle('is-reading',item===card));
       const index=Number(card.dataset.stageIndex);
@@ -1674,12 +2153,13 @@ window.ContextDiagrams = (() => {
           guide.append(make('p','story-scroll-cue','Scroll to follow the flow · or choose a step'),focus,jumps);figure.prepend(guide);
           const viewport=figure.querySelector('.diagram-viewport'),depth=make('div','story-depth-stage');
           viewport.before(depth);depth.append(viewport);depth.setAttribute('data-depth-scene','');
-          const depthMotion=global.ContextMotion.register({element:depth,staticFrame:()=>{depth.style.setProperty('--tilt-x','0deg');depth.style.setProperty('--tilt-y','0deg');depth.style.setProperty('--lift','0px');},frame:()=>{
+          const depthMotion=global.ContextMotion.register({element:depth,kind:'depth',continuous:false,staticFrame:()=>{depth.style.setProperty('--tilt-x','0deg');depth.style.setProperty('--tilt-y','0deg');depth.style.setProperty('--lift','0px');},measure:()=>{
             const box=scene.getBoundingClientRect(),span=Math.max(1,box.height-innerHeight*.5);
-            const progress=Math.max(0,Math.min(1,(innerHeight*.3-box.top)/span));
-            depth.style.setProperty('--tilt-x',(3-progress*6).toFixed(2)+'deg');
-            depth.style.setProperty('--tilt-y',(-3+progress*6).toFixed(2)+'deg');
-            depth.style.setProperty('--lift',(12+Math.sin(progress*Math.PI)*8).toFixed(2)+'px');
+            return Math.max(0,Math.min(1,(innerHeight*.3-box.top)/span));
+          },frame:(_t,_delta,progress)=>{
+            depth.style.setProperty('--tilt-x',(2-progress*4).toFixed(2)+'deg');
+            depth.style.setProperty('--tilt-y',(-2+progress*4).toFixed(2)+'deg');
+            depth.style.setProperty('--lift',(Math.sin(progress*Math.PI)*10).toFixed(2)+'px');
           }});depthMotion.setAllowed(true);
           stages.forEach((stage,i)=>{
             const card=make('article','story-step');card.dataset.stageIndex=String(i);card.tabIndex=0;
@@ -1720,25 +2200,25 @@ const byId = id => document.getElementById(id);
 const storyMode = document.body.dataset.presentation === 'story';
 let deckData;
 let current = 0;
+let slideRequest = 0;
 let showingOverview = false;
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-let motionPaused = reducedMotion.matches;
-let motionOverride = false;
+let motionPaused = false;
 let printing = false;
 const panels = [];
 const navButtons = [];
 const mechanisms = [];
 
 function syncMotion() {
-  const paused = motionPaused || reducedMotion.matches || printing;
+  const state = window.ContextMotion.state();
+  motionPaused = state.paused;
+  const paused = state.stopped;
   document.body.classList.toggle('motion-paused', paused);
   document.querySelectorAll('[data-motion]').forEach(button => {
     button.textContent = reducedMotion.matches ? 'Motion off' : paused ? 'Play motion' : 'Pause motion';
     button.disabled = reducedMotion.matches;
     button.setAttribute('aria-pressed', String(paused));
   });
-  window.ContextMotion.setReduced(reducedMotion.matches);
-  window.ContextMotion.setPaused(paused || showingOverview || document.hidden);
   mechanisms.forEach(controller => controller.setAllowed(!paused && !showingOverview && !document.hidden && (storyMode || controller.figure.closest('.slide') === panels[current])));
 }
 
@@ -1764,7 +2244,8 @@ function createMechanism(kind, onStage = () => {}) {
   const viewport = element('div', 'diagram-viewport' + (svg.classList.contains('architecture-svg') ? ' architecture-viewport' : ''));
   viewport.tabIndex=0; viewport.setAttribute('role','region');
   viewport.setAttribute('aria-label','Workflow diagram. Scroll horizontally on a small screen.');
-  viewport.append(svg);figure.append(viewport,caption);
+  const panHint=element('p','diagram-pan-hint','Full diagram → Scroll sideways to follow every stage.');
+  viewport.append(svg);figure.append(panHint,viewport,caption);
   // Native path geometry supplies packet positions. No independent SMIL clocks.
   const packets = [...svg.querySelectorAll('.m-dot')].map(dot => {
     const ref=dot.dataset.path || dot.querySelector('mpath')?.getAttribute('href');
@@ -1795,7 +2276,7 @@ function createMechanism(kind, onStage = () => {}) {
     if(nextCursor!==cursor||svg.classList.contains('is-static'))select(nextCursor);
     packets.forEach(({dot,points},i)=>{const f=((t/1.6+i*.17)%1)*80,j=Math.floor(f),r=f-j,a=points[j],b=points[Math.min(j+1,80)];dot.setAttribute('transform',`translate(${a[0]+(b[0]-a[0])*r} ${a[1]+(b[1]-a[1])*r})`);});
   }});
-  const manualStep=delta=>{motionPaused=true;motionOverride=true;syncMotion();select(cursor+delta);base=lastTime-cursor*2.4;};
+  const manualStep=delta=>{window.ContextMotion.setPaused(true);select(cursor+delta);base=lastTime-cursor*2.4;};
   previous.addEventListener('click',()=>manualStep(-1));next.addEventListener('click',()=>manualStep(1));
   figure.selectStage=index=>manualStep(index-cursor);
   figure.scrollStage=index=>{figure.dataset.scrollStage=String(index);if(!motionPaused&&!reducedMotion.matches&&!printing){select(index);svg.dataset.playing='true';}};
@@ -2328,6 +2809,14 @@ function renderSlide(slide, i) {
     else if (slide.type === "sources") panel.append(sourcesVisual());
     else panel.append(renderItems(slide.items));
   }
+  if(i===0){
+    const audience=element('p','product-audience','For AI, data and governance teams');
+    const actions=element('div','product-actions');
+    [['primary-action','Explore the architecture ↗','full-architecture'],['secondary-action','Review the pilot →','pilot-acceptance']].forEach(([cls,label,id])=>{
+      const link=element('a',cls,label);link.href='#'+id;actions.append(link);
+    });
+    lead.after(audience,actions);
+  }
   if (slide.note) panel.append(element("p", "slide-note", slide.note));
   if(!slide.miniArchitecture&&!slide.sections&&slide.items.length&&['cover','leadership-case'].includes(slide.type)) {
     const detail=presenterDetail(slide);detail.classList.add('dev');panel.append(detail);
@@ -2342,12 +2831,18 @@ function setOverview(show) {
   byId("deck").style.display = show ? "none" : "";
   byId("overview-toggle").setAttribute("aria-expanded", String(show));
   if (show) byId("overview").querySelector("button")?.focus();
+  window.ContextMotion.setSuspended(show || printing);
   syncMotion();
 }
 
 function showSlide(index, updateHash = true) {
-  current = Math.max(0, Math.min(index, panels.length - 1));
-  if(storyMode){window.ContextStory.navigate(current,updateHash);return;}
+  const next = Math.max(0, Math.min(index, panels.length - 1));
+  const request = ++slideRequest;
+  current = next;
+  if(storyMode){current=next;window.ContextStory.navigate(current,updateHash);return;}
+  const update=()=>{
+  if(request!==slideRequest)return;
+  current=next;
   setOverview(false);
   panels.forEach((panel, i) => { panel.hidden = i !== current; });
   navButtons.forEach((button, i) => {
@@ -2365,6 +2860,9 @@ function showSlide(index, updateHash = true) {
   if (updateHash) history.replaceState(null, "", `#${deckData.slides[current].id}`);
   syncMotion();
   window.scrollTo({ top: 0, behavior: "instant" });
+  };
+  if(updateHash && !showingOverview) window.ContextMotion.transition(update);
+  else { update(); window.ContextMotion.arrive(panels[current].querySelector('h1,h2')); }
 }
 
 function indexFromHash() {
@@ -2390,22 +2888,22 @@ async function initialize() {
       overview.addEventListener("click", () => showSlide(i)); byId("overview").append(overview);
     });
     deck.setAttribute("aria-busy", "false");
+    window.ContextMotion.subscribe(syncMotion);
     if(storyMode) window.ContextStory.initialize({panels,data:deckData,onChapter:index=>{current=index;syncMotion();}});
     showSlide(Math.max(0, indexFromHash()), false);
-    if(storyMode && (!location.hash || location.hash==='#why-prefrontal')) document.getElementById('why-prefrontal')?.scrollIntoView({behavior:'instant',block:'start'});
+    if(storyMode && (!location.hash || location.hash==='#why-prefrontal')) document.getElementById(location.hash?'why-prefrontal':'product-start')?.scrollIntoView({behavior:'instant',block:'start'});
     byId("previous").addEventListener("click", () => showSlide(current - 1));
     byId("next").addEventListener("click", () => showSlide(current + 1));
     byId("overview-toggle").addEventListener("click", () => setOverview(!showingOverview));
     byId("print").addEventListener("click", () => window.print());
     document.addEventListener('click',event=>{
-      if(event.target.closest('[data-motion]')){motionPaused=!motionPaused;motionOverride=true;syncMotion();}
+      if(event.target.closest('[data-motion]')) window.ContextMotion.setPaused(!window.ContextMotion.state().paused);
       const view=event.target.closest('[data-view]');
       if(view){document.body.classList.toggle('devview',view.dataset.view==='dev');document.querySelectorAll('[data-view]').forEach(b=>b.setAttribute('aria-pressed',String(b===view)));syncMotion();}
     });
-    reducedMotion.addEventListener("change", event => { if (!motionOverride) motionPaused = event.matches; syncMotion(); });
     document.addEventListener("visibilitychange", syncMotion);
-    window.addEventListener("beforeprint", () => { printing = true; syncMotion(); });
-    window.addEventListener("afterprint", () => { printing = false; syncMotion(); });
+    window.addEventListener("beforeprint", () => { printing = true; window.ContextMotion.setSuspended(true); syncMotion(); });
+    window.addEventListener("afterprint", () => { printing = false; window.ContextMotion.setSuspended(showingOverview); syncMotion(); });
     byId("fullscreen").addEventListener("click", async () => {
       try {
         if (document.fullscreenElement) await document.exitFullscreen();
@@ -2435,12 +2933,19 @@ initialize();
  document.querySelectorAll('.cortex-section').forEach(section=>{
   if(section.closest('noscript'))return;
   const stage=section.querySelector('.cortex-stage'),wire=section.querySelector('.cortex-wire'),dot=section.querySelector('.cortex-packet');
-  const length=wire.getTotalLength();let paused=false;
-  const motion=ContextMotion.register({element:stage,frame(t){const point=wire.getPointAtLength((t/3%1)*length);dot.setAttribute('cx',point.x);dot.setAttribute('cy',point.y);const box=stage.getBoundingClientRect();const p=Math.max(-1,Math.min(1,(box.top+box.height/2-innerHeight/2)/innerHeight));stage.style.setProperty('--cortex-tilt',`${-p*6}deg`);},staticFrame(){stage.style.setProperty('--cortex-tilt','0deg');}});motion.setAllowed(true);
-  const control=section.querySelector('.cortex-motion');control.onclick=()=>{paused=!paused;stage.dataset.localPaused=String(paused);control.setAttribute('aria-pressed',String(paused));control.textContent=paused?'Resume this visual':'Pause this visual';motion.setAllowed(!paused);};
+  const pointAt=ContextMotion.samplePath(wire);
+  const motion=ContextMotion.register({element:stage,frame(t){const point=pointAt(t/1.6%1);dot.setAttribute('cx',point.x);dot.setAttribute('cy',point.y);}});motion.setAllowed(true);
+  const depthTarget=section.querySelector('.cortex-diagram');
+  const depth=ContextMotion.register({element:depthTarget,kind:'depth',continuous:false,
+   measure(){const box=stage.getBoundingClientRect();return Math.max(-1,Math.min(1,(box.top+box.height/2-innerHeight/2)/innerHeight));},
+   frame(_t,_delta,p){stage.style.setProperty('--cortex-tilt',`${-p*2}deg`);},
+   staticFrame(){stage.style.setProperty('--cortex-tilt','0deg');}});depth.setAllowed(true);
+  ContextMotion.bindPauseControl(section.querySelector('.cortex-motion'));
+  ContextMotion.subscribe(state=>{stage.dataset.localPaused=String(state.stopped);});
   const cards=[...section.querySelectorAll('.cortex-mapping')],links=[...section.querySelectorAll('[data-cortex-region]')];
   let requestedCard=null;
-  function select(id){cards.forEach(e=>e.classList.toggle('is-selected',e.dataset.region===id));links.forEach(e=>{if(e.dataset.cortexRegion===id)e.setAttribute('aria-current','location');else e.removeAttribute('aria-current');});}
+  let selected=null;
+  function select(id){if(id===selected)return;selected=id;cards.forEach(e=>{e.classList.toggle('is-selected',e.dataset.region===id);if(e.dataset.region===id)ContextMotion.arrive(e.querySelector('h3'));});links.forEach(e=>{if(e.dataset.cortexRegion===id)e.setAttribute('aria-current','location');else e.removeAttribute('aria-current');});}
   function destination(card){const margin=parseFloat(getComputedStyle(card).scrollMarginTop)||0;return Math.max(0,Math.min(document.documentElement.scrollHeight-innerHeight,scrollY+card.getBoundingClientRect().top-margin));}
   function selectReadingCard(){
    // Keep a chosen region selected while native anchor scrolling crosses other cards.

@@ -1,0 +1,197 @@
+/* Balanced motion: one vocabulary for the deck, story and decision map. */
+:root {
+  --motion-interaction: 180ms;
+  --motion-arrival: 420ms;
+  --motion-exit: 180ms;
+  --motion-selection: 320ms;
+  --motion-stagger: 60ms;
+  --motion-ease: cubic-bezier(.16, 1, .3, 1);
+}
+
+/* Native snapshots bridge slide changes; unsupported browsers navigate instantly. */
+::view-transition-old(root) { animation: motion-depart var(--motion-exit) ease-in both; }
+::view-transition-new(root) { animation: motion-arrive var(--motion-arrival) var(--motion-ease) both; }
+@keyframes motion-depart { to { opacity:0; } }
+html:has(body.motion-paused)::view-transition-old(root),
+html:has(body.motion-paused)::view-transition-new(root) { animation:none; }
+
+/* Controls respond immediately. Scroll-driven transforms have no timing lag. */
+:is(.tools, .stage-controls, .deck-footer, .view-switch, .suite-tabs, .controls) button,
+.topic-strip button, .story-step-jump, .cortex-motion,
+.presentation-format, .cortex-nav-link, .story-chapters a,
+.cortex-tabs a, .phases a, aside button, .nav-item {
+  transition: background-color var(--motion-interaction) var(--motion-ease),
+    border-color var(--motion-interaction) var(--motion-ease),
+    color var(--motion-interaction) var(--motion-ease);
+}
+
+:is(button, a, input, select, summary):focus-visible {
+  outline: 3px solid #171717;
+  outline-offset: 4px;
+}
+.rail :is(button, a):focus-visible,
+.phases a:focus-visible {
+  outline-color: #fff;
+}
+.node-button:focus-visible,
+.cortex-section :is(button, a):focus-visible,
+.story-step-jump:focus-visible,
+.story-depth-toggle:focus-visible {
+  outline: 3px solid #171717;
+  outline-offset: 4px;
+}
+
+.story-step {
+  transition: border-color var(--motion-selection) var(--motion-ease),
+    transform var(--motion-selection) var(--motion-ease);
+}
+.node-button, .cortex-analogy {
+  transition: border-color var(--motion-selection) var(--motion-ease),
+    background-color var(--motion-selection) var(--motion-ease);
+}
+.route path {
+  transition: stroke var(--motion-selection) var(--motion-ease),
+    opacity var(--motion-selection) var(--motion-ease);
+}
+
+/* Labels stay readable while the current node and path carry the emphasis. */
+.motion-diagram .m-stage,
+.motion-diagram[data-playing="true"] .m-stage,
+.mini-focus-visual .m-stage {
+  opacity: 1;
+  transition: none;
+}
+.motion-diagram .m-node rect {
+  transition: stroke var(--motion-selection) var(--motion-ease);
+}
+
+.motion-arrival,
+.story-arrived > .chapter-number {
+  animation: motion-arrive var(--motion-arrival) var(--motion-ease) 1 both;
+}
+@keyframes motion-arrive {
+  from { transform: translateY(8px); }
+  to { transform: translateY(0); }
+}
+
+/* Geometry follows scroll position directly; JavaScript bounds tilt and lift. */
+.story-depth-stage,
+body[data-presentation="story"] .story-depth-stage > .diagram-viewport {
+  transition: none;
+}
+.story-depth-stage {
+  transform: rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+}
+body[data-presentation="story"] .story-depth-stage > .diagram-viewport {
+  transform: translateZ(var(--lift, 0px));
+}
+
+/* Flat view removes spatial depth, but keeps the selected route in motion. */
+@media screen and (prefers-reduced-motion: no-preference) {
+  body.flat:not(.paused):not(.motion-paused):not(.motion-reduced) .route.selected .flow-dot {
+    display: block !important;
+  }
+}
+body:is([data-depth="off"], .flat, .motion-paused, .motion-reduced, .paused)
+  :is(.story-depth-stage, .story-depth-stage > .diagram-viewport, .node-button, .cortex-diagram) {
+  transform: none !important;
+}
+body:is([data-depth="off"], .flat, .motion-paused, .motion-reduced, .paused)
+  .story-depth-stage::before,
+body:is([data-depth="off"], .flat, .motion-paused, .motion-reduced, .paused)
+  .story-depth-stage::after {
+  display: none !important;
+}
+
+body:is(.motion-paused, .motion-reduced, .paused) *,
+body:is(.motion-paused, .motion-reduced, .paused) *::before,
+body:is(.motion-paused, .motion-reduced, .paused) *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+html:has(body:is(.motion-paused, .motion-reduced, .paused)) {
+  scroll-behavior: auto !important;
+}
+body:is(.motion-paused, .motion-reduced, .paused) :is(.flow-dot, .cortex-packet, .m-dot) {
+  display: none !important;
+}
+body:is(.motion-paused, .motion-reduced, .paused) .story-step {
+  transform: none !important;
+}
+
+@media screen and (max-width: 1100px) {
+  :is(.story-depth-stage, .story-depth-stage > .diagram-viewport, .node-button),
+  .cortex-section .cortex-diagram {
+    transform: none !important;
+  }
+  .story-depth-stage::before,
+  .story-depth-stage::after { display: none !important; }
+}
+
+@media screen and (max-width: 760px), screen and (pointer: coarse) {
+  :is(.tools, .stage-controls, .deck-footer, .view-switch, .suite-tabs, .controls) button,
+  .topic-strip button, .story-step-jump, .cortex-motion, aside button,
+  .story-menu > summary, .story-chapters a, .cortex-tabs a,
+  .presentation-format, .cortex-nav-link {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  .presentation-format, .cortex-nav-link {
+    display: inline-flex;
+    align-items: center;
+  }
+  .topbar { height: auto; min-height: 60px; }
+  .phases {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+  .phases a {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Static output always starts in a complete, readable state. */
+.no-js *, .no-js *::before, .no-js *::after {
+  animation: none !important;
+  transition: none !important;
+}
+.no-js :is(.story-depth-stage, .story-depth-stage > .diagram-viewport, .node-button, .cortex-diagram) {
+  transform: none !important;
+}
+.no-js .story-depth-stage::before,
+.no-js .story-depth-stage::after { display: none !important; }
+.no-js :is(.flow-dot, .cortex-packet, .m-dot) { display: none !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  html, *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+  :is(.story-depth-stage, .story-depth-stage > .diagram-viewport, .node-button, .cortex-diagram, .story-step) {
+    transform: none !important;
+  }
+  .story-depth-stage::before, .story-depth-stage::after,
+  body .route.selected .flow-dot, .cortex-packet, .m-dot {
+    display: none !important;
+  }
+}
+
+@media print {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  :is(.story-depth-stage, .story-depth-stage > .diagram-viewport, .node-button, .cortex-diagram, .story-step, .motion-arrival) {
+    transform: none !important;
+  }
+  .story-depth-stage::before, .story-depth-stage::after,
+  body .route.selected .flow-dot, .cortex-packet, .m-dot {
+    display: none !important;
+  }
+}

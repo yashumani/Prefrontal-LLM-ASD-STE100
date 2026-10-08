@@ -29,8 +29,8 @@
           <div class="view-switch" role="group" aria-label="Audience view"><button type="button" data-view="leader" aria-pressed="true">Leader</button><button type="button" id="audience-dev" data-view="dev" aria-pressed="false">Developer</button></div>
           <button data-motion id="motion-toggle" type="button" aria-pressed="false">Pause motion</button>
           <button id="overview-toggle" type="button" aria-expanded="false" aria-controls="overview">Slides <span aria-hidden="true">▦</span></button>
-          <button id="print" type="button">Print / PDF</button>
-          <button id="fullscreen" type="button">Full screen</button>
+          <details class="presentation-options"><summary>Options</summary><div class="option-panel"><button id="print" type="button">Print / PDF</button>
+          <button id="fullscreen" type="button">Full screen</button></div></details>
         </div>
       </header>
       <main id="deck" tabindex="-1" aria-busy="true">

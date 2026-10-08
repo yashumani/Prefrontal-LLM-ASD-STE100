@@ -11,25 +11,25 @@ const byId = id => document.getElementById(id);
 const storyMode = document.body.dataset.presentation === 'story';
 let deckData;
 let current = 0;
+let slideRequest = 0;
 let showingOverview = false;
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-let motionPaused = reducedMotion.matches;
-let motionOverride = false;
+let motionPaused = false;
 let printing = false;
 const panels = [];
 const navButtons = [];
 const mechanisms = [];
 
 function syncMotion() {
-  const paused = motionPaused || reducedMotion.matches || printing;
+  const state = window.ContextMotion.state();
+  motionPaused = state.paused;
+  const paused = state.stopped;
   document.body.classList.toggle('motion-paused', paused);
   document.querySelectorAll('[data-motion]').forEach(button => {
     button.textContent = reducedMotion.matches ? 'Motion off' : paused ? 'Play motion' : 'Pause motion';
     button.disabled = reducedMotion.matches;
     button.setAttribute('aria-pressed', String(paused));
   });
-  window.ContextMotion.setReduced(reducedMotion.matches);
-  window.ContextMotion.setPaused(paused || showingOverview || document.hidden);
   mechanisms.forEach(controller => controller.setAllowed(!paused && !showingOverview && !document.hidden && (storyMode || controller.figure.closest('.slide') === panels[current])));
 }
 
@@ -55,7 +55,8 @@ function createMechanism(kind, onStage = () => {}) {
   const viewport = element('div', 'diagram-viewport' + (svg.classList.contains('architecture-svg') ? ' architecture-viewport' : ''));
   viewport.tabIndex=0; viewport.setAttribute('role','region');
   viewport.setAttribute('aria-label','Workflow diagram. Scroll horizontally on a small screen.');
-  viewport.append(svg);figure.append(viewport,caption);
+  const panHint=element('p','diagram-pan-hint','Full diagram → Scroll sideways to follow every stage.');
+  viewport.append(svg);figure.append(panHint,viewport,caption);
   // Native path geometry supplies packet positions. No independent SMIL clocks.
   const packets = [...svg.querySelectorAll('.m-dot')].map(dot => {
     const ref=dot.dataset.path || dot.querySelector('mpath')?.getAttribute('href');
@@ -86,7 +87,7 @@ function createMechanism(kind, onStage = () => {}) {
     if(nextCursor!==cursor||svg.classList.contains('is-static'))select(nextCursor);
     packets.forEach(({dot,points},i)=>{const f=((t/1.6+i*.17)%1)*80,j=Math.floor(f),r=f-j,a=points[j],b=points[Math.min(j+1,80)];dot.setAttribute('transform',`translate(${a[0]+(b[0]-a[0])*r} ${a[1]+(b[1]-a[1])*r})`);});
   }});
-  const manualStep=delta=>{motionPaused=true;motionOverride=true;syncMotion();select(cursor+delta);base=lastTime-cursor*2.4;};
+  const manualStep=delta=>{window.ContextMotion.setPaused(true);select(cursor+delta);base=lastTime-cursor*2.4;};
   previous.addEventListener('click',()=>manualStep(-1));next.addEventListener('click',()=>manualStep(1));
   figure.selectStage=index=>manualStep(index-cursor);
   figure.scrollStage=index=>{figure.dataset.scrollStage=String(index);if(!motionPaused&&!reducedMotion.matches&&!printing){select(index);svg.dataset.playing='true';}};
@@ -619,6 +620,14 @@ function renderSlide(slide, i) {
     else if (slide.type === "sources") panel.append(sourcesVisual());
     else panel.append(renderItems(slide.items));
   }
+  if(i===0){
+    const audience=element('p','product-audience','For AI, data and governance teams');
+    const actions=element('div','product-actions');
+    [['primary-action','Explore the architecture ↗','full-architecture'],['secondary-action','Review the pilot →','pilot-acceptance']].forEach(([cls,label,id])=>{
+      const link=element('a',cls,label);link.href='#'+id;actions.append(link);
+    });
+    lead.after(audience,actions);
+  }
   if (slide.note) panel.append(element("p", "slide-note", slide.note));
   if(!slide.miniArchitecture&&!slide.sections&&slide.items.length&&['cover','leadership-case'].includes(slide.type)) {
     const detail=presenterDetail(slide);detail.classList.add('dev');panel.append(detail);
@@ -633,12 +642,18 @@ function setOverview(show) {
   byId("deck").style.display = show ? "none" : "";
   byId("overview-toggle").setAttribute("aria-expanded", String(show));
   if (show) byId("overview").querySelector("button")?.focus();
+  window.ContextMotion.setSuspended(show || printing);
   syncMotion();
 }
 
 function showSlide(index, updateHash = true) {
-  current = Math.max(0, Math.min(index, panels.length - 1));
-  if(storyMode){window.ContextStory.navigate(current,updateHash);return;}
+  const next = Math.max(0, Math.min(index, panels.length - 1));
+  const request = ++slideRequest;
+  current = next;
+  if(storyMode){current=next;window.ContextStory.navigate(current,updateHash);return;}
+  const update=()=>{
+  if(request!==slideRequest)return;
+  current=next;
   setOverview(false);
   panels.forEach((panel, i) => { panel.hidden = i !== current; });
   navButtons.forEach((button, i) => {
@@ -656,6 +671,9 @@ function showSlide(index, updateHash = true) {
   if (updateHash) history.replaceState(null, "", `#${deckData.slides[current].id}`);
   syncMotion();
   window.scrollTo({ top: 0, behavior: "instant" });
+  };
+  if(updateHash && !showingOverview) window.ContextMotion.transition(update);
+  else { update(); window.ContextMotion.arrive(panels[current].querySelector('h1,h2')); }
 }
 
 function indexFromHash() {
@@ -681,22 +699,22 @@ async function initialize() {
       overview.addEventListener("click", () => showSlide(i)); byId("overview").append(overview);
     });
     deck.setAttribute("aria-busy", "false");
+    window.ContextMotion.subscribe(syncMotion);
     if(storyMode) window.ContextStory.initialize({panels,data:deckData,onChapter:index=>{current=index;syncMotion();}});
     showSlide(Math.max(0, indexFromHash()), false);
-    if(storyMode && (!location.hash || location.hash==='#why-prefrontal')) document.getElementById('why-prefrontal')?.scrollIntoView({behavior:'instant',block:'start'});
+    if(storyMode && (!location.hash || location.hash==='#why-prefrontal')) document.getElementById(location.hash?'why-prefrontal':'product-start')?.scrollIntoView({behavior:'instant',block:'start'});
     byId("previous").addEventListener("click", () => showSlide(current - 1));
     byId("next").addEventListener("click", () => showSlide(current + 1));
     byId("overview-toggle").addEventListener("click", () => setOverview(!showingOverview));
     byId("print").addEventListener("click", () => window.print());
     document.addEventListener('click',event=>{
-      if(event.target.closest('[data-motion]')){motionPaused=!motionPaused;motionOverride=true;syncMotion();}
+      if(event.target.closest('[data-motion]')) window.ContextMotion.setPaused(!window.ContextMotion.state().paused);
       const view=event.target.closest('[data-view]');
       if(view){document.body.classList.toggle('devview',view.dataset.view==='dev');document.querySelectorAll('[data-view]').forEach(b=>b.setAttribute('aria-pressed',String(b===view)));syncMotion();}
     });
-    reducedMotion.addEventListener("change", event => { if (!motionOverride) motionPaused = event.matches; syncMotion(); });
     document.addEventListener("visibilitychange", syncMotion);
-    window.addEventListener("beforeprint", () => { printing = true; syncMotion(); });
-    window.addEventListener("afterprint", () => { printing = false; syncMotion(); });
+    window.addEventListener("beforeprint", () => { printing = true; window.ContextMotion.setSuspended(true); syncMotion(); });
+    window.addEventListener("afterprint", () => { printing = false; window.ContextMotion.setSuspended(showingOverview); syncMotion(); });
     byId("fullscreen").addEventListener("click", async () => {
       try {
         if (document.fullscreenElement) await document.exitFullscreen();
