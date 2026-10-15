@@ -1,0 +1,11 @@
+{
+  "workspace": "sales-lab",
+  "unit": "USD cents",
+  "period": "2026-09",
+  "orders": [
+    {"id": "order-001", "status": "completed", "gross_cents": 100000, "discount_cents": 10000, "return_cents": 5000},
+    {"id": "order-002", "status": "completed", "gross_cents": 200000, "discount_cents": 0, "return_cents": 10000},
+    {"id": "order-003", "status": "completed", "gross_cents": 60000, "discount_cents": 5000, "return_cents": 0},
+    {"id": "order-004", "status": "cancelled", "gross_cents": 50000, "discount_cents": 0, "return_cents": 0}
+  ]
+}

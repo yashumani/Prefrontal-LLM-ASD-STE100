@@ -136,6 +136,13 @@ Browser validation needs Playwright and Chromium. Set `PREFRONTAL_PLAYWRIGHT_MOD
 
 ## Publication and proof boundaries
 
+A [local context-lifecycle pilot](pilot/README.md) now provides a separate Python
+skeleton for deterministic lifecycle and maintenance tests. It uses synthetic data,
+simulated reviewers and a JSON-lines interface. Run `python -m pilot.demo` to retain
+SQLite/audit evidence; run `python -m unittest pilot.test_context_pilot -v` for its
+acceptance cases. It is separate from the published presentation and does not
+qualify the proposed enterprise product, live adapters, MCP or hybrid search.
+
 The existing Pages workflow validates and publishes the eight public files from `feature/context-presentation`. It checks freshness, syntax and browser acceptance before deployment. Research, the supplied ZIP, local architecture sidecars, PDFs and screenshots remain outside the public package.
 
 Working artifacts: the presentation, illustrative browser checks, editable worksheet and checked local architecture viewer. Still to implement and qualify: persistent admission, real decision-model integration, calibration, record-level authorization, MCP service, recovery, load and customer return.
