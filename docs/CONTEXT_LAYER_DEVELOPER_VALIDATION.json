@@ -1,0 +1,96 @@
+{
+  "artifact": "CONTEXT_LAYER_DEVELOPER.html",
+  "artifact_sha256": "40e49e1e34824b4a90d09c2859d1b5401879a9c6111f37e99f07e4a606e5edba",
+  "architecture_commit": "21bcd3f89ac19bc51e918c20cc822e483bf5b8ee",
+  "pilot_source_commit": "5bf04d628cc7ac80e740fea0336f1367bf51c1be",
+  "previous_guide_commit": "34f7d6811b34dc29141ff9a29878c8f721d7d869",
+  "architecture_sha256": "db059bfa1d181124a56dcf183b690914c2e83cd47f250eae4314465bd98615a8",
+  "node_count": 14,
+  "edge_count": 24,
+  "node_ids": [
+    "submissions",
+    "preparation",
+    "human-review",
+    "canonical-registry",
+    "context-agent",
+    "decision-model",
+    "ontology-layer",
+    "data-layer",
+    "metric-layer",
+    "interpretation-layer",
+    "mcp-delivery",
+    "consumers",
+    "derived-search-index",
+    "governed-retrieval"
+  ],
+  "snippet_count": 32,
+  "exact_source_excerpts": 18,
+  "snippet_parse_checks": {
+    "python": 20,
+    "json": 9,
+    "powershell": 2,
+    "sql": "exact fixture; executed by native service during fresh replay"
+  },
+  "runnable_documentation_example": "PASS: exact-version review, guarded publication, native USD 3300, denied outsider",
+  "tests": {
+    "count": 42,
+    "seconds": "127.053",
+    "passed": true
+  },
+  "captured_run": "run-20261016T141518799544Z",
+  "tested_version_digest": "9ddbd85209a0916bbdfb7e4e260a64ebb6d28611176fffc2aefe2fa35aed7a29",
+  "synthetic_scenarios": 8,
+  "simulated_human_approvals": true,
+  "llm_calls": 0,
+  "browser": {
+    "checks": [
+      "Offline file: load, 14 exact nodes and 24 edges",
+      "All 14 node selections show six required fields, source/action/owner/status boundary",
+      "Keyboard SVG node activation",
+      "Node source button opens matching exact source",
+      "Code search, empty state and clear restore all 32 snippets",
+      "Copy code: native clipboard matches full runnable example with Windows newline normalization",
+      "All six captured-replay controls reveal valid labeled JSON",
+      "Replay source/version and final known answer retained",
+      "Troubleshooting filter",
+      "Presentation mode, arrow navigation, previous and Escape",
+      "Desktop/tablet/390px/360px: no page overflow; all node inspectors fit; mobile menu and search",
+      "Reduced-motion setting respected",
+      "Print view retains all 10 chapters",
+      "No browser errors and no automatic network requests"
+    ],
+    "viewports": [
+      {
+        "width": 1440,
+        "height": 1000,
+        "overflow": false
+      },
+      {
+        "width": 1024,
+        "height": 768,
+        "overflow": false
+      },
+      {
+        "width": 390,
+        "height": 844,
+        "overflow": false
+      },
+      {
+        "width": 360,
+        "height": 800,
+        "overflow": false
+      }
+    ],
+    "consoleErrors": [],
+    "pageErrors": [],
+    "automaticNetworkRequests": []
+  },
+  "limitations": [
+    "Local trusted fixture identities and simulated approvals",
+    "No live LLM/model/MCP/enterprise adapters",
+    "No month-over-month or dimensional joins",
+    "Captured replay only; browser does not execute pilot",
+    "Print inspector shows only selected node; full coverage in companion checklist",
+    "No measured human effort, production authorization, distributed qualification or hosted CI claim"
+  ]
+}
