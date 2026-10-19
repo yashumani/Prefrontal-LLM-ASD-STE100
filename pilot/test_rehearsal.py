@@ -69,6 +69,25 @@ class RehearsalAcceptance(unittest.TestCase):
         scored = grade(self.tasks, response, "knowledge", {"authority": {"context:authority"}, "profit": set()})
         self.assertFalse(scored[0]["passed"])
 
+    def test_raw_sources_allow_either_independently_supporting_document(self):
+        tasks = copy.deepcopy(self.tasks)
+        tasks[0]["source_citations"] = ["authority.md", "review.md"]
+        response = ScriptedModel().complete({"phase": "raw-answer"})
+        response["answers"][0]["citations"] = ["review.md"]
+        allowed = {"authority": {"authority.md", "review.md"}, "profit": set()}
+        self.assertTrue(grade(tasks, response, "raw", allowed)[0]["passed"])
+        response["answers"][0]["citations"] = ["unrelated.md"]
+        self.assertFalse(grade(tasks, response, "raw", allowed)[0]["passed"])
+        response["answers"][0]["citations"] = []
+        self.assertFalse(grade(tasks, response, "raw", allowed)[0]["passed"])
+
+    def test_knowledge_still_requires_all_expected_record_citations(self):
+        tasks = copy.deepcopy(self.tasks)
+        tasks[0]["record_citations"].append("context:review")
+        response = ScriptedModel().complete({"phase": "prefrontal-answer"})
+        allowed = {"authority": {"context:authority", "context:review"}, "profit": set()}
+        self.assertFalse(grade(tasks, response, "knowledge", allowed)[0]["passed"])
+
     def test_missing_or_duplicate_task_is_not_silently_scored(self):
         response = ScriptedModel().complete({"phase": "raw-answer"})
         response["answers"][1] = copy.deepcopy(response["answers"][0])

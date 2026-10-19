@@ -34,12 +34,19 @@ RULES = (
 
 
 class CodexModel:
-    """Use the existing authenticated Codex CLI in read-only mode without overrides."""
+    """Use authenticated Codex read-only, with optional per-run model selection."""
 
-    def __init__(self, directory, timeout=90):
-        self.executable = shutil.which("codex")
+    def __init__(self, directory, timeout=90, executable=None, model=None, reasoning_effort=None):
+        self.executable = executable or shutil.which("codex")
         if not self.executable:
             raise ValueError("Codex CLI is unavailable; no model call made")
+        version = subprocess.run([self.executable, "--version"], capture_output=True, text=True,
+                                 encoding="utf-8", timeout=10)
+        if version.returncode:
+            raise ValueError("Codex CLI version check failed; no model call made")
+        self.version = version.stdout.strip()
+        self.model = model
+        self.reasoning_effort = reasoning_effort
         self.directory = Path(directory)
         self.timeout = timeout
         self.calls = []
@@ -52,8 +59,13 @@ class CodexModel:
         prompt_path = self.directory / ("model-{}-prompt.txt".format(number))
         prompt_path.write_text(prompt, encoding="utf-8")
         started = perf_counter()
+        command = [self.executable, "exec", "--sandbox", "read-only", "--ephemeral", "--json"]
+        if self.model:
+            command.extend(["--model", self.model])
+        if self.reasoning_effort:
+            command.extend(["-c", "model_reasoning_effort=" + json.dumps(self.reasoning_effort)])
         result = subprocess.run(
-            [self.executable, "exec", "--sandbox", "read-only", "--ephemeral", "--json", "-"],
+            command + ["-"],
             input=prompt, capture_output=True, text=True, encoding="utf-8", timeout=self.timeout,
         )
         (self.directory / "model-{}-events.jsonl".format(number)).write_text(result.stdout, encoding="utf-8")
@@ -61,23 +73,29 @@ class CodexModel:
         if result.returncode or len(result.stdout.encode("utf-8")) > 4 * MAX_SOURCE_BYTES:
             raise ValueError("model command failed or exceeded the bounded output; inspect retained local diagnostics")
         events = [json.loads(line) for line in result.stdout.splitlines() if line.strip()]
-        messages, usage = [], None
+        messages, diagnostics, usage, completed = [], [], None, False
         for event in events:
             item = event.get("item", {})
-            if item and item.get("type") not in {"agent_message", "reasoning"}:
+            if item and item.get("type") not in {"agent_message", "reasoning", "error"}:
                 raise ValueError("model used an external tool; this run is contaminated and cannot establish acceptance")
+            if item.get("type") == "error":
+                diagnostics.append(item.get("message", ""))
             if event.get("type") == "item.completed" and item.get("type") == "agent_message":
                 messages.append(item["text"])
             if event.get("type") == "turn.completed":
                 usage = event.get("usage")
+                completed = True
             if event.get("type") in {"error", "turn.failed"}:
                 raise ValueError("model turn failed; inspect retained local diagnostics")
-        if not messages:
-            raise ValueError("model did not return an answer")
+        if not messages or not completed:
+            raise ValueError("model did not return a completed answer")
         answer = json.loads(messages[-1])
         self.calls.append({"phase": payload["phase"], "elapsed_ms": round((perf_counter() - started) * 1000, 3),
                            "prompt_bytes": len(prompt.encode("utf-8")), "usage": usage,
-                           "model": "existing Codex CLI configuration; inspect retained stderr for reported model",
+                           "executable": self.executable, "cli_version": self.version,
+                           "model": self.model or "inherited CLI configuration; inspect local config",
+                           "reasoning_effort": self.reasoning_effort or "inherited CLI configuration",
+                           "diagnostics": diagnostics,
                            "tools_used": False})
         return answer
 
@@ -136,7 +154,11 @@ def grade(tasks, response, arm, allowed_citations):
         answer = by_id[task["id"]]
         expected_citations = set(task["source_citations" if arm == "raw" else "record_citations"])
         cited = set(answer["citations"])
-        supported = (expected_citations.issubset(cited) and cited.issubset(allowed_citations[task["id"]]))
+        # A raw claim may be established independently by several documents.
+        # Knowledge answers must still cite every required record identity.
+        required_present = (bool(expected_citations & cited) if arm == "raw" and expected_citations
+                            else expected_citations.issubset(cited))
+        supported = required_present and cited.issubset(allowed_citations[task["id"]])
         passed = (answer["status"] == task["expected_status"]
                   and answer["choice"] == task["expected_choice"] and supported)
         results.append({"task_id": task["id"], "passed": passed,
@@ -249,6 +271,9 @@ def main():
     parser.add_argument("--config", required=True, help="operator-reviewed local corpus/task configuration")
     parser.add_argument("--output", required=True, help="new ignored evidence directory")
     parser.add_argument("--codex", action="store_true", help="explicitly opt into three authenticated model calls")
+    parser.add_argument("--codex-executable", help="path to a compatible authenticated Codex CLI")
+    parser.add_argument("--model", help="explicit Codex model, shared by both arms")
+    parser.add_argument("--reasoning-effort", choices=["low", "medium", "high", "xhigh", "max", "ultra"])
     args = parser.parse_args()
     if not args.codex:
         parser.error("--codex is required; no model calls are made by default")
@@ -260,7 +285,8 @@ def main():
         parser.error("invalid rehearsal configuration")
     with KnowledgeRegistry(configuration["database"], configuration["source_root"],
                            _principals(configuration["principals"])) as registry:
-        model = CodexModel(directory)
+        model = CodexModel(directory, executable=args.codex_executable, model=args.model,
+                           reasoning_effort=args.reasoning_effort)
         report = run_rehearsal(registry, configuration["principal"], configuration["workspace"],
                                configuration["tasks"], configuration["source_paths"], model, directory)
     print("Raw-source factual tasks: {}/{}".format(report["raw_passed"], report["tasks"]))

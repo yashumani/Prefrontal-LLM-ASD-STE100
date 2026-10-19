@@ -7,11 +7,13 @@ on:
       - pilot/**
       - .github/workflows/pilot.yml
       - LICENSE
+      - .gitattributes
   pull_request:
     paths:
       - pilot/**
       - .github/workflows/pilot.yml
       - LICENSE
+      - .gitattributes
 
 permissions:
   contents: read

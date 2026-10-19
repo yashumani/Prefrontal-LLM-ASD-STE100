@@ -148,10 +148,13 @@ Prepare a local JSON configuration with these exact top-level fields:
 }
 ```
 
-Expected answers and required citations must be checked against the sources before
+Expected answers and supporting citations must be checked against the sources before
 the run. They are withheld from the consumer. Use `expected_status: "abstain"`,
 `expected_choice: "unverified"`, and empty required citation arrays for a question
 that the corpus cannot answer. Caller/source authorization applies to both arms.
+For raw answers, `source_citations` lists independently supporting alternatives:
+at least one must be cited. Knowledge answers must cite every `record_citations`
+identity, and may cite only records actually delivered for that question.
 
 ```powershell
 python -m pilot.rehearsal --config '<reviewed-config.json>' --output '.validation/rehearsal-unique-run' --codex
@@ -178,3 +181,32 @@ by the deterministic lifecycle suite. A successful small factual run does not
 establish general semantic correctness, productivity savings, provider security,
 or human review effort. Record actual supervised review time separately when it
 is measured; otherwise leave it unverified.
+
+## Rehearse this repository with Codex
+
+Preparation alone freezes `pilot/README.md` and `pilot/AGENT_WORKFLOW.md`, publishes
+10 source-bound fixture records, and writes 12 fixed questions (including two
+unsupported questions). It makes no model calls:
+
+```powershell
+python -m pilot.repository_rehearsal
+```
+
+With an existing Codex login, explicitly opt into three calls:
+
+```powershell
+python -m pilot.repository_rehearsal --run-codex --model gpt-6.1-sol --reasoning-effort low
+```
+
+Use a model your account and installed CLI support. If the desktop bundles a newer
+CLI than the one on PATH, add `--codex-executable '<absolute-path-to-codex>'`.
+These options apply to this run; they do not edit global settings. Both arms use
+the same selected executable/model/effort, and the evidence records the CLI
+version. The generic `pilot.rehearsal` command accepts the same options.
+
+Preparation uses simulated reviewers over real source bytes. It checks literal
+claims before publishing; it is not supervised human acceptance. Local outputs
+are ignored under `.validation/repository-rehearsal/`. See
+[RELEASE_VALIDATION.md](RELEASE_VALIDATION.md) and
+[repository-rehearsal-result.json](repository-rehearsal-result.json) for the actual
+bounded run, saved answers, disclosed annotation correction, and proof limits.

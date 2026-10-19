@@ -1,5 +1,12 @@
 # Prefrontal · Governed context as a product
 
+Prefrontal includes a runnable, MIT-licensed governed-context reference in
+[`pilot/`](pilot/README.md): propose source-bound knowledge, review exact versions,
+publish a dependency set, and deliver current permitted context to a consumer.
+Start with `python -m pilot.knowledge_demo`; Python 3.9 or newer and the standard
+library are sufficient. See the [agent guide](pilot/AGENT_WORKFLOW.md),
+[knowledge interface](pilot/KNOWLEDGE.md), and [release evidence](pilot/RELEASE_VALIDATION.md).
+
 [Open the pitch](https://yashumani.github.io/Prefrontal-LLM-ASD-STE100/).
 
 This 16-slide presentation sells a proposed context product and a bounded pilot. The first four slides explain the buyer problem, product and investment case. Slide five shows the complete architecture. Developer detail follows: submissions, review, canonical IDs, semantic layers, model decisions, controlled delivery, economics and implementation gates.
@@ -150,13 +157,16 @@ period, currency, or all four semantic categories in every release. The
 corrections, and maintenance. Run all reference acceptance cases with
 `python -m unittest discover -s pilot -t . -p 'test_*.py' -v`.
 
-Reference acceptance covers 42 metric lifecycle cases, 18 general-knowledge cases,
-and 10 scripted rehearsal-harness cases. Run `python -m pilot.knowledge_demo` for
+Reference acceptance covers metric and general-knowledge lifecycle cases,
+scripted adapter/harness checks, and repository-source preparation. Run `python -m pilot.knowledge_demo` for
 a self-contained knowledge database, source snapshot, targeted retrieval, and
 reviewed correction. Model calls are opt-in and separate from deterministic CI;
 scripted harness acceptance does not establish live agent effectiveness or human
 review effort. The source workflow retains reproducible test/demo evidence for
-each tested revision.
+each tested revision. The opt-in repository rehearsal uses two real documentation
+files and 12 fixed questions. Its saved answers pass in both arms after a disclosed
+citation-annotation correction; it establishes no speed or quality advantage.
+The [MIT license](LICENSE) covers this repository's source.
 
 The existing Pages workflow validates and publishes the eight public files from `feature/context-presentation`. It checks freshness, syntax and browser acceptance before deployment. Research, the supplied ZIP, local architecture sidecars, PDFs and screenshots remain outside the public package.
 
