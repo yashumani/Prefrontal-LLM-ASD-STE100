@@ -36,7 +36,11 @@ RULES = (
 class CodexModel:
     """Use authenticated Codex read-only, with optional per-run model selection."""
 
-    def __init__(self, directory, timeout=90, executable=None, model=None, reasoning_effort=None):
+    def __init__(self, directory, timeout=90, executable=None, model=None, reasoning_effort=None,
+                 rules=RULES, response_format="json"):
+        if response_format not in {"json", "ndjson"}:
+            raise ValueError("unsupported model response format")
+        self.rules, self.response_format = rules, response_format
         self.executable = executable or shutil.which("codex")
         if not self.executable:
             raise ValueError("Codex CLI is unavailable; no model call made")
@@ -53,7 +57,7 @@ class CodexModel:
 
     def complete(self, payload):
         number = len(self.calls) + 1
-        prompt = RULES + "\n\n" + json.dumps(payload, ensure_ascii=False)
+        prompt = self.rules + "\n\n" + json.dumps(payload, ensure_ascii=False)
         if len(prompt.encode("utf-8")) > MAX_PROMPT_BYTES:
             raise ValueError("model prompt exceeds the rehearsal byte budget")
         prompt_path = self.directory / ("model-{}-prompt.txt".format(number))
@@ -89,7 +93,7 @@ class CodexModel:
                 raise ValueError("model turn failed; inspect retained local diagnostics")
         if not messages or not completed:
             raise ValueError("model did not return a completed answer")
-        answer = json.loads(messages[-1])
+        answer = messages[-1] if self.response_format == "ndjson" else json.loads(messages[-1])
         self.calls.append({"phase": payload["phase"], "elapsed_ms": round((perf_counter() - started) * 1000, 3),
                            "prompt_bytes": len(prompt.encode("utf-8")), "usage": usage,
                            "executable": self.executable, "cli_version": self.version,

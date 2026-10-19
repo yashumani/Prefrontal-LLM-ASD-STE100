@@ -60,6 +60,23 @@ class CodexAdapterChecks(unittest.TestCase):
                 self.assertGreaterEqual(recorded["elapsed_ms"], 0)
         self.assertEqual(["raw-answer", "prefrontal-answer"], [call["phase"] for call in model.calls])
 
+    def test_engineering_ndjson_retains_original_text_and_custom_rules(self):
+        original = ' {"task":1}  \n{"task":2}\n'
+        events = [{"type": "item.completed", "item": {"type": "agent_message", "text": original}},
+                  {"type": "turn.completed", "usage": {"input_tokens": 31, "output_tokens": 7}}]
+        with patch("pilot.rehearsal.subprocess.run", side_effect=[self.version, self.response(events)]) as execute:
+            model = CodexModel(self.directory, executable=self.executable,
+                               rules="Bounded engineering NDJSON", response_format="ndjson")
+            self.assertEqual(original, model.complete({"phase": "engineering"}))
+        self.assertTrue(execute.call_args.kwargs["input"].startswith("Bounded engineering NDJSON\n\n"))
+        self.assertEqual(original, json.loads((self.directory / "model-1-events.jsonl").read_text().splitlines()[0])["item"]["text"])
+
+    def test_unknown_response_format_is_rejected_before_invocation(self):
+        with patch("pilot.rehearsal.subprocess.run") as execute:
+            with self.assertRaisesRegex(ValueError, "response format"):
+                CodexModel(self.directory, response_format="repair")
+        execute.assert_not_called()
+
     def test_unspecified_executable_uses_cli_lookup_without_model_overrides(self):
         with patch("pilot.rehearsal.shutil.which", return_value=self.executable) as locate, \
                 patch("pilot.rehearsal.subprocess.run",

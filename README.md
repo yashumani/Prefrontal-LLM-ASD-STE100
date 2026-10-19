@@ -185,3 +185,10 @@ Open `story.html` for the full 16-chapter story. The header links both formats a
 Both formats use `presentation-content.json` and the same renderers. Run `node scripts/build-static.cjs` after edits; its `--check` flag verifies both generated files. Run `node scripts/verify-story.cjs` alongside the existing deck suite. Story print output includes expanded detail; use the original deck for the 16-page print layout. Search is proposed, not a deployed backend.
 
 The scrolling view also has a 3D depth toggle, scroll-driven perspective, and a numbered step guide. Select a step to move to its explanation. Diagram text and all source material remain intact. Pausing motion, choosing flat view or using OS reduced motion removes perspective; narrow screens keep the diagram flat for legibility. The existing motion dispatcher drives depth, so no extra animation loop is created.
+
+## Supervised engineering consumer
+
+See [the supervised consumer contract](pilot/SUPERVISED.md) for bounded task
+outputs, current task evidence and atomic multirecord delivery through the
+existing local knowledge registry. Prior frozen rehearsal source and results
+remain unchanged.
