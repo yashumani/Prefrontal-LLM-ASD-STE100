@@ -90,6 +90,13 @@ and selected knowledge rejected source drift until a reviewed correction restore
 use. Static presentation freshness, contracts and all 31 original topics passed.
 The presentation itself was not changed by this release.
 
+The first hosted matrix exposed a test assumption: Python 3.13 can decode the
+deeply nested JSON list that older Python rejects during decoding. Both runtimes
+denied the request and recovered for the following valid request. The regression
+now checks the exact denial category for the current decoder, retaining the
+malformed-input denial and next-request recovery assertions. Runtime behavior
+and the saved model answers were unchanged by this test portability correction.
+
 The [source workflow](https://github.com/yashumani/Prefrontal-LLM-ASD-STE100/actions/workflows/pilot.yml)
 repeats the suite and both demos on Linux with Python 3.9 and 3.13 and Windows
 with Python 3.13, without model calls. Match its tested commit to the release tag;

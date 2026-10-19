@@ -262,13 +262,22 @@ class KnowledgeAcceptance(unittest.TestCase):
         principals.write_text(json.dumps(PRINCIPALS), encoding="utf-8")
         request = {"operation": "knowledge.get", "workspace": WORKSPACE, "record_ids": [self.first["id"]]}
         deep = "[" * 1500 + "0" + "]" * 1500
+        # Decoder nesting limits differ across Python versions. If the decoder
+        # accepts this valid JSON list, dispatch must still reject its shape.
+        # A decoder recursion failure must remain a controlled invalid_json.
+        try:
+            json.loads(deep)
+            expected_error = "invalid_request"
+        except RecursionError:
+            expected_error = "invalid_json"
         result = subprocess.run([sys.executable, "-m", "pilot.knowledge_cli", "--database", str(self.database),
                                  "--source-root", str(self.sources), "--principals", str(principals),
                                  "--principal", "reader"], input=deep + "\n" + json.dumps(request) + "\n",
                                 capture_output=True, text=True, cwd=ROOT, timeout=30)
         self.assertEqual(0, result.returncode, result.stderr)
         messages = [json.loads(line) for line in result.stdout.splitlines()]
-        self.assertEqual({"ok": False, "error": "invalid_json"}, messages[0])
+        self.assertEqual(2, len(messages))
+        self.assertEqual({"ok": False, "error": expected_error}, messages[0])
         self.assertTrue(messages[1]["ok"], messages[1])
 
 
