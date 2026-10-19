@@ -143,9 +143,28 @@ SQLite/audit evidence; run `python -m unittest pilot.test_context_pilot -v` for 
 acceptance cases. It is separate from the published presentation and does not
 qualify the proposed enterprise product, live adapters, MCP or hybrid search.
 
+The additive [knowledge reference interface](pilot/KNOWLEDGE.md) applies the same
+review/publication controls to source-bound claims without requiring a metric,
+period, currency, or all four semantic categories in every release. The
+[agent workflow](pilot/AGENT_WORKFLOW.md) explains ingestion, evidence use,
+corrections, and maintenance. Run all reference acceptance cases with
+`python -m unittest discover -s pilot -t . -p 'test_*.py' -v`.
+
+Reference acceptance covers 42 metric lifecycle cases, 18 general-knowledge cases,
+and 10 scripted rehearsal-harness cases. Run `python -m pilot.knowledge_demo` for
+a self-contained knowledge database, source snapshot, targeted retrieval, and
+reviewed correction. Model calls are opt-in and separate from deterministic CI;
+scripted harness acceptance does not establish live agent effectiveness or human
+review effort. The source workflow retains reproducible test/demo evidence for
+each tested revision.
+
 The existing Pages workflow validates and publishes the eight public files from `feature/context-presentation`. It checks freshness, syntax and browser acceptance before deployment. Research, the supplied ZIP, local architecture sidecars, PDFs and screenshots remain outside the public package.
 
-Working artifacts: the presentation, illustrative browser checks, editable worksheet and checked local architecture viewer. Still to implement and qualify: persistent admission, real decision-model integration, calibration, record-level authorization, MCP service, recovery, load and customer return.
+Working artifacts include the presentation and local reference code for persistent
+admission, exact-version review, atomic publication, and checked delivery. Real
+identity and decision-model qualification, semantic retrieval quality, hosted MCP,
+enterprise adapters, infrastructure recovery/load, and customer return remain
+unverified operating-product capabilities.
 
 The writing is inspired by ASD-STE100. Full compliance has not been checked. Primary standards guide the proposal; they do not certify it. No flawless-operation, future-proofing, cost-saving or model-parity guarantee is claimed.
 

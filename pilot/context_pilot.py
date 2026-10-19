@@ -54,6 +54,9 @@ class ContextError(Exception):
 
 
 class Registry:
+    profile = "metric"
+    required_layers = LAYERS
+
     def __init__(self, database, source_root, principals, clock=utc_now):
         self.root = Path(source_root).resolve()
         self.principals = json.loads(canonical(principals))
@@ -80,7 +83,20 @@ class Registry:
             CREATE TABLE IF NOT EXISTS events (
                 seq INTEGER PRIMARY KEY AUTOINCREMENT, at TEXT, actor TEXT,
                 workspace TEXT, action TEXT, details TEXT);
+            CREATE TABLE IF NOT EXISTS registry_config (
+                key TEXT PRIMARY KEY, value TEXT NOT NULL);
         """)
+        stored = self.db.execute("SELECT value FROM registry_config WHERE key='profile'").fetchone()
+        if stored is None:
+            # Existing pre-profile databases contain the original metric contract.
+            if self.profile != "metric" and self.db.execute("SELECT COUNT(*) FROM records").fetchone()[0]:
+                self.db.close()
+                raise ContextError("profile_mismatch")
+            with self.db:
+                self.db.execute("INSERT INTO registry_config VALUES('profile',?)", (self.profile,))
+        elif stored[0] != self.profile:
+            self.db.close()
+            raise ContextError("profile_mismatch")
 
     def close(self):
         self.db.close()
@@ -124,7 +140,7 @@ class Registry:
     def evidence(self, relative):
         return {"path": relative, "sha256": self.source_hash(relative)}
 
-    def _validate_body(self, body):
+    def _validate_envelope(self, body):
         required = {"id", "version", "workspace", "layer", "owner", "claim",
                     "classification", "valid_from", "valid_until", "evidence",
                     "dependencies", "content"}
@@ -165,6 +181,10 @@ class Registry:
                 raise ContextError("invalid_record")
         if len({(d["id"], d["version"]) for d in deps}) != len(deps):
             raise ContextError("invalid_record")
+
+    def _validate_body(self, body):
+        self._validate_envelope(body)
+        deps = body["dependencies"]
         if body["layer"] != "data" and not deps:
             raise ContextError("missing_dependencies")
         content_fields = {
@@ -244,15 +264,16 @@ class Registry:
 
     def approve(self, actor, workspace, record_id, version, expected_hash):
         self._principal(actor, workspace, "reviewer")
-        row = self._row(workspace, record_id, version)
-        if row["submitter"] == actor:
-            raise ContextError("self_approval")
-        if expected_hash != row["hash"]:
-            raise ContextError("approval_hash_mismatch")
-        if row["review_state"] in {"rejected", "changes_requested"}:
-            raise ContextError("review_blocked")
-        self._current(row, require_approval=False)
         with self.db:
+            self.db.execute("BEGIN IMMEDIATE")
+            row = self._row(workspace, record_id, version)
+            if row["submitter"] == actor:
+                raise ContextError("self_approval")
+            if expected_hash != row["hash"]:
+                raise ContextError("approval_hash_mismatch")
+            if row["review_state"] in {"rejected", "changes_requested"}:
+                raise ContextError("review_blocked")
+            self._current(row, require_approval=False)
             prior = self.db.execute(
                 "SELECT hash FROM approvals WHERE workspace=? AND id=? AND version=?",
                 (workspace, record_id, version),
@@ -273,12 +294,13 @@ class Registry:
         self._principal(actor, workspace, "reviewer")
         if decision not in {"rejected", "changes_requested"}:
             raise ContextError("invalid_decision")
-        row = self._row(workspace, record_id, version)
-        if expected_hash != row["hash"]:
-            raise ContextError("approval_hash_mismatch")
-        if row["review_state"] != "draft":
-            raise ContextError("review_blocked")
         with self.db:
+            self.db.execute("BEGIN IMMEDIATE")
+            row = self._row(workspace, record_id, version)
+            if expected_hash != row["hash"]:
+                raise ContextError("approval_hash_mismatch")
+            if row["review_state"] != "draft":
+                raise ContextError("review_blocked")
             self.db.execute("UPDATE records SET review_state=? "
                             "WHERE workspace=? AND id=? AND version=?",
                             (decision, workspace, record_id, version))
@@ -299,7 +321,8 @@ class Registry:
                 if classification not in person.get("classifications", []):
                     raise ContextError("access_denied")
             bodies[record_id] = self._current(row)
-        if {body["layer"] for body in bodies.values()} != LAYERS:
+        if (self.required_layers is not None
+                and {body["layer"] for body in bodies.values()} != self.required_layers):
             raise ContextError("incomplete_layers")
         visiting, visited = set(), set()
 
@@ -318,6 +341,10 @@ class Registry:
 
         for record_id in bodies:
             visit(record_id)
+        self._check_native_bindings(bodies)
+        return bodies
+
+    def _check_native_bindings(self, bodies):
         for body in bodies.values():
             if body["layer"] in {"data", "metric"}:
                 key = "source" if body["layer"] == "data" else "native_query"
@@ -328,7 +355,6 @@ class Registry:
                 if (body["layer"] == "metric"
                         and body["content"]["native_revision"] != evidence[source]):
                     raise ContextError("source_binding_mismatch")
-        return bodies
 
     def publish(self, actor, workspace, name, manifest):
         self._principal(actor, workspace, "publisher")

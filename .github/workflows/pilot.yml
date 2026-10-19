@@ -1,0 +1,67 @@
+name: Validate governed context pilot
+
+on:
+  push:
+    branches: [feature/context-presentation]
+    paths:
+      - pilot/**
+      - .github/workflows/pilot.yml
+      - LICENSE
+  pull_request:
+    paths:
+      - pilot/**
+      - .github/workflows/pilot.yml
+      - LICENSE
+
+permissions:
+  contents: read
+
+concurrency:
+  group: context-pilot-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Pilot / ${{ matrix.os }} / Python ${{ matrix.python-version }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            python-version: '3.9'
+          - os: ubuntu-latest
+            python-version: '3.13'
+          - os: windows-latest
+            python-version: '3.13'
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Check out tested revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Run pilot acceptance tests
+        run: |
+          set -o pipefail
+          python -m unittest discover -s pilot -t . -p 'test_*.py' -v 2>&1 | tee pilot-test-results.log
+      - name: Reproduce deterministic lifecycle evidence
+        run: python -m pilot.demo --output pilot-evidence
+      - name: Reproduce selected knowledge lifecycle
+        run: python -m pilot.knowledge_demo --output pilot-evidence/knowledge
+      - name: Retain test and lifecycle evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: context-pilot-${{ matrix.os }}-python-${{ matrix.python-version }}
+          path: |
+            pilot-test-results.log
+            pilot-evidence/
+          retention-days: 7
+          if-no-files-found: warn

@@ -158,9 +158,12 @@ reviewed correction, expiry, revocation, cached-use checks, workspace/classifica
 denial, native-source permission independence, bounded inputs, malformed data,
 query budgets, reference-index corruption/rebuild, and separate-process JSON use.
 
-The single completion checklist and validation record remain in
-[`research-shortlist.md`](../research-shortlist.md), under "Context lifecycle pilot".
-No second project tracker is introduced.
+The acceptance suite and demo are reproducible from the commands above. A demo
+run writes its source/fixture SHA-256 manifest and machine-readable evidence to
+the printed evidence directory. The saved local baseline on October 15, 2026
+passed 42 tests and replayed eight maintenance scenarios with three consumers
+and zero LLM calls. That historical result is not a current CI or release claim;
+validate the exact source revision being used.
 
 Before moving from this skeleton to an operating pilot, assign a source owner,
 reviewer and release owner; choose representative tasks and maintenance changes;

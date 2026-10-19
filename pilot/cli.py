@@ -26,7 +26,7 @@ def main():
                 continue
             try:
                 request = json.loads(line)
-            except (ValueError, TypeError):
+            except (ValueError, TypeError, RecursionError):
                 print(json.dumps({"ok": False, "error": "invalid_json"}), flush=True)
                 continue
             print(json.dumps(registry.dispatch(args.principal, request), allow_nan=False), flush=True)
