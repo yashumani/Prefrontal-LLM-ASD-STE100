@@ -11,11 +11,12 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from contextlib import closing
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from unittest.mock import patch
 
-from .context_pilot import canonical
+from .context_pilot import ContextError, canonical
 from .knowledge import KnowledgeRegistry
 from .knowledge_mcp import MCPServer
 
@@ -131,7 +132,7 @@ class KnowledgeMCPAcceptance(unittest.TestCase):
 
     def published_state(self):
         tables = ("records", "approvals", "releases", "active", "search_refs", "registry_config")
-        with sqlite3.connect(self.database) as connection:
+        with closing(sqlite3.connect(self.database)) as connection:
             return {table: connection.execute("SELECT * FROM " + table + " ORDER BY 1,2").fetchall()
                     for table in tables}
 
@@ -429,6 +430,28 @@ class KnowledgeMCPAcceptance(unittest.TestCase):
         self.database.unlink()
         self.controlled(self.tool(), "storage_unavailable")
         self.assertFalse(self.database.exists())
+
+    def test_profile_probe_closes_connection_on_success_and_failure(self):
+        connections = []
+        original_connect = sqlite3.connect
+
+        def tracked_connect(*args, **kwargs):
+            connection = original_connect(*args, **kwargs)
+            connections.append(connection)
+            return connection
+
+        empty = self.directory / "probe-empty.sqlite3"
+        empty.write_bytes(b"")
+        with patch("pilot.knowledge_mcp.sqlite3.connect", side_effect=tracked_connect):
+            self.server._existing_database()
+            with patch.object(self.server, "database", empty):
+                with self.assertRaises(ContextError):
+                    self.server._existing_database()
+        self.assertEqual(2, len(connections))
+        # Strong references prevent garbage collection from masking a leaked handle.
+        for connection in connections:
+            with self.assertRaises(sqlite3.ProgrammingError):
+                connection.execute("SELECT 1")
 
     def test_database_replaced_with_empty_file_after_startup_is_not_initialized(self):
         self.initialize()

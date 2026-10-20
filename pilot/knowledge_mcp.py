@@ -11,6 +11,7 @@ import math
 import re
 import sqlite3
 import sys
+from contextlib import closing
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -78,7 +79,7 @@ class MCPServer:
         if not self.database.is_file():
             raise ContextError("storage_unavailable")
         try:
-            with sqlite3.connect(self.database.as_uri() + "?mode=ro", uri=True) as connection:
+            with closing(sqlite3.connect(self.database.as_uri() + "?mode=ro", uri=True)) as connection:
                 row = connection.execute("SELECT value FROM registry_config WHERE key='profile'").fetchone()
                 if row is None or row[0] != "knowledge":
                     raise ContextError("storage_unavailable")
