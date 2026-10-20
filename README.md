@@ -192,3 +192,7 @@ See [the supervised consumer contract](pilot/SUPERVISED.md) for bounded task
 outputs, current task evidence and atomic multirecord delivery through the
 existing local knowledge registry. Prior frozen rehearsal source and results
 remain unchanged.
+
+For current-repository retrieval in a normal Codex session, see the
+[local Codex connection](pilot/CODEX.md). It uses scoped read-only MCP tools and
+keeps new guide review/publication separate.
