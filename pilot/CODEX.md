@@ -89,7 +89,8 @@ maintenance minutes only when reported; machine latency is not human effort.
 
 The stdio port implements initialization/version negotiation, ping, tool listing
 and tool calls. It supports protocol versions 2025-03-26, 2025-06-18 and
-2025-11-25. Messages are bounded newline-delimited UTF-8 JSON-RPC; unsupported
+2025-11-25. Messages are bounded newline-delimited UTF-8 JSON-RPC with a 32-level
+JSON nesting limit enforced before parsing; unsupported
 methods and malformed messages fail explicitly. It exposes no management tools.
 This is a small local protocol adapter, not a general MCP platform.
 

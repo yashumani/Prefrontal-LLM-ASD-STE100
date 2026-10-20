@@ -17,6 +17,7 @@ from pathlib import Path
 from .context_pilot import ContextError, MAX_RECORDS, digest
 from .knowledge import KnowledgeRegistry
 from .knowledge_cli import _principals
+from .task_contract import _check_depth
 
 
 MAX_RPC_BYTES = 8192
@@ -219,7 +220,10 @@ class MCPServer:
                 response = _error(None, -32600, "Request exceeds byte limit")
             else:
                 try:
-                    message = json.loads(line.decode("utf-8"), object_pairs_hook=_pairs,
+                    decoded = line.decode("utf-8")
+                    # Use the shared depth guard instead of runtime parser limits.
+                    _check_depth(decoded)
+                    message = json.loads(decoded, object_pairs_hook=_pairs,
                                          parse_constant=_constant, parse_float=_float)
                     response = self.handle(message)
                 except (ValueError, UnicodeError, RecursionError, OverflowError):

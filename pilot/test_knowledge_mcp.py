@@ -380,6 +380,25 @@ class KnowledgeMCPAcceptance(unittest.TestCase):
         response = self.stream(payload + b"\n")[0]
         self.assertIn(response["error"]["code"], (-32600, -32602))
 
+    def test_explicit_json_depth_boundary_ignores_quoted_brackets(self):
+        def nested(count):
+            value = 0
+            for _ in range(count):
+                value = [value]
+            return value
+
+        # The request and params objects occupy the first two nesting levels.
+        at_limit = {"jsonrpc": "2.0", "id": 1, "method": "ping", "params": {"nested": nested(30)}}
+        over_limit = {"jsonrpc": "2.0", "id": 2, "method": "ping", "params": {"nested": nested(31)}}
+        quoted = {"jsonrpc": "2.0", "id": 3, "method": "ping",
+                  "params": {"text": '[{\\\"' * 100 + '}]' * 100}}
+        payload = b"".join(json.dumps(value).encode("utf-8") + b"\n"
+                           for value in [at_limit, over_limit, quoted])
+        responses = self.stream(payload)
+        self.assertEqual({"jsonrpc": "2.0", "id": 1, "result": {}}, responses[0])
+        self.assertEqual(-32700, responses[1]["error"]["code"])
+        self.assertEqual({"jsonrpc": "2.0", "id": 3, "result": {}}, responses[2])
+
     def test_successful_dispatch_remains_within_registry_request_byte_limit(self):
         self.initialize()
         captured = []
