@@ -53,6 +53,7 @@ def worker(size, output, rss_limit):
     from pilot.composable_model import validate_record
     from pilot.composable_registry import ComposableRegistry
     from pilot.context_pilot import digest
+    from pilot.context_pilot import ContextError
 
     started = time.perf_counter()
     root = Path(output)
@@ -131,11 +132,24 @@ def worker(size, output, rss_limit):
             "exact_id_search": lambda: registry.search("reader", "scale", selected),
             "alias_search": lambda: registry.search("reader", "scale", "scaleleaf%06d" % (size - 1)),
             "ranked_first_page": lambda: registry.search("reader", "scale", "synthetic member", dimension="CHANNEL", page_size=20),
+            "ranked_targeted_search": lambda: registry.search("reader", "scale", "member %06d" % (size - 1), dimension="CHANNEL", page_size=20),
             "bounded_resolution": resolve,
         }
         measurements = {}
         for name, operation in operations.items():
-            operation()  # warm-up explicitly excluded
+            probe_started = time.perf_counter_ns()
+            try:
+                operation()  # successful warm-up explicitly excluded
+            except ContextError as error:
+                if (name != "ranked_first_page" or error.code != "context_unavailable"
+                        or not isinstance(error.__context__, sqlite3.DatabaseError)
+                        or str(error.__context__) != "interrupted"):
+                    raise
+                measurements[name] = {"status": "bounded_denial", "reason": "sqlite_ranking_work_budget",
+                    "probe_ms": round((time.perf_counter_ns() - probe_started) / 1e6, 3),
+                    "partial_results": False, "timed_samples": 0}
+                (root / "measurement-progress.json").write_text(json.dumps(measurements, indent=2) + "\n", encoding="utf-8")
+                continue
             samples = []
             for _ in range(20):
                 tick = time.perf_counter_ns()
@@ -148,12 +162,14 @@ def worker(size, output, rss_limit):
             _, peak = tracemalloc.get_traced_memory()
             tracemalloc.stop()
             ordered = sorted(samples)
-            measurements[name] = {"samples": len(samples), "median_ms": round(statistics.median(samples), 3),
+            measurements[name] = {"status": "passed", "samples": len(samples), "median_ms": round(statistics.median(samples), 3),
                                   "p95_ms": round(ordered[18], 3), "max_ms": round(max(samples), 3),
                                   "single_operation_python_peak_bytes": peak}
+            (root / "measurement-progress.json").write_text(json.dumps(measurements, indent=2) + "\n", encoding="utf-8")
         rss = peak_rss_bytes()
         assert rss is None or rss <= rss_limit * 1024 * 1024
-        return {"status": "passed", "synthetic_members": size, "canonical_records": size + len(records),
+        return {"status": "completed_with_query_limits" if any(value["status"] != "passed" for value in measurements.values()) else "passed",
+                "synthetic_members": size, "canonical_records": size + len(records),
                 "materialized_combinations": 0, "submitted_batches": batches,
                 "simulated_exact_version_reviews": size + len(records),
                 "member_ingest_review_publish_seconds": round(seed_seconds, 3),
