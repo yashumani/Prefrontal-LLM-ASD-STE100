@@ -1,0 +1,44 @@
+[
+  {
+    "order": "o1",
+    "period": "2026-09",
+    "channel": "online",
+    "product": "postpaid",
+    "status": "completed"
+  },
+  {
+    "order": "o2",
+    "period": "2026-09",
+    "channel": "online",
+    "product": "postpaid",
+    "status": "completed"
+  },
+  {
+    "order": "o3",
+    "period": "2026-09",
+    "channel": "online",
+    "product": "prepaid",
+    "status": "completed"
+  },
+  {
+    "order": "o4",
+    "period": "2026-09",
+    "channel": "store",
+    "product": "postpaid",
+    "status": "completed"
+  },
+  {
+    "order": "o5",
+    "period": "2026-08",
+    "channel": "online",
+    "product": "postpaid",
+    "status": "completed"
+  },
+  {
+    "order": "o6",
+    "period": "2026-09",
+    "channel": "online",
+    "product": "postpaid",
+    "status": "cancelled"
+  }
+]
