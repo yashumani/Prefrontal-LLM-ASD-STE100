@@ -154,6 +154,8 @@ absent/rejected. **Structurally valid does not mean human approved.**
 | Reverse-affected publication set | 2,048 records; excess denies without truncation |
 | Search page | 100 results |
 | Search query | 16 terms; 256 characters |
+| Search candidate references | 2,048 per request |
+| Ranking-query work | 20,000,000 SQLite VM instructions per query |
 
 Limits are admission/response bounds, not performance guarantees. Registry
 metadata scale is separate from fact rows, source query cost, language quality
@@ -204,6 +206,12 @@ python -m pip install --no-deps --no-build-isolation .
 python -B -m pilot.composable_demo --output-root .validation/composable-demo
 ```
 
+`--no-build-isolation` uses those already-installed build tools; it does not
+install them. A minimal new venv without `wheel` or the required setuptools
+version needs those build prerequisites provisioned first, for example from an
+approved local wheel directory. They are build requirements, not runtime/model
+dependencies. The project install command requests no runtime dependencies.
+
 Installation provides `prefrontal-context`; the equivalent module entrypoint is
 `python -B -m pilot.composable_cli`. There are no runtime third-party dependencies
 or model/provider calls. The demo's actual argument is `--output-root`; it creates
@@ -211,6 +219,11 @@ a new unique run beneath that parent and prints one JSON report, including
 `database`, `source_root`, `principals`, `run_dir`, `bundle`, `native` and
 `consumers`. It also saves `result.json`, synthetic source files, principal
 configuration and individual record documents in the run directory.
+Installed handoff documents live beneath
+`sys.prefix/share/prefrontal-context`: `AGENTS.md`, `LLM_HANDOFF.md`, `README.md`
+and `pilot/COMPOSABLE.md` with the other pilot guides. Installed synthetic
+examples are under its `examples/composable/` directory. Repository-only links,
+such as the presentation and benchmark script, require the source checkout.
 
 Demo review is explicitly simulated by distinct local submitter/reviewer/releaser
 fixtures. Running it is not actual independent human review or permission to
@@ -295,11 +308,17 @@ contract `prefrontal.context.search.v1` returns `results`, `next_cursor` and
 `catalog_revision`; each result includes ID/version, layer/kind, name/description,
 score and content hash. It exposes no catalog total or protected match hints.
 Scores are deterministic lookup ranks, not semantic truth or model relevance.
-An ambiguous exact alias denies instead of choosing an interpretation.
+Search can return multiple permitted records matching the same alias. Alias-based
+resolution/composition requires one eligible exact match and denies ambiguity;
+it does not choose an interpretation from search rank alone.
 An eligible exact canonical ID uses a single-result fast path. A hidden or
 unavailable ID does not reveal a protected match and can fall back to normal
 visible keyword candidates. Inspect result IDs rather than assuming a query
 string resolved to the record it resembles.
+Discovery also enforces the candidate-reference and SQLite ranking-work budgets
+above. Exhaustion denies `context_unavailable` without partial results. Use an
+exact canonical ID or a narrower query/filter within the same authorized scope;
+a large catalog is not permission for an unbounded broad search.
 
 Pagination cursors bind the query, filters, principal configuration and catalog
 revision; authority/revision changes invalidate them. Source hashes, validity
@@ -415,9 +434,61 @@ zero live model/network calls and explicitly simulated distinct-role approval.
 This is an observed synthetic result, not human-reviewed telecom meaning or a
 production connector. Its source freshness is capture-specific.
 
-Installation, the final complete test count and measured metadata benchmarks
-remain to be bound to the final recorded receipts. No new whole-suite count or
-scale guarantee is claimed here before those checks complete.
+The complete source-suite run recorded in
+`.validation/composable-context/full-suite-release.log` passed **278 tests in
+44.830 seconds**, including the original 165 tests and checkout-portability
+checks for source hashes and draft-only human-YAML import.
+
+The candidate archive at `527b68037f081e049bea5167702f133b64738ce2` passed
+the isolated clean-install smoke in **34.165 seconds**. Its receipt is
+`.validation/composable-context/clean-archive-first/smoke.json`: a fresh virtual
+environment, an offline dependency-free runtime wheel installed outside the
+checkout, installed handoff files, actual block-YAML/JSON/Markdown round trips,
+CLI search/resolve/revalidate/export, and native value 2 for three consumers.
+That receipt identifies the tested candidate archive and wheel; a later release
+archive requires its own recorded smoke receipt.
+
+## Measured metadata scale
+
+The [public benchmark report](COMPOSABLE_BENCHMARK.json) records the measured
+source hashes, environment and per-operation outcomes. This capture used
+Python 3.9.21, SQLite 3.45.3 and Windows AMD64 with 12 reported CPUs. Each size
+ran in a fresh subprocess on a normal workstation with unisolated background
+activity. These are observed synthetic metadata timings, not service promises.
+
+| Synthetic members | Canonical records | Scripted ingest/review/publish (s) | Observed peak RSS (MiB) | Dataset outcome |
+|---:|---:|---:|---:|---|
+| 1,000 | 1,008 | 3.352 | 29.35 | Passed |
+| 10,000 | 10,008 | 35.659 | 30.02 | Passed |
+| 100,000 | 100,008 | 366.772 | 29.13 | Completed with query limits |
+
+Successful operations below show **median / p95 milliseconds**, with one
+excluded warmup and 20 timed samples per operation:
+
+| Operation | 1k members | 10k members | 100k members |
+|---|---:|---:|---:|
+| Exact canonical ID search | 5.851 / 6.461 | 6.027 / 6.680 | 5.902 / 6.384 |
+| Exact alias search | 5.925 / 7.385 | 6.075 / 6.683 | 6.133 / 6.404 |
+| Selective token-ranked, dimension-filtered search | 7.324 / 10.181 | 15.607 / 16.845 | 132.349 / 147.268 |
+| Broad ranked first page | 133.542 / 149.440 | 271.286 / 297.962 | Bounded denial; no returned results |
+| Nine-record resolution | 34.744 / 43.829 | 34.482 / 37.389 | 34.193 / 38.324 |
+
+At 100k members, the selective query `member 099999` with dimension `CHANNEL`
+returned `CHANNEL_MEMBER_099999` with score 600. This is token ranking rather
+than an exact ID/name/alias shortcut; the separate captured check is
+`.validation/composable-context/selective-100k.json`. The broad query
+`synthetic member` with that dimension hit the 20,000,000-instruction SQLite
+ranking budget after a 4,694.313 ms diagnostic probe. It returned a controlled
+`context_unavailable` denial with no partial results and no timed successful
+samples. The 100k dataset is explicitly `completed_with_query_limits`, not an
+all-query pass. Exact IDs and selective filters are the qualified retrieval
+paths for this capture; broad retrieval at that size remains bounded.
+
+All three sizes resolved nine records, preserved selector-order identity and
+materialized zero measure/member combinations. The benchmark executed zero
+source fact rows and zero model calls; scripted reviews measure no human review
+effort or semantic acceptance. These results do not qualify large warehouse
+queries or arbitrary measures.
 
 ## Reproduce the metadata benchmark
 
@@ -426,12 +497,14 @@ measures synthetic registry metadata, not fact execution. Choose a new output
 directory:
 
 ```text
-python -B scripts/benchmark-composable.py --output .validation/composable-benchmark-new --sizes 1000,10000,100000 --max-seconds 300 --max-rss-mib 512
+python -B scripts/benchmark-composable.py --output .validation/composable-benchmark-new --sizes 1000,10000,100000 --max-seconds 600 --max-rss-mib 512
 ```
 
 `benchmark.json` records Python/platform/SQLite/CPU environment, input sizes,
 code hashes, per-dataset status, observed latency and peak resident memory.
-Each operation has one warmup and 20 timed samples. The timeout is per dataset;
+Each successful operation has one warmup and 20 timed samples. A bounded denial
+retains its diagnostic probe time without pretending to return results.
+The timeout is per dataset;
 RSS is measured after batches and completion, not enforced as an OS allocation
 cap. Failed/timed-out sizes stay in the result. Scripted distinct-role approvals
 measure no actual human review effort or semantic truth. The fixture executes

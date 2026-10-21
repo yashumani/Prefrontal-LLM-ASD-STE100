@@ -22,7 +22,7 @@ pilot = ["fixtures/*", "fixtures/**/*"]
 
 [tool.setuptools.data-files]
 "share/prefrontal-context" = ["AGENTS.md", "LLM_HANDOFF.md", "README.md", "LICENSE"]
-"share/prefrontal-context/pilot" = ["pilot/*.md"]
+"share/prefrontal-context/pilot" = ["pilot/*.md", "pilot/COMPOSABLE_BENCHMARK.json"]
 "share/prefrontal-context/examples/composable" = ["examples/composable/requests.jsonl", "examples/composable/principals.json", "examples/composable/import-batch.json"]
 "share/prefrontal-context/examples/composable/sources" = ["examples/composable/sources/domain.txt", "examples/composable/sources/orders.json"]
 "share/prefrontal-context/examples/composable/records" = ["examples/composable/records/*.json", "examples/composable/records/*.yaml", "examples/composable/records/*.md"]

@@ -68,7 +68,8 @@ def main():
     installed_handoff = run([python, "-I", "-c",
         "from pathlib import Path; import sys; p=Path(sys.prefix)/'share'/'prefrontal-context'; "
         "assert (p/'AGENTS.md').is_file() and (p/'LLM_HANDOFF.md').is_file(); "
-        "assert (p/'pilot'/'COMPOSABLE.md').is_file(); print(p/'LLM_HANDOFF.md')"]).strip()
+        "assert (p/'pilot'/'COMPOSABLE.md').is_file(); "
+        "assert (p/'pilot'/'COMPOSABLE_BENCHMARK.json').is_file(); print(p/'LLM_HANDOFF.md')"]).strip()
     yaml_path = source / "examples" / "composable" / "records" / "M_GROSS_ADDS.yaml"
     json_path = yaml_path.with_suffix(".json")
     yaml_check = run([python, "-I", "-c",

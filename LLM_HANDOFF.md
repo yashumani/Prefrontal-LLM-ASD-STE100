@@ -41,6 +41,12 @@ operation is exposed by the CLI. The [complete PowerShell sequence and native
 contract](pilot/COMPOSABLE.md#json-lines-requests-and-orchestration) show the
 actual envelope handling. Keep management roles out of consumer orchestration.
 
+The wheel includes these instructions beneath
+`sys.prefix/share/prefrontal-context/`, alongside the pilot guides and synthetic
+examples. The clean-install command requires existing `setuptools>=65` and
+`wheel` build tools; `--no-build-isolation` does not install those prerequisites.
+Full presentation and benchmark-script links refer to a source checkout.
+
 ## Workflow
 
 1. **Frame the task.** Identify the permitted workspace, requested measure,
