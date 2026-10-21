@@ -24,7 +24,7 @@ narrative: |-
 owner: synthetic-domain-owner
 provenance:
   - path: domain.txt
-    sha256: "980504d7bc717403c49875802d3edb21cdeb32458ee3226429b11fe846187a9b"
+    sha256: "bb0744fb655e1906a45fb4cd96c900ef787c01cb7df7f7d97cbb62eb044353c2"
 schema: prefrontal.context.v1
 spec:
   aggregation: count

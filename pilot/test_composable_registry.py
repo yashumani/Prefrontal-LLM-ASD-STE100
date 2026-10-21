@@ -1,5 +1,6 @@
 """Exact reviews and bounded, current-authority context composition."""
 import copy
+from contextlib import closing
 from datetime import datetime, timedelta, timezone
 import hashlib
 import importlib
@@ -218,7 +219,7 @@ class ComposableRegistryAcceptance(unittest.TestCase):
             self.module.ComposableRegistry(legacy, self.root, self.people)
         self.assertEqual(error.exception.code, "profile_mismatch")
         self.assertEqual(before, legacy.read_bytes())
-        with sqlite3.connect(legacy) as connection:
+        with closing(sqlite3.connect(legacy)) as connection:
             self.assertEqual(connection.execute("SELECT count(*) FROM sqlite_master WHERE name LIKE 'c_%'").fetchone()[0], 0)
 
     def guidance(self, identifier, dependencies=()):

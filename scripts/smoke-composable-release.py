@@ -65,6 +65,13 @@ def main():
     installed = run([python, "-I", "-c", "import pilot; print(pilot.__file__)"]).strip()
     if str(venv).casefold() not in installed.casefold():
         raise RuntimeError("smoke imported developer source instead of installed package")
+    # Verify committed proposal/source bytes from the extracted archive too.
+    # A developer checkout can retain CRLF bytes despite newly added LF pins.
+    run([python, "-I", "-c",
+         "import sys,unittest; sys.path.insert(0,sys.argv[1]); "
+         "suite=unittest.defaultTestLoader.loadTestsFromName('pilot.test_composable_portability'); "
+         "result=unittest.TextTestRunner(verbosity=2).run(suite); "
+         "sys.exit(0 if result.wasSuccessful() else 1)", source])
     installed_handoff = run([python, "-I", "-c",
         "from pathlib import Path; import sys; p=Path(sys.prefix)/'share'/'prefrontal-context'; "
         "assert (p/'AGENTS.md').is_file() and (p/'LLM_HANDOFF.md').is_file(); "
@@ -113,6 +120,7 @@ def main():
               "installed_handoff": installed_handoff,
               "isolated_python": True, "runtime_install_no_index": True, "runtime_dependencies": [],
               "outside_checkout": True, "native_value": demo["native"]["value"],
+              "archive_proposal_provenance_and_draft_admission": True,
               "consumer_count": len(demo["consumers"]), "live_model_calls": demo["live_model_calls"],
               "cli_search_resolve_revalidate_export": True, "bundle_hash": resolved["bundle_hash"],
               "idiomatic_yaml_input_roundtrip": True, "yaml_record_hash": yaml_check,
