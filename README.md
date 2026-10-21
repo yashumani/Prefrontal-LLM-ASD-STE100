@@ -1,5 +1,9 @@
 # Prefrontal · Governed context as a product
 
+The default development branch is `main`. The governed-context validation matrix
+runs on relevant changes to `main`; the presentation publication workflow keeps
+its existing separate branch configuration described below.
+
 For the additive v0.3 composable context profile, start with
 [LLM_HANDOFF.md](LLM_HANDOFF.md), [AGENTS.md](AGENTS.md) and the
 [composable profile contract](pilot/COMPOSABLE.md). The LLM workflow is bounded
