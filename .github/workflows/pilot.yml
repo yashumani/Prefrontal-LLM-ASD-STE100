@@ -2,7 +2,7 @@ name: Validate governed context pilot
 
 on:
   push:
-    branches: [feature/context-presentation]
+    branches: [main, feature/context-presentation]
     paths:
       - pilot/**
       - .github/workflows/pilot.yml
@@ -14,6 +14,7 @@ on:
       - scripts/smoke-composable-release.py
       - AGENTS.md
       - LLM_HANDOFF.md
+      - README.md
   pull_request:
     paths:
       - pilot/**
@@ -26,6 +27,8 @@ on:
       - scripts/smoke-composable-release.py
       - AGENTS.md
       - LLM_HANDOFF.md
+      - README.md
+  workflow_dispatch:
 
 permissions:
   contents: read
