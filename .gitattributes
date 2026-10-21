@@ -1,3 +1,6 @@
 # These documentation bytes are the published rehearsal's source identities.
 /pilot/README.md text eol=lf
 /pilot/AGENT_WORKFLOW.md text eol=lf
+# These synthetic source bytes are pinned by the composable proposal provenance.
+/examples/composable/sources/* text eol=lf
+/examples/composable/records/* text eol=lf

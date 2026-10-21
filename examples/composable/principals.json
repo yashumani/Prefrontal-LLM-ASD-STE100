@@ -1,0 +1,74 @@
+{
+  "submitter": {
+    "workspace": "composable-demo",
+    "roles": [
+      "submitter"
+    ],
+    "classifications": [
+      "internal"
+    ],
+    "source_bindings": [
+      "synthetic-orders"
+    ]
+  },
+  "reviewer": {
+    "workspace": "composable-demo",
+    "roles": [
+      "reviewer"
+    ],
+    "classifications": [
+      "internal"
+    ],
+    "source_bindings": [
+      "synthetic-orders"
+    ]
+  },
+  "releaser": {
+    "workspace": "composable-demo",
+    "roles": [
+      "releaser"
+    ],
+    "classifications": [
+      "internal"
+    ],
+    "source_bindings": [
+      "synthetic-orders"
+    ]
+  },
+  "agent": {
+    "workspace": "composable-demo",
+    "roles": [
+      "consumer"
+    ],
+    "classifications": [
+      "internal"
+    ],
+    "source_bindings": [
+      "synthetic-orders"
+    ]
+  },
+  "chatbot": {
+    "workspace": "composable-demo",
+    "roles": [
+      "consumer"
+    ],
+    "classifications": [
+      "internal"
+    ],
+    "source_bindings": [
+      "synthetic-orders"
+    ]
+  },
+  "workflow": {
+    "workspace": "composable-demo",
+    "roles": [
+      "consumer"
+    ],
+    "classifications": [
+      "internal"
+    ],
+    "source_bindings": [
+      "synthetic-orders"
+    ]
+  }
+}

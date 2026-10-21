@@ -1,5 +1,15 @@
 # Prefrontal · Governed context as a product
 
+For the additive v0.3 composable context profile, start with
+[LLM_HANDOFF.md](LLM_HANDOFF.md), [AGENTS.md](AGENTS.md) and the
+[composable profile contract](pilot/COMPOSABLE.md). The LLM workflow is bounded
+search, exact dependency resolution, current validation and admitted native use.
+Readable typed IDs, JSON/bounded block YAML/Markdown views and generated proposals
+remain subject to exact human review; structural validity never establishes approval.
+Existing knowledge/metric databases and the [knowledge MCP connection](pilot/CODEX.md)
+remain separate. See the composable guide for installation, CLI/native examples,
+limits and qualification evidence.
+
 Prefrontal includes a runnable, MIT-licensed governed-context reference in
 [`pilot/`](pilot/README.md): propose source-bound knowledge, review exact versions,
 publish a dependency set, and deliver current permitted context to a consumer.

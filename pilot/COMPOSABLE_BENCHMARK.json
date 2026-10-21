@@ -1,0 +1,228 @@
+{
+  "code_sha256": {
+    "benchmark-composable.py": "505f2f8111d174e208e30f43fffe5a4e138a090755093827c876003606bc530e",
+    "composable_cli.py": "d631dda63bcd5df1923d2aaf50ec5d2c566f87d9c82ae8085ce4fb8647a348fa",
+    "composable_demo.py": "0a89f23e8d236374a84b139903432097dc50c4741f4f63548e812c6864db871e",
+    "composable_formats.py": "6b2eb59b64008ac4c0ac1df2c2e2329a4eb2394ecb88cd080da9974925ba9526",
+    "composable_model.py": "a27ef9ac71a53942ba1e62431a27f6614be7b1675aa69d9731e755f5dcd98e88",
+    "composable_native.py": "c4d2079a313a96284b4d7f04fdc04899c613816484119226a660d7afa113bfd5",
+    "composable_registry.py": "cf2ff23a31615beb85292a52ad8596cf2c28385c3becbb91943d3f86be1cc060",
+    "composable_search.py": "a6e800a66cea91835fb06c5c4fc17a2cace79cfbb41b7db85a9e1e5f49109582"
+  },
+  "code_sha256_lf": {
+    "benchmark-composable.py": "505f2f8111d174e208e30f43fffe5a4e138a090755093827c876003606bc530e",
+    "composable_cli.py": "d631dda63bcd5df1923d2aaf50ec5d2c566f87d9c82ae8085ce4fb8647a348fa",
+    "composable_demo.py": "0a89f23e8d236374a84b139903432097dc50c4741f4f63548e812c6864db871e",
+    "composable_formats.py": "6b2eb59b64008ac4c0ac1df2c2e2329a4eb2394ecb88cd080da9974925ba9526",
+    "composable_model.py": "a27ef9ac71a53942ba1e62431a27f6614be7b1675aa69d9731e755f5dcd98e88",
+    "composable_native.py": "c4d2079a313a96284b4d7f04fdc04899c613816484119226a660d7afa113bfd5",
+    "composable_registry.py": "cf2ff23a31615beb85292a52ad8596cf2c28385c3becbb91943d3f86be1cc060",
+    "composable_search.py": "a6e800a66cea91835fb06c5c4fc17a2cace79cfbb41b7db85a9e1e5f49109582"
+  },
+  "contract": "prefrontal.synthetic.scale.v1",
+  "created_at_utc": "2026-10-21T18:33:23.389171+00:00",
+  "datasets": [
+    {
+      "approval_note": "Scripted distinct-role approvals; no human effort or semantic truth measurement",
+      "canonical_records": 1008,
+      "database_bytes": 4087808,
+      "llm_calls": 0,
+      "materialized_combinations": 0,
+      "member_ingest_review_publish_seconds": 3.352,
+      "operations": {
+        "alias_search": {
+          "max_ms": 7.676,
+          "median_ms": 5.925,
+          "p95_ms": 7.385,
+          "samples": 20,
+          "single_operation_python_peak_bytes": 1084580,
+          "status": "passed"
+        },
+        "bounded_resolution": {
+          "max_ms": 46.321,
+          "median_ms": 34.744,
+          "p95_ms": 43.829,
+          "samples": 20,
+          "single_operation_python_peak_bytes": 1182219,
+          "status": "passed"
+        },
+        "exact_id_search": {
+          "max_ms": 6.511,
+          "median_ms": 5.851,
+          "p95_ms": 6.461,
+          "samples": 20,
+          "single_operation_python_peak_bytes": 1086318,
+          "status": "passed"
+        },
+        "ranked_first_page": {
+          "max_ms": 153.696,
+          "median_ms": 133.542,
+          "p95_ms": 149.44,
+          "samples": 20,
+          "single_operation_python_peak_bytes": 1385042,
+          "status": "passed"
+        },
+        "ranked_targeted_search": {
+          "max_ms": 10.361,
+          "median_ms": 7.324,
+          "p95_ms": 10.181,
+          "samples": 20,
+          "single_operation_python_peak_bytes": 1091370,
+          "status": "passed"
+        }
+      },
+      "process_peak_rss_bytes": 30777344,
+      "process_peak_rss_limit_mib": 512,
+      "resolved_bundle_bytes": 7691,
+      "resolved_records": 9,
+      "selector_order_invariant": true,
+      "simulated_exact_version_reviews": 1008,
+      "source_fact_rows_executed": 0,
+      "status": "passed",
+      "submitted_batches": 5,
+      "synthetic_members": 1000,
+      "total_seconds": 7.826
+    },
+    {
+      "approval_note": "Scripted distinct-role approvals; no human effort or semantic truth measurement",
+      "canonical_records": 10008,
+      "database_bytes": 39661568,
+      "llm_calls": 0,
+      "materialized_combinations": 0,
+      "member_ingest_review_publish_seconds": 35.659,
+      "operations": {
+        "alias_search": {
+          "max_ms": 6.989,
+          "median_ms": 6.075,
+          "p95_ms": 6.683,
+          "samples": 20,
+          "single_operation_python_peak_bytes": 1091111,
+          "status": "passed"
+        },
+        "bounded_resolution": {
+          "max_ms": 38.003,
+          "median_ms": 34.482,
+          "p95_ms": 37.389,
+          "samples": 20,
+          "single_operation_python_peak_bytes": 1191598,
+          "status": "passed"
+        },
+        "exact_id_search": {
+          "max_ms": 6.784,
+          "median_ms": 6.027,
+          "p95_ms": 6.68,
+          "samples": 20,
+          "single_operation_python_peak_bytes": 1088657,
+          "status": "passed"
+        },
+        "ranked_first_page": {
+          "max_ms": 313.015,
+          "median_ms": 271.286,
+          "p95_ms": 297.962,
+          "samples": 20,
+          "single_operation_python_peak_bytes": 1400543,
+          "status": "passed"
+        },
+        "ranked_targeted_search": {
+          "max_ms": 17.447,
+          "median_ms": 15.607,
+          "p95_ms": 16.845,
+          "samples": 20,
+          "single_operation_python_peak_bytes": 1086317,
+          "status": "passed"
+        }
+      },
+      "process_peak_rss_bytes": 31473664,
+      "process_peak_rss_limit_mib": 512,
+      "resolved_bundle_bytes": 7692,
+      "resolved_records": 9,
+      "selector_order_invariant": true,
+      "simulated_exact_version_reviews": 10008,
+      "source_fact_rows_executed": 0,
+      "status": "passed",
+      "submitted_batches": 41,
+      "synthetic_members": 10000,
+      "total_seconds": 43.337
+    },
+    {
+      "approval_note": "Scripted distinct-role approvals; no human effort or semantic truth measurement",
+      "canonical_records": 100008,
+      "database_bytes": 398106624,
+      "llm_calls": 0,
+      "materialized_combinations": 0,
+      "member_ingest_review_publish_seconds": 366.772,
+      "operations": {
+        "alias_search": {
+          "max_ms": 6.421,
+          "median_ms": 6.133,
+          "p95_ms": 6.404,
+          "samples": 20,
+          "single_operation_python_peak_bytes": 1091298,
+          "status": "passed"
+        },
+        "bounded_resolution": {
+          "max_ms": 41.665,
+          "median_ms": 34.193,
+          "p95_ms": 38.324,
+          "samples": 20,
+          "single_operation_python_peak_bytes": 1138025,
+          "status": "passed"
+        },
+        "exact_id_search": {
+          "max_ms": 6.458,
+          "median_ms": 5.902,
+          "p95_ms": 6.384,
+          "samples": 20,
+          "single_operation_python_peak_bytes": 1090604,
+          "status": "passed"
+        },
+        "ranked_first_page": {
+          "partial_results": false,
+          "probe_ms": 4694.313,
+          "reason": "sqlite_ranking_work_budget",
+          "status": "bounded_denial",
+          "timed_samples": 0
+        },
+        "ranked_targeted_search": {
+          "max_ms": 154.598,
+          "median_ms": 132.349,
+          "p95_ms": 147.268,
+          "samples": 20,
+          "single_operation_python_peak_bytes": 1091752,
+          "status": "passed"
+        }
+      },
+      "process_peak_rss_bytes": 30543872,
+      "process_peak_rss_limit_mib": 512,
+      "resolved_bundle_bytes": 7693,
+      "resolved_records": 9,
+      "selector_order_invariant": true,
+      "simulated_exact_version_reviews": 100008,
+      "source_fact_rows_executed": 0,
+      "status": "completed_with_query_limits",
+      "submitted_batches": 392,
+      "synthetic_members": 100000,
+      "total_seconds": 375.586
+    }
+  ],
+  "environment": {
+    "cpu_count": 12,
+    "machine": "AMD64",
+    "platform": "Windows-10-10.0.26300-SP0",
+    "python": "3.9.21 (main, Dec 11 2024, 16:35:24) [MSC v.1929 64 bit (AMD64)]",
+    "sqlite": "3.45.3"
+  },
+  "limits": {
+    "per_dataset_wall_seconds": 600,
+    "process_peak_rss_mib": 512,
+    "rss_limit_enforcement": "measured after each batch and at completion; not an OS hard allocation cap",
+    "search_candidate_budget": 2048,
+    "search_sql_vm_instruction_budget": 20000000,
+    "timed_samples_per_operation": 20,
+    "warmups_per_operation": 1
+  },
+  "measurement_conditions": "Fresh subprocess per dataset on a normal workstation; background activity was not isolated. Successful operations have one warm-up and 20 timed samples. A bounded denial retains its diagnostic probe time without pretending to return results.",
+  "scope": "Synthetic context metadata; fixed tiny evidence file, no underlying fact-data scale claim",
+  "source_commit": "d246aecaf011cbb5f7f5dce8c7cdcb6d7a605211",
+  "source_proof": "All measured source files match this commit after LF newline normalization; raw working-copy and normalized SHA256 values are retained."
+}
