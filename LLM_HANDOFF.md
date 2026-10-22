@@ -49,6 +49,17 @@ Full presentation and benchmark-script links refer to a source checkout.
 
 ## Workflow
 
+For context-quality evidence, read [CONTEXT_EVALUATION.md](pilot/CONTEXT_EVALUATION.md).
+Run the scoped benchmark with `python -B -m pilot.context_evaluation`, then inspect
+its actual `report_path` through `pilot.context_evaluation.load_evaluation` or the
+local `pilot.context_quality_ui` panel. Preserve benchmark/context/source
+revisions, measured coverage, case evidence and currentness with any conclusion.
+Missing or stale checks cannot become zero, pass or an earlier success. A security
+or critical semantic gate failure blocks acceptance regardless of other scores.
+This deterministic fixture neither approves business meaning nor measures model
+uplift. Model comparisons require matched configuration and actual paired,
+held-out executions; an unexecuted comparison remains not evaluated.
+
 1. **Frame the task.** Identify the permitted workspace, requested measure,
    dimensions, members and explicit reporting period. Clarify missing business
    meaning rather than guessing. Do not infer permissions from a question.

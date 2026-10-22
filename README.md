@@ -14,6 +14,25 @@ Existing knowledge/metric databases and the [knowledge MCP connection](pilot/COD
 remain separate. See the composable guide for installation, CLI/native examples,
 limits and qualification evidence.
 
+## Context quality evaluation preview
+
+This development branch adds a proposed context scorecard and a dedicated local
+quality panel. It reports measured checks, their coverage and evidence, with
+separate states for failures, missing measurements and stale evaluations.
+Security and critical semantic failures block acceptance; there is no blended
+quality index or claimed model uplift. The supplied gross-additions benchmark
+uses synthetic orders and explicitly simulated approval.
+
+```powershell
+$evaluation = python -B -m pilot.context_evaluation --output-root .validation/context-evaluation | ConvertFrom-Json
+if ($LASTEXITCODE -ne 0) { throw 'Evaluation failed; inspect its error.' }
+python -B -m pilot.context_quality_ui --report $evaluation.report_path --port 8191
+```
+
+Open `http://127.0.0.1:8191/`. This panel reads the generated evaluation and its
+current bindings; it does not start the separate sales pilot or a hosted service.
+See [evaluation definitions, installation and limits](pilot/CONTEXT_EVALUATION.md).
+
 Prefrontal includes a runnable, MIT-licensed governed-context reference in
 [`pilot/`](pilot/README.md): propose source-bound knowledge, review exact versions,
 publish a dependency set, and deliver current permitted context to a consumer.
