@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "prefrontal-context"
-version = "0.3.0"
+version = "0.4.0.dev1"
 description = "Local governed, composable context records and deterministic offline examples"
 requires-python = ">=3.9"
 dependencies = []
@@ -12,13 +12,15 @@ license = {file = "LICENSE"}
 
 [project.scripts]
 prefrontal-context = "pilot.composable_cli:main"
+prefrontal-evaluate = "pilot.context_evaluation:main"
+prefrontal-quality = "pilot.context_quality_ui:main"
 
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["pilot*"]
 
 [tool.setuptools.package-data]
-pilot = ["fixtures/*", "fixtures/**/*"]
+pilot = ["fixtures/*", "fixtures/**/*", "quality_assets/*"]
 
 [tool.setuptools.data-files]
 "share/prefrontal-context" = ["AGENTS.md", "LLM_HANDOFF.md", "README.md", "LICENSE"]

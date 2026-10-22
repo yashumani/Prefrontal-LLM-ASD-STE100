@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Context quality · Prefrontal</title>
+  <link rel="stylesheet" href="/assets/quality.css">
+  <script src="/assets/quality.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to quality ledger</a>
+  <header class="masthead"><a class="brand" href="/" aria-label="Prefrontal quality home"><span class="brand-mark" aria-hidden="true">p</span>prefrontal<span class="brand-dot">.</span></a><span class="local-label">LOCAL EVALUATION / READ ONLY</span></header>
+  <main id="main">
+    <div class="page-heading"><div><p class="eyebrow">CONTEXT / QUALITY LEDGER</p><h1>Evidence before<br>confidence<span class="red">.</span></h1></div><div class="intro"><p>Inspect what was measured, where it failed, and whether the evidence still holds.</p><button type="button" id="refresh">Recheck report <span aria-hidden="true">↻</span></button><p id="readback" class="small" role="status" aria-live="polite">Reading the selected evaluation…</p></div></div>
+    <section id="gate-banner" class="gate-banner" aria-labelledby="gate-heading"><div><p class="eyebrow">NON-COMPENSATING GATES</p><h2 id="gate-heading">Checking acceptance</h2><p id="gate-description">Security and critical semantics each decide acceptance.</p></div><span id="freshness" class="pill">Not evaluated</span></section>
+    <div id="gate-list" class="gate-list"></div>
+    <section class="section" aria-labelledby="layers-heading"><div class="section-heading"><div><p class="eyebrow">THE CONTEXT ITSELF</p><h2 id="layers-heading">Four layers, individually measured</h2></div><p>No blended total. Every dimension keeps its own evidence.</p></div><div id="layers" class="layers"></div></section>
+    <section class="section" aria-labelledby="crosscuts-heading"><div class="section-heading"><div><p class="eyebrow">ACROSS THE LAYERS</p><h2 id="crosscuts-heading">Retrieval, formats, governance &amp; runtime</h2></div></div><div id="crosscuts" class="crosscuts"></div></section>
+    <section class="section" aria-labelledby="coverage-heading"><div class="section-heading"><div><p class="eyebrow">WHAT WAS ACTUALLY RUN</p><h2 id="coverage-heading">Measurement coverage</h2></div><p id="coverage-summary"></p></div><div class="table-scroll" tabindex="0" role="region" aria-label="Measurement coverage table"><table><thead><tr><th scope="col">Check</th><th scope="col">State</th><th scope="col">Executed / planned</th><th scope="col">Numerator / denominator</th></tr></thead><tbody id="coverage"></tbody></table></div></section>
+    <section class="section" aria-labelledby="cases-heading"><div class="section-heading"><div><p class="eyebrow">FOLLOW THE EVIDENCE</p><h2 id="cases-heading">Case ledger</h2></div><p>Open a case to inspect expected, observed and evidence.</p></div><div class="filters"><div class="filter-field"><label for="status-filter">Case state</label><select id="status-filter"><option value="all">All states</option><option value="failed">Failed</option><option value="measured">Measured</option><option value="missing">Not evaluated</option></select></div><div class="filter-field"><label for="layer-filter">Dimension</label><select id="layer-filter"><option value="all">All dimensions</option></select></div><div class="filter-field search-label"><label for="case-search">Find case or evidence</label><input id="case-search" type="search" placeholder="Search the case ledger" maxlength="200"></div></div><p id="case-count" class="small" role="status" aria-live="polite"></p><div id="cases" class="cases"></div></section>
+    <div class="context-grid"><section class="section" aria-labelledby="binding-heading"><p class="eyebrow">EXACT EVALUATION CONTEXT</p><h2 id="binding-heading">Revisions &amp; readback</h2><dl id="bindings" class="bindings"></dl></section><section class="section" aria-labelledby="model-heading"><p class="eyebrow">MODEL COMPARISON</p><h2 id="model-heading">Only executed comparisons count</h2><div id="model"></div></section></div>
+    <section class="limits-section" aria-labelledby="limits-heading"><h2 id="limits-heading">Scope &amp; limits</h2><ul id="limits"></ul></section>
+  </main><footer><span>prefrontal<span class="red">.</span></span><p>Local evidence viewer · Fixture review is simulated, not human semantic approval.</p></footer>
+</body>
+</html>

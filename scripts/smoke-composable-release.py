@@ -51,7 +51,7 @@ def main():
         return process.stdout
 
     wheels = root / "wheels"
-    run([sys.executable, "-I", "-m", "pip", "wheel", "--no-deps", "--no-build-isolation",
+    run([sys.executable, "-I", "-m", "pip", "wheel", "--no-index", "--no-deps", "--no-build-isolation",
          "--wheel-dir", wheels, source])
     packages = list(wheels.glob("prefrontal_context-*.whl"))
     if len(packages) != 1:
@@ -61,6 +61,8 @@ def main():
     binary_dir = venv / ("Scripts" if os.name == "nt" else "bin")
     python = binary_dir / ("python.exe" if os.name == "nt" else "python")
     console = binary_dir / ("prefrontal-context.exe" if os.name == "nt" else "prefrontal-context")
+    evaluate_console = binary_dir / ("prefrontal-evaluate.exe" if os.name == "nt" else "prefrontal-evaluate")
+    quality_console = binary_dir / ("prefrontal-quality.exe" if os.name == "nt" else "prefrontal-quality")
     run([python, "-I", "-m", "pip", "install", "--no-index", "--no-deps", packages[0]])
     installed = run([python, "-I", "-c", "import pilot; print(pilot.__file__)"]).strip()
     if str(venv).casefold() not in installed.casefold():
@@ -76,6 +78,7 @@ def main():
         "from pathlib import Path; import sys; p=Path(sys.prefix)/'share'/'prefrontal-context'; "
         "assert (p/'AGENTS.md').is_file() and (p/'LLM_HANDOFF.md').is_file(); "
         "assert (p/'pilot'/'COMPOSABLE.md').is_file(); "
+        "assert (p/'pilot'/'CONTEXT_EVALUATION.md').is_file(); "
         "assert (p/'pilot'/'COMPOSABLE_BENCHMARK.json').is_file(); print(p/'LLM_HANDOFF.md')"]).strip()
     yaml_path = source / "examples" / "composable" / "records" / "M_GROSS_ADDS.yaml"
     json_path = yaml_path.with_suffix(".json")
@@ -112,6 +115,48 @@ def main():
                         "id": "M_GROSS_ADDS", "format": "markdown"})
     if not exported["document"] or not current:
         raise RuntimeError("missing installed validation/export output")
+    evaluation = json.loads(run([evaluate_console, "--output-root", root / "evaluation"]))
+    run([quality_console, "--help"])
+    evaluation_path = evaluation["report_path"]
+    quality_smoke = json.loads(run([python, "-I", "-c", """
+import json, sys, threading, urllib.request
+from pilot.context_evaluation import load_evaluation
+from pilot.context_quality_ui import create_server
+report = load_evaluation(sys.argv[1])
+assert report['schema'] == 'prefrontal.context.evaluation.v1'
+assert report['currentness']['status'] == 'current'
+assert report['coverage']['executed'] > 0
+assert report['acceptance'] == 'partial'
+assert all(gate['status'] == 'passed' for gate in report['gates'])
+native = next(check for check in report['checks'] if check['id'] == 'native')
+assert {case['id']: case['observed']['value'] for case in native['cases']} == {
+    'period': 4, 'channel': 3, 'product': 3, 'combined': 2, 'zero': 0}
+assert report['model_comparison']['status'] == 'not_evaluated'
+server = create_server(sys.argv[1], port=0)
+thread = threading.Thread(target=server.serve_forever, daemon=True)
+thread.start()
+try:
+    origin = 'http://127.0.0.1:%s' % server.server_port
+    responses = {}
+    for route in ('/', '/assets/quality.css', '/assets/quality.js', '/api/evaluation'):
+        with urllib.request.urlopen(origin + route, timeout=10) as response:
+            assert response.status == 200
+            assert response.headers.get('Cache-Control', '').startswith('no-store')
+            body = response.read()
+            assert body
+            responses[route] = len(body)
+            if route == '/api/evaluation':
+                payload = json.loads(body)
+                assert payload['schema'] == report['schema']
+                assert payload['currentness']['status'] == 'current'
+    print(json.dumps({'status':'passed','routes':responses,
+                      'executed':report['coverage']['executed'],
+                      'model_comparison':'not_evaluated'}))
+finally:
+    server.shutdown()
+    server.server_close()
+    thread.join(timeout=10)
+""", evaluation_path]))
     report = {"contract": "prefrontal.release.smoke.v1", "status": "passed",
               "archive": str(archive), "archive_git_commit": archive_commit,
               "archive_sha256": hashlib.sha256(archive.read_bytes()).hexdigest(),
@@ -124,6 +169,7 @@ def main():
               "consumer_count": len(demo["consumers"]), "live_model_calls": demo["live_model_calls"],
               "cli_search_resolve_revalidate_export": True, "bundle_hash": resolved["bundle_hash"],
               "idiomatic_yaml_input_roundtrip": True, "yaml_record_hash": yaml_check,
+              "context_evaluation_and_packaged_quality_ui": quality_smoke,
               "elapsed_seconds": round(time.perf_counter() - started, 3)}
     (root / "smoke.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(report, sort_keys=True))
