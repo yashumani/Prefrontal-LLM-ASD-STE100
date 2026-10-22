@@ -71,6 +71,26 @@ Machine validity and exact-version fixture approval are not human semantic
 approval. A new business benchmark needs independent expected answers and
 review of the meaning being asserted.
 
+### Executed gross-additions example
+
+For this fixture, gross additions count distinct completed order IDs; the source
+grain is one row per order and the unit is orders. Cancelled rows are excluded.
+The oracle counts directly from the six raw rows, independently of the native
+executor's filter/count helper.
+
+| Selection | Calculated orders |
+|---|---:|
+| September 2026 | 4 |
+| September, online | 3 |
+| September, postpaid | 3 |
+| September, online and postpaid | 2 |
+| August, prepaid | 0 |
+
+The last row is an executed zero. The normal scorecard executes 22 of 23 declared
+cases and leaves independent human semantics unmeasured, so overall acceptance
+is partial even when its automated gates pass. These invented rows establish no
+production telecom definition or measured model uplift.
+
 ## Missing, failed and stale evidence
 
 - **Not evaluated:** a measurement or its required evidence is absent. Its value

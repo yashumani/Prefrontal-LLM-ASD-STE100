@@ -113,12 +113,107 @@ class EvaluationContractTests(unittest.TestCase):
         for identifier in ("retrieval_precision", "retrieval_recall"):
             for case in self.check(report, identifier)["cases"]:
                 case["observed"] = {"hits": 0, "returned": 0, "relevant": case["expected"]["relevant"]}
-                case["status"] = "measured" if case["observed"] == case["expected"] else "failed"
+                case["status"] = ("failed" if identifier == "retrieval_recall"
+                                  and case["expected"]["relevant"] else "measured")
         self.save(report)
         loaded = evaluation.load_evaluation(self.path)
         self.assertIsNone(self.check(loaded, "retrieval_precision")["score"]["value"])
+        self.assertEqual(self.check(loaded, "retrieval_precision")["status"], "measured")
         self.assertEqual(self.check(loaded, "retrieval_recall")["score"]["value"], 0)
         self.assertEqual(self.check(loaded, "retrieval_recall")["coverage"]["executed"], 3)
+
+    def test_actual_retrieval_faults_score_precision_and_recall_independently(self):
+        original = evaluation.ComposableRegistry.search
+        for fault in ("false_positive", "false_negative"):
+            def search(registry, actor, workspace, query, **kwargs):
+                result = original(registry, actor, workspace, query, **kwargs)
+                if query in {"M_GROSS_ADDS", "new completed orders"}:
+                    result["results"] = (result["results"] + [{"id": "M_IRRELEVANT"}]
+                                         if fault == "false_positive" else [])
+                return result
+            with self.subTest(fault=fault), patch.object(evaluation.ComposableRegistry, "search", new=search):
+                produced = evaluation.run_evaluation(self.parent / fault)
+            for report in (produced["report"], evaluation.load_evaluation(produced["report_path"])):
+                precision, recall = (self.check(report, key) for key in
+                                     ("retrieval_precision", "retrieval_recall"))
+                self.assertEqual(report["currentness"]["status"], "current")
+                if fault == "false_positive":
+                    self.assertEqual(precision["status"], "failed")
+                    self.assertEqual(precision["score"]["value"], 0.5)
+                    self.assertEqual(recall["status"], "measured")
+                    self.assertEqual(recall["score"]["value"], 1)
+                else:
+                    self.assertEqual(precision["status"], "measured")
+                    self.assertIsNone(precision["score"]["value"])
+                    self.assertEqual(recall["status"], "failed")
+                    self.assertEqual(recall["score"]["value"], 0)
+
+    def test_pinned_in_memory_two_item_gold_overlay_keeps_precision_perfect(self):
+        # Controlled report/benchmark overlay only; this is not an actual query.
+        report = self.report()
+        benchmark = evaluation._read_json(self.directory / "benchmark.json")
+        benchmark["retrieval"]["exact"] = ["M_GROSS_ADDS", "M_SECOND_RELEVANT"]
+        for identifier, status in (("retrieval_precision", "measured"), ("retrieval_recall", "failed")):
+            check = self.check(report, identifier)
+            check["cases"] = [dict(check["cases"][0], expected={"hits": 2, "returned": 2, "relevant": 2},
+                                   observed={"hits": 1, "returned": 1, "relevant": 2}, status=status)]
+            check.update(status="measured", score={"numerator": 99, "denominator": 99, "value": 1})
+        self.save(report)
+        original = evaluation._read_json
+        def overlay(path, *args, **kwargs):
+            return copy.deepcopy(benchmark) if Path(path).name == "benchmark.json" else original(path, *args, **kwargs)
+        with patch.object(evaluation, "_read_json", side_effect=overlay):
+            loaded = evaluation.load_evaluation(self.path)
+        precision, recall = (self.check(loaded, key) for key in ("retrieval_precision", "retrieval_recall"))
+        self.assertEqual(loaded["currentness"]["status"], "current")
+        self.assertEqual(precision["cases"][0]["status"], "measured")
+        self.assertEqual(precision["score"], {"numerator": 1, "denominator": 1, "value": 1})
+        self.assertEqual(recall["cases"][0]["status"], "failed")
+        self.assertEqual(recall["status"], "failed")
+        self.assertEqual(recall["score"], {"numerator": 1, "denominator": 2, "value": 0.5})
+        self.assertEqual(precision["coverage"], {"planned": 3, "executed": 1})
+
+    def test_executed_empty_query_differs_from_missing_query(self):
+        report = self.report()
+        for identifier in ("retrieval_precision", "retrieval_recall"):
+            check = self.check(report, identifier)
+            check["cases"] = [case for case in check["cases"] if case["id"] == "absent"]
+        self.save(report)
+        loaded = evaluation.load_evaluation(self.path)
+        for identifier in ("retrieval_precision", "retrieval_recall"):
+            check = self.check(loaded, identifier)
+            self.assertEqual(check["coverage"], {"planned": 3, "executed": 1})
+            self.assertEqual(check["score"], {"numerator": 0, "denominator": 0, "value": None})
+            self.assertEqual([case["status"] for case in check["cases"]], ["missing", "missing", "measured"])
+            self.assertIsNone(check["cases"][0]["observed"])
+            self.assertEqual(check["cases"][2]["observed"], {"hits": 0, "returned": 0, "relevant": 0})
+            self.assertTrue(any(item.startswith("query=") for item in check["cases"][2]["evidence"]))
+
+    def test_retrieval_false_pass_and_inconsistent_relevant_count_rejected(self):
+        original = self.report()
+        for identifier, observed in (
+                ("retrieval_precision", {"hits": 1, "returned": 2, "relevant": 1}),
+                ("retrieval_recall", {"hits": 0, "returned": 0, "relevant": 1}),
+                ("retrieval_precision", {"hits": 1, "returned": 1, "relevant": 2})):
+            with self.subTest(identifier=identifier, observed=observed):
+                report = copy.deepcopy(original)
+                self.check(report, identifier)["cases"][0].update(observed=observed, status="measured")
+                self.save(report)
+                self.assertEqual(evaluation.load_evaluation(self.path)["status"], "missing")
+
+    def test_empty_relevant_set_with_irrelevant_return_keeps_recall_undefined(self):
+        report = self.report()
+        for identifier, status in (("retrieval_precision", "failed"), ("retrieval_recall", "measured")):
+            check = self.check(report, identifier)
+            check["cases"] = [case for case in check["cases"] if case["id"] == "absent"]
+            check["cases"][0].update(observed={"hits": 0, "returned": 1, "relevant": 0}, status=status)
+        self.save(report)
+        loaded = evaluation.load_evaluation(self.path)
+        precision, recall = (self.check(loaded, key) for key in ("retrieval_precision", "retrieval_recall"))
+        self.assertEqual(precision["status"], "failed")
+        self.assertEqual(precision["score"], {"numerator": 0, "denominator": 1, "value": 0})
+        self.assertEqual(recall["cases"][2]["status"], "measured")
+        self.assertEqual(recall["score"], {"numerator": 0, "denominator": 0, "value": None})
 
     def test_false_pass_and_changed_expected_answer_rejected(self):
         for change_status in (False, True):
@@ -155,6 +250,9 @@ class EvaluationContractTests(unittest.TestCase):
     def test_no_model_executions_never_claim_uplift(self):
         report = evaluation.load_evaluation(self.path)
         self.assertEqual(report["model_comparison"]["paired_executions"], 0)
+        self.assertEqual(report["model_comparison"]["held_out_cases"], 0)
+        self.assertEqual(report["runtime"]["model_calls"], 0)
+        self.assertEqual(report["runtime"]["network_calls"], 0)
         self.assertEqual(report["model_comparison"]["status"], "not_evaluated")
         self.assertIsNone(report["model_comparison"]["uplift"])
         for changes in ({"uplift": 0.2}, {"paired_executions": 4},
@@ -163,6 +261,24 @@ class EvaluationContractTests(unittest.TestCase):
             altered["model_comparison"].update(changes)
             self.save(altered)
             self.assertEqual(evaluation.load_evaluation(self.path)["acceptance"], "not_evaluated")
+
+    def test_missing_invalid_and_unreadable_envelopes_keep_unknown_counts_null(self):
+        absent = evaluation.load_evaluation(self.directory / "absent.json")
+        self.path.write_text("{", encoding="utf-8")
+        invalid = evaluation.load_evaluation(self.path)
+        with patch.object(evaluation, "_read_json", side_effect=PermissionError("unreadable")):
+            unreadable = evaluation.load_evaluation(self.path)
+        for report in (absent, invalid, unreadable):
+            with self.subTest(reason=report["currentness"]["reasons"]):
+                self.assertEqual(report["status"], "missing")
+                self.assertEqual(report["acceptance"], "not_evaluated")
+                self.assertEqual(report["currentness"]["status"], "not_evaluated")
+                self.assertEqual(report["coverage"], {"planned": None, "executed": None})
+                self.assertTrue(all(value is None for value in report["runtime"].values()))
+                self.assertIsNone(report["model_comparison"]["paired_executions"])
+                self.assertIsNone(report["model_comparison"]["held_out_cases"])
+                self.assertIsNone(report["model_comparison"]["uplift"])
+                self.assertEqual(report["model_comparison"]["status"], "not_evaluated")
 
     def test_dataset_identity_and_boolean_impostors_rejected(self):
         original = self.report()

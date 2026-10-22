@@ -126,6 +126,11 @@ report = load_evaluation(sys.argv[1])
 assert report['schema'] == 'prefrontal.context.evaluation.v1'
 assert report['currentness']['status'] == 'current'
 assert report['coverage']['executed'] > 0
+assert report['acceptance'] == 'partial'
+assert all(gate['status'] == 'passed' for gate in report['gates'])
+native = next(check for check in report['checks'] if check['id'] == 'native')
+assert {case['id']: case['observed']['value'] for case in native['cases']} == {
+    'period': 4, 'channel': 3, 'product': 3, 'combined': 2, 'zero': 0}
 assert report['model_comparison']['status'] == 'not_evaluated'
 server = create_server(sys.argv[1], port=0)
 thread = threading.Thread(target=server.serve_forever, daemon=True)

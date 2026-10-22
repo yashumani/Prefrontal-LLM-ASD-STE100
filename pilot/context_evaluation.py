@@ -162,6 +162,12 @@ def _case(identifier, expected, observed, evidence=(), elapsed_ms=None):
             "elapsed_ms": elapsed_ms}
 
 
+def _retrieval_status(identifier, expected, observed):
+    # Precision judges returned items; recall judges the pinned relevant set.
+    denominator = observed["returned"] if identifier == "retrieval_precision" else expected["relevant"]
+    return "measured" if observed["hits"] == denominator else "failed"
+
+
 def _summarize(identifier, cases):
     layer, name, critical, planned = CHECKS[identifier]
     done = [case for case in cases if case["status"] != "missing"]
@@ -233,15 +239,18 @@ def _model_comparison():
 
 
 def _empty(reason):
+    comparison = _model_comparison()
+    comparison.update(paired_executions=None, held_out_cases=None,
+                      reason="No usable model execution evidence.")
     return {"schema": SCHEMA, "run_id": None, "evaluated_at": None, "benchmark": None,
         "snapshot": None, "dataset": None, "evaluator": None,
         "approval": {"status": "unknown", "description": "No usable report."},
         "status": "missing", "acceptance": "not_evaluated",
         "currentness": {"status": "not_evaluated", "checked_at": _stamp(_now()),
                         "expires_at": None, "reasons": [reason]},
-        "checks": [], "gates": [], "coverage": {"planned": 0, "executed": 0},
-        "model_comparison": _model_comparison(), "runtime": {"elapsed_ms": None,
-        "model_calls": 0, "network_calls": 0, "model_api_cost": None}, "limits": [reason]}
+        "checks": [], "gates": [], "coverage": {"planned": None, "executed": None},
+        "model_comparison": comparison, "runtime": {"elapsed_ms": None,
+        "model_calls": None, "network_calls": None, "model_api_cost": None}, "limits": [reason]}
 
 
 def run_evaluation(output_root):
@@ -317,6 +326,7 @@ def run_evaluation(output_root):
                     counts, ["query=" + query, "returned=" + ",".join(sorted(returned)),
                              "judged_relevant=" + ",".join(sorted(relevant))],
                     round((time.perf_counter() - tick) * 1000, 3))
+                case["status"] = _retrieval_status(key, case["expected"], counts)
                 cases[key].append(case)
         for fmt in ("json", "yaml", "markdown"):
             tick = time.perf_counter()
@@ -443,7 +453,8 @@ def _validate(report):
             if case["status"] == "missing":
                 if case["expected"] is not None or case["observed"] is not None:
                     raise ValueError("missing value")
-            elif case["status"] != ("measured" if _canonical(case["expected"]) == _canonical(case["observed"]) else "failed"):
+            elif not key.startswith("retrieval_") and case["status"] != (
+                    "measured" if _canonical(case["expected"]) == _canonical(case["observed"]) else "failed"):
                 raise ValueError("false pass")
             if case["status"] != "missing":
                 if key in {"source", "interpretation", "security", "review"} and case["expected"] is not True:
@@ -464,6 +475,8 @@ def _validate(report):
                                 or any(type(value) is not int or value < 0 or value > 100 for value in counts.values())
                                 or counts["hits"] > min(counts["returned"], counts["relevant"])):
                             raise ValueError("retrieval counts")
+                    if case["status"] != _retrieval_status(key, case["expected"], case["observed"]):
+                        raise ValueError("false retrieval pass")
             if not isinstance(case["evidence"], list) or any(not isinstance(item, str) for item in case["evidence"]):
                 raise ValueError("case evidence")
             elapsed = case["elapsed_ms"]
