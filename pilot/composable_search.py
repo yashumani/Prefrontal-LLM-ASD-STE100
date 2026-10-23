@@ -33,7 +33,7 @@ import sqlite3
 import unicodedata
 
 from .context_pilot import ContextError, canonical, digest, parse_time
-from .composable_model import MAX_CLOSURE_RECORDS, MAX_DEPTH, MAX_BUNDLE_BYTES, validate_record
+from .composable_model import MAX_CLOSURE_RECORDS, MAX_DEPTH, MAX_BUNDLE_BYTES, KIND_LAYERS, validate_record
 
 
 SEARCH_CONTRACT = "prefrontal.context.search.v1"
@@ -46,7 +46,7 @@ MAX_SEARCH_SQL_STEPS = 20000000
 _FETCH_SIZE = 128
 _ID = re.compile(r"[A-Z][A-Z0-9_]{1,95}\Z")
 _LAYERS = {"data", "metric", "ontology", "interpretation"}
-_KINDS = {"source", "measure", "dimension", "member", "guidance"}
+_KINDS = frozenset(KIND_LAYERS)
 _CURSOR_KEYS = {"v", "b", "a", "r", "s", "i"}
 _CLASS_BITS = {"internal": 1, "restricted": 2}
 

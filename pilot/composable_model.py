@@ -24,7 +24,9 @@ MAX_INTEGER = 2 ** 63 - 1
 LAYERS = frozenset({'data', 'metric', 'ontology', 'interpretation'})
 CLASSIFICATIONS = frozenset({'internal', 'restricted'})
 KIND_LAYERS = {'source': 'data', 'measure': 'metric', 'dimension': 'ontology',
-               'member': 'ontology', 'guidance': 'interpretation'}
+               'member': 'ontology', 'guidance': 'interpretation',
+               'term': 'ontology', 'event': 'ontology',
+               'policy': 'interpretation', 'document': 'data'}
 RECORD_FIELDS = frozenset({'schema', 'id', 'version', 'layer', 'kind', 'name',
                            'aliases', 'description', 'narrative', 'owner',
                            'classification', 'valid_from', 'valid_until',
@@ -36,6 +38,10 @@ SPEC_FIELDS = {
     'dimension': frozenset({'value_type'}),
     'member': frozenset({'dimension', 'value', 'parents'}),
     'guidance': frozenset({'qualifiers', 'caveats'}),
+    'term': frozenset({'definition', 'related_terms'}),
+    'event': frozenset({'trigger', 'time_field', 'entities'}),
+    'policy': frozenset({'rule', 'applies_to'}),
+    'document': frozenset({'media_type', 'summary', 'related'}),
 }
 _ID = re.compile(r'[A-Z][A-Z0-9_]{1,95}\Z')
 _HASH = re.compile(r'[a-f0-9]{64}\Z')
@@ -256,9 +262,25 @@ def _spec(kind, spec):
             _fail()
         # The referenced dimension establishes text/period/integer semantics at
         # resolution. A member alone cannot establish that cross-record fact.
-    else:
+    elif kind == 'guidance':
         _texts(spec['qualifiers'], nonempty=True)
         _texts(spec['caveats'], nonempty=True)
+    elif kind == 'term':
+        _text(spec['definition'])
+        refs.update(_texts(spec['related_terms'], ids=True))
+    elif kind == 'event':
+        _text(spec['trigger'])
+        if type(spec['time_field']) is not str or not _COLUMN.fullmatch(spec['time_field']):
+            _fail()
+        refs.update(_texts(spec['entities'], ids=True))
+    elif kind == 'policy':
+        _text(spec['rule'])
+        refs.update(_texts(spec['applies_to'], nonempty=True, ids=True))
+    elif kind == 'document':
+        if spec['media_type'] not in ('text/plain', 'text/markdown', 'application/json', 'application/yaml'):
+            _fail()
+        _text(spec['summary'])
+        refs.update(_texts(spec['related'], ids=True))
     return refs
 
 

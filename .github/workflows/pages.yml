@@ -1,9 +1,21 @@
-name: Publish context layer presentation
+name: Validate and publish context workspace
 
 on:
   push:
-    branches: [feature/context-presentation]
+    branches: [main]
     paths:
+      - workspace/**
+      - scripts/build-pages.cjs
+      - scripts/test-workspace-*.mjs
+      - scripts/verify-workspace-*
+      - scripts/benchmark-workspace.mjs
+      - pilot/composable_model.py
+      - pilot/composable_registry.py
+      - pilot/composable_search.py
+      - pilot/composable_formats.py
+      - pilot/browser_workspace.py
+      - .gitattributes
+      - pyproject.toml
       - best-practices.html
       - best-practices.json
       - practices.css
@@ -52,21 +64,48 @@ on:
       - scripts/verify-browser.cjs
       - scripts/verify-v7.cjs
       - .github/workflows/pages.yml
+  pull_request:
+    paths:
+      - workspace/**
+      - scripts/build-pages.cjs
+      - scripts/test-workspace-*.mjs
+      - scripts/verify-workspace-*
+      - scripts/benchmark-workspace.mjs
+      - pilot/composable_model.py
+      - pilot/composable_registry.py
+      - pilot/composable_search.py
+      - pilot/composable_formats.py
+      - pilot/browser_workspace.py
+      - .gitattributes
+      - pyproject.toml
+      - .github/workflows/pages.yml
   workflow_dispatch:
 
 permissions:
   contents: read
 
 concurrency:
-  group: github-pages
+  group: github-pages-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    # Keep browser/font dependencies on the supported, reproducible LTS image.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
     steps:
-      - name: Check out presentation
-        uses: actions/checkout@v6
+      - name: Check out tested revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Validate bounded context workspace
+        run: |
+          node --version
+          node --check workspace/app.mjs
+          node --check workspace/core.mjs
+          node --check workspace/formats.mjs
+          node scripts/test-workspace-core.mjs
+          node scripts/test-workspace-formats.mjs
+          node scripts/verify-workspace-bridge.mjs
+          node scripts/benchmark-workspace.mjs --output .validation/workspace/benchmark.json
       - name: Validate static presentation
         run: |
           node --check scripts/render-product-intro.cjs
@@ -100,6 +139,10 @@ jobs:
         run: |
           npm install --no-save --package-lock=false playwright@1.62.1
           npx playwright install --with-deps chromium
+      - name: Assemble public workspace and preserved presentation
+        run: node scripts/build-pages.cjs --commit ${{ github.sha }}
+      - name: Validate workspace in Chromium at the repository subpath
+        run: node scripts/verify-workspace-browser.cjs
       - name: Validate presentation in Chromium
         run: |
           python3 -m http.server 8893 --bind 127.0.0.1 >/tmp/context-presentation-http.log 2>&1 &
@@ -112,18 +155,24 @@ jobs:
           node scripts/verify-motion.cjs
           node scripts/verify-navigation.cjs
       - name: Configure GitHub Pages
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         uses: actions/configure-pages@v5
-      - name: Assemble public site
-        run: |
-          mkdir _site
-          cp best-practices.html motion-preview.html decisions.html story.html index.html styles.css app.js diagrams.js cost-lab.js cost-lab.css presentation-content.json _site/
-          touch _site/.nojekyll
       - name: Upload public site
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         uses: actions/upload-pages-artifact@v4
         with:
           path: _site
+      - name: Retain workspace acceptance evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: browser-context-workspace
+          path: .validation/workspace/
+          retention-days: 7
+          if-no-files-found: warn
   deploy:
     needs: build
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
       pages: write
@@ -132,6 +181,6 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Deploy presentation
+      - name: Deploy context workspace
         id: deployment
         uses: actions/deploy-pages@v4

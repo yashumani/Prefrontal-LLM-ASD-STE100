@@ -256,7 +256,8 @@ class ComposableRegistry(SearchMixin):
         def linked(identifier, kind):
             version = deps.get(identifier)
             envelope = found.get((identifier, version))
-            if envelope is None or envelope["record"]["kind"] != kind:
+            kinds = {kind} if isinstance(kind, str) else set(kind)
+            if envelope is None or envelope["record"]["kind"] not in kinds:
                 raise ContextError("context_unavailable")
             return envelope["record"]
         spec = body["spec"]
@@ -284,6 +285,12 @@ class ComposableRegistry(SearchMixin):
                     raise ContextError("context_unavailable")
             if set(deps) != {spec["dimension"], *spec["parents"]}:
                 raise ContextError("context_unavailable")
+        elif body["kind"] == "term":
+            for identifier in spec["related_terms"]:
+                linked(identifier, "term")
+        elif body["kind"] == "event":
+            for identifier in spec["entities"]:
+                linked(identifier, ("term", "dimension"))
 
     def submit(self, actor, record):
         return self.submit_batch(actor, [record])[0]
