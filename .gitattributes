@@ -4,3 +4,9 @@
 # These synthetic source bytes are pinned by the composable proposal provenance.
 /examples/composable/sources/* text eol=lf
 /examples/composable/records/* text eol=lf
+# Keep browser build/benchmark bytes portable across Windows and Pages builds.
+/workspace/** text eol=lf
+/scripts/*workspace* text eol=lf
+/pilot/browser_workspace.py text eol=lf
+/pilot/test_browser_workspace.py text eol=lf
+/pilot/test_composable_knowledge_types.py text eol=lf
