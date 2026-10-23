@@ -44,8 +44,20 @@ class ConnectedCodexChecks(unittest.TestCase):
         self.assertEqual(["prefrontal"], isolation["enabled_servers"])
         self.assertFalse(isolation["shared_configuration_modified"])
         self.assertEqual(2, run.call_count)
-        for feature in ["plugins", "apps", "memories", "shell_tool", "unified_exec", "multi_agent"]:
-            self.assertIn(feature, command)
+        for feature in ["plugins", "apps", "memories", "shell_tool", "unified_exec", "sleep_tool", "multi_agent",
+                        "browser_use", "browser_use_external", "browser_use_full_cdp_access", "computer_use",
+                        "image_generation", "in_app_browser", "code_mode", "code_mode_host", "code_mode_only",
+                        "goals", "multi_agent_v2", "hooks", "remote_plugin"]:
+            self.assertIn("features." + feature + "=false", command)
+        self.assertNotIn("--disable", command)
+
+    def test_rejected_configuration_stops_before_model_execution(self):
+        with patch("pilot.codex_connected.subprocess.run", return_value=process("", code=1)) as run:
+            with self.assertRaisesRegex(ValueError, "no model call made"):
+                run_recorded(self.config, "Retrieve", self.directory/"rejected", "fixture-codex")
+        self.assertEqual(1, run.call_count)
+        self.assertEqual(["mcp", "list", "--json"], run.call_args.args[0][-3:])
+        self.assertFalse((self.directory/"rejected/answer.txt").exists())
 
     def test_failed_isolation_stops_before_model_call(self):
         with patch("pilot.codex_connected.subprocess.run", side_effect=[catalogs()[0], catalogs()[0]]) as run:

@@ -19,6 +19,12 @@ from .knowledge_mcp import MCPServer
 
 ROOT = Path(__file__).resolve().parents[1]
 TOOLS = {"prefrontal_get", "prefrontal_search"}
+DISABLED_FEATURES = (
+    "plugins", "apps", "memories", "shell_tool", "unified_exec", "sleep_tool", "multi_agent",
+    "browser_use", "browser_use_external", "browser_use_full_cdp_access", "computer_use",
+    "image_generation", "in_app_browser", "code_mode", "code_mode_host", "code_mode_only",
+    "goals", "multi_agent_v2", "hooks", "remote_plugin",
+)
 
 
 def connection(path):
@@ -45,8 +51,11 @@ def scoped_command(config, executable=None, trace=None, model=None, reasoning_ef
     table = "{prefrontal = {command = " + json.dumps(sys.executable) + ", args = " + json.dumps(arguments)
     table += ", cwd = " + json.dumps(str(ROOT)) + "}}"
     command = [executable, "-c", "mcp_servers=" + table, "-c", 'web_search="disabled"', "-a", "never"]
-    for feature in ("plugins", "apps", "memories", "shell_tool", "unified_exec", "sleep_tool", "multi_agent"):
-        command.extend(["--disable", feature])
+    for feature in DISABLED_FEATURES:
+        # --disable rejects removed feature names (sleep_tool on CLI 0.146.0).
+        # Equivalent session overrides keep supported controls off without
+        # requiring older/newer clients to recognize every historical name.
+        command.extend(["-c", "features." + feature + "=false"])
     if model:
         command.extend(["-c", "model=" + json.dumps(model)])
     if reasoning_effort:
