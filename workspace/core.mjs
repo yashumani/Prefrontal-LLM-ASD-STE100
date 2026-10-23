@@ -101,6 +101,10 @@ function specRefs(kind,spec) {
   else if(kind==='document') {check(['text/plain','text/markdown','application/json','application/yaml'].includes(spec.media_type),'Select a supported document media type.');text(spec.summary,'a document summary');list(spec.related,'related context IDs',{ids:true});refs.push(...spec.related);}
   return refs;
 }
+export function referencesFromSpec(kind,spec) {
+  check(Object.hasOwn(KIND_LAYERS,kind),'Select a supported context type.');
+  return specRefs(kind,copy(spec));
+}
 export function validateRecord(raw) {
   let record;
   try {record=copy(raw);}catch(error){if(error instanceof WorkspaceError)throw error;fail('invalid_record','Use a bounded JSON record with safe whole numbers.');}
@@ -204,9 +208,24 @@ export async function prepareRecord(state,kind,values) {
   const identifierValue=values.id||suggestId(kind,values.name,values.spec?.dimension);
   const version=nextVersion(state,identifierValue);const spec=copy(values.spec||defaultSpec(kind));
   const refs=specRefs(kind,spec);const latest=new Map(latestRecords(state).map(x=>[x.id,x]));
-  const dependencies=(values.dependencies||refs.map(id=>{const r=latest.get(id);if(!r)fail('missing_dependency',`Add ${id} before using this relationship.`);return {id,version:r.version};}));
+    const previous=latest.get(identifierValue);
+    let dependencies;
+    if(Object.hasOwn(values,'dependencies'))dependencies=copy(values.dependencies);
+    else if(kind==='guidance'&&previous)dependencies=copy(previous.dependencies);
+    else {
+      // Keep retained pins in their prior array order. A label edit does not
+      // authorize upgrading or reordering an existing relationship.
+      const selected=new Set(refs);
+      dependencies=(previous?.dependencies||[]).filter(pin=>selected.has(pin.id)).map(copy);
+      const retained=new Set(dependencies.map(pin=>pin.id));
+      for(const id of refs)if(!retained.has(id)){
+        const r=latest.get(id);if(!r)fail('missing_dependency',`Add ${id} before using this relationship.`);
+        dependencies.push({id,version:r.version});
+      }
+    }
   const sourcePath=`submissions/${identifierValue.toLowerCase()}-v${version}-${digest.slice(0,12)}.json`;
-  const record=validateRecord({schema:'prefrontal.context.v1',id:identifierValue,version,kind,layer:KIND_LAYERS[kind],name:values.name,aliases:values.aliases||[],description:values.description,narrative:values.narrative,owner:values.owner,classification:values.classification||'internal',valid_from:values.valid_from||nowTime(),valid_until:values.valid_until||null,provenance:[{path:sourcePath,sha256:digest}],dependencies,spec});
+    const provenance=[...new Map([...(previous?.provenance||[]),{path:sourcePath,sha256:digest}].map(item=>[item.path+'\0'+item.sha256,copy(item)])).values()];
+    const record=validateRecord({schema:'prefrontal.context.v1',id:identifierValue,version,kind,layer:KIND_LAYERS[kind],name:values.name,aliases:values.aliases||[],description:values.description,narrative:values.narrative,owner:values.owner,classification:values.classification||'internal',valid_from:values.valid_from||nowTime(),valid_until:values.valid_until||null,provenance,dependencies,spec});
   const validationState={...state,records:[...state.records,record]};validateIdentitiesAndSources(validationState.records);closure(validationState,[record]);
   return {record,submission:{path:sourcePath,text:original,sha256:digest,format:'form'},validation:{valid:true,structural:'valid',relationships:'valid',semantic_approval:'not_verified'}};
 }

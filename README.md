@@ -33,6 +33,9 @@ document records with pinned relationships. JSON, bounded YAML and the defined
 Markdown profile preserve the same canonical fields and narrative. IDs survive
 name edits; changed content creates a new version. Point-of-view composition
 resolves required records instead of materializing Cartesian combinations.
+Ordinary edits retain exact existing dependency pins and prior provenance; label
+changes do not silently upgrade references. Other names and text-list items use
+separate fields, so commas and embedded text line breaks are not separators.
 
 `prefrontal.workspace.v1.user` and `prefrontal.workspace.v1.demo` are separate
 localStorage keys. Saved status requires successful write/readback. Export a

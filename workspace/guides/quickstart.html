@@ -44,6 +44,7 @@
       <tr><td>Interpretation</td><td>Guidance and policy</td><td>Guidance qualifiers and caveats; or a policy rule and the records to which it applies.</td></tr>
     </tbody></table>
     <p>A relationship pins an ID and version. Add the referenced records first, or import a valid complete set. Missing records, wrong types, dependency cycles and conflicting versions need correction before a consumer payload can be made.</p>
+    <p>When you choose <strong>Create next version</strong>, inspect the displayed exact relationship versions. Changing a display name keeps those pins, supporting links and earlier provenance; it does not select newer dependencies. A newly added related ID uses its latest stored version. To intentionally change a pin for the same ID, or change a guidance record's supporting dependency pins, import a new prepared record proposal and inspect its exact dependencies before save.</p>
     <p>The <em>internal</em> and <em>restricted</em> labels describe records. They do not create browser access controls. A person who can use this browser profile may be able to read its stored context.</p>
   </section>
 
@@ -72,7 +73,8 @@
       <tr><td>Delivered</td><td>The consumer payload, included records, selected point of view, provenance and unverified approval state.</td></tr>
     </tbody></table>
     <p>A submission hash can show that the stored submission bytes match. It does not verify an external document, source data, freshness claim or business fact.</p>
-    <p>Guided lists use one item per line and other names use commas. The form removes surrounding space from IDs, names, owners and list items, and converts date controls to UTC. Inspect the proposed JSON before save. Meaning and supporting text stays text; it is not a model-generated summary.</p>
+    <p>In <strong>Other names</strong>, use one name per field and <strong>Add another name</strong> for another. Commas and spaces stay part of the name. Text lists use one item per field with <strong>Add a list item</strong>; spaces and line breaks belong to that item. Leave a field empty to omit it. Other names use ASCII characters; display names and meaning text can use Unicode.</p>
+    <p>On an edit, untouched canonical field values stay exact, including text line endings, timestamp precision and item order. Text fields keep the submitted text. Readable IDs must match the strict uppercase-letter, digit and underscore syntax; spaces do not pass validation. Number controls produce whole numbers and edited date controls become UTC. Inspect the proposed JSON before save. A new version retains earlier provenance and adds its new captured form submission. Meaning and supporting text is not a model-generated summary.</p>
   </section>
 
   <section aria-labelledby="recovery"><h2 id="recovery">Export before you leave</h2>

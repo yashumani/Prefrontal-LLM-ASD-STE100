@@ -27,6 +27,9 @@ let candidateEpoch = 0;
 let formEpoch = 0;
 let formDirty = false;
 let editingId = null;
+let editingBaseRecord = null;
+let displaySnapshot = {};
+const itemOriginals = new WeakMap();
 let manuallyNamedId = false;
 let selected = null;
 let consumer = null;
@@ -56,6 +59,16 @@ function fillReference(select,records,multiple=false,value=null){select.replaceC
 function isoFromInput(value){if(!value)return null;const date=new Date(value);if(!Number.isFinite(date.getTime()))throw new Error('Enter a valid date and time.');return date.toISOString().replace('.000Z','Z');}
 function localTime(iso){const date=new Date(iso);if(!Number.isFinite(date.getTime()))return '';const shifted=new Date(date.getTime()-date.getTimezoneOffset()*60000);return shifted.toISOString().slice(0,19);}
 function selectedValues(select){return [...select.selectedOptions].map(option=>option.value);}
+function copyValue(value){return value===undefined?undefined:JSON.parse(JSON.stringify(value));}
+function referencedRecords(){const pins=new Map((editingBaseRecord?.dependencies||[]).map(d=>[d.id,d.version]));return latestRecords().map(record=>state.records.find(r=>r.id===record.id&&r.version===pins.get(record.id))||record);}
+function itemValue(control){const original=itemOriginals.get(control);return original&&control.value===original.display?original.value:control.value;}
+function addValueRow(container,value='',alias=false){const row=node('div',undefined,'record-item');const label=node('label',alias?'Other name':'List item');const control=node(alias?'input':'textarea');if(alias){control.dataset.aliasItem='';control.maxLength=65536;}else{control.dataset.listItem='';control.rows=2;control.maxLength=65536;}control.value=value;itemOriginals.set(control,{value,display:control.value});control.addEventListener('input',markFormChanged);label.append(control);const remove=node('button','Remove');remove.type='button';remove.addEventListener('click',()=>{row.remove();markFormChanged();});row.append(label,remove);container.append(row);}
+function setListValues(container,values,alias=false){container.replaceChildren();for(const value of values.length?values:[''])addValueRow(container,value,alias);}
+function listValues(container,keepEmpty=false){return [...container.querySelectorAll('[data-list-item],[data-alias-item]')].map(itemValue).filter(value=>keepEmpty||value!=='');}
+function displayValue(id){const control=$(id);if(!control)return null;if(control.querySelector('[data-list-item],[data-alias-item]'))return JSON.stringify([...control.querySelectorAll('[data-list-item],[data-alias-item]')].map(el=>el.value));if(id==='spec-dimensions')return JSON.stringify([...control.querySelectorAll('.mapping-row')].map(row=>[row.querySelector('select').value,row.querySelector('input').value]));if(control.multiple)return JSON.stringify(selectedValues(control));return control.value;}
+function preserveField(id,original,read){return editingBaseRecord&&Object.hasOwn(displaySnapshot,id)&&displayValue(id)===displaySnapshot[id]?copyValue(original):read();}
+function captureDisplaySnapshot(){const result={};for(const id of ['record-id','record-name','record-owner','record-description','record-narrative','record-aliases','record-classification','valid-from','valid-until',...TYPE_FIELDS[$('record-kind').value].map(d=>`spec-${d.key}`)])result[id]=displayValue(id);return result;}
+function renderEditDependencies(container){if(!editingBaseRecord?.dependencies.length)return;const section=node('div',undefined,'full ref-hint');section.id='edit-dependencies';section.append(node('strong','Exact relationship pins kept for this edit'));const list=node('ul');for(const dependency of editingBaseRecord.dependencies)list.append(node('li',`${dependency.id} · exact version ${dependency.version}`));section.append(list,node('p','Changing a display label does not choose newer related versions. Guidance keeps these explicit pins. Use an explicit imported proposal to change its dependency pins.'));container.append(section);}
 function listFromText(value){return value.split('\n').map(s=>s.trim()).filter(Boolean);}
 function decimalInteger(value,label){if(!/^(?:0|-?[1-9][0-9]*)$/.test(value))throw new Error(`Enter an exact decimal whole number for ${label}.`);const number=Number(value);if(!Number.isSafeInteger(number))throw new Error(`Enter a safe whole number for ${label}.`);return number;}
 function originalText(id){const original=fileOriginals.get(id);return original&&$(id).value===original.visibleText?original.text:$(id).value;}
@@ -80,13 +93,13 @@ function buildSpecFields(kind,provided=null){
       const section=node('div',undefined,'full');section.append(node('p',label,'small'));const rows=node('div');rows.id=`spec-${key}`;for(const [k,v] of Object.entries(values[key]||{}))mappingRow(rows,k,v);section.append(rows);const add=node('button','Add a dimension mapping');add.type='button';add.className='quiet';add.addEventListener('click',()=>{mappingRow(rows);markFormChanged();});section.append(add,node('p','Map a known dimension to its native source column. This does not connect to or inspect the source.','field-help'));fields.append(section);continue;
     }
     if(Object.hasOwn(refs,key)){
-      control=node('select');const multiple=type==='list';control.multiple=multiple;const allowed=refs[key];let records=latestRecords().filter(r=>(!allowed||allowed.includes(r.kind))&&r.id!==editingId);if(kind==='member'&&key==='parents'){const dimension=values.dimension;records=records.filter(r=>r.spec.dimension===dimension);}fillReference(control,records,multiple,values[key]);wrapper.classList.add('full');
+      control=node('select');const multiple=type==='list';control.multiple=multiple;const allowed=refs[key];let records=referencedRecords().filter(r=>(!allowed||allowed.includes(r.kind))&&r.id!==editingId);if(kind==='member'&&key==='parents'){const dimension=values.dimension;records=records.filter(r=>r.spec.dimension===dimension);}fillReference(control,records,multiple,values[key]);wrapper.classList.add('full');
       wrapper.append(control);wrapper.append(node('span',multiple?'Select related records. References use their displayed exact versions.':'Choose an existing record. The dependency uses its displayed exact version.','field-help'));
       if(!records.length)wrapper.append(node('span','No matching record exists yet. Add the referenced record first.','field-help'));
     }else if(type==='choice'){
       control=node('select');for(const value of options||[]){const option=node('option',String(value));option.value=String(value);control.append(option);}control.value=values[key]??'';wrapper.append(control);
     }else if(type==='list'){
-      control=node('textarea');control.rows=3;control.value=(values[key]||[]).join('\n');control.placeholder='Enter one item per line.';wrapper.classList.add('full');wrapper.append(control,node('span','Use one item per line.','field-help'));
+      const group=node('fieldset',undefined,'full');group.append(node('legend',label));control=node('div');control.id=`spec-${key}`;control.dataset.listControl='';setListValues(control,values[key]||[]);const add=node('button','Add a list item');add.type='button';add.dataset.addList=key;add.className='quiet';add.addEventListener('click',()=>{addValueRow(control);markFormChanged();});group.append(control,add,node('p','Use one item per field. Spaces and line breaks belong to that item. Leave an empty field to omit it.','field-help'));if(help)group.append(node('p',help,'field-help'));fields.append(group);continue;
     }else{
       control=node(type==='text'&&['definition','trigger','rule','summary','expression'].includes(key)?'textarea':'input');if(control.tagName==='TEXTAREA'){control.rows=3;wrapper.classList.add('full');}if(type==='number'){control.type='number';control.min='1';control.step='1';}control.value=values[key]??'';if(key==='checked_at'){control.value=localTime(values[key]||new Date().toISOString());control.type='datetime-local';control.step='1';wrapper.append(control,node('span','A declared metadata check time. No connected source freshness has been verified.','field-help'));}else wrapper.append(control);
     }
@@ -96,35 +109,62 @@ function buildSpecFields(kind,provided=null){
     if(kind==='member'&&key==='dimension')control.addEventListener('change',()=>{const parent=$('spec-parents');if(parent)fillReference(parent,latestRecords().filter(r=>r.kind==='member'&&r.spec.dimension===control.value&&r.id!==editingId),true,[]);updateSuggestedId();});
     fields.append(wrapper);
   }
+  renderEditDependencies(fields);
 }
 function readSpec(){
   const kind=$('record-kind').value;const spec={};
   for(const descriptor of TYPE_FIELDS[kind]){
     const el=$(`spec-${descriptor.key}`);const key=descriptor.key;
-    if(descriptor.type==='mapping'){const mapping={};for(const row of el.querySelectorAll('.mapping-row')){const dimension=row.querySelector('select').value;const value=row.querySelector('input').value.trim();if(!dimension||!value)throw new Error('Choose a dimension and its source column for each mapping.');if(Object.hasOwn(mapping,dimension))throw new Error('Use each dimension only once in source mappings.');mapping[dimension]=value;}spec[key]=mapping;}
-    else if(el.tagName==='SELECT'&&el.multiple)spec[key]=selectedValues(el);
-    else if(descriptor.type==='list')spec[key]=listFromText(el.value);
-    else if(descriptor.type==='number')spec[key]=decimalInteger(el.value,descriptor.label);
-    else if(key==='checked_at')spec[key]=isoFromInput(el.value);
-    else if(kind==='member'&&key==='value'){const dimension=latestRecords().find(r=>r.id===$('spec-dimension')?.value);spec[key]=dimension?.spec.value_type==='integer'?decimalInteger(el.value,'this integer member'):el.value;}
-    else spec[key]=el.value;
+    spec[key]=preserveField(`spec-${key}`,editingBaseRecord?.spec[key],()=>{
+      if(descriptor.type==='mapping'){const mapping={};for(const row of el.querySelectorAll('.mapping-row')){const dimension=row.querySelector('select').value;const value=row.querySelector('input').value;if(!dimension||!value)throw new Error('Choose a dimension and its source column for each mapping.');if(Object.hasOwn(mapping,dimension))throw new Error('Use each dimension only once in source mappings.');mapping[dimension]=value;}return mapping;}
+      if(el.tagName==='SELECT'&&el.multiple)return selectedValues(el);
+      if(descriptor.type==='list')return listValues(el);
+      if(descriptor.type==='number')return decimalInteger(el.value,descriptor.label);
+      if(key==='checked_at')return isoFromInput(el.value);
+      if(kind==='member'&&key==='value'){const dimension=referencedRecords().find(r=>r.id===$('spec-dimension')?.value);return dimension?.spec.value_type==='integer'?decimalInteger(el.value,'this integer member'):el.value;}
+      return el.value;
+    });
   }
   return spec;
 }
 function updateSuggestedId(){if(editingId||manuallyNamedId)return;const dimension=$('spec-dimension')?.value||'';$('record-id').value=suggestId($('record-kind').value,$('record-name').value,dimension);}
 function resetForm(record=null){
-  editingId=record?.id||null;manuallyNamedId=Boolean(record);candidate=null;candidateRevision=null;formEpoch++;
-  $('author-form').reset();$('record-kind').value=record?.kind||'term';$('record-kind').disabled=Boolean(record);$('record-id').readOnly=Boolean(record);$('record-id').value=record?.id||'';$('record-name').value=record?.name||'';$('record-owner').value=record?.owner||'';$('record-description').value=record?.description||'';$('record-narrative').value=record?.narrative||'';$('record-aliases').value=(record?.aliases||[]).join(', ');$('record-classification').value=record?.classification||'internal';$('valid-from').value=localTime(record?.valid_from||new Date().toISOString());$('valid-until').value=record?.valid_until?localTime(record.valid_until):'';
-  buildSpecFields($('record-kind').value,record?.spec);$('record-version').textContent=record?`${record.id} · next version ${nextVersion(state,record.id)}`:'New record · version 1';$('id-help').textContent=record?'This ID stays fixed. Saving creates a new version.':'Use a stable ID. Letters, numbers and underscores.';$('save-record').disabled=true;$('validation-panel').hidden=true;setMethod('author');formDirty=false;
+  editingId=record?.id||null;editingBaseRecord=copyValue(record);displaySnapshot={};manuallyNamedId=Boolean(record);candidate=null;candidateRevision=null;formEpoch++;
+  $('author-form').reset();$('record-kind').value=record?.kind||'term';$('record-kind').disabled=Boolean(record);$('record-id').readOnly=Boolean(record);$('record-id').value=record?.id||'';$('record-name').value=record?.name||'';$('record-owner').value=record?.owner||'';$('record-description').value=record?.description||'';$('record-narrative').value=record?.narrative||'';setListValues($('record-aliases'),record?.aliases||[],true);$('record-classification').value=record?.classification||'internal';$('valid-from').value=localTime(record?.valid_from||new Date().toISOString());$('valid-until').value=record?.valid_until?localTime(record.valid_until):'';
+  buildSpecFields($('record-kind').value,record?.spec);displaySnapshot=captureDisplaySnapshot();$('record-version').textContent=record?`${record.id} · next version ${nextVersion(state,record.id)}`:'New record · version 1';$('id-help').textContent=record?'This ID stays fixed. Saving creates a new version. Unchanged fields keep their exact stored values.':'Use a stable ID. Letters, numbers and underscores.';$('save-record').disabled=true;$('validation-panel').hidden=true;setMethod('author');formDirty=false;
 }
-function captureDraft(){return {method,editingId,manuallyNamedId,formDirty,fields:[...$('author-form').querySelectorAll('input,textarea,select')].filter(el=>el.id).map(el=>({id:el.id,value:el.value,selected:el.multiple?selectedValues(el):null})),mappings:[...$('spec-fields').querySelectorAll('.mapping-row')].map(row=>({dimension:row.querySelector('select').value,column:row.querySelector('input').value})),spec:readSpecSafe(),importText:$('import-text').value,importOriginal:fileOriginals.get('import-text'),importFormat:$('import-format').value,candidate,candidateRevision,candidateEpoch,formEpoch};}
+function captureDraft(){
+  const lists={};for(const control of $('spec-fields').querySelectorAll('[data-list-control]'))lists[control.id]=listValues(control,true);
+  return {method,editingId,editingBaseRecord:copyValue(editingBaseRecord),displaySnapshot:copyValue(displaySnapshot),manuallyNamedId,formDirty,
+    aliases:listValues($('record-aliases'),true),lists,
+    fields:[...$('author-form').querySelectorAll('input,textarea,select')].filter(el=>el.id).map(el=>({id:el.id,value:el.value,selected:el.multiple?selectedValues(el):null})),
+    mappings:[...$('spec-fields').querySelectorAll('.mapping-row')].map(row=>({dimension:row.querySelector('select').value,column:row.querySelector('input').value})),
+    spec:readSpecSafe(),importText:$('import-text').value,importOriginal:fileOriginals.get('import-text'),importFormat:$('import-format').value,candidate,candidateRevision,candidateEpoch,formEpoch};
+}
 function readSpecSafe(){try{return readSpec();}catch{return null;}}
-function restoreDraft(draft){resetForm();if(!draft)return;editingId=draft.editingId;manuallyNamedId=draft.manuallyNamedId;const kind=draft.fields.find(x=>x.id==='record-kind')?.value||'term';$('record-kind').value=kind;buildSpecFields(kind,draft.spec);for(const entry of draft.fields){const el=$(entry.id);if(!el)continue;if(el.multiple){for(const option of el.options)option.selected=entry.selected?.includes(option.value)||false;}else el.value=entry.value;}if(kind==='source'){const rows=$('spec-dimensions');rows.replaceChildren();for(const mapping of draft.mappings)mappingRow(rows,mapping.dimension,mapping.column);}if(kind==='member'){const dimension=$('spec-dimension').value;fillReference($('spec-parents'),latestRecords().filter(r=>r.kind==='member'&&r.spec.dimension===dimension&&r.id!==editingId),true,draft.fields.find(x=>x.id==='spec-parents')?.selected||[]);}$('record-kind').disabled=Boolean(editingId);$('record-id').readOnly=Boolean(editingId);$('record-version').textContent=editingId?`${editingId} · next version ${nextVersion(state,editingId)}`:'New record · version 1';$('import-text').value=draft.importText;$('import-format').value=draft.importFormat;setMethod(draft.method);formEpoch=draft.formEpoch;formDirty=draft.formDirty;candidate=draft.candidate;candidateRevision=draft.candidateRevision;candidateEpoch=draft.candidateEpoch;if(draft.importOriginal)fileOriginals.set('import-text',draft.importOriginal);else fileOriginals.delete('import-text');if(candidate)renderValidation(candidate);}
+function restoreDraft(draft){
+  resetForm();if(!draft)return;
+  editingId=draft.editingId;editingBaseRecord=copyValue(draft.editingBaseRecord);displaySnapshot=copyValue(draft.displaySnapshot||{});manuallyNamedId=draft.manuallyNamedId;
+  const kind=draft.fields.find(x=>x.id==='record-kind')?.value||'term';$('record-kind').value=kind;buildSpecFields(kind,draft.spec);
+  for(const entry of draft.fields){const el=$(entry.id);if(!el)continue;if(el.multiple){for(const option of el.options)option.selected=entry.selected?.includes(option.value)||false;}else el.value=entry.value;}
+  setListValues($('record-aliases'),draft.aliases||[],true);for(const [id,values] of Object.entries(draft.lists||{}))if($(id))setListValues($(id),values);
+  if(kind==='source'){const rows=$('spec-dimensions');rows.replaceChildren();for(const mapping of draft.mappings)mappingRow(rows,mapping.dimension,mapping.column);}
+  if(kind==='member'){const dimension=$('spec-dimension').value;fillReference($('spec-parents'),referencedRecords().filter(r=>r.kind==='member'&&r.spec.dimension===dimension&&r.id!==editingId),true,draft.fields.find(x=>x.id==='spec-parents')?.selected||[]);}
+  $('record-kind').disabled=Boolean(editingId);$('record-id').readOnly=Boolean(editingId);$('record-version').textContent=editingId?`${editingId} · next version ${nextVersion(state,editingId)}`:'New record · version 1';
+  $('import-text').value=draft.importText;$('import-format').value=draft.importFormat;setMethod(draft.method);formEpoch=draft.formEpoch;formDirty=draft.formDirty;candidate=draft.candidate;candidateRevision=draft.candidateRevision;candidateEpoch=draft.candidateEpoch;
+  if(draft.importOriginal)fileOriginals.set('import-text',draft.importOriginal);else fileOriginals.delete('import-text');if(candidate)renderValidation(candidate);
+}
 function renderValidation(prepared,error=null){$('validation-panel').hidden=false;$('validation-result').replaceChildren();if(error){$('validation-heading').textContent='Fix the record before you save';$('validation-badge').textContent='Not saved';$('validation-result').append(node('p',explain(error),'error-text'));$('proposed-record').textContent='';$('save-record').disabled=true;return;}$('validation-heading').textContent='Structure and relationships checked';$('validation-badge').textContent='Valid proposal · not approved';$('validation-result').append(node('p',`${prepared.record.id} · version ${prepared.record.version} · ${KIND_LAYERS[prepared.record.kind]} layer`,'success-text'),node('p','This result checks the declared structure, references and limits. It does not verify source facts, external freshness, business meaning or execution permission.'));$('proposed-record').textContent=JSON.stringify(prepared.record,null,2);$('save-record').disabled=false;}
 async function validateAuthor(){
   hideMessage();const epoch=formEpoch;const rev=state.revision;
   rememberTrace('submitted',`Guided ${kindNames[$('record-kind').value].toLowerCase()} fields submitted for validation.`);
-  try{const values={id:$('record-id').value.trim(),name:$('record-name').value.trim(),owner:$('record-owner').value.trim(),description:$('record-description').value,narrative:$('record-narrative').value,aliases:$('record-aliases').value.split(',').map(s=>s.trim()).filter(Boolean),classification:$('record-classification').value,valid_from:isoFromInput($('valid-from').value),valid_until:isoFromInput($('valid-until').value),spec:readSpec()};const prepared=await prepareRecord(state,$('record-kind').value,values);if(epoch!==formEpoch||rev!==state.revision)throw new Error('The form or workspace changed. Validate the current fields again.');candidate=prepared;candidateRevision=rev;candidateEpoch=epoch;renderValidation(prepared);rememberTrace('validated',`${prepared.record.id} v${prepared.record.version}: structure valid; meaning not approved.`);}catch(error){candidate=null;renderValidation(null,error);throw error;}
+  try{const original=editingBaseRecord;const values={
+    id:preserveField('record-id',original?.id,()=>$('record-id').value),name:preserveField('record-name',original?.name,()=>$('record-name').value),owner:preserveField('record-owner',original?.owner,()=>$('record-owner').value),
+    description:preserveField('record-description',original?.description,()=>$('record-description').value),narrative:preserveField('record-narrative',original?.narrative,()=>$('record-narrative').value),
+    aliases:preserveField('record-aliases',original?.aliases,()=>listValues($('record-aliases'))),classification:preserveField('record-classification',original?.classification,()=>$('record-classification').value),
+    valid_from:preserveField('valid-from',original?.valid_from,()=>isoFromInput($('valid-from').value)),valid_until:preserveField('valid-until',original?.valid_until,()=>isoFromInput($('valid-until').value)),spec:readSpec()};
+    if(original?.kind==='guidance')values.dependencies=copyValue(original.dependencies);
+    const prepared=await prepareRecord(state,$('record-kind').value,values);if(epoch!==formEpoch||rev!==state.revision)throw new Error('The form or workspace changed. Validate the current fields again.');candidate=prepared;candidateRevision=rev;candidateEpoch=epoch;renderValidation(prepared);rememberTrace('validated',`${prepared.record.id} v${prepared.record.version}: structure valid; meaning not approved.`);}catch(error){candidate=null;renderValidation(null,error);throw error;}
 }
 async function validateImport(){hideMessage();const epoch=formEpoch;const rev=state.revision;const submitted=originalText('import-text');rememberTrace('submitted',`${$('import-format').value.toUpperCase()} record submitted for validation.`);try{const record=importRecord(submitted,$('import-format').value);const test=await addRecords(state,[record],{submissionText:submitted,format:$('import-format').value});await validateWorkspace(test);if(epoch!==formEpoch||rev!==state.revision)throw new Error('The import or workspace changed. Validate it again.');candidate={record,importText:submitted,format:$('import-format').value};candidateRevision=rev;candidateEpoch=epoch;renderValidation(candidate);rememberTrace('validated',`${record.id} v${record.version}: import is valid; no review authority imported.`);}catch(error){candidate=null;renderValidation(null,error);throw error;}}
 
@@ -156,6 +196,7 @@ async function switchMode(mode){modeCache.set(state.mode,{state,token,persistenc
 
 for(const button of document.querySelectorAll('[data-view]'))button.addEventListener('click',()=>setView(button.dataset.view,true));
 for(const link of document.querySelectorAll('[data-view-link]'))link.addEventListener('click',event=>{event.preventDefault();setView(link.dataset.viewLink,true);});
+$('add-alias').addEventListener('click',()=>{addValueRow($('record-aliases'),'',true);markFormChanged();});
 $('author-method').addEventListener('click',()=>setMethod('author'));
 $('import-method').addEventListener('click',()=>setMethod('import'));
 $('new-record').addEventListener('click',()=>{if(formDirty&&!window.confirm('Start a new record and clear the current unsaved form?'))return;resetForm();hideMessage();});

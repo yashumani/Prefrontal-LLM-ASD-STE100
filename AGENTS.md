@@ -75,6 +75,10 @@ unsaved. Preserve the versioned export/recovery path, source text, exact IDs and
 versions. Do not add credential fields, content analytics, automatic uploads or
 model calls. Authoring search can show local drafts; keep it distinct from
 approved, authorization-filtered consumer search.
+An ordinary edit must preserve exact existing dependency pins, supporting links,
+prior provenance and untouched canonical field values. Do not silently repin to
+the latest version or split aliases/list values on punctuation. An intentional
+dependency change needs an explicit new proposal and validation.
 
 The fixed synthetic evaluator does not evaluate arbitrary workspace context.
 Keep missing, failed and stale evidence distinct. Plain, consistent language is

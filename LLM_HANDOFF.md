@@ -33,6 +33,12 @@ text, ID, version, typed relationships and visible submission-to-storage-to-cons
 trace. IDs remain stable when labels change; changed content is a new version.
 JSON, bounded YAML and Markdown are controlled views of one canonical model,
 not approval or automatic equivalence between unrelated knowledge models.
+An ordinary edit preserves existing exact dependency pins, prior provenance and
+untouched canonical fields, including line endings and timestamp precision.
+Changing a display label must not silently upgrade a dependency or drop a policy
+or document link. Other names and text-list items use separate fields; commas and
+embedded text line breaks are content. A deliberate pin change is an explicit
+new canonical proposal, not an inferred update.
 
 Browser authoring search includes local proposals. Local review notes are
 unauthenticated exact-hash attestations, not independent verified human approval.

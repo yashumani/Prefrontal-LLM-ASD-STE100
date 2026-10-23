@@ -182,4 +182,48 @@ await test('recovery tokens bind the mode and preserve invalid Unicode raw stora
 await test('workspace recovery caps captured originals at the bridge count bound',async()=>{
   const state=createWorkspace();const digest=await hash('');state.submissions=Array.from({length:1001},(_,i)=>({path:`sources/${i}.txt`,text:'',sha256:digest,format:'form'}));await denied(()=>validateWorkspace(state),'source_limit');
 });
+await test('guidance label edits preserve explicit dependency pins and consumer closure',async()=>{
+  let state=await createDemo();const guide=state.records.find(r=>r.id==='GUIDE_GROSS_ADDS');const policy=state.records.find(r=>r.id==='POLICY_COMPLETED_ONLY');
+  state=await addRecords(state,[{...clone(policy),version:2,name:'New policy label'}]);
+  const prepared=await prepareRecord(state,'guidance',{id:guide.id,name:'A changed guidance label',owner:guide.owner,aliases:guide.aliases,description:guide.description,narrative:guide.narrative,classification:guide.classification,valid_from:guide.valid_from,valid_until:guide.valid_until,spec:guide.spec});
+  assert.deepEqual(prepared.record.dependencies,guide.dependencies);
+  state=await addRecords(state,[prepared.record],{submissions:[prepared.submission]});
+  const payload=await compose(state,{roots:['GUIDE_GROSS_ADDS']});
+  assert.equal(payload.records.find(x=>x.record.id==='POLICY_COMPLETED_ONLY').record.version,1);
+  assert(payload.records.some(x=>x.record.id==='DOC_ORDER_GUIDE'));assert(payload.records.some(x=>x.record.id==='EVENT_ORDER_COMPLETED'));
+});
+await test('typed relationship edits preserve retained pins and pin only newly added IDs',async()=>{
+  let state=(await addTerm(createWorkspace(),'TERM_FIRST','First')).state;
+  state=(await addTerm(state,'TERM_SECOND','Second')).state;
+  const related=await term(state,'TERM_RELATED','Related',{spec:{definition:'A related definition',related_terms:['TERM_FIRST']}});
+  state=await addRecords(state,[related.record],{submissions:[related.submission]});
+  state=(await addTerm(state,'TERM_FIRST','First version two')).state;
+  const labelEdit=await term(state,'TERM_RELATED','Changed label',{spec:{definition:'A related definition',related_terms:['TERM_FIRST']}});
+  assert.deepEqual(labelEdit.record.dependencies,[{id:'TERM_FIRST',version:1}]);
+  const addRelation=await term(state,'TERM_RELATED','Changed relationships',{spec:{definition:'A related definition',related_terms:['TERM_FIRST','TERM_SECOND']}});
+  assert.deepEqual(addRelation.record.dependencies,[{id:'TERM_FIRST',version:1},{id:'TERM_SECOND',version:1}]);
+  const removeRelation=await term(state,'TERM_RELATED','Remove old relationship',{spec:{definition:'A related definition',related_terms:['TERM_SECOND']}});
+  assert.deepEqual(removeRelation.record.dependencies,[{id:'TERM_SECOND',version:1}]);
+  await denied(()=>term(state,'TERM_RELATED','Bad explicit pins',{spec:{definition:'A related definition',related_terms:['TERM_SECOND']},dependencies:[{id:'TERM_FIRST',version:1}]}));
+});
+await test('guided edits retain imported source provenance and add captured edit evidence',async()=>{
+  const source=clone((await createDemo()).records.find(r=>r.kind==='source'));source.id='SOURCE_IMPORTED';source.spec.dimensions={};source.provenance=[{path:'evidence/orders.json',sha256:'a'.repeat(64)}];
+  const originalText=exportRecord(source,'json');let state=await addRecords(createWorkspace(),[source],{submissionText:originalText,format:'json'});
+  const edit=await prepareRecord(state,'source',{id:source.id,name:'Changed display label',owner:source.owner,aliases:source.aliases,description:source.description,narrative:source.narrative,classification:source.classification,valid_from:source.valid_from,valid_until:source.valid_until,spec:source.spec});
+  assert.equal(edit.record.version,2);assert.deepEqual(edit.record.provenance[0],source.provenance[0]);assert.equal(edit.record.provenance.length,2);assert.equal(edit.record.provenance[1].path,edit.submission.path);assert.equal(edit.record.provenance[1].sha256,await hash(edit.submission.text));
+  state=await addRecords(state,[edit.record],{submissions:[edit.submission]});assert.equal(state.submissions[0].text,originalText);
+  const payload=await compose(state,{roots:[source.id]});assert(payload.provenance.some(p=>p.path==='evidence/orders.json'&&p.sha256==='a'.repeat(64)));assert.equal(payload.validation.source_access,'disconnected');
+});
+await test('typed dependency array order survives label edits and retained relationship changes',async()=>{
+  const demo=await createDemo();const metric=demo.records.find(r=>r.id==='M_GROSS_ADDS');metric.dependencies.reverse();
+  const labelEdit=await prepareRecord(demo,'measure',{id:metric.id,name:'Changed metric label',owner:metric.owner,aliases:metric.aliases,description:metric.description,narrative:metric.narrative,classification:metric.classification,valid_from:metric.valid_from,valid_until:metric.valid_until,spec:metric.spec});
+  assert.deepEqual(labelEdit.record.dependencies,metric.dependencies);
+  let state=createWorkspace();for(const id of ['TERM_A','TERM_B','TERM_C'])state=(await addTerm(state,id,id)).state;
+  const related=await term(state,'TERM_RELATED','Related',{spec:{definition:'Related terms',related_terms:['TERM_A','TERM_B']},dependencies:[{id:'TERM_B',version:1},{id:'TERM_A',version:1}]});
+  state=await addRecords(state,[related.record],{submissions:[related.submission]});state=(await addTerm(state,'TERM_B','New B')).state;
+  const add=await term(state,'TERM_RELATED','Add relation',{spec:{definition:'Related terms',related_terms:['TERM_C','TERM_A','TERM_B']}});
+  assert.deepEqual(add.record.dependencies,[{id:'TERM_B',version:1},{id:'TERM_A',version:1},{id:'TERM_C',version:1}]);
+  const remove=await term(state,'TERM_RELATED','Remove relation',{spec:{definition:'Related terms',related_terms:['TERM_C','TERM_A']}});
+  assert.deepEqual(remove.record.dependencies,[{id:'TERM_A',version:1},{id:'TERM_C',version:1}]);
+});
 console.log(JSON.stringify({status:'passed',tests:count,contract:'prefrontal.browser.workspace.tests.v1'}));
