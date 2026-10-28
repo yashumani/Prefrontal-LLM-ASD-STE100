@@ -55,12 +55,13 @@ async function main(){
   const ids=await p.locator('[id]').evaluateAll(nodes=>nodes.map(n=>n.id));assert.equal(new Set(ids).size,ids.length,'DOM IDs must be unique.');
   const brand=await p.evaluate(()=>({red:getComputedStyle(document.documentElement).getPropertyValue('--red').trim(),background:getComputedStyle(document.body).backgroundColor,font:getComputedStyle(document.body).fontFamily}));
   assert.equal(brand.red.toUpperCase(),'#EE001E');assert.equal(brand.background,'rgb(255, 255, 255)');assert.match(brand.font,/Arial/);
-  await p.waitForFunction(()=>ContextMotion.stats().frames>3);
+  // Keep Playwright's own polling out of the application RAF probe.
+  await p.waitForFunction(()=>ContextMotion.stats().frames>3,null,{polling:50});
   const first=await p.evaluate(()=>({stats:ContextMotion.stats(),probe:__motionProbe()}));assert.equal(first.stats.active,1);assert.equal(first.probe.peak,1);assert.equal(first.probe.intervals,0);
   await p.locator('#motion-toggle').click();await p.waitForTimeout(120);
   assert.equal(await p.evaluate(()=>ContextMotion.stats().scheduled),false);const frozen=await p.evaluate(()=>ContextMotion.stats().frames);await p.waitForTimeout(100);assert.equal(await p.evaluate(()=>ContextMotion.stats().frames),frozen);
   assert(await p.locator('.slide:visible svg').evaluate(svg=>svg.classList.contains('is-static')),'Pause shows the final static mechanism.');
-  await p.locator('#motion-toggle').click();await p.waitForFunction(()=>ContextMotion.stats().active===1);
+  await p.locator('#motion-toggle').click();await p.waitForFunction(()=>ContextMotion.stats().active===1,null,{polling:50});
   const svg=p.locator('.slide:visible svg.motion-diagram');const before=await svg.getAttribute('data-current-step');await p.waitForTimeout(2500);assert.notEqual(await svg.getAttribute('data-current-step'),before,'Shared RAF advances the stage.');
   await p.locator('#sidebar-stage-next').click();assert.equal(await p.evaluate(()=>ContextMotion.stats().scheduled),false);
   await p.locator('#overview-toggle').click();assert.equal(await p.locator('.overview-card').count(),16);assert.equal(await p.evaluate(()=>ContextMotion.stats().active),0);await p.keyboard.press('Escape');
@@ -111,7 +112,7 @@ async function main(){
    miniNodes+=plan.nodes.length;miniEdges+=plan.edges.length;
   }
   assert.equal(agentExplanations,7);
-  await goto(p,'bounded-decision-router');await p.locator('#motion-toggle').click();await p.waitForFunction(()=>ContextMotion.stats().active===1);
+  await goto(p,'bounded-decision-router');await p.locator('#motion-toggle').click();await p.waitForFunction(()=>ContextMotion.stats().active===1,null,{polling:50});
   const packet=p.locator('.slide:visible .mini-architecture-svg .m-dot').first();const packetPosition=await packet.getAttribute('transform');await p.waitForTimeout(130);assert.notEqual(await packet.getAttribute('transform'),packetPosition,'Native mini paths move in the shared loop.');await p.locator('#motion-toggle').click();
   await goto(p,'full-architecture');assert.equal(await p.locator('.slide:visible [data-node]').count(),14);assert.equal(await p.locator('.slide:visible [data-edge]').count(),24);assert.equal(await p.locator('.slide:visible [data-policy=external]').count(),1);assert.equal(await p.locator('.slide:visible [data-review=owner]').count(),1);
   let topics=0;

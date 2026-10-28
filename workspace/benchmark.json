@@ -1,0 +1,81 @@
+{
+  "contract": "prefrontal.browser.metadata.benchmark.v1",
+  "status": "passed",
+  "measured_at": "2026-10-23T23:27:59.017Z",
+  "source_hashes": {
+    "workspace/core.mjs": "ddb4b7032ac3e551287e7e4c23fb1eecbfd83e149ea115be50172677acb57b67",
+    "workspace/formats.mjs": "7a9569d2e89fdd1b225021cd18dbd6f2d2601b2f1500aec92955c1e81dbcb497",
+    "scripts/benchmark-workspace.mjs": "038dd42284b1932ac8696099ad16b84e7906a9ca7a6962104e662396d3d66a21"
+  },
+  "environment": {
+    "node": "v24.18.0",
+    "os": "win32",
+    "os_release": "10.0.26300",
+    "architecture": "x64",
+    "cpu": "AMD Ryzen 5 5600H with Radeon Graphics         "
+  },
+  "limits": {
+    "seconds": 30,
+    "records": 1000,
+    "workspaceBytes": 2097152,
+    "recordBytes": 65536,
+    "directDependencies": 32,
+    "closureRecords": 128,
+    "closureBytes": 1048576,
+    "depth": 16,
+    "pageSize": 100,
+    "queryChars": 256,
+    "queryTerms": 16,
+    "trace": 4096
+  },
+  "elapsed_ms": 2171.992,
+  "memory": {
+    "measurement": "Node process samples; not a browser peak-memory measurement",
+    "rss_before": 39940096,
+    "rss_after": 169193472,
+    "heap_used_before": 5733664,
+    "heap_used_after": 34165888
+  },
+  "results": [
+    {
+      "record_versions": 100,
+      "records_are_synthetic_metadata": true,
+      "captured_originals": 2,
+      "backup_utf8_bytes": 133124,
+      "workspace_canonical_utf8_bytes": 132989,
+      "import_ms": 38.181,
+      "validate_ms": 40.392,
+      "first_indexed_selective_query_ms": 2.313,
+      "warm_selective_query_samples": 50,
+      "warm_selective_query_median_ms": 0.362,
+      "warm_selective_query_p95_ms": 0.954,
+      "selective_query": "group7",
+      "selective_matches": 10,
+      "pagination_rows": 100,
+      "full_pagination_ms": 3.755,
+      "export_ms": 45.926
+    },
+    {
+      "record_versions": 1000,
+      "records_are_synthetic_metadata": true,
+      "captured_originals": 5,
+      "backup_utf8_bytes": 1327431,
+      "workspace_canonical_utf8_bytes": 1327296,
+      "import_ms": 831.471,
+      "validate_ms": 492.479,
+      "first_indexed_selective_query_ms": 9.529,
+      "warm_selective_query_samples": 50,
+      "warm_selective_query_median_ms": 0.745,
+      "warm_selective_query_p95_ms": 1.401,
+      "selective_query": "group7",
+      "selective_matches": 100,
+      "pagination_rows": 1000,
+      "full_pagination_ms": 38.699,
+      "export_ms": 591.108
+    }
+  ],
+  "source_data_rows": 0,
+  "model_calls": 0,
+  "external_requests": 0,
+  "interpretation": "Measures metadata import, validation, indexed authoring search, pagination and backup. Does not measure native source data, browser quota capacity, concurrent users or enterprise throughput."
+}

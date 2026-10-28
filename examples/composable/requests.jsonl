@@ -1,0 +1,3 @@
+{"operation": "context.search", "workspace": "composable-demo", "query": "gross adds", "page_size": 10}
+{"operation": "context.resolve", "workspace": "composable-demo", "measure": "M_GROSS_ADDS", "selectors": ["CHANNEL_ONLINE", "PRODUCT_POSTPAID", "PERIOD_2026_09"]}
+{"operation": "context.export", "workspace": "composable-demo", "id": "M_GROSS_ADDS", "format": "markdown"}

@@ -2,18 +2,35 @@ name: Validate governed context pilot
 
 on:
   push:
-    branches: [feature/context-presentation]
+    branches: [main, feature/context-presentation]
     paths:
       - pilot/**
       - .github/workflows/pilot.yml
       - LICENSE
       - .gitattributes
+      - pyproject.toml
+      - examples/composable/**
+      - scripts/benchmark-composable.py
+      - scripts/smoke-composable-release.py
+      - scripts/verify-context-quality.cjs
+      - AGENTS.md
+      - LLM_HANDOFF.md
+      - README.md
   pull_request:
     paths:
       - pilot/**
       - .github/workflows/pilot.yml
       - LICENSE
       - .gitattributes
+      - pyproject.toml
+      - examples/composable/**
+      - scripts/benchmark-composable.py
+      - scripts/smoke-composable-release.py
+      - scripts/verify-context-quality.cjs
+      - AGENTS.md
+      - LLM_HANDOFF.md
+      - README.md
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -31,7 +48,8 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-latest
+          # Ubuntu 26.04 has no actions/setup-python build for Python 3.9.
+          - os: ubuntu-24.04
             python-version: '3.9'
           - os: ubuntu-latest
             python-version: '3.13'
@@ -57,6 +75,15 @@ jobs:
         run: python -m pilot.demo --output pilot-evidence
       - name: Reproduce selected knowledge lifecycle
         run: python -m pilot.knowledge_demo --output pilot-evidence/knowledge
+      - name: Build and smoke-test clean composable release archive
+        run: |
+          python -m pip install setuptools==75.6.0 wheel==0.45.1
+          git archive --format=zip --output=pilot-evidence/release.zip HEAD
+          python scripts/smoke-composable-release.py --archive pilot-evidence/release.zip --output pilot-evidence/clean-install
+      - name: Measure bounded synthetic metadata workload
+        run: python scripts/benchmark-composable.py --sizes 1000 --max-seconds 180 --output pilot-evidence/scale
+      - name: Evaluate synthetic context quality
+        run: python -B -m pilot.context_evaluation --output-root pilot-evidence/context-quality
       - name: Retain test and lifecycle evidence
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
@@ -65,5 +92,7 @@ jobs:
           path: |
             pilot-test-results.log
             pilot-evidence/
+            !pilot-evidence/clean-install/venv/**
+            !pilot-evidence/clean-install/source/**
           retention-days: 7
           if-no-files-found: warn

@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=65", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "prefrontal-context"
+version = "0.5.0.dev1"
+description = "Local governed, composable context records and deterministic offline examples"
+requires-python = ">=3.9"
+dependencies = []
+license = {file = "LICENSE"}
+
+[project.scripts]
+prefrontal-context = "pilot.composable_cli:main"
+prefrontal-evaluate = "pilot.context_evaluation:main"
+prefrontal-quality = "pilot.context_quality_ui:main"
+prefrontal-workspace = "pilot.browser_workspace:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["pilot*"]
+
+[tool.setuptools.package-data]
+pilot = ["fixtures/*", "fixtures/**/*", "quality_assets/*"]
+
+[tool.setuptools.data-files]
+"share/prefrontal-context" = ["AGENTS.md", "LLM_HANDOFF.md", "README.md", "LICENSE"]
+"share/prefrontal-context/pilot" = ["pilot/*.md", "pilot/COMPOSABLE_BENCHMARK.json"]
+"share/prefrontal-context/workspace" = ["workspace/index.html", "workspace/styles.css", "workspace/app.mjs", "workspace/core.mjs", "workspace/formats.mjs", "workspace/demo.mjs", "workspace/benchmark.json"]
+"share/prefrontal-context/workspace/guides" = ["workspace/guides/quickstart.html", "workspace/guides/developer.html", "workspace/guides/scaling.html"]
+"share/prefrontal-context/examples/composable" = ["examples/composable/requests.jsonl", "examples/composable/principals.json", "examples/composable/import-batch.json"]
+"share/prefrontal-context/examples/composable/sources" = ["examples/composable/sources/domain.txt", "examples/composable/sources/orders.json"]
+"share/prefrontal-context/examples/composable/records" = ["examples/composable/records/*.json", "examples/composable/records/*.yaml", "examples/composable/records/*.md"]

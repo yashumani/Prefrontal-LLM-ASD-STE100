@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
+  <title>Quickstart · Prefrontal</title>
+  <style>
+    :root{font-family:Arial,sans-serif;color:#151515;background:#fff;line-height:1.6;font-size:17px}*{box-sizing:border-box}body{margin:0}header,main,footer{max-width:960px;margin:auto;padding:24px}header{border-bottom:1px solid #ddd;display:flex;gap:18px;justify-content:space-between;align-items:center;flex-wrap:wrap}.brand{font-size:25px;font-weight:800;color:#151515;text-decoration:none}.brand span{color:#ee001e}nav{display:flex;gap:18px;flex-wrap:wrap}a{color:#b00019;text-underline-offset:3px}a:focus-visible{outline:3px solid #ee001e;outline-offset:4px}h1{font-size:clamp(2.1rem,7vw,3.6rem);line-height:1.1;letter-spacing:-.04em;max-width:760px}h2{font-size:1.55rem;line-height:1.25;margin-top:46px}h3{font-size:1.1rem;margin-top:28px}.eyebrow{font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;margin-top:28px}.lead{font-size:1.2rem;max-width:760px}.notice{border-left:5px solid #ee001e;background:#f5f5f5;padding:18px 22px;margin:28px 0}table{border-collapse:collapse;width:100%;margin:22px 0}td,th{text-align:left;vertical-align:top;padding:12px 10px;border-bottom:1px solid #ddd;overflow-wrap:anywhere}th{font-size:.85rem}code{font-family:Consolas,monospace;font-size:.88em;overflow-wrap:anywhere;background:#f2f2f2;padding:2px 4px}li{margin:10px 0}section{scroll-margin-top:16px}footer{border-top:1px solid #ddd;font-size:.85rem}p,li{max-width:850px}.steps{padding-left:24px}.steps li{padding-left:5px;margin:22px 0}strong{font-weight:700}@media(max-width:450px){header,main,footer{padding:20px}table{font-size:.88rem}td,th{padding:10px 6px}nav{gap:12px}.notice{padding:15px}}
+  </style>
+</head>
+<body>
+<header><a class="brand" href="../">prefrontal<span>.</span></a><nav aria-label="Guides"><a href="../">Workspace</a><a href="developer.html">Developer guide</a><a href="scaling.html">Storage and scale</a></nav></header>
+<main>
+  <p class="eyebrow">Quickstart / No code needed</p>
+  <h1>Build context, step by step.</h1>
+  <p class="lead">Start with an empty workspace. Add the meaning your consumer needs. Check it, save it, find it and inspect what you will export.</p>
+  <aside class="notice"><strong>Your browser holds your work.</strong> This open-source project runs in your browser. The application does not upload your context, connect to a source or call a model. Storage belongs to this device, browser profile and website origin. It is not shared server storage, a secure vault or a backup. Do not enter passwords, tokens or sensitive source data.</aside>
+
+  <section aria-labelledby="start"><h2 id="start">Start in your own workspace</h2>
+    <p>A fresh visit has no records. The optional synthetic demo has a separate workspace. Open it only when you want an example. Return to your workspace to add your own records. The demo must not replace or merge with your work.</p>
+    <p>The same URL on your phone opens that phone's local workspace. It does not load records saved on your laptop. Use a workspace export to move your work between devices.</p>
+  </section>
+
+  <section aria-labelledby="first"><h2 id="first">Add your first record</h2>
+    <ol class="steps">
+      <li><strong>Choose Add context.</strong> In <strong>Context type</strong>, select <strong>Glossary term</strong> for a first record. Fill in <strong>Display name</strong>, <strong>Owner</strong>, <strong>Short description</strong>, <strong>Meaning and supporting text</strong>, and the term's <strong>Definition</strong>. Add related terms only when those records already exist.</li>
+      <li><strong>Check Readable ID.</strong> The form suggests an ID from the name. Keep it or choose another before the first save. The interface shows the ID and version before save. An ID identifies one meaning. A name can change without changing the ID. An edit creates a new version; it does not replace the old record.</li>
+      <li><strong>Choose Validate record.</strong> Inspect the field and relationship results and the proposed JSON. Fix each error. This checks the record's structure and declared links. It does not prove that the meaning is correct or that an external source is current.</li>
+      <li><strong>Choose Save record on this device.</strong> Wait for confirmed browser storage. Inspect the stored record, ID, version, source text and hash. If storage fails, the interface shows that your change is not saved. Export it before leaving.</li>
+      <li><strong>Use Find context.</strong> Search by ID, name, alias or description. Filter by layer or type. Open a result to inspect its current version and pinned relationships. This is authoring search; it can include local drafts. To edit, choose <strong>Create next version</strong>; the ID stays fixed. Older versions remain in the exact stored-state JSON and workspace backup.</li>
+    </ol>
+    <p>For example, you can enter the invented name <em>Customer</em>, the ID <code>TERM_CUSTOMER</code> and the definition <em>An account that can place an order.</em> This is an example to type and review, not a supplied business definition.</p>
+  </section>
+
+  <section aria-labelledby="types"><h2 id="types">Choose a type for each meaning</h2>
+    <p>Keep small records and link them. Do not put a whole policy library, formula and glossary into one text field.</p>
+    <table><thead><tr><th>Layer</th><th>Record type</th><th>What to enter</th></tr></thead><tbody>
+      <tr><td>Data</td><td>Source</td><td>A source binding description, grain, freshness rule and dimension-to-column map. A binding name does not establish a live connection.</td></tr>
+      <tr><td>Data</td><td>Document</td><td>The document media type, summary and related record IDs. Keep the submitted text and its provenance.</td></tr>
+      <tr><td>Metric</td><td>Measure</td><td>The source ID, aggregation, expression, required and optional dimensions, and guidance IDs. The browser does not execute the expression.</td></tr>
+      <tr><td>Ontology</td><td>Dimension and member</td><td>A typed dimension, then its distinct members. A member links to the dimension and optional parents in that dimension.</td></tr>
+      <tr><td>Ontology</td><td>Term and business event</td><td>A term definition and related terms; or an event trigger, time field and related entities.</td></tr>
+      <tr><td>Interpretation</td><td>Guidance and policy</td><td>Guidance qualifiers and caveats; or a policy rule and the records to which it applies.</td></tr>
+    </tbody></table>
+    <p>A relationship pins an ID and version. Add the referenced records first, or import a valid complete set. Missing records, wrong types, dependency cycles and conflicting versions need correction before a consumer payload can be made.</p>
+    <p>When you choose <strong>Create next version</strong>, inspect the displayed exact relationship versions. Changing a display name keeps those pins, supporting links and earlier provenance; it does not select newer dependencies. A newly added related ID uses its latest stored version. To intentionally change a pin for the same ID, or change a guidance record's supporting dependency pins, import a new prepared record proposal and inspect its exact dependencies before save.</p>
+    <p>The <em>internal</em> and <em>restricted</em> labels describe records. They do not create browser access controls. A person who can use this browser profile may be able to read its stored context.</p>
+  </section>
+
+  <section aria-labelledby="imports"><h2 id="imports">Import context without code</h2>
+    <p>In Add context, choose <strong>Import a record</strong> for one record exported in the supported JSON, YAML or Markdown profile. Choose the format, inspect the submitted content, then choose <strong>Validate import</strong> before save. Import does not fetch the links in a document or approve its meaning.</p>
+    <ul>
+      <li><strong>JSON:</strong> use the exact record fields. Repeated keys and unknown fields fail validation.</li>
+      <li><strong>YAML:</strong> use the documented bounded block profile. Quote text that could be read as a number, date or Boolean. Arbitrary YAML, tags, aliases and ambiguous values are not supported.</li>
+      <li><strong>Markdown:</strong> use an exported Prefrontal record template. It has a fixed title, a JSON metadata block and a Narrative section. An arbitrary Markdown page is not a record import.</li>
+    </ul>
+    <p>Use the Document type to enter supporting material that does not already use the record profile. Keep what the source actually says. Do not invent missing metadata or remove caveats to pass validation.</p>
+  </section>
+
+  <section aria-labelledby="consume"><h2 id="consume">Compose and inspect a consumer payload</h2>
+    <p>Open <strong>Compose and export</strong>. Choose a measure and its required point-of-view selectors. For knowledge-only context, leave the measure empty and choose records in <strong>Supporting context</strong>. A member supplies one value in one typed dimension. For example, <code>M_GROSS_ADDS + CHANNEL_ONLINE + PRODUCT_POSTPAID + PERIOD_2026_09</code> names separately defined records. It does not create a stored record for every possible combination.</p>
+    <p>Choose <strong>Validate and compose</strong>. Inspect the selected IDs, versions, dependency records, provenance and validation results before <strong>Download consumer payload</strong>. Correct missing required selectors, two members from one dimension, unsupported cuts or ambiguous aliases.</p>
+    <p>The consumer preview shows what leaves this workspace. It contains context and its limits, not a calculated business answer. Its <code>execution_authorized</code> value is <code>false</code>. A downstream system must admit the proposals, check human approval, revalidate current authority and use its own source permissions before execution.</p>
+    <p>In a record's inspection view, <strong>Save local review note</strong> records an attestation against its exact hash. It is not an authenticated independent review, a backend release or permission to use a source. A new record version needs a new review.</p>
+  </section>
+
+  <section aria-labelledby="trace"><h2 id="trace">Follow your work through the trace</h2>
+    <table><thead><tr><th>Step</th><th>What to inspect</th></tr></thead><tbody>
+      <tr><td>Submitted</td><td>The guided field values captured as JSON, or the original imported record document, with its format and submission hash.</td></tr>
+      <tr><td>Processed</td><td>Structural validation, exact fields, typed links and any failure messages.</td></tr>
+      <tr><td>Stored</td><td>Workspace mode, storage key, revision, saved state and exact record versions.</td></tr>
+      <tr><td>Delivered</td><td>The consumer payload, included records, selected point of view, provenance and unverified approval state.</td></tr>
+    </tbody></table>
+    <p>A submission hash can show that the stored submission bytes match. It does not verify an external document, source data, freshness claim or business fact.</p>
+    <p>In <strong>Other names</strong>, use one name per field and <strong>Add another name</strong> for another. Commas and spaces stay part of the name. Text lists use one item per field with <strong>Add a list item</strong>; spaces and line breaks belong to that item. Leave a field empty to omit it. Other names use ASCII characters; display names and meaning text can use Unicode.</p>
+    <p>On an edit, untouched canonical field values stay exact, including text line endings, timestamp precision and item order. Text fields keep the submitted text. Readable IDs must match the strict uppercase-letter, digit and underscore syntax; spaces do not pass validation. Number controls produce whole numbers and edited date controls become UTC. Inspect the proposed JSON before save. A new version retains earlier provenance and adds its new captured form submission. Meaning and supporting text is not a model-generated summary.</p>
+  </section>
+
+  <section aria-labelledby="recovery"><h2 id="recovery">Export before you leave</h2>
+    <p>Open <strong>Storage and recovery</strong>. Use <strong>Download workspace backup</strong> and keep the downloaded file outside the browser. A record export is useful for one proposal; a consumer export is useful for delivery. Neither includes a complete workspace backup. In particular, the consumer payload omits the original submission files.</p>
+    <p>To recover or move a workspace, choose or paste the backup and select <strong>Validate backup</strong>. Inspect the workspace name, mode, record count and validation result. Export the current work you need to keep. Select the explicit confirmation checkbox, then <strong>Replace this workspace</strong>. The backup replaces only the selected matching mode; a demo backup cannot replace a user workspace. Nothing is merged silently.</p>
+    <h3>If saved data cannot be read</h3>
+    <p>The application leaves the unreadable stored value unchanged and shows a warning. Ordinary Save cannot replace it. There is no automatic clear or reset.</p>
+    <ol>
+      <li>Open <strong>Storage and recovery</strong>, then <strong>Inspect the exact stored state</strong>. Keep a copy of that raw value if you need it. A backup of current readable page state is not a backup of unreadable stored bytes.</li>
+      <li>Choose or paste a valid backup for the selected user or demo mode. Select <strong>Validate backup</strong>. Inspect the backup preview and the warning that recovery will replace the captured unreadable value in this slot.</li>
+      <li>Select the explicit replacement checkbox, then <strong>Replace this workspace</strong>. Only that selected slot can be replaced. Success is shown after confirmed persistence; the other workspace stays unchanged.</li>
+      <li>If the stored value changed, disappeared or became a valid workspace in another tab, recovery stops with a conflict. Read stored state again or reload, inspect it and validate the intended backup again. Do not force a replacement.</li>
+    </ol>
+    <p>You can name a new empty workspace here with <strong>Workspace name</strong> and <strong>Create workspace on this device</strong>. Use <strong>Read stored state again</strong> to inspect the current persisted state.</p>
+    <p>The user storage key is <code>prefrontal.workspace.v1.user</code>. The demo key is <code>prefrontal.workspace.v1.demo</code>. These keys are local to the current website origin and browser profile. A local preview and the published Pages URL have different storage. Other Pages projects on the same <code>owner.github.io</code> host share the origin; a different repository path is not a storage or security boundary.</p>
+  </section>
+
+  <section aria-labelledby="fix"><h2 id="fix">Fix common failures</h2>
+    <table><thead><tr><th>Message or state</th><th>Next action</th></tr></thead><tbody>
+      <tr><td>Not saved / storage unavailable / quota reached</td><td>Keep the page open and export your current work. Move larger collections to the Python core path. Do not treat the in-memory change as stored or remove history to force a save.</td></tr>
+      <tr><td>Stored bytes cannot be read</td><td>Inspect and keep the raw value if needed. Validate a matching workspace backup, inspect the recovery warning and confirm Replace this workspace. Ordinary Save cannot overwrite unreadable data.</td></tr>
+      <tr><td>Workspace changed in another tab</td><td>Export this tab's pending work. Reload the stored workspace and compare changes. Avoid editing the same workspace in two tabs.</td></tr>
+      <tr><td>Missing dependency or wrong version</td><td>Inspect the referenced ID and version. Add the intended record or correct the proposal. Do not substitute another meaning.</td></tr>
+      <tr><td>Invalid or ambiguous import</td><td>Start from a supported exported template. Remove repeated keys and use explicit values. Do not discard source text to force an import.</td></tr>
+      <tr><td>Not evaluated</td><td>No measurement establishes quality for this context. Structural validity and a local review note do not change that state.</td></tr>
+    </tbody></table>
+  </section>
+
+  <p class="notice">The optional evaluation uses a separate six-row synthetic gross-additions fixture. It is not a score for your workspace. Read the <a href="developer.html#evaluation">evaluation boundary</a> and the <a href="scaling.html">storage and scaling guide</a>.</p>
+</main>
+<footer><p>Plain language inspired by ASD-STE100. Formal compliance has not been assessed. <a href="../presentation/">Open the preserved product presentation</a>.</p></footer>
+</body></html>

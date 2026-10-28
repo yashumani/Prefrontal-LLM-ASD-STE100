@@ -1,5 +1,118 @@
 # Prefrontal · Governed context as a product
 
+The default development branch is `main`. The governed-context validation matrix
+runs on relevant changes to `main`. The Pages build places the browser workspace
+at the site root and preserves the earlier presentation under `presentation/`.
+Deployment status belongs to the exact workflow run, not to source-file presence.
+
+## Browser context workspace
+
+The [browser workspace](workspace/index.html) starts empty. A person can add or
+import context, inspect structural validation, save on this device, find records,
+compose a point of view and export the consumer payload without editing code.
+The optional synthetic demo uses a separate workspace and never silently merges
+with user records. [Open the published workspace](https://yashumani.github.io/Prefrontal-LLM-ASD-STE100/)
+when the main-branch Pages deployment has completed.
+
+Read the [nontechnical quickstart](workspace/guides/quickstart.html),
+[developer and adapter guide](workspace/guides/developer.html) and
+[storage and scaling guide](workspace/guides/scaling.html). The writing is
+ASD-STE100-inspired; formal compliance has not been assessed.
+
+This is a static open-source project workspace. User records stay in browser
+localStorage on one device, profile and origin; the application does not upload
+them. This is not shared persistence, a secure vault, a backup or a hosted
+private/commercial SaaS backend. There are no credential-entry fields, content
+analytics, automatic source ingestion, paid model calls or live LLM. Local rules
+orchestrate context processing and delivery only. Downstream consumers own their
+task logic, native execution and answers.
+
+The `prefrontal.context.v1` profile keeps atomic source, measure, dimension,
+member and guidance records, and adds typed term, business event, policy and
+document records with pinned relationships. JSON, bounded YAML and the defined
+Markdown profile preserve the same canonical fields and narrative. IDs survive
+name edits; changed content creates a new version. Point-of-view composition
+resolves required records instead of materializing Cartesian combinations.
+Ordinary edits retain exact existing dependency pins and prior provenance; label
+changes do not silently upgrade references. Other names and text-list items use
+separate fields, so commas and embedded text line breaks are not separators.
+
+`prefrontal.workspace.v1.user` and `prefrontal.workspace.v1.demo` are separate
+localStorage keys. Saved status requires successful write/readback. Export a
+versioned workspace backup for recovery or transfer. Recovery validates before
+explicit replacement and rejects a different mode. Quota and conflict errors
+remain visibly unsaved. Classification is metadata, not a browser ACL. Local
+review notes are unauthenticated attestations, not backend approval.
+Pages projects on the same `owner.github.io` origin share browser storage access;
+a repository URL path is not a storage or security boundary.
+Unreadable stored data stays unchanged. Only a validated, explicitly confirmed
+same-mode backup can replace the captured corrupt value; ordinary saves cannot.
+Recovery stops if another tab changes that value or stores a valid workspace.
+
+Build the assembled site before previewing its workspace, guides and preserved
+presentation routes:
+
+```text
+node scripts/build-pages.cjs
+python -m http.server 8192 --bind 127.0.0.1 --directory _site
+```
+
+Open `http://127.0.0.1:8192/`. The browser app is also source-previewable at
+`workspace/`, but that folder alone does not contain the assembled presentation.
+Asset and guide links must work beneath the repository's Pages subpath.
+
+The actual Python bridge validates a browser backup or consumer payload. Only a
+full workspace backup can stage retained original submissions and proposals:
+
+```text
+python -B -m pilot.browser_workspace --input browser-backup.json --validate-only
+python -B -m pilot.browser_workspace --input browser-backup.json --output-root .validation/browser-stage --workspace example-workspace
+```
+
+Use the actual downloaded file and the operator's intended workspace. Staging
+creates a new local output directory; it does not import into a registry, approve
+meaning, publish a release, call a model or execute a source. Missing original
+source paths stay explicit and need operator review. A browser consumer preview
+has `execution_authorized: false`; governed admission, exact human review,
+release, current authority checks and native permissions remain required.
+Authoring search can include drafts and is separate from approved consumer search.
+
+Your workspace is **not evaluated**. The separate fixed synthetic evaluator below
+does not award scores to arbitrary user records. The browser profile admits at
+most 1,000 record versions and 1,000 captured original files within 2 MiB of
+saved backup state, including history and originals; record, dependency and
+closure limits also apply. Actual workload evidence and migrations are described
+in the scaling guide. These bounds do not establish warehouse or unlimited scale.
+
+For the additive v0.3 composable context profile, start with
+[LLM_HANDOFF.md](LLM_HANDOFF.md), [AGENTS.md](AGENTS.md) and the
+[composable profile contract](pilot/COMPOSABLE.md). The LLM workflow is bounded
+search, exact dependency resolution, current validation and admitted native use.
+Readable typed IDs, JSON/bounded block YAML/Markdown views and generated proposals
+remain subject to exact human review; structural validity never establishes approval.
+Existing knowledge/metric databases and the [knowledge MCP connection](pilot/CODEX.md)
+remain separate. See the composable guide for installation, CLI/native examples,
+limits and qualification evidence.
+
+## Context quality evaluation preview
+
+This development branch adds a proposed context scorecard and a dedicated local
+quality panel. It reports measured checks, their coverage and evidence, with
+separate states for failures, missing measurements and stale evaluations.
+Security and critical semantic failures block acceptance; there is no blended
+quality index or claimed model uplift. The supplied gross-additions benchmark
+uses synthetic orders and explicitly simulated approval.
+
+```powershell
+$evaluation = python -B -m pilot.context_evaluation --output-root .validation/context-evaluation | ConvertFrom-Json
+if ($LASTEXITCODE -ne 0) { throw 'Evaluation failed; inspect its error.' }
+python -B -m pilot.context_quality_ui --report $evaluation.report_path --port 8191
+```
+
+Open `http://127.0.0.1:8191/`. This panel reads the generated evaluation and its
+current bindings; it does not start the separate sales pilot or a hosted service.
+See [evaluation definitions, installation and limits](pilot/CONTEXT_EVALUATION.md).
+
 Prefrontal includes a runnable, MIT-licensed governed-context reference in
 [`pilot/`](pilot/README.md): propose source-bound knowledge, review exact versions,
 publish a dependency set, and deliver current permitted context to a consumer.
@@ -7,7 +120,7 @@ Start with `python -m pilot.knowledge_demo`; Python 3.9 or newer and the standar
 library are sufficient. See the [agent guide](pilot/AGENT_WORKFLOW.md),
 [knowledge interface](pilot/KNOWLEDGE.md), and [release evidence](pilot/RELEASE_VALIDATION.md).
 
-[Open the pitch](https://yashumani.github.io/Prefrontal-LLM-ASD-STE100/).
+[Open the preserved pitch](https://yashumani.github.io/Prefrontal-LLM-ASD-STE100/presentation/).
 
 This 16-slide presentation sells a proposed context product and a bounded pilot. The first four slides explain the buyer problem, product and investment case. Slide five shows the complete architecture. Developer detail follows: submissions, review, canonical IDs, semantic layers, model decisions, controlled delivery, economics and implementation gates.
 
@@ -168,7 +281,7 @@ files and 12 fixed questions. Its saved answers pass in both arms after a disclo
 citation-annotation correction; it establishes no speed or quality advantage.
 The [MIT license](LICENSE) covers this repository's source.
 
-The existing Pages workflow validates and publishes the eight public files from `feature/context-presentation`. It checks freshness, syntax and browser acceptance before deployment. Research, the supplied ZIP, local architecture sidecars, PDFs and screenshots remain outside the public package.
+The Pages workflow validates the browser workspace and preserves the earlier presentation, then assembles an explicit public-file allowlist from `main`. The workspace is the site entrypoint; the presentation stays under `presentation/`. User workspaces, the private corpus and Sheet, research, supplied ZIPs, local architecture sidecars, PDFs and screenshots are not included in the public package.
 
 Working artifacts include the presentation and local reference code for persistent
 admission, exact-version review, atomic publication, and checked delivery. Real

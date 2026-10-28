@@ -1,0 +1,9 @@
+# Prefrontal context record
+
+```json
+{"aliases":["new completed orders"],"classification":"internal","dependencies":[{"id":"SOURCE_ORDERS","version":1},{"id":"PERIOD","version":1},{"id":"CHANNEL","version":1},{"id":"PRODUCT","version":1},{"id":"G_REVIEWED","version":1}],"description":"Illustrative synthetic measure.","id":"M_GROSS_ADDS","kind":"measure","layer":"metric","name":"Gross adds","owner":"synthetic-domain-owner","provenance":[{"path":"domain.txt","sha256":"bb0744fb655e1906a45fb4cd96c900ef787c01cb7df7f7d97cbb62eb044353c2"}],"schema":"prefrontal.context.v1","spec":{"aggregation":"count","expression":"count_completed_orders","guidance":["G_REVIEWED"],"optional_dimensions":["CHANNEL","PRODUCT"],"required_dimensions":["PERIOD"],"source":"SOURCE_ORDERS"},"valid_from":"2026-01-01T00:00:00Z","valid_until":null,"version":1}
+```
+
+## Narrative
+
+Offline example only. Exact-version approval is simulated by distinct fixture roles.
